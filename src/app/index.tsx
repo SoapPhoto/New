@@ -1,21 +1,16 @@
-/**
- *
- * App
- *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
- */
-
 import * as React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Route, BrowserRouter, Routes, useLocation } from 'react-router-dom';
 
 import { GlobalStyle } from '../styles/global-styles';
 
 import HomePage from 'pages/Home/Loadable';
 import { useTranslation } from 'react-i18next';
 import { DefaultLayout } from 'components/Layout';
+import Account from 'pages/Account';
 import Login from 'pages/Account/Login';
+import Register from 'pages/Account/Register';
+import { useEffect, useState } from 'react';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -29,12 +24,13 @@ export function App() {
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
       <Routes>
-        <DefaultLayout>
-          <Route path="">
-            <Route path="/" element={<HomePage />}></Route>
-          </Route>
-        </DefaultLayout>
-        <Route path="/login" element={<Login />} />
+        <Route path="" element={<DefaultLayout />}>
+          <Route path="/" element={<HomePage />}></Route>
+        </Route>
+        <Route path="" element={<Account />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+        </Route>
       </Routes>
       <GlobalStyle />
     </BrowserRouter>

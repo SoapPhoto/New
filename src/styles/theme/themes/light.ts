@@ -2,10 +2,11 @@ import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
   primary: 'rgba(26, 92, 255, 1)',
-  error: 'rgb(255 77 79)',
+  error: 'rgb(255,77,79)',
   text: 'rgba(58,52,51,1)',
+  background: '#fff',
+  foreground: 'rgb(44, 62, 80)',
   textSecondary: 'rgba(58,52,51,0.7)',
-  background: 'rgba(255,255,255,1)',
   backgroundVariant: 'rgba(251,249,249,1)',
   border: 'rgba(58,52,51,0.12)',
   borderLight: 'rgba(58,52,51,0.05)',

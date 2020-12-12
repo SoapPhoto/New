@@ -138,25 +138,23 @@ export const animate = css`
     inStyle: `
       0% {
         opacity: 0;
-        transform: scale3d(0.98, 0.98, 0.98);
+        transform: translateY(-100%);
       }
       100% {
         opacity: 1;
-        transform: scale3d(1, 1, 1);
+        transform: translateY(0%);
       }
     `,
     outStyle: `
       0% {
         opacity: 1;
-        transform: scale3d(1, 1, 1);
       }
       100% {
         opacity: 0;
-        transform: scale3d(0.98, 0.98, 0.98);
       }
     `,
     inTiming: 'cubic-bezier(0.08, 0.82, 0.17, 1)',
     outTiming: 'cubic-bezier(0.6, 0.04, 0.98, 0.34)',
-    duration: 0.32,
+    duration: 0.3,
   })}
 `;

@@ -1,24 +1,15 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, DefaultTheme } from 'styled-components';
 import { animate } from './animate';
 import normalize from './normalize';
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<DefaultTheme>`
   html,
   body {
     height: 100%;
     width: 100%;
     line-height: 1.5;
-    color: rgb(44, 62, 80);
+    color: ${p => p.theme.foreground};
   }
-
-  body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-
-  body.fontLoaded {
-    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  }
-  
   p,
   label {
     line-height: 1.5em;
@@ -27,6 +18,10 @@ export const GlobalStyle = createGlobalStyle`
   input, select, button {
     font-family: inherit;
     font-size: inherit;
+  }
+  a {
+    text-decoration: none;
+    color: ${p => p.theme.primary}
   }
   ${normalize}
   ${animate}

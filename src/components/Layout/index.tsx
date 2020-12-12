@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Header } from 'components/Header';
+import { Outlet } from 'react-router-dom';
 
 interface IProps {}
 
@@ -15,7 +16,7 @@ export const DefaultLayout: React.FC<IProps> = ({ children }) => {
   return (
     <Wrapper>
       <Header />
-      {children}
+      <Outlet />
     </Wrapper>
   );
 };

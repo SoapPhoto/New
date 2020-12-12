@@ -24,13 +24,12 @@ const Label = styled.span`
 `;
 
 const ErrorBox = styled.div`
-  height: 24px;
-  line-height: 24px;
+  margin-top: 2px;
+  height: 18px;
+  line-height: 18px;
   overflow: hidden;
 `;
 const Error = styled.div`
-  height: 24px;
-  line-height: 24px;
   font-size: 12px;
   color: ${p => p.theme.error};
 `;

@@ -1,54 +1,41 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import { motion } from 'framer-motion';
 
 import FieldInput from 'components/Formik/FieldInput';
-import { LoginSchema } from './dto';
-import { motion } from 'framer-motion';
-import { GitHubLogo } from 'components/Icons';
-import { Weibo } from 'components/Icons/Weibo';
-import {
-  Button,
-  Des,
-  GithubOauthBtn,
-  OauthBox,
-  Tips,
-  Title,
-  WeiboOauthBtn,
-} from '../styles';
+import { Button, Des, Title } from '../styles';
 
 interface IValues {
   username: string;
   password: string;
 }
-
-const Login = () => {
+const Register = () => {
   const { t } = useTranslation();
-  const transition = { duration: 0.5 };
+  const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
   const variants = {
-    initial: { transform: 'translateX(-5%)', opacity: 0 },
+    initial: { transform: 'translateX(5%)', opacity: 0 },
     enter: { transform: 'translateX(0%)', opacity: 1, transition },
     exit: {
-      transform: 'translateX(5%)',
+      transform: 'translateX(-5%)',
       opacity: 0,
       transition: { ...transition },
     },
   };
   return (
     <motion.div
+      exit="exit"
       initial="initial"
       animate="enter"
-      exit="exit"
       variants={variants}
     >
-      <Title>{t('accountFeature.loginTitle')}</Title>
+      <Title>注册</Title>
       <Des>
-        新用户？<Link to="/register">创建账户</Link>
+        已有账户？<Link to="/login">登录</Link>
       </Des>
       <Formik<IValues>
         initialValues={{ username: '', password: '' }}
-        validationSchema={LoginSchema(t)}
         onSubmit={(values, actions) => {
           console.log({ values, actions });
         }}
@@ -60,20 +47,16 @@ const Login = () => {
             name="password"
             style={{ marginTop: '6px' }}
           />
-          <Button type="submit">登录</Button>
+          <FieldInput
+            label={t('label.password')}
+            name="password"
+            style={{ marginTop: '6px' }}
+          />
+          <Button type="submit">注册</Button>
         </Form>
       </Formik>
-      <Tips>使用其他账号登录</Tips>
-      <OauthBox>
-        <GithubOauthBtn>
-          <GitHubLogo color="#fff" />
-        </GithubOauthBtn>
-        <WeiboOauthBtn>
-          <Weibo color="#fff" />
-        </WeiboOauthBtn>
-      </OauthBox>
     </motion.div>
   );
 };
 
-export default Login;
+export default Register;

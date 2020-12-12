@@ -1,0 +1,22 @@
+{
+  "accountFeature": {
+    "loginTitle": "登录"
+  },
+  "label": {
+    "collection": "收藏夹",
+    "picture": "图片",
+    "username": "用户名",
+    "password": "密码",
+    "picture_title": "标题",
+    "picture_bio": "说明",
+    "email": "邮箱",
+    "url": "网址",
+    "choice": "精选"
+  },
+  "validation": {
+    "yup_required": "请输入{{name}}！",
+    "yup_format": "{{name}}格式不正确!",
+    "yup_longer": "{{name}}必须大于{{length}}位！",
+    "yup_greater": "{{name}}不得大于{{length}}位！"
+  }
+}

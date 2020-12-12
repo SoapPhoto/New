@@ -1,0 +1,21 @@
+{
+  "accountFeature": {
+    "loginTitle": "Login"
+  },
+  "label": {
+    "collection": "Collection",
+    "picture": "Picture",
+    "username": "Username",
+    "password": "Password",
+    "picture_title": "Title",
+    "picture_bio": "Bio",
+    "email": "Email",
+    "url": "URL",
+    "choice": "Choice"
+  },
+  "validation": {
+    "yup_longer": "{0} must be greater than {1} digits!",
+    "yup_greater": "{0} must not be greater than {1}!",
+    "yup_required": "Please enter {0}!"
+  }
+}

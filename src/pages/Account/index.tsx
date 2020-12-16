@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { AnimatePresence } from 'framer-motion';
 
 import { Outlet } from 'react-router-dom';
 
@@ -36,9 +35,7 @@ const Account = () => {
       <BG />
       <RightBox>
         <Content>
-          <AnimatePresence exitBeforeEnter>
-            <Outlet />
-          </AnimatePresence>
+          <Outlet />
         </Content>
       </RightBox>
     </Wrapper>

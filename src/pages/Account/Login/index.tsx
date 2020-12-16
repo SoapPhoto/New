@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import { useSpring, animated, config } from 'react-spring';
 
 import FieldInput from 'components/Formik/FieldInput';
 import { LoginSchema } from './dto';
-import { motion } from 'framer-motion';
 import { GitHubLogo } from 'components/Icons';
 import { Weibo } from 'components/Icons/Weibo';
 import {
@@ -25,23 +25,22 @@ interface IValues {
 
 const Login = () => {
   const { t } = useTranslation();
-  const transition = { duration: 0.5 };
-  const variants = {
-    initial: { transform: 'translateX(-5%)', opacity: 0 },
-    enter: { transform: 'translateX(0%)', opacity: 1, transition },
-    exit: {
-      transform: 'translateX(5%)',
-      opacity: 0,
-      transition: { ...transition },
-    },
-  };
+  const timer = useRef<number>();
+  const [props, set] = useSpring(() => ({
+    opacity: 0,
+    transform: 'translateX(-5%)',
+  }));
+  useEffect(() => {
+    timer.current = setTimeout(() => {
+      set({
+        opacity: 1,
+        transform: 'translateX(0%)',
+      });
+    }, 100);
+    return () => clearTimeout(timer.current);
+  }, []);
   return (
-    <motion.div
-      initial="initial"
-      animate="enter"
-      exit="exit"
-      variants={variants}
-    >
+    <animated.div style={props}>
       <Title>{t('accountFeature.loginTitle')}</Title>
       <Des>
         新用户？<Link to="/register">创建账户</Link>
@@ -72,7 +71,7 @@ const Login = () => {
           <Weibo color="#fff" />
         </WeiboOauthBtn>
       </OauthBox>
-    </motion.div>
+    </animated.div>
   );
 };
 

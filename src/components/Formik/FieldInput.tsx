@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Field, FieldProps } from 'formik';
 import Animate from 'rc-animate';
+import { config, Transition } from 'react-spring/renderprops';
 
 import Input, { IInputProps } from '../Input';
 import styled from 'styled-components';
@@ -60,9 +61,15 @@ const Component: React.FC<FieldProps & IProps> = memo(
         )}
         <Input {...restFieldProps} {...field} />
         <ErrorBox>
-          <Animate transitionName="labelError">
-            {error && <Error>{error}</Error>}
-          </Animate>
+          <Transition
+            config={{ ...config.stiff, friction: 18, mass: 0.8 }}
+            items={!!error}
+            from={{ opacity: 0, transform: 'translateY(-100%)' }}
+            enter={{ opacity: 1, transform: 'translateY(0%)' }}
+            leave={{ opacity: 0 }}
+          >
+            {show => show && (props => <Error style={props}>{error}</Error>)}
+          </Transition>
         </ErrorBox>
       </LabelBox>
     );

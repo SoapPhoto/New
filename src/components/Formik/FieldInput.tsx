@@ -31,7 +31,7 @@ const ErrorBox = styled.div`
 `;
 const Error = styled.div`
   font-size: 12px;
-  color: ${p => p.theme.error};
+  color: ${p => p.theme.colors.error};
 `;
 
 const Component: React.FC<FieldProps & IProps> = memo(

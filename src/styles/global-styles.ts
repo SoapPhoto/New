@@ -1,8 +1,8 @@
-import { createGlobalStyle, DefaultTheme } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import { animate } from './animate';
 import normalize from './normalize';
 
-export const GlobalStyle = createGlobalStyle<DefaultTheme>`
+export const GlobalStyle = createGlobalStyle`
   html,
   body {
     height: 100%;
@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle<DefaultTheme>`
   }
   a {
     text-decoration: none;
-    color: ${p => p.theme.primary}
+    color: ${p => p.theme.colors.primary}
   }
   ${normalize}
   ${animate}

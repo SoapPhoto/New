@@ -25,8 +25,8 @@ export const Button = styled.button`
   height: 36px;
   min-width: 64px;
   padding: 0 16px;
-  box-shadow: 0 3px 11px -2px ${p => rgba(p.theme.primary, 0.6)};
-  background-color: ${p => p.theme.primary};
+  box-shadow: 0 3px 11px -2px ${p => rgba(p.theme.colors.primary, 0.6)};
+  background-color: ${p => p.theme.colors.primary};
   color: #fff;
 `;
 

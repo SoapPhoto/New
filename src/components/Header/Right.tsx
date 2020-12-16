@@ -2,13 +2,14 @@ import { A } from 'components/A';
 import React, { memo } from 'react';
 import { Search, UploadCloud } from 'react-feather';
 import styled from 'styled-components';
+import { space } from 'utils/theme';
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin-right: ${p => p.theme.space8x}px;
+  margin-right: ${space(8)}px;
 `;
 export const Right = memo(() => {
   return (

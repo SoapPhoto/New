@@ -5,6 +5,7 @@ import { rem } from 'polished';
 import { Icon } from './Icon';
 import { A } from 'components/A';
 import { Right } from './Right';
+import { space } from 'utils/theme';
 
 const Wrapper = styled.header`
   display: flex;
@@ -18,7 +19,7 @@ export const Logo = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  margin-left: ${p => p.theme.space8x}px;
+  margin-left: ${space(8)}px;
 `;
 
 export const Header = memo(() => {

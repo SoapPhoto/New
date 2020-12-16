@@ -4,7 +4,7 @@ import { ThemeKeyType } from 'styles/theme/types';
 import { isSystemDark } from 'styles/theme/utils';
 
 class Theme {
-  public selected: ThemeKeyType = 'dark';
+  public selected: ThemeKeyType = 'light';
 
   constructor() {
     makeObservable(this, {
@@ -15,7 +15,7 @@ class Theme {
 
   get theme() {
     if (this.selected === 'system') {
-      return isSystemDark ? themes.dark : themes.dark;
+      return isSystemDark ? themes.dark : themes.light;
     }
     return themes[this.selected];
   }

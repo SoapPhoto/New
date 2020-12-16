@@ -1,24 +1,16 @@
 import { DefaultTheme } from 'styled-components';
 
 const theme: DefaultTheme = {
-  primary: 'rgba(26, 92, 255, 1)',
-  error: 'rgb(255,77,79)',
-  text: 'rgba(58,52,51,1)',
+  space: 4,
   background: '#fff',
   foreground: 'rgb(44, 62, 80)',
-  textSecondary: 'rgba(58,52,51,0.7)',
-  backgroundVariant: 'rgba(251,249,249,1)',
-  border: 'rgba(58,52,51,0.12)',
-  borderLight: 'rgba(58,52,51,0.05)',
-  space: 4,
-  space2x: 8,
-  space4x: 16,
-  space8x: 32,
-  space16x: 64,
-  space24x: 96,
-  space32x: 128,
-  space48x: 192,
-  space64x: 256,
+  colors: {
+    error: 'rgb(255,77,79)',
+    text: 'rgba(58,52,51,1)',
+    primary: 'rgba(26, 92, 255, 1)',
+  },
+  dashboard: {},
+  widget: {},
 };
 
 export default theme;

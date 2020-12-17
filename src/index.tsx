@@ -5,31 +5,29 @@
  * code.
  */
 
-// import 'react-app-polyfill/ie11';
-// import 'react-app-polyfill/stable';
-
-import 'stores';
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 import FontFaceObserver from 'fontfaceobserver';
-import * as serviceWorker from 'serviceWorker';
+import * as serviceWorker from '@app/serviceWorker';
 import { ApolloProvider } from '@apollo/client';
 
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
 
-import { App } from 'app';
+import { App } from '@app/app';
 
 import { HelmetProvider } from 'react-helmet-async';
 
-import { ThemeProvider } from 'styles/theme/ThemeProvider';
+import { ThemeProvider } from '@app/styles/theme/ThemeProvider';
 
 // Initialize languages
 import './locales/i18n';
-import { stores } from 'stores';
-import { initClient } from 'apollo/client';
+import { stores } from '@app/stores';
+import { client } from '@app/apollo/client';
 
 // Observe loading of Inter (to remove 'Inter', remove the <link> tag in
 // the index.html file and this observer)
@@ -39,8 +37,6 @@ const openSansObserver = new FontFaceObserver('Inter', {});
 openSansObserver.load().then(() => {
   document.body.classList.add('fontLoaded');
 });
-
-const client = initClient();
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 

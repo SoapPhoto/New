@@ -16,7 +16,12 @@ const StyleInput = styled.input`
   outline: 0;
   transition: border 0.2s, color 0.2s ease-out, box-shadow 0.2s ease;
   font-size: 14px;
-  background-color: #f2f5fa;
+  transition: all 0.25s ease;
+  background-color: ${p => p.theme.widget.input.bg};
+  color: ${p => p.theme.colors.text};
+  &:focus {
+    background-color: ${p => p.theme.widget.input.hoverBg};
+  }
 `;
 
 const Input: React.FC<IInputProps> = ({ ...restProps }) => {

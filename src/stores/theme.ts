@@ -1,10 +1,10 @@
 import { computed, makeObservable, observable } from 'mobx';
-import { themes } from 'styles/theme/themes';
-import { ThemeKeyType } from 'styles/theme/types';
-import { isSystemDark } from 'styles/theme/utils';
+import { themes } from '@app/styles/theme/themes';
+import { ThemeKeyType } from '@app/styles/theme/types';
+import { getThemeFromStorage, isSystemDark } from '@app/styles/theme/utils';
 
 class Theme {
-  public selected: ThemeKeyType = 'light';
+  public selected: ThemeKeyType = getThemeFromStorage() || 'system';
 
   constructor() {
     makeObservable(this, {

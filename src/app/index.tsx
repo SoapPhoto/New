@@ -4,12 +4,12 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 
 import { GlobalStyle } from '../styles/global-styles';
 
-import HomePage from 'pages/Home/Loadable';
+import HomePage from '@app/pages/Home/Loadable';
 import { useTranslation } from 'react-i18next';
-import { DefaultLayout } from 'components/Layout';
-import Account from 'pages/Account';
-import Login from 'pages/Account/Login';
-import Register from 'pages/Account/Register';
+import { DefaultLayout } from '@app/components/Layout';
+import Account from '@app/pages/Account';
+import Login from '@app/pages/Account/Login';
+import Register from '@app/pages/Account/Register';
 
 export function App() {
   const { i18n } = useTranslation();

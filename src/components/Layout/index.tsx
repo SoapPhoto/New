@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { Header } from 'components/Header';
+import { Header } from '@app/components/Header';
 import { Outlet } from 'react-router-dom';
 
 interface IProps {}

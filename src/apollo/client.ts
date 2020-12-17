@@ -1,22 +1,26 @@
 import { ApolloClient, InMemoryCache, ApolloLink } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { getMainDefinition } from 'apollo-utilities';
 import { isString } from 'lodash';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 
 export function initClient() {
   const batchLink = new BatchHttpLink({
-    uri: process.env.REACT_APP_API_URL,
+    uri: process.env.REACT_APP_API_URL + 'graphql',
     credentials: 'include',
   });
   const authLink = new ApolloLink((operation, next) => {
+    let Authorization = '';
     const token = localStorage.getItem('token');
-    console.log(token);
+    if (token && JSON.parse(token)) {
+      const { accessToken } = JSON.parse(token);
+      Authorization = `Bearer ${accessToken || ''}`;
+    }
     operation.setContext(context => ({
       ...context,
       headers: {
+        accept: 'application/json',
         ...context.headers,
-        Authorization: token,
+        Authorization,
       },
     }));
 
@@ -50,9 +54,11 @@ export function initClient() {
   //   );
   // }, httpLink);
   const client = new ApolloClient({
-    connectToDevTools: true,
+    connectToDevTools: false,
     cache: new InMemoryCache(),
     link: httpLink,
   });
   return client;
 }
+
+export const client = initClient();

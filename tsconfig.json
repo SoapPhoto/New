@@ -1,4 +1,5 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "noImplicitAny": false,
     "target": "es5",
@@ -21,7 +22,7 @@
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
     "jsx": "react-jsx",
-    "baseUrl": "./src"
+    "baseUrl": "./"
   },
   "include": [
     "src",

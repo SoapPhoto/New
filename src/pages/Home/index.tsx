@@ -1,5 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
-import { Pictures } from 'graphql/query';
+import { Pictures } from '@app/graphql/query';
 
 import React from 'react';
 

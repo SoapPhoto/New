@@ -1,1 +1,1 @@
-export * from 'graphql/query/query.graphql';
+export * from '@app/graphql/query/query.graphql';

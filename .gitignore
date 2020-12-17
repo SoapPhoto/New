@@ -21,3 +21,5 @@ generated-cra-app
 .cra-template-rb
 template
 .env
+lib/
+.eslintcache

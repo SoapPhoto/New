@@ -1,3 +1,4 @@
+import { themes } from './themes';
 import { ThemeKeyType } from './types';
 
 /* istanbul ignore next line */
@@ -11,7 +12,9 @@ export function saveTheme(theme: ThemeKeyType) {
 
 /* istanbul ignore next line */
 export function getThemeFromStorage(): ThemeKeyType | null {
-  return window.localStorage
-    ? (localStorage.getItem('selectedTheme') as ThemeKeyType) || null
-    : null;
+  const keys = Object.keys(themes);
+  if (keys.find(v => v === localStorage.getItem('selectedTheme'))) {
+    return localStorage.getItem('selectedTheme') as ThemeKeyType;
+  }
+  return null;
 }

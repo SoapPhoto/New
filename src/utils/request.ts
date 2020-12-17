@@ -1,54 +1,64 @@
-export class ResponseError extends Error {
-  public response: Response;
+import axios, { AxiosResponse } from 'axios';
 
-  constructor(response: Response) {
-    super(response.statusText);
-    this.response = response;
-  }
-}
-/**
- * Parses the JSON returned by a network request
- *
- * @param  {object} response A response from a network request
- *
- * @return {object}          The parsed JSON from the request
- */
-function parseJSON(response: Response) {
-  if (response.status === 204 || response.status === 205) {
-    return null;
-  }
-  return response.json();
-}
+const instance = axios.create({
+  withCredentials: true,
+  baseURL: process.env.REACT_APP_API_URL,
+  validateStatus(status: number) {
+    return status < 500 && status !== 404;
+  },
+});
 
-/**
- * Checks if a network request came back fine, and throws an error if not
- *
- * @param  {object} response   A response from a network request
- *
- * @return {object|undefined} Returns either the response, or throws an error
- */
-function checkStatus(response: Response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-  const error = new ResponseError(response);
-  error.response = response;
-  throw error;
-}
+// 请求前预先判断token是否失效
+// instance.interceptors.request.use(async (config) => {
+//   if (server) {
+//     return config;
+//   }
+//   const { refreshToken, isAccessTokenOk } = store.accountStore;
+//   if (!isAccessTokenOk()) {
+//     await refreshToken();
+//     return config;
+//   }
+//   return config;
+// });
 
-/**
- * Requests a URL, returning a promise
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- *
- * @return {object}           The response data
- */
-export async function request(
-  url: string,
-  options?: RequestInit,
-): Promise<{} | { err: ResponseError }> {
-  const fetchResponse = await fetch(url, options);
-  const response = checkStatus(fetchResponse);
-  return parseJSON(response);
-}
+instance.interceptors.response.use(
+  async (response: AxiosResponse<any>) => {
+    // const { refreshToken, isRefreshTokenOk } = store.accountStore;
+    // const { config } = response;
+    if (response.status >= 400) {
+      // if (!server) {
+      //   // const message = t(response.data.message);
+      //   switch (response.status) {
+      //     case 401:
+      //       if (isRefreshTokenOk && response.data.message === 'Unauthorized') {
+      //         if (!isRefreshing) {
+      //           isRefreshing = true;
+      //           try {
+      //             await refreshToken();
+      //             Promise.all(requests.map(r => r()));
+      //             requests = [];
+      //             return instance(config);
+      //           } catch (err) {
+      //             console.error('refreshToken error =>', err);
+      //           }
+      //         } else {
+      //           requests.push(() => instance(config));
+      //         }
+      //       }
+      //       // if (message) Toast.error(message);
+      //       break;
+      //     case 400:
+      //       // if (message) Toast.error(message);
+      //       break;
+      //     default:
+      //       break;
+      //   }
+      // }
+      return Promise.reject(response.data);
+    }
+    return Promise.resolve(response);
+  },
+  (error: any) => Promise.reject(error),
+);
+
+export const request = instance;

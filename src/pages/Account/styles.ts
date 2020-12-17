@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 
-import { btnMixin } from 'styles/mixins';
+import { btnMixin } from '@app/styles/mixins';
 
 export const Title = styled(motion.h2)`
   text-align: center;
@@ -25,9 +25,13 @@ export const Button = styled.button`
   height: 36px;
   min-width: 64px;
   padding: 0 16px;
-  box-shadow: 0 3px 11px -2px ${p => rgba(p.theme.colors.primary, 0.6)};
+  box-shadow: 0 10px 20px -10px ${p => rgba(p.theme.colors.primary, 0.5)};
   background-color: ${p => p.theme.colors.primary};
   color: #fff;
+  &:hover {
+    box-shadow: 0 15px 20px -10px ${p => rgba(p.theme.colors.primary, 0.6)};
+    transform: translateY(-2px);
+  }
 `;
 
 export const Tips = styled.div`

@@ -1,6 +1,9 @@
 {
   "accountFeature": {
-    "loginTitle": "登录"
+    "loginTitle": "登录",
+    "loginMessage": "新用户？<1>创建账户</1>",
+    "registerTitle": "注册",
+    "registerMessage": "已有账户？<1>登录</1>"
   },
   "label": {
     "collection": "收藏夹",

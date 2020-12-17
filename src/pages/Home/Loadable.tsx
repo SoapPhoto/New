@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { lazyLoad } from 'utils/loadable';
-import { LoadingIndicator } from 'components/LoadingIndicator';
 import styled from 'styled-components/macro';
+
+import { lazyLoad } from '@app/utils/loadable';
+import { LoadingIndicator } from '@app/components/LoadingIndicator';
 
 const LoadingWrapper = styled.div`
   width: 100%;

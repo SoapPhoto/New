@@ -25,6 +25,7 @@
     "apollo-link-batch-http": "^1.2.14",
     "apollo-link-context": "^1.0.20",
     "apollo-link-error": "^1.1.13",
+    "axios": "^0.21.0",
     "chalk": "4.1.0",
     "cross-env": "7.0.3",
     "eslint-config-prettier": "7.0.0",
@@ -93,7 +94,9 @@
     "@types/webpack-env": "1.15.2",
     "@types/yup": "^0.29.10",
     "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.1.8"
+    "hard-source-webpack-plugin": "^0.13.1",
+    "react-app-rewired": "^2.1.8",
+    "terser-webpack-plugin": "^5.0.3"
   },
   "eslintConfig": {
     "extends": "react-app"

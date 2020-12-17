@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
-import FieldInput from 'components/Formik/FieldInput';
+import FieldInput from '@app/components/Formik/FieldInput';
 import { Button, Des, Title } from '../styles';
 import { useSpring, animated } from 'react-spring';
 
@@ -29,9 +29,11 @@ const Register = () => {
   }, []);
   return (
     <animated.div style={props}>
-      <Title>注册</Title>
+      <Title>{t('accountFeature.registerTitle')}</Title>
       <Des>
-        已有账户？<Link to="/login">登录</Link>
+        <Trans i18nKey="accountFeature.registerMessage">
+          已有账户？<Link to="/login">登录</Link>
+        </Trans>
       </Des>
       <Formik<IValues>
         initialValues={{ username: '', password: '' }}
@@ -40,14 +42,14 @@ const Register = () => {
         }}
       >
         <Form>
-          <FieldInput label={t('label.username')} name="username" />
+          <FieldInput label={t('label.username') as string} name="username" />
           <FieldInput
-            label={t('label.password')}
+            label={t('label.password') as string}
             name="password"
             style={{ marginTop: '6px' }}
           />
           <FieldInput
-            label={t('label.password')}
+            label={t('label.password') as string}
             name="password"
             style={{ marginTop: '6px' }}
           />

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useAccount } from '@app/stores/hooks';
+import { observer } from 'mobx-react';
 
 const Wrapper = styled.section`
   display: flex;
@@ -15,7 +17,7 @@ const BG = styled.div`
   background-size: cover;
 `;
 const RightBox = styled.div`
-  background-color: ${p => p.theme.background};
+  background-color: ${p => p.theme.colors.layout};
   max-width: 680px;
   width: 100%;
   display: flex;
@@ -29,7 +31,22 @@ const Content = styled.section`
   max-width: 380px;
 `;
 
-const Account = () => {
+const Account = observer(() => {
+  let navigate = useNavigate();
+  const { getUserInfo, isLogin } = useAccount();
+  useLayoutEffect(() => {
+    if (localStorage.getItem('token')) {
+      getUserInfo();
+    }
+  }, []);
+  useEffect(() => {
+    if (isLogin) {
+      navigate('/', {
+        replace: true,
+      });
+      console.log(1123123);
+    }
+  }, [isLogin]);
   return (
     <Wrapper>
       <BG />
@@ -40,6 +57,6 @@ const Account = () => {
       </RightBox>
     </Wrapper>
   );
-};
+});
 
 export default Account;

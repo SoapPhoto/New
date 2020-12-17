@@ -10,8 +10,18 @@ declare module 'styled-components' {
       text: string;
       error: string;
       primary: string;
+      gray1: string;
+      gray2: string;
+      gray3: string;
+      gray4: string;
+      layout: string;
     };
     dashboard: {};
-    widget: {};
+    widget: {
+      input: {
+        bg: string;
+        hoverBg: string;
+      };
+    };
   }
 }

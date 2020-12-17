@@ -1,6 +1,6 @@
 declare module '*/fragments.graphql';
 
-declare module 'graphql/query/query.graphql' {
+declare module '@app/graphql/query/query.graphql' {
   import { DocumentNode } from 'graphql';
 
   export const Picture: DocumentNode;

@@ -1,6 +1,9 @@
 {
   "accountFeature": {
-    "loginTitle": "Login"
+    "loginTitle": "Login",
+    "loginMessage": "New user? <1>Create an account</1>",
+    "registerTitle": "Register",
+    "registerMessage": "Already have an account? <1>Login</1>"
   },
   "label": {
     "collection": "Collection",
@@ -16,6 +19,7 @@
   "validation": {
     "yup_longer": "{0} must be greater than {1} digits!",
     "yup_greater": "{0} must not be greater than {1}!",
-    "yup_required": "Please enter {0}!"
+    "yup_required": "Please enter {0}!",
+    "yup_format": "{{name}} format is incorrect!"
   }
 }

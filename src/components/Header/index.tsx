@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { rem } from 'polished';
 
 import { Icon } from './Icon';
-import { A } from 'components/A';
+import { A } from '@app/components/A';
 import { Right } from './Right';
-import { space } from 'utils/theme';
+import { space } from '@app/utils/theme';
 
 const Wrapper = styled.header`
   display: flex;

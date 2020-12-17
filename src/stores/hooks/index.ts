@@ -1,6 +1,6 @@
 import { MobXProviderContext } from 'mobx-react';
 import { useContext } from 'react';
-import { stores } from 'stores';
+import { stores } from '@app/stores';
 // import { MobXProviderContext } from 'mobx-react';
 
 export function useStores() {
@@ -10,4 +10,9 @@ export function useStores() {
 export function useThemeStore() {
   const { theme } = useStores();
   return theme;
+}
+
+export function useAccount() {
+  const { account } = useStores();
+  return account;
 }

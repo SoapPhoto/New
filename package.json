@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "test:generators": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/testing/test-generators.ts",
@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.4",
+    "@craco/craco": "^6.0.0",
     "apollo-link-batch-http": "^1.2.14",
     "apollo-link-context": "^1.0.20",
     "apollo-link-error": "^1.1.13",
@@ -90,7 +91,9 @@
     "@types/testing-library__jest-dom": "5.9.5",
     "@types/webpack": "4.41.25",
     "@types/webpack-env": "1.15.2",
-    "@types/yup": "^0.29.10"
+    "@types/yup": "^0.29.10",
+    "customize-cra": "^1.0.0",
+    "react-app-rewired": "^2.1.8"
   },
   "eslintConfig": {
     "extends": "react-app"

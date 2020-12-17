@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 
 import FieldInput from 'components/Formik/FieldInput';
 import { Button, Des, Title } from '../styles';
-import { config, useSpring, animated } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 
 interface IValues {
   username: string;

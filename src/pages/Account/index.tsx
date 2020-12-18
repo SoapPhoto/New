@@ -38,14 +38,15 @@ const Account = observer(() => {
     if (localStorage.getItem('token')) {
       getUserInfo();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (isLogin) {
       navigate('/', {
         replace: true,
       });
-      console.log(1123123);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
   return (
     <Wrapper>

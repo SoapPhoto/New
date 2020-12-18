@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
@@ -9,15 +9,15 @@ import { LoginSchema } from './dto';
 import { GitHubLogo } from '@app/components/Icons';
 import { Weibo } from '@app/components/Icons/Weibo';
 import {
-  Button,
   Des,
   GithubOauthBtn,
   OauthBox,
   Tips,
   Title,
   WeiboOauthBtn,
-} from '../styles';
+} from '../elements';
 import { useAccount } from '@app/stores/hooks';
+import { Button } from '@app/components';
 
 interface IValues {
   username: string;
@@ -25,6 +25,7 @@ interface IValues {
 }
 
 const Login = () => {
+  const [confirmLoading, setConfirmLoading] = useState(false);
   const { login } = useAccount();
   const { t } = useTranslation();
   const timer = useRef<number>();
@@ -40,7 +41,19 @@ const Login = () => {
       });
     }, 100);
     return () => clearTimeout(timer.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const onSubmit = useCallback(
+    async (values: IValues) => {
+      setConfirmLoading(true);
+      try {
+        await login(values.username, values.password);
+      } catch {
+        setConfirmLoading(false);
+      }
+    },
+    [login],
+  );
   return (
     <animated.div style={props}>
       <Title>{t('accountFeature.loginTitle')}</Title>
@@ -52,18 +65,19 @@ const Login = () => {
       <Formik<IValues>
         initialValues={{ username: '', password: '' }}
         validationSchema={LoginSchema(t)}
-        onSubmit={(values, actions) => {
-          login(values.username, values.password);
-        }}
+        onSubmit={onSubmit}
       >
         <Form>
           <FieldInput label={t('label.username') as string} name="username" />
           <FieldInput
             label={t('label.password') as string}
             name="password"
+            type="password"
             style={{ marginTop: '6px' }}
           />
-          <Button type="submit">登录</Button>
+          <Button loading={confirmLoading} type="submit">
+            登录
+          </Button>
         </Form>
       </Formik>
       <Tips>使用其他账号登录</Tips>

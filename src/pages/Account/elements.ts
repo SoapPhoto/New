@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { rgba } from 'polished';
 import styled from 'styled-components';
 
 import { btnMixin } from '@app/styles/mixins';
@@ -16,22 +15,6 @@ export const Des = styled.div`
   color: rgb(138, 146, 169);
   text-align: center;
   margin-bottom: 24px;
-`;
-
-export const Button = styled.button`
-  ${btnMixin}
-  margin-top: 24px;
-  width: 100%;
-  height: 36px;
-  min-width: 64px;
-  padding: 0 16px;
-  box-shadow: 0 10px 20px -10px ${p => rgba(p.theme.colors.primary, 0.5)};
-  background-color: ${p => p.theme.colors.primary};
-  color: #fff;
-  &:hover {
-    box-shadow: 0 15px 20px -10px ${p => rgba(p.theme.colors.primary, 0.6)};
-    transform: translateY(-2px);
-  }
 `;
 
 export const Tips = styled.div`

@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { Field, FieldProps } from 'formik';
-import Animate from 'rc-animate';
 import { config, Transition } from 'react-spring/renderprops';
 
 import Input, { IInputProps } from '../Input';

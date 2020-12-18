@@ -20,5 +20,9 @@
     "src/locales",
     "internals/startingTemplate/src/locales"
   ],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "cSpell.words": [
+    "Weibo"
+  ],
+  "i18n-ally.sourceLanguage": "zh"
 }

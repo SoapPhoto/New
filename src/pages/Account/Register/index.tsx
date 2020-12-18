@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 
 import FieldInput from '@app/components/Formik/FieldInput';
-import { Button, Des, Title } from '../styles';
+import { Des, Title } from '../elements';
 import { useSpring, animated } from 'react-spring';
+import { Button } from '@app/components';
 
 interface IValues {
   username: string;
@@ -26,6 +27,7 @@ const Register = () => {
       });
     }, 100);
     return () => clearTimeout(timer.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <animated.div style={props}>

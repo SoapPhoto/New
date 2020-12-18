@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { rem } from 'polished';
 
 import { Icon } from './Icon';
-import { A } from '@app/components/A';
+import { A } from '@app/components';
 import { Right } from './Right';
 import { space } from '@app/utils/theme';
 
@@ -22,7 +22,7 @@ export const Logo = styled.div`
   margin-left: ${space(8)}px;
 `;
 
-export const Header = memo(() => {
+const Header = memo(() => {
   return (
     <Wrapper>
       <Logo>
@@ -34,3 +34,5 @@ export const Header = memo(() => {
     </Wrapper>
   );
 });
+
+export default Header;

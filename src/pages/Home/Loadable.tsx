@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components/macro';
 
 import { lazyLoad } from '@app/utils/loadable';
-import { LoadingIndicator } from '@app/components/LoadingIndicator';
+import { Loading } from '@app/components';
 
 const LoadingWrapper = styled.div`
   width: 100%;
@@ -18,7 +18,7 @@ const HomePage = lazyLoad(
   {
     fallback: (
       <LoadingWrapper>
-        <LoadingIndicator />
+        <Loading />
       </LoadingWrapper>
     ),
   },

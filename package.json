@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "storybook": "start-storybook -p 9009 -s public",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-scripts test",

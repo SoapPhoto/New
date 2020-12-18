@@ -1,7 +1,8 @@
-import { A } from '@app/components/A';
 import React, { memo } from 'react';
 import { Search, UploadCloud } from 'react-feather';
 import styled from 'styled-components';
+
+import { A } from '@app/components';
 import { space } from '@app/utils/theme';
 
 const Wrapper = styled.div`

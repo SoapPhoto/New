@@ -61,7 +61,7 @@ module.exports = {
         // 'node_modules/.cache/hard-source/[confighash]'
         cacheDirectory: path.join(
           __dirname,
-          './lib/.cache/hard-source/[confighash]',
+          './node_modules/.cache/hard-source/[confighash]',
         ),
         // configHash在启动webpack实例时转换webpack配置，
         // 并用于cacheDirectory为不同的webpack配置构建不同的缓存

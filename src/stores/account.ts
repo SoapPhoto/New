@@ -20,15 +20,24 @@ class AccountStore {
   }
 
   public setUserInfo = (userInfo?: UserEntity) => {
-    console.log(userInfo);
     this.userInfo = userInfo;
   };
 
   public getUserInfo = async () => {
-    const { data } = await client.query<{ whoami: UserEntity }>({
-      query: Whoami,
-    });
-    this.setUserInfo(data.whoami);
+    client
+      .watchQuery<{ whoami: UserEntity }>({
+        query: Whoami,
+      })
+      .subscribe({
+        next: data => {
+          if (data) {
+            this.setUserInfo(data.data.whoami);
+          } else {
+            // sink(observable.box(data));
+          }
+        },
+        error: console.error,
+      });
   };
 
   public login = async (username: string, password: string) => {

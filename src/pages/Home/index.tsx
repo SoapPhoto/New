@@ -1,19 +1,33 @@
-import { gql, useQuery } from '@apollo/client';
-import { Pictures } from '@app/graphql/query';
+import React, { useEffect } from 'react';
 
-import React from 'react';
+import Fragments from '@app/graphql/fragments';
+import { useApolloClient } from '@apollo/client';
+import { UserEntity } from '@common/types/modules/user/user.entity';
+import { useAccount } from '@app/stores/hooks';
+import { observer } from 'mobx-react';
 
-export const Home = () => {
-  // console.log()
-  const { loading, error, data } = useQuery(Pictures, {
-    variables: {
-      type: 'NEW',
-      query: {
-        page: 1,
-        pageSize: 30,
-      },
-    },
-  });
-  console.log(loading, error, data);
-  return <div>home</div>;
-};
+export const Home = observer(() => {
+  const { userInfo } = useAccount();
+  const client = useApolloClient();
+  useEffect(() => {
+    const data = client.readFragment<UserEntity>({
+      fragment: Fragments,
+      fragmentName: 'UserFragment',
+      id: `User:3`,
+    });
+    if (data) {
+      setTimeout(() => {
+        client.writeFragment<UserEntity>({
+          fragment: Fragments,
+          fragmentName: 'UserFragment',
+          id: `User:3`,
+          data: {
+            ...data,
+            username: 'sdfasdfasdf',
+          } as UserEntity,
+        });
+      }, 1000);
+    }
+  }, []);
+  return <div>{userInfo ? userInfo.username : ''}</div>;
+});

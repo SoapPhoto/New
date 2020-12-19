@@ -3,6 +3,32 @@ import styled from 'styled-components';
 
 import { btnMixin } from '@app/styles/mixins';
 
+export const Wrapper = styled.section`
+  display: flex;
+`;
+
+export const BG = styled.div`
+  flex: 1;
+  height: 100vh;
+  background-image: url('https://cdn-oss.soapphoto.com/photo/6c71ed8a-56de-4e35-90e0-cddd9f2fbd95@!regular_webp');
+  background-position: center center;
+  background-size: cover;
+`;
+export const RightBox = styled.div`
+  background-color: ${p => p.theme.colors.layout};
+  max-width: 680px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 120px;
+`;
+
+export const Content = styled.section`
+  width: 100%;
+  max-width: 380px;
+`;
+
 export const Title = styled(motion.h2)`
   text-align: center;
   font-size: 32px;
@@ -45,4 +71,12 @@ export const WeiboOauthBtn = styled.button`
   background: rgb(255, 218, 93);
   margin-left: 12px;
   border-radius: 100%;
+`;
+
+export const LoadingBox = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

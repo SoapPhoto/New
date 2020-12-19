@@ -1,5 +1,5 @@
 import { request } from '@app/utils/request';
-import { OauthType } from '@common/enum/router';
+import { OauthType } from '@app/common/enum/router';
 
 export const oauth = (params: URLSearchParams) =>
   request.post('oauth/token', params, {

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useLayoutEffect } from 'react';
+import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 
@@ -10,9 +12,15 @@ import { DefaultLayout } from '@app/components/Layout';
 import Account from '@app/pages/Account';
 import Login from '@app/pages/Account/Login';
 import Register from '@app/pages/Account/Register';
+import { useAccount } from '@app/stores/hooks';
 
-export function App() {
+export const App = observer(() => {
   const { i18n } = useTranslation();
+  const { initHandle } = useAccount();
+  useLayoutEffect(() => {
+    initHandle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <BrowserRouter>
       <Helmet
@@ -34,4 +42,4 @@ export function App() {
       <GlobalStyle />
     </BrowserRouter>
   );
-}
+});

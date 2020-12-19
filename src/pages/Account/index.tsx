@@ -1,61 +1,41 @@
-import React, { useEffect, useLayoutEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAccount } from '@app/stores/hooks';
 import { observer } from 'mobx-react';
-
-const Wrapper = styled.section`
-  display: flex;
-`;
-
-const BG = styled.div`
-  flex: 1;
-  height: 100vh;
-  background-image: url('https://cdn-oss.soapphoto.com/photo/6c71ed8a-56de-4e35-90e0-cddd9f2fbd95@!regular_webp');
-  background-position: center center;
-  background-size: cover;
-`;
-const RightBox = styled.div`
-  background-color: ${p => p.theme.colors.layout};
-  max-width: 680px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 120px;
-`;
-
-const Content = styled.section`
-  width: 100%;
-  max-width: 380px;
-`;
+import { Loading } from '@app/components';
+import { BG, Content, LoadingBox, RightBox, Wrapper } from './elements';
 
 const Account = observer(() => {
+  const [loading, setLoading] = useState(true);
+  const { isLogin, init } = useAccount();
   let navigate = useNavigate();
-  const { getUserInfo, isLogin } = useAccount();
-  useLayoutEffect(() => {
-    if (localStorage.getItem('token')) {
-      getUserInfo();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   useEffect(() => {
     if (isLogin) {
       navigate('/', {
         replace: true,
       });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogin]);
+    if (init && isLogin) {
+      setLoading(false);
+    }
+  }, [isLogin, init]);
   return (
     <Wrapper>
-      <BG />
-      <RightBox>
-        <Content>
-          <Outlet />
-        </Content>
-      </RightBox>
+      {loading ? (
+        <LoadingBox>
+          <Loading size={42} />
+        </LoadingBox>
+      ) : (
+        <>
+          <BG />
+          <RightBox>
+            <Content>
+              <Outlet />
+            </Content>
+          </RightBox>
+        </>
+      )}
     </Wrapper>
   );
 });

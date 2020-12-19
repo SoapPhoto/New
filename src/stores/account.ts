@@ -1,10 +1,17 @@
 import { client } from '@app/apollo/client';
 import { Whoami } from '@app/graphql/query';
 import { oauth } from '@app/services/oauth';
-import { UserEntity } from '@common/types/modules/user/user.entity';
-import { action, computed, makeObservable, observable } from 'mobx';
+import { UserEntity } from '@app/common/types/modules/user/user.entity';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 
 class AccountStore {
+  public init = false;
   public userInfo?: UserEntity;
 
   get isLogin() {
@@ -13,13 +20,30 @@ class AccountStore {
 
   constructor() {
     makeObservable(this, {
+      init: observable,
       isLogin: computed,
       userInfo: observable,
       setUserInfo: action,
     });
   }
 
+  /**
+   * 初始化用户数据
+   *
+   * @memberof AccountStore
+   */
+  public initHandle = () => {
+    if (localStorage.getItem('token')) {
+      this.getUserInfo();
+    } else {
+      runInAction(() => {
+        this.init = true;
+      });
+    }
+  };
+
   public setUserInfo = (userInfo?: UserEntity) => {
+    if (!this.init) this.init = true;
     this.userInfo = userInfo;
   };
 

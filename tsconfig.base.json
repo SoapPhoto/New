@@ -4,9 +4,6 @@
     "paths": {
       "@app/*": [
         "src/*"
-      ],
-      "@common/*": [
-        "common/*"
       ]
     }
   }

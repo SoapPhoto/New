@@ -2,7 +2,7 @@
 import { css } from 'styled-components';
 
 const font = `
-  "Noto Sans SC", PingFang SC, PingFang TC, Microsoft YaHei,
+  Rubik, "Noto Sans SC", PingFang SC, PingFang TC, Microsoft YaHei,
   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", "Helvetica", Hiragino Sans GB, STHeiti, "WenQuanYi Micro Hei", sans-serif
 `;
 

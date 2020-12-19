@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { rem } from 'polished';
 
@@ -6,6 +6,8 @@ import { Icon } from './Icon';
 import { A } from '@app/components';
 import { Right } from './Right';
 import { space } from '@app/utils/theme';
+import { observer } from 'mobx-react';
+import { useAccount } from '@app/stores/hooks';
 
 const Wrapper = styled.header`
   display: flex;
@@ -22,7 +24,7 @@ export const Logo = styled.div`
   margin-left: ${space(8)}px;
 `;
 
-const Header = memo(() => {
+const Header = () => {
   return (
     <Wrapper>
       <Logo>
@@ -33,6 +35,6 @@ const Header = memo(() => {
       <Right />
     </Wrapper>
   );
-});
+};
 
 export default Header;

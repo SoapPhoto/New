@@ -16,7 +16,7 @@ export const Home = observer(() => {
       type: PicturesType.NEW,
       query: {
         page: 1,
-        pageSize: 30,
+        pageSize: 20,
       },
     },
   });

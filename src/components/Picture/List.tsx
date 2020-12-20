@@ -1,28 +1,35 @@
-import { render } from 'react-dom';
-import React, { useState, useEffect, useMemo } from 'react';
-import { useTransition, animated } from 'react-spring';
-import data from './data';
-import './styles.css';
+import React, { useMemo } from 'react';
+
 import { useMeasure, useMedia } from '@app/utils/hooks';
-import { getPictureUrl } from '@app/utils/image';
+import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import PictureItem from './Item';
+import { ListWrapper } from './elements';
 
 function App({ list }) {
   const columns = useMedia(
-    ['(min-width: 1500px)', '(min-width: 1000px)', '(min-width: 600px)'],
-    [5, 4, 3],
+    [
+      '(min-width: 1024px)',
+      '(min-width: 768px)',
+      '(min-width: 425px)',
+      '(max-width: 425px)',
+    ],
+    [4, 3, 2, 1],
     2,
   );
   const [bind, { width }] = useMeasure();
   const [heights, gridItems] = useMemo(() => {
+    const padding = 20;
     let heights = new Array(columns).fill(0);
     let gridItems = list.map((child, i) => {
+      const colPadding = padding * (columns - 1);
       const column = heights.indexOf(Math.min(...heights));
-      const itemWidth = width / columns;
+      const itemWidth = (width - colPadding) / columns;
       const itemC = child.width / itemWidth;
       const itemHeight = child.height / itemC;
       const xy = [
-        itemWidth * column,
-        (heights[column] += itemHeight) - itemHeight,
+        (itemWidth + padding) * column,
+        (heights[column] +=
+          itemHeight + (heights[column] === 0 ? 0 : padding)) - itemHeight,
       ];
       return {
         ...child,
@@ -42,29 +49,21 @@ function App({ list }) {
   //   trail: 25,
   // });
   return (
-    <div {...bind} className="list" style={{ height: Math.max(...heights) }}>
+    <ListWrapper {...bind} style={{ height: Math.max(...heights) }}>
       {gridItems.map(({ xy, width, height, ...picture }) => {
         return (
-          <div
+          <PictureItem
             key={picture.id}
             style={{
               transform: `translate3d(${xy[0]}px,${xy[1]}px,0)`,
               width,
               height,
             }}
-          >
-            <div
-              style={{
-                width: '100%',
-                height: '100%',
-                backgroundSize: 'cover',
-                backgroundImage: `url(${getPictureUrl(picture.key, 'thumb')})`,
-              }}
-            />
-          </div>
+            picture={picture as PictureEntity}
+          />
         );
       })}
-    </div>
+    </ListWrapper>
   );
 }
 

@@ -16,7 +16,7 @@ const Account = observer(() => {
         replace: true,
       });
     }
-    if (init && isLogin) {
+    if (init && !isLogin) {
       setLoading(false);
     }
   }, [isLogin, init]);

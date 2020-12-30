@@ -28,6 +28,7 @@ const normalize = () => css`
   html,
   body {
     width: 100%;
+    background-color: ${p => p.theme.colors.layout};
   }
   ol,
   ul {

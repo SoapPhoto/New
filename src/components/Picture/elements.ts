@@ -1,4 +1,4 @@
-import { rgba } from 'polished';
+import { darken, rgba } from 'polished';
 import styled from 'styled-components';
 
 export const ListWrapper = styled.div`
@@ -9,8 +9,8 @@ export const ListWrapper = styled.div`
 export const ItemWrapper = styled.div<{ color: string }>`
   position: absolute;
   will-change: transform, width, height, opacity;
-  border-radius: 4px;
-  box-shadow: 0px 0px 10px 0px ${p => rgba(p.color, 0.5)};
+  border-radius: 3px;
+  box-shadow: 0px 0px 30px 0px ${p => darken(0.5, rgba(p.color, 0.5))};
   background-color: ${p => p.color};
 `;
 
@@ -18,7 +18,7 @@ export const ItemBox = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 4px;
+  border-radius: 3px;
 `;
 
 export const ImageWrapper = styled.div`
@@ -29,6 +29,7 @@ export const ImageWrapper = styled.div`
   height: 100%;
   transition: 0.2s filter ease-in-out;
   border-radius: inherit;
+  overflow: hidden;
 `;
 
 export const Img = styled.img`

@@ -46,7 +46,6 @@ fragment PictureDetailFragment on Picture {
     ...PictureFragment
     isPrivate
     commentCount
-    blurhashSrc
     currentCollections {
       ...CollectionFragment
     }
@@ -82,7 +81,6 @@ fragment PictureListFragment on Pictures {
         ...BadgeFragment
       }
       blurhash
-      blurhashSrc
       isPrivate
       user {
         ...UserBaseFragment

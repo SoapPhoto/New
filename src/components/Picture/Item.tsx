@@ -13,8 +13,7 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
   return (
     <ItemWrapper style={style} color={picture.color}>
       <ItemBox>
-        <PictureImage blurhashSrc={picture.blurhashSrc} imgkey={picture.key} />
-        <Shadow style={{ backgroundImage: `url(${picture.blurhashSrc})` }} />
+        <PictureImage blurhash={picture.blurhash} imgkey={picture.key} />
       </ItemBox>
     </ItemWrapper>
   );

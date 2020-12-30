@@ -10,9 +10,6 @@ export const Wrapper = styled.section`
 export const BG = styled.div`
   flex: 1;
   height: 100vh;
-  background-image: url('https://cdn-oss.soapphoto.com/photo/6c71ed8a-56de-4e35-90e0-cddd9f2fbd95@!regular_webp');
-  background-position: center center;
-  background-size: cover;
 `;
 export const RightBox = styled.div`
   background-color: ${p => p.theme.colors.layout};

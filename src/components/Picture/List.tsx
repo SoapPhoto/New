@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
+import { useMeasure } from 'react-use';
 
-import { useMeasure, useMedia } from '@app/utils/hooks';
+import { useMedia } from '@app/utils/hooks';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import PictureItem from './Item';
 import { ListWrapper } from './elements';
@@ -8,22 +9,23 @@ import { ListWrapper } from './elements';
 function App({ list }) {
   const columns = useMedia(
     [
-      '(min-width: 1024px)',
-      '(min-width: 768px)',
-      '(min-width: 425px)',
-      '(max-width: 425px)',
+      '(min-width: 1170px)',
+      '(min-width: 868px)',
+      '(min-width: 604px)',
+      '(max-width: 604px)',
     ],
     [4, 3, 2, 1],
     2,
   );
-  const [bind, { width }] = useMeasure();
+  const [ref, { width }] = useMeasure();
   const [heights, gridItems] = useMemo(() => {
+    const baseWidth = width === 0 ? document.body.clientWidth - 48 : width;
     const padding = 20;
     let heights = new Array(columns).fill(0);
     let gridItems = list.map((child, i) => {
       const colPadding = padding * (columns - 1);
       const column = heights.indexOf(Math.min(...heights));
-      const itemWidth = (width - colPadding) / columns;
+      const itemWidth = (baseWidth - colPadding) / columns;
       const itemC = child.width / itemWidth;
       const itemHeight = child.height / itemC;
       const xy = [
@@ -49,7 +51,7 @@ function App({ list }) {
   //   trail: 25,
   // });
   return (
-    <ListWrapper {...bind} style={{ height: Math.max(...heights) }}>
+    <ListWrapper ref={ref as any} style={{ height: Math.max(...heights) }}>
       {gridItems.map(({ xy, width, height, ...picture }) => {
         return (
           <PictureItem

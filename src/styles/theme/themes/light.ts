@@ -25,6 +25,12 @@ const theme: DefaultTheme = {
       bg: gray2,
       hoverBg: gray3,
     },
+    skeleton: {
+      accents1: '#fafafa',
+      accents2: '#eaeaea',
+      background: '#fff',
+      shadow: 'rgba(0, 0, 0, 0.06)',
+    },
   },
 };
 

@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css, keyframes } from 'styled-components';
 
 export const boxMixin = css`
   width: 100%;
@@ -26,4 +26,26 @@ export const btnMixin = css`
   vertical-align: middle;
   white-space: nowrap;
   cursor: pointer;
+`;
+
+export const skeletonKeyframes = keyframes`
+  0% {
+    background-position: 200% 50%;
+  }
+
+  100% {
+    background-position: -200% 50%;
+  }
+`;
+
+export const skeletonCss = css`
+  background: linear-gradient(
+    270deg,
+    ${p => p.theme.widget.skeleton.accents1},
+    ${p => p.theme.widget.skeleton.accents2},
+    ${p => p.theme.widget.skeleton.accents2},
+    ${p => p.theme.widget.skeleton.accents1}
+  );
+  background-size: 400% 400%;
+  animation: ${skeletonKeyframes} 8s ease-in-out infinite;
 `;

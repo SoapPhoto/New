@@ -22,6 +22,12 @@ declare module 'styled-components' {
         bg: string;
         hoverBg: string;
       };
+      skeleton: {
+        accents1: string;
+        accents2: string;
+        background: string;
+        shadow: string;
+      };
     };
   }
 }

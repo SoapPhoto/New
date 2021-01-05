@@ -29,14 +29,11 @@ import './locales/i18n';
 import { stores } from '@app/stores';
 import { client } from '@app/apollo/client';
 
-// Observe loading of Inter (to remove 'Inter', remove the <link> tag in
-// the index.html file and this observer)
-const openSansObserver = new FontFaceObserver('Inter', {});
+// const openSansObserver = new FontFaceObserver('Rubik', {});
 
-// When Inter is loaded, add a font-family using Inter to the body
-openSansObserver.load().then(() => {
-  document.body.classList.add('fontLoaded');
-});
+// openSansObserver.load().then(() => {
+//   document.body.classList.add('fontLoaded');
+// });
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
@@ -62,7 +59,4 @@ if (module.hot) {
   });
 }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

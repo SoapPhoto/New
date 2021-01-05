@@ -22,26 +22,31 @@ const BlurHashBox = styled.div`
   right: 0;
 `;
 
-const Img = styled.img<{ loaded: number }>`
+const Img = styled.img<{ loaded: number; complete: number }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: ${p => (p.loaded ? 1 : 0)};
-  filter: brightness(${p => (p.loaded ? '100%' : '100%')})
-    saturate(${p => (p.loaded ? '100%' : '20%')});
-  transition: filter 700ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: ${p => (p.loaded || p.complete ? 1 : 0)};
+  filter: brightness(${p => (p.loaded || p.complete ? '100%' : '100%')})
+    saturate(${p => (p.loaded || p.complete ? '100%' : '20%')});
+  transition: ${p =>
+    p.complete
+      ? 'none'
+      : `filter 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)`};
 `;
 
 const Image: React.FC<IImageProps> = ({ src, blurhash, color = '#fff' }) => {
   const [loaded, setLoaded] = useState(false);
+  const [complete, setComplete] = useState(false);
   const [blurhashVisible, setBlurhashVisible] = useState(true);
   const imageRef = useRef<HTMLImageElement>(null);
   useEffect(() => {
     const img = imageRef.current;
     if (img && img.complete) {
       if (img.naturalWidth !== 0) {
-        handleLoadImage();
+        setComplete(true);
+        // handleLoadImage();
       }
     }
     if (img) {
@@ -75,6 +80,7 @@ const Image: React.FC<IImageProps> = ({ src, blurhash, color = '#fff' }) => {
       )}
       <Img
         loaded={loaded ? 1 : 0}
+        complete={complete ? 1 : 0}
         style={{ background: color }}
         onLoad={handleLoadImage}
         ref={imageRef}

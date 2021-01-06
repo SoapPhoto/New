@@ -13,7 +13,7 @@ export const Wrapper = styled.div<{ size: number; color: string }>`
   align-items: center;
   justify-content: center;
   color: ${p => p.theme.colors.text};
-  border-radius: 35%;
+  border-radius: 100%;
   transition: all 0.25s ease;
   box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.05);
 `;

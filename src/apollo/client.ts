@@ -55,7 +55,26 @@ export function initClient() {
   // }, httpLink);
   const client = new ApolloClient({
     connectToDevTools: false,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            pictures: {
+              keyArgs: false,
+              merge(existing, incoming) {
+                if (!existing) {
+                  return incoming;
+                }
+                return {
+                  ...incoming,
+                  data: [...existing.data, ...incoming.data],
+                };
+              },
+            },
+          },
+        },
+      },
+    }),
     link: httpLink,
   });
   return client;

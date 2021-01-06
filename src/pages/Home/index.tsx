@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react';
 
-import { PictureList } from '@app/components';
-import { useQuery } from '@apollo/client';
+import { Button, PictureList } from '@app/components';
+import { NetworkStatus, useQuery } from '@apollo/client';
 import { Pictures } from '@app/graphql/query';
 
 import { PicturesType } from '@app/common/enum/picture';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import Skeleton from '@app/components/Picture/Skeleton';
+import { IPaginationListData } from '@app/graphql/interface';
 
 export const Home = observer(() => {
-  const { loading, data } = useQuery<{
-    pictures: { data: PictureEntity[] };
+  const { loading, data, fetchMore, networkStatus } = useQuery<{
+    pictures: IPaginationListData<PictureEntity>;
   }>(Pictures, {
+    notifyOnNetworkStatusChange: true,
     variables: {
       type: PicturesType.NEW,
       query: {
@@ -21,6 +23,26 @@ export const Home = observer(() => {
       },
     },
   });
+
+  const more = useCallback(() => {
+    if (!data || networkStatus !== NetworkStatus.ready) {
+      return;
+    }
+    const { pictures } = data;
+    const { count, page, pageSize } = pictures;
+    const nowPage = page + 1;
+    if (pageSize * page >= count) {
+      return;
+    }
+    fetchMore({
+      variables: {
+        query: {
+          page: nowPage,
+          pageSize: 20,
+        },
+      },
+    });
+  }, [data, fetchMore, networkStatus]);
   return (
     <div
       style={{
@@ -30,14 +52,14 @@ export const Home = observer(() => {
         minHeight: 'calc(100vh - 80px)',
       }}
     >
-      {!loading && data ? (
+      {(loading && networkStatus === NetworkStatus.loading) || !data ? (
         <div>
-          <PictureList list={data.pictures.data} />
-          {/* <PictureList list={data.pictures.data} /> */}
+          <Skeleton />
+          <Button onClick={more}>加载更多</Button>
         </div>
       ) : (
         <div>
-          <Skeleton />
+          <PictureList list={data!.pictures.data} />
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { rem } from 'polished';
 
 import { Icon } from './Icon';
@@ -25,11 +25,12 @@ export const Logo = styled.div`
 `;
 
 const Header = () => {
+  const theme = useTheme();
   return (
     <Wrapper>
       <Logo>
         <A to="/">
-          <Icon />
+          <Icon color={theme.colors.text} />
         </A>
       </Logo>
       <Right />

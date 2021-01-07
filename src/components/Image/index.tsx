@@ -45,6 +45,7 @@ const Image: React.FC<IImageProps> = ({ src, blurhash, color = '#fff' }) => {
     const img = imageRef.current;
     if (img && img.complete) {
       if (img.naturalWidth !== 0) {
+        setBlurhashVisible(false);
         setComplete(true);
         // handleLoadImage();
       }

@@ -55,11 +55,11 @@ export const Home = observer(() => {
       {(loading && networkStatus === NetworkStatus.loading) || !data ? (
         <div>
           <Skeleton />
-          <Button onClick={more}>加载更多</Button>
         </div>
       ) : (
         <div>
           <PictureList list={data!.pictures.data} />
+          <Button onClick={more}>加载更多</Button>
         </div>
       )}
     </div>

@@ -14,6 +14,7 @@ const theme: DefaultTheme = {
     text: 'rgba(241,233,231,1)',
     primary: 'rgba(26, 92, 255, 1)',
     layout: '#1e2023',
+    secondary: '#666',
     gray1,
     gray2,
     gray3,
@@ -30,6 +31,10 @@ const theme: DefaultTheme = {
       accents2: '#333333',
       background: gray1,
       shadow: 'transparent',
+    },
+    popover: {
+      radius: 4,
+      background: '#333',
     },
   },
   // primary: 'rgba(26, 92, 255, 1)',

@@ -15,6 +15,7 @@ declare module 'styled-components' {
       gray3: string;
       gray4: string;
       layout: string;
+      secondary: string;
     };
     dashboard: {};
     widget: {
@@ -27,6 +28,10 @@ declare module 'styled-components' {
         accents2: string;
         background: string;
         shadow: string;
+      };
+      popover: {
+        radius: number;
+        background: string;
       };
     };
   }

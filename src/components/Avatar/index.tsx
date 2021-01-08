@@ -29,7 +29,7 @@ const Avatar: React.FC<IAvatarProps> = ({
     content = <Text total={text.length}>{text}</Text>;
   }
   if (src) {
-    content = <Img alt={alt} src={getPictureUrl(src)} />;
+    content = <Img alt={alt} src={getPictureUrl(src, 'thumb')} />;
   }
   return (
     <Wrapper size={size} color={theme.colors[color]}>

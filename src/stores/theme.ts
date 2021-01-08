@@ -1,7 +1,11 @@
-import { computed, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { themes } from '@app/styles/theme/themes';
 import { ThemeKeyType } from '@app/styles/theme/types';
-import { getThemeFromStorage, isSystemDark } from '@app/styles/theme/utils';
+import {
+  getThemeFromStorage,
+  isSystemDark,
+  saveTheme,
+} from '@app/styles/theme/utils';
 
 class Theme {
   public selected: ThemeKeyType = getThemeFromStorage() || 'system';
@@ -10,6 +14,7 @@ class Theme {
     makeObservable(this, {
       selected: observable,
       theme: computed,
+      setTheme: action,
     });
   }
 
@@ -19,6 +24,11 @@ class Theme {
     }
     return themes[this.selected];
   }
+
+  public setTheme = (theme: ThemeKeyType) => {
+    saveTheme(theme);
+    this.selected = theme;
+  };
 }
 
 export default new Theme();

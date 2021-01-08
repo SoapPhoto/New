@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Blurhash } from '..';
-interface IImageProps {
+interface IImageProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   src?: string;
   blurhash?: string;
   color?: string;
@@ -36,7 +36,12 @@ const Img = styled.img<{ loaded: number; complete: number }>`
     opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)`};
 `;
 
-const Image: React.FC<IImageProps> = ({ src, blurhash, color = '#fff' }) => {
+const Image: React.FC<IImageProps> = ({
+  src,
+  blurhash,
+  color = '#fff',
+  ...props
+}) => {
   const [loaded, setLoaded] = useState(false);
   const [complete, setComplete] = useState(false);
   const [blurhashVisible, setBlurhashVisible] = useState(true);
@@ -66,7 +71,7 @@ const Image: React.FC<IImageProps> = ({ src, blurhash, color = '#fff' }) => {
     setLoaded(true);
   }, []);
   return (
-    <Box>
+    <Box {...props}>
       {blurhash && blurhashVisible && (
         <BlurHashBox>
           <Blurhash

@@ -23,6 +23,7 @@
   "dependencies": {
     "@apollo/client": "^3.3.4",
     "@craco/craco": "^6.0.0",
+    "@popperjs/core": "^2.6.0",
     "apollo-link-batch-http": "^1.2.14",
     "apollo-link-context": "^1.0.20",
     "apollo-link-error": "^1.1.13",
@@ -58,6 +59,7 @@
     "react-feather": "^2.0.9",
     "react-helmet-async": "1.0.7",
     "react-i18next": "11.8.2",
+    "react-popper": "^2.2.4",
     "react-router-dom": "6.0.0-beta.0",
     "react-scripts": "4.0.1",
     "react-spring": "^8.0.27",

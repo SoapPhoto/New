@@ -21,5 +21,17 @@
     "yup_format": "{{name}}格式不正确!",
     "yup_longer": "{{name}}必须大于{{length}}位！",
     "yup_greater": "{{name}}不得大于{{length}}位！"
+  },
+  "user": {
+    "label": {
+      "followers": "粉丝",
+      "followed": "关注",
+      "likes": "喜欢"
+    }
+  },
+  "menu": {
+    "setting": "设置",
+    "light": "亮色模式",
+    "dark": "暗色模式"
   }
 }

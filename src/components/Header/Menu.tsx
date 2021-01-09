@@ -17,7 +17,6 @@ interface ILinkProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Wrapper = styled.div`
   width: 200px;
   font-size: 14px;
-  background-color: ${p => p.theme.background};
 `;
 
 const ItemWrapper = styled.div`

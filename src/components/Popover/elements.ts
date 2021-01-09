@@ -41,7 +41,7 @@ export const Content = styled(animated.div)`
   }
   ${Tooltip}[x-theme^="dark"] & {
     color: ${p => p.theme.colors.text};
-    background-color: #333;
+    background-color: #18191c;
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48),
       0 6px 16px 0 rgba(0, 0, 0, 0.32), 0 9px 28px 8px rgba(0, 0, 0, 0.2);
   }
@@ -53,19 +53,13 @@ export const Content = styled(animated.div)`
   }
   /* background: ${p => p.theme.widget.popover.background}; */
   padding: 5px 10px;
-  border-radius: ${p => p.theme.widget.popover.radius};
+  border-radius: ${p => p.theme.widget.popover.radius}px;
   font-size: 14px;
   text-align: left;
   z-index: 1;
 `;
 
 export const Arrow = styled.div`
-  ${Tooltip}[x-theme^="dark"] & {
-    background-color: #333;
-  }
-  ${Tooltip}[x-theme^="light"] &::before {
-    background-color: #fff;
-  }
   &,
   &::before {
     width: 10px;
@@ -78,5 +72,11 @@ export const Arrow = styled.div`
     transform: rotate(45deg);
     top: 0;
     left: 0;
+    ${Tooltip}[x-theme^="dark"] & {
+      background-color: #18191c;
+    }
+    ${Tooltip}[x-theme^="light"] &::before {
+      background-color: #fff;
+    }
   }
 `;

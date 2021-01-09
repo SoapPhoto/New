@@ -1,3 +1,5 @@
+import { skeletonCss } from '@app/styles/mixins';
+import { rgba } from 'polished';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -39,6 +41,7 @@ export const Bio = styled.p`
   font-size: 12px;
   font-weight: 400;
   text-decoration-color: ${p => p.theme.colors.gray4};
+  color: ${p => rgba(p.theme.colors.text, 0.6)};
 `;
 
 export const PicturePreview = styled.div`
@@ -50,7 +53,6 @@ export const PicturePreview = styled.div`
 export const PreviewBox = styled.div`
   position: relative;
   padding-bottom: 75%;
-  border-radius: 2px;
   overflow: hidden;
 `;
 
@@ -85,10 +87,49 @@ export const InfoItemCount = styled.span`
   margin-right: 8px;
   font-weight: 600;
   font-family: Rubik;
+  color: ${p => p.theme.colors.text};
 `;
 
 export const InfoItemLabel = styled.span`
-  color: ${p => p.theme.colors.secondary};
+  color: ${p => rgba(p.theme.colors.text, 0.4)};
   font-size: 12px;
   font-weight: 400;
+`;
+
+export const SkeletonAvatar = styled.div`
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  ${skeletonCss}
+`;
+
+export const SkeletonName = styled.div`
+  width: 60px;
+  height: 14px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  ${skeletonCss}
+`;
+
+export const SkeletonBio = styled.div`
+  width: 80px;
+  height: 10px;
+  border-radius: 4px;
+  ${skeletonCss}
+`;
+
+export const SkeletonPreview = styled.div`
+  position: relative;
+  padding-bottom: 75%;
+  border-radius: 2px;
+  overflow: hidden;
+  ${skeletonCss}
+`;
+export const SkeletonCount = styled.div`
+  display: inline-block;
+  font-size: 0;
+  width: 12px;
+  height: 8px;
+  border-radius: 4px;
+  ${skeletonCss}
 `;

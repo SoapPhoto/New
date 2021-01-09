@@ -15,6 +15,7 @@ import { isFunction } from 'lodash';
 import { Arrow, Content, Tooltip } from './elements';
 import { Placement } from '@popperjs/core';
 import ResizeObserver from 'resize-observer-polyfill';
+import { useTheme } from 'styled-components';
 
 interface IPopoverProps {
   onOpen?: () => void;
@@ -23,6 +24,7 @@ interface IPopoverProps {
   placement?: Placement;
   destroyOnClose?: boolean;
   theme?: PopoverTheme;
+  openDelay?: number;
   contentStyle?: React.CSSProperties | undefined;
 }
 
@@ -32,16 +34,19 @@ const Popover: React.FC<IPopoverProps> = ({
   content,
   children,
   trigger,
-  theme = 'light',
+  theme,
   placement = 'auto',
   destroyOnClose,
   contentStyle,
+  openDelay,
   onOpen,
 }) => {
+  const themeContext = useTheme();
   const [popperSize, setPopperSize] = useState({ width: 0, height: 0 });
   const [arrowHide, setArrowHide] = useState(true);
   const [popupVisible, setPopupVisible] = useState(false);
   const [closed, setClosed] = useState(true);
+  const openTimer = useRef<number>();
   const closeTimer = useRef<number>();
   const referenceElementRef = useRef<HTMLButtonElement>();
   const [
@@ -53,6 +58,10 @@ const Popover: React.FC<IPopoverProps> = ({
     null,
   );
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
+  const themeState = useMemo(
+    () => (theme ? theme : themeContext.widget.popover.theme),
+    [theme, themeContext.widget.popover.theme],
+  );
   const { styles, attributes, forceUpdate, update } = usePopper(
     referenceElement,
     popperElement,
@@ -201,10 +210,27 @@ const Popover: React.FC<IPopoverProps> = ({
     [child],
   );
 
+  const open = useCallback(() => {
+    if (openDelay) {
+      clearTimeout(openTimer.current!);
+      openTimer.current = window.setTimeout(() => {
+        if (isFunction(onOpen)) {
+          onOpen();
+        }
+        setPopupVisible(true);
+      }, openDelay);
+    } else {
+      if (isFunction(onOpen)) {
+        onOpen();
+      }
+      setPopupVisible(true);
+    }
+  }, []);
+
   const onChildClick = useCallback(
     e => {
       if (!popupVisible) {
-        setPopupVisible(true);
+        open();
       } else {
         setPopupVisible(false);
       }
@@ -216,7 +242,7 @@ const Popover: React.FC<IPopoverProps> = ({
   const onMouseEnter = useCallback(
     e => {
       if (!popupVisible) {
-        setPopupVisible(true);
+        open();
       }
       selfEvents('onMouseEnter', e);
     },
@@ -231,6 +257,7 @@ const Popover: React.FC<IPopoverProps> = ({
           setPopupVisible(false);
         }, 150);
       }
+      clearTimeout(openTimer.current);
       selfEvents('onMouseLeave', e);
     },
     [popupVisible, selfEvents],
@@ -262,7 +289,7 @@ const Popover: React.FC<IPopoverProps> = ({
           <Tooltip
             ref={setPopperElement}
             {...attributes.popper}
-            x-theme={theme}
+            x-theme={themeState}
             style={{ ...styles.popper, display: !closed ? 'initial' : 'none' }}
           >
             <Content

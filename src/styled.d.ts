@@ -30,6 +30,7 @@ declare module 'styled-components' {
         shadow: string;
       };
       popover: {
+        theme: string;
         radius: number;
         background: string;
       };

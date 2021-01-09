@@ -19,6 +19,11 @@ import {
   InfoItem,
   InfoItemCount,
   InfoItemLabel,
+  SkeletonAvatar,
+  SkeletonName,
+  SkeletonBio,
+  SkeletonPreview,
+  SkeletonCount,
 } from './elements';
 import Avatar from '../Avatar';
 import { Link } from 'react-router-dom';
@@ -30,57 +35,83 @@ interface IUserPopover {
 }
 
 interface IUserCard {
-  user: UserEntity;
+  loading: boolean;
+  user?: UserEntity;
 }
 
-const UserCard: React.FC<IUserCard> = ({ user }) => {
+const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
   const { t } = useTranslation();
   return (
     <div>
       <Wrapper>
         <Header>
-          <Link to={`/@${user.username}`}>
-            <Avatar src={user.avatar} size={48} />
-          </Link>
+          {loading ? (
+            <SkeletonAvatar />
+          ) : (
+            <Link to={`/@${user?.username}`}>
+              <Avatar src={user?.avatar} size={48} />
+            </Link>
+          )}
           <UserBox>
             <UserNameBox>
-              <UserName>{user.username}</UserName>
+              {loading ? (
+                <SkeletonName />
+              ) : (
+                <UserName>{user?.username}</UserName>
+              )}
             </UserNameBox>
-            <Bio>{user.bio}</Bio>
+            {loading ? <SkeletonBio /> : <Bio>{user?.bio}</Bio>}
           </UserBox>
         </Header>
         <PicturePreview>
-          {user.pictures.map((picture, index) => (
-            <PreviewBox
-              key={picture.id}
-              style={{
-                backgroundColor: picture.color,
-                borderTopLeftRadius: index === 0 ? 4 : 0,
-                borderBottomLeftRadius: index === 0 ? 4 : 0,
-                borderTopRightRadius: index === 2 ? 4 : 0,
-                borderBottomRightRadius: index === 2 ? 4 : 0,
-                overflow: 'hidden',
-              }}
-            >
-              <Link to={`/picture/${picture.id}`}>
-                <Img src={getPictureUrl(picture.key, 'thumb')} />
-              </Link>
-            </PreviewBox>
-          ))}
+          {loading
+            ? [0, 1, 3].map(key => (
+                <SkeletonPreview
+                  key={key}
+                  style={{
+                    borderTopLeftRadius: key === 0 ? 4 : 0,
+                    borderBottomLeftRadius: key === 0 ? 4 : 0,
+                    borderTopRightRadius: key === 2 ? 4 : 0,
+                    borderBottomRightRadius: key === 2 ? 4 : 0,
+                  }}
+                />
+              ))
+            : user?.pictures.map((picture, index) => (
+                <PreviewBox
+                  key={picture.id}
+                  style={{
+                    backgroundColor: picture.color,
+                    borderTopLeftRadius: index === 0 ? 4 : 0,
+                    borderBottomLeftRadius: index === 0 ? 4 : 0,
+                    borderTopRightRadius: index === 2 ? 4 : 0,
+                    borderBottomRightRadius: index === 2 ? 4 : 0,
+                  }}
+                >
+                  <Link to={`/picture/${picture.id}`}>
+                    <Img src={getPictureUrl(picture.key, 'thumb')} />
+                  </Link>
+                </PreviewBox>
+              ))}
         </PicturePreview>
       </Wrapper>
       <UserInfoWrapper>
         <Info>
           <InfoItem>
-            <InfoItemCount>{user.followerCount}</InfoItemCount>
+            <InfoItemCount>
+              {loading ? <SkeletonCount /> : user?.followerCount}
+            </InfoItemCount>
             <InfoItemLabel>{t('user.label.followers')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
-            <InfoItemCount>{user.followedCount}</InfoItemCount>
+            <InfoItemCount>
+              {loading ? <SkeletonCount /> : user?.followedCount}
+            </InfoItemCount>
             <InfoItemLabel>{t('user.label.followed')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
-            <InfoItemCount>{user.likesCount}</InfoItemCount>
+            <InfoItemCount>
+              {loading ? <SkeletonCount /> : user?.likesCount}
+            </InfoItemCount>
             <InfoItemLabel>{t('user.label.likes')}</InfoItemLabel>
           </InfoItem>
         </Info>
@@ -104,9 +135,11 @@ const UserPopover: React.FC<IUserPopover> = ({ children, username }) => {
     <Popover
       onOpen={onOpen}
       trigger="hover"
+      destroyOnClose
+      openDelay={300}
       contentStyle={{ padding: 0 }}
       placement="top"
-      content={data ? <UserCard user={data.user} /> : <></>}
+      content={<UserCard loading={loading} user={data?.user} />}
     >
       {children}
     </Popover>

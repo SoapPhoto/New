@@ -11,7 +11,7 @@ const theme: DefaultTheme = {
   foreground: '#fff',
   colors: {
     error: 'rgb(255,77,79)',
-    text: 'rgba(241,233,231,1)',
+    text: '#fff',
     primary: 'rgba(26, 92, 255, 1)',
     layout: '#1e2023',
     secondary: '#666',
@@ -33,6 +33,7 @@ const theme: DefaultTheme = {
       shadow: 'transparent',
     },
     popover: {
+      theme: 'dark',
       radius: 4,
       background: '#333',
     },

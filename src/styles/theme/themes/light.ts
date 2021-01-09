@@ -33,6 +33,7 @@ const theme: DefaultTheme = {
       shadow: 'rgba(0, 0, 0, 0.06)',
     },
     popover: {
+      theme: 'light',
       radius: 4,
       background: '#333',
     },

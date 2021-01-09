@@ -75,7 +75,7 @@ export const Arrow = styled.div`
     ${Tooltip}[x-theme^="dark"] & {
       background-color: #18191c;
     }
-    ${Tooltip}[x-theme^="light"] &::before {
+    ${Tooltip}[x-theme^="light"] & {
       background-color: #fff;
     }
   }

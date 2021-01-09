@@ -105,7 +105,7 @@ const Popover: React.FC<IPopoverProps> = ({
     config: {
       mass: 1,
       tension: 340,
-      friction: 28,
+      friction: 30,
     },
     onRest: () => {
       if (!popupVisible) {

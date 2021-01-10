@@ -31,7 +31,12 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
       <InfoBox>
         <UserBox>
           <UserPopover username={picture.user.username}>
-            <Link to={`/@${picture.user.username}`}>
+            <Link
+              to={`/@${picture.user.username}`}
+              state={{
+                picture: '222',
+              }}
+            >
               <Avatar
                 // badge={detail.user.badge}
                 src={picture.user.avatar}

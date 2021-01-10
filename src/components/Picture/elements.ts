@@ -83,27 +83,17 @@ export const A = styled(Link)`
     bottom: 0;
     left: 0;
     right: 0;
-    height: 220px;
+    height: 120px;
     pointer-events: none;
     border-radius: 4px;
     background: linear-gradient(
       180deg,
-      transparent 62%,
-      rgba(0, 0, 0, 0.00345888) 63.94%,
-      rgba(0, 0, 0, 0.014204) 65.89%,
-      rgba(0, 0, 0, 0.0326639) 67.83%,
-      rgba(0, 0, 0, 0.0589645) 69.78%,
-      rgba(0, 0, 0, 0.0927099) 71.72%,
-      rgba(0, 0, 0, 0.132754) 73.67%,
-      rgba(0, 0, 0, 0.177076) 75.61%,
-      rgba(0, 0, 0, 0.222924) 77.56%,
-      rgba(0, 0, 0, 0.267246) 79.5%,
-      rgba(0, 0, 0, 0.30729) 81.44%,
-      rgba(0, 0, 0, 0.341035) 83.39%,
-      rgba(0, 0, 0, 0.367336) 85.33%,
-      rgba(0, 0, 0, 0.385796) 87.28%,
-      rgba(0, 0, 0, 0.396541) 89.22%,
-      rgba(0, 0, 0, 0.4) 91.17%
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 10.79%,
+      rgba(0, 0, 0, 0.12) 32.79%,
+      rgba(0, 0, 0, 0.2) 44.79%,
+      rgba(0, 0, 0, 0.35) 63.54%,
+      #000 100%
     );
     ${handleHover}
   }
@@ -145,7 +135,7 @@ export const UserName = styled(Link)`
   font-weight: 600;
   font-size: 14px;
   color: #fff;
-  text-shadow: 0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
 `;
 
 export const SkeletonContent = styled.div`

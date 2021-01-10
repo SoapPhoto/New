@@ -23,6 +23,10 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: ${p => p.theme.colors.primary}
   }
+  .lazyload-wrapper {
+    width: 100%;
+    height: 100%;
+  }
   ${normalize}
   ${animate}
 `;

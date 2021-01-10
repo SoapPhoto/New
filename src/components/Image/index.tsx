@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import LazyLoad from 'react-lazyload';
+
 import { Blurhash } from '..';
 interface IImageProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   src?: string;
   blurhash?: string;
   color?: string;
+  lazyload?: boolean;
 }
 
 const Box = styled.div`
@@ -40,6 +43,7 @@ const Image: React.FC<IImageProps> = ({
   src,
   blurhash,
   color = '#fff',
+  lazyload = true,
   ...props
 }) => {
   const [loaded, setLoaded] = useState(false);
@@ -84,14 +88,29 @@ const Image: React.FC<IImageProps> = ({
           />
         </BlurHashBox>
       )}
-      <Img
-        loaded={loaded ? 1 : 0}
-        complete={complete ? 1 : 0}
-        style={{ background: color }}
-        onLoad={handleLoadImage}
-        ref={imageRef}
-        src={src}
-      />
+      {lazyload ? (
+        <LazyLoad once resize height="100%" offset={100}>
+          <Img
+            loaded={loaded ? 1 : 0}
+            complete={complete ? 1 : 0}
+            style={{ background: color }}
+            onLoad={handleLoadImage}
+            ref={imageRef}
+            src={src}
+          />
+        </LazyLoad>
+      ) : (
+        <>
+          <Img
+            loaded={loaded ? 1 : 0}
+            complete={complete ? 1 : 0}
+            style={{ background: color }}
+            onLoad={handleLoadImage}
+            ref={imageRef}
+            src={src}
+          />
+        </>
+      )}
     </Box>
   );
 };

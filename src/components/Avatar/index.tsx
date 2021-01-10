@@ -13,11 +13,13 @@ interface IAvatarProps {
   size?: number;
   color?: ColorType;
   alt?: string;
+  rainbow?: boolean;
 }
 
 const Avatar: React.FC<IAvatarProps> = ({
   size = 42,
   color = 'gray2',
+  rainbow = false,
   src,
   text,
   children,
@@ -29,10 +31,10 @@ const Avatar: React.FC<IAvatarProps> = ({
     content = <Text total={text.length}>{text}</Text>;
   }
   if (src) {
-    content = <Img alt={alt} src={getPictureUrl(src, 'thumb')} />;
+    content = <Img src={getPictureUrl(src, 'thumb')} />;
   }
   return (
-    <Wrapper size={size} color={theme.colors[color]}>
+    <Wrapper rainbow={rainbow ? 1 : 0} size={size} color={theme.colors[color]}>
       {content}
     </Wrapper>
   );

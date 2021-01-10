@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
@@ -41,6 +41,10 @@ interface IUserCard {
 
 const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
   const { t } = useTranslation();
+  const prestige = useMemo(
+    () => !!user?.badge.find(v => v.name === 'prestige'),
+    [user?.badge],
+  );
   return (
     <div>
       <Wrapper>
@@ -49,7 +53,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
             <SkeletonAvatar />
           ) : (
             <Link to={`/@${user?.username}`}>
-              <Avatar src={user?.avatar} size={48} />
+              <Avatar rainbow={prestige} src={user?.avatar} size={48} />
             </Link>
           )}
           <UserBox>

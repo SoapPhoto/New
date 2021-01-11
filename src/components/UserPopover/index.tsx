@@ -3,7 +3,7 @@ import { useLazyQuery } from '@apollo/client';
 
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { UserInfo } from '@app/graphql/query';
-import { Popover } from '..';
+import { EmojiText, Popover } from '..';
 import {
   Header,
   Wrapper,
@@ -45,11 +45,12 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
     () => !!user?.badge.find(v => v.name === 'prestige'),
     [user?.badge],
   );
+  const isLoading = useMemo(() => loading || !user, [loading, user]);
   return (
     <div>
       <Wrapper>
         <Header>
-          {loading ? (
+          {isLoading ? (
             <SkeletonAvatar />
           ) : (
             <Link to={`/@${user?.username}`}>
@@ -58,17 +59,26 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
           )}
           <UserBox>
             <UserNameBox>
-              {loading ? (
+              {isLoading ? (
                 <SkeletonName />
               ) : (
-                <UserName>{user?.username}</UserName>
+                <UserName>
+                  {/* {user?.fullName} */}
+                  <EmojiText text={user?.fullName} />
+                </UserName>
               )}
             </UserNameBox>
-            {loading ? <SkeletonBio /> : <Bio>{user?.bio}</Bio>}
+            {isLoading ? (
+              <SkeletonBio />
+            ) : (
+              <Bio>
+                <EmojiText text={user?.bio} />
+              </Bio>
+            )}
           </UserBox>
         </Header>
         <PicturePreview>
-          {loading
+          {isLoading
             ? [0, 1, 3].map(key => (
                 <SkeletonPreview
                   key={key}
@@ -102,19 +112,19 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
         <Info>
           <InfoItem>
             <InfoItemCount>
-              {loading ? <SkeletonCount /> : user?.followerCount}
+              {isLoading ? <SkeletonCount /> : user?.followerCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.followers')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
             <InfoItemCount>
-              {loading ? <SkeletonCount /> : user?.followedCount}
+              {isLoading ? <SkeletonCount /> : user?.followedCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.followed')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
             <InfoItemCount>
-              {loading ? <SkeletonCount /> : user?.likesCount}
+              {isLoading ? <SkeletonCount /> : user?.likesCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.likes')}</InfoItemLabel>
           </InfoItem>
@@ -125,9 +135,11 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
 };
 
 const UserPopover: React.FC<IUserPopover> = ({ children, username }) => {
-  const [loadUser, { loading, data }] = useLazyQuery<{ user: UserEntity }>(
-    UserInfo,
-  );
+  const [loadUser, { loading, data, networkStatus }] = useLazyQuery<{
+    user: UserEntity;
+  }>(UserInfo, {
+    notifyOnNetworkStatusChange: true,
+  });
   const onOpen = useCallback(() => {
     loadUser({
       variables: {

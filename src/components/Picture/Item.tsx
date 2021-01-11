@@ -15,6 +15,7 @@ import {
 import { Link } from 'react-router-dom';
 import Avatar from '../Avatar';
 import UserPopover from '../UserPopover';
+import { EmojiText } from '..';
 
 interface IPictureItemProps {
   picture: PictureEntity;
@@ -45,8 +46,7 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
             </Link>
           </UserPopover>
           <UserName to={`/@${picture.user.username}`}>
-            <span>{picture.user.fullName}</span>
-            {/* <EmojiText text={picture.user.fullName} /> */}
+            <EmojiText text={picture.user.fullName} />
           </UserName>
         </UserBox>
         <HandleBox />

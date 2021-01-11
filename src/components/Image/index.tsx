@@ -39,7 +39,7 @@ const Img = styled.img<{ loaded: number; complete: number }>`
     opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)`};
 `;
 
-const Image: React.FC<IImageProps> = ({
+const ImageComponents: React.FC<IImageProps> = ({
   src,
   blurhash,
   color = '#fff',
@@ -88,30 +88,26 @@ const Image: React.FC<IImageProps> = ({
           />
         </BlurHashBox>
       )}
-      {lazyload ? (
-        <LazyLoad once resize height="100%" offset={100}>
-          <Img
-            loaded={loaded ? 1 : 0}
-            complete={complete ? 1 : 0}
-            style={{ background: color }}
-            onLoad={handleLoadImage}
-            ref={imageRef}
-            src={src}
-          />
-        </LazyLoad>
-      ) : (
-        <>
-          <Img
-            loaded={loaded ? 1 : 0}
-            complete={complete ? 1 : 0}
-            style={{ background: color }}
-            onLoad={handleLoadImage}
-            ref={imageRef}
-            src={src}
-          />
-        </>
-      )}
+      <Img
+        loaded={loaded ? 1 : 0}
+        complete={complete ? 1 : 0}
+        style={{ background: color }}
+        onLoad={handleLoadImage}
+        ref={imageRef}
+        src={src}
+      />
     </Box>
   );
+};
+
+const Image: React.FC<IImageProps> = ({ lazyload, ...props }) => {
+  if (lazyload) {
+    return (
+      <LazyLoad once resize height="100%" offset={100}>
+        <ImageComponents {...props} />
+      </LazyLoad>
+    );
+  }
+  return <ImageComponents {...props} />;
 };
 export default Image;

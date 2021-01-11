@@ -2,7 +2,13 @@ import * as React from 'react';
 import { useLayoutEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
-import { Route, BrowserRouter, Routes, useLocation } from 'react-router-dom';
+import {
+  Route,
+  BrowserRouter,
+  Routes,
+  useLocation,
+  Router,
+} from 'react-router-dom';
 
 import { GlobalStyle } from '../styles/global-styles';
 

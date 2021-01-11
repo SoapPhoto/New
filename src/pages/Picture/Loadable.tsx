@@ -1,5 +1,3 @@
-import { Picture } from '.';
-
-const PicturePage = Picture;
+import { PicturePage } from '.';
 
 export default PicturePage;

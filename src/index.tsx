@@ -12,8 +12,12 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 import FontFaceObserver from 'fontfaceobserver';
-import * as serviceWorker from '@app/serviceWorker';
 import { ApolloProvider } from '@apollo/client';
+
+import relativeTime from 'dayjs/plugin/relativeTime';
+import dayjs from 'dayjs';
+
+import * as serviceWorker from '@app/serviceWorker';
 
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
@@ -29,6 +33,9 @@ import './locales/i18n';
 import { stores } from '@app/stores';
 import { client } from '@app/apollo/client';
 
+import 'dayjs/locale/es';
+import 'dayjs/locale/zh-cn';
+
 // const openSansObserver = new FontFaceObserver('Rubik', {});
 
 // openSansObserver.load().then(() => {
@@ -36,6 +43,9 @@ import { client } from '@app/apollo/client';
 // });
 
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
+
+dayjs.extend(relativeTime);
+dayjs.locale('zh-cn');
 
 ReactDOM.render(
   <ApolloProvider client={client}>

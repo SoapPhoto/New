@@ -17,7 +17,7 @@ import {
   WeiboOauthBtn,
 } from '../elements';
 import { useAccount } from '@app/stores/hooks';
-import { Button } from '@app/components';
+import { Button, Toast } from '@app/components';
 
 interface IValues {
   username: string;
@@ -48,11 +48,16 @@ const Login = () => {
       setConfirmLoading(true);
       try {
         await login(values.username, values.password);
-      } catch {
+      } catch (error) {
+        if (error.message === 'Invalid grant: user credentials are invalid') {
+          Toast.error(t('error.oauth.user_credentials_invalid') as string);
+        } else {
+          Toast.error(error.message);
+        }
         setConfirmLoading(false);
       }
     },
-    [login],
+    [login, t],
   );
   return (
     <animated.div style={props}>

@@ -36,8 +36,6 @@ import { client } from '@app/apollo/client';
 import 'dayjs/locale/es';
 import 'dayjs/locale/zh-cn';
 
-import 'vercel-toast/dist/vercel-toast.css';
-
 // const openSansObserver = new FontFaceObserver('Rubik', {});
 
 // openSansObserver.load().then(() => {

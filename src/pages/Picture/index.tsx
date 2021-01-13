@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { EmojiText, Image, Popover } from '@app/components';
+import { EmojiText, Image, Modal, Popover } from '@app/components';
 import Avatar from '@app/components/Avatar';
 import { Picture } from '@app/graphql/query';
 import { useAccount } from '@app/stores/hooks';
@@ -9,7 +9,14 @@ import { getPictureUrl } from '@app/utils/image';
 import dayjs from 'dayjs';
 import React, { useMemo } from 'react';
 import { Info, Settings } from 'react-feather';
-import { useParams } from 'react-router-dom';
+import {
+  useLocation,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
+import { css } from 'styled-components';
+import ExifModal from './components/ExifModal';
 
 import {
   UserHeader,
@@ -61,7 +68,10 @@ export const PictureSkeleton = () => (
 );
 
 export const PicturePage = () => {
-  let { id } = useParams();
+  const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { userInfo } = useAccount();
   const [spring, bind] = useTapButton();
   const { loading, data, fetchMore, networkStatus } = useQuery<{
@@ -123,7 +133,7 @@ export const PicturePage = () => {
             <PictureImageBox height={height} background={picture.color}>
               <PictureImage>
                 <Image
-                  src={getPictureUrl(picture.key, 'small')}
+                  src={getPictureUrl(picture.key, 'full')}
                   blurhash={picture.blurhash}
                   lazyload={false}
                 />
@@ -146,8 +156,26 @@ export const PicturePage = () => {
               <p>{picture.likedCount}</p>
             </LikeContent>
           </div>
-          <div>
-            <IconButton popover={'特殊'}>
+          <div
+            css={`
+              display: grid;
+              gap: 8px;
+              grid-auto-flow: column;
+            `}
+          >
+            <IconButton
+              onClick={() =>
+                setSearchParams(
+                  { modal: 'info' },
+                  {
+                    state: {
+                      modal: 'info',
+                    },
+                  },
+                )
+              }
+              popover={'详情'}
+            >
               <Info />
             </IconButton>
             {isOwner && (
@@ -158,6 +186,7 @@ export const PicturePage = () => {
           </div>
         </PictureBaseInfo>
       </Content>
+      <ExifModal picture={picture} />
     </Wrapper>
   );
 };

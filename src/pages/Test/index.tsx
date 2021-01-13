@@ -13,11 +13,6 @@ const Test = () => {
         </UserPopover>
         <Button onClick={() => setVisible(true)}>打开</Button>
       </div>
-      <Modal centered visible={visible} onClose={() => setVisible(false)}>
-        <div style={{ maxWidth: '400px', width: '100%', height: '400px' }}>
-          124124142124124142124124142124124142124124142124124142124124142124124142
-        </div>
-      </Modal>
     </div>
   );
 };

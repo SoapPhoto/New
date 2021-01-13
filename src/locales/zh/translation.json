@@ -45,5 +45,18 @@
     "message": {
       "register_success": "注册成功！"
     }
+  },
+  "picture": {
+    "info": {
+      "title": "信息",
+      "make": "设备",
+      "model": "型号",
+      "focalLength": "焦距",
+      "aperture": "光圈",
+      "exposureTime": "快门速度",
+      "ISO": "ISO",
+      "dimensions": "尺寸",
+      "size": "大小"
+    }
   }
 }

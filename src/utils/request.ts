@@ -56,7 +56,7 @@ instance.interceptors.response.use(
       // }
       return Promise.reject(response.data);
     }
-    return Promise.resolve(response.data);
+    return Promise.resolve(response);
   },
   (error: any) => Promise.reject(error.response.data),
 );

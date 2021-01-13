@@ -5,7 +5,7 @@ const {
   addWebpackPlugin,
   addDecoratorsLegacy,
   disableEsLint,
-  removeModuleScopePlugin,
+  addBabelPlugins,
 } = require('customize-cra');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -53,9 +53,6 @@ const webpackConfig = () => (config, env) => {
 };
 module.exports = {
   webpack: override(
-    addDecoratorsLegacy(),
-    disableEsLint(),
-    webpackConfig(),
     addWebpackAlias({
       '@app': path.resolve(__dirname, 'src'),
     }),
@@ -102,6 +99,10 @@ module.exports = {
         },
       }),
     ),
+    addDecoratorsLegacy(),
+    webpackConfig(),
+    disableEsLint(),
+    ...addBabelPlugins('babel-plugin-styled-components'),
     addWebpackPlugin(
       new HardSourceWebpackPlugin.ExcludeModulePlugin([
         {

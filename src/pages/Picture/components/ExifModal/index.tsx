@@ -2,7 +2,6 @@ import { isNull } from 'lodash';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import bytes from 'bytes';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { Modal } from '@app/components';
@@ -10,6 +9,7 @@ import { EXIFBox, EXIFInfo, EXIFTitle, Info } from './elements';
 import { getPictureUrl } from '@app/utils/image';
 import { rgba } from 'polished';
 import { useTheme } from 'styled-components';
+import { useSearchParamModal } from '@app/utils/hooks';
 
 interface IProps {
   picture: PictureEntity;
@@ -17,10 +17,8 @@ interface IProps {
 
 const ExifModal: React.FC<IProps> = ({ picture }) => {
   const theme = useTheme();
-  const routerLocation = useLocation();
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const { t } = useTranslation();
+  const [visible, close] = useSearchParamModal('exif');
   const {
     make,
     model,
@@ -33,30 +31,9 @@ const ExifModal: React.FC<IProps> = ({ picture }) => {
     info,
   } = picture;
   const { focalLength, aperture, exposureTime, ISO } = exif!;
-  const background = useMemo(
-    () =>
-      `linear-gradient(${rgba(theme.background, 0.8)}, ${
-        theme.background
-      } 150px), url("${getPictureUrl(key, 'blur')}")`,
-    [key, theme.background],
-  );
   return (
-    <Modal
-      maxWidth={500}
-      centered
-      visible={searchParams.get('modal') === 'info'}
-      onClose={() => {
-        if (
-          routerLocation.state &&
-          (routerLocation.state as any).modal === 'info'
-        ) {
-          navigate(-1);
-        } else {
-          navigate('.');
-        }
-      }}
-    >
-      <Modal.Background background={background} />
+    <Modal maxWidth={500} centered visible={visible} onClose={close}>
+      <Modal.Background background={getPictureUrl(key, 'blur')} />
       <Modal.Content>
         <Modal.Title>信息</Modal.Title>
         <Info>

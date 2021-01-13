@@ -1,3 +1,4 @@
+import { rgba } from 'polished';
 import { animated } from 'react-spring';
 import styled, { css } from 'styled-components';
 
@@ -33,10 +34,10 @@ export const Wrapper = styled.div<{ centered: number }>`
   outline: 0;
   -webkit-overflow-scrolling: touch;
   z-index: 1000;
-  text-align: center;
   ${p =>
     p.centered
       ? css`
+          text-align: center;
           padding: 12px 0px;
           &::before {
             display: inline-block;
@@ -73,7 +74,11 @@ export const ModalBackground = styled.div<{ background: string }>`
   width: 100%;
   height: 150px;
   filter: blur(4px);
-  background: ${_ => _.background};
+  background: linear-gradient(
+      ${p => rgba(p.theme.background, 0.8)},
+      ${p => p.theme.background} 150px
+    ),
+    url('${p => p.background}');
   background-repeat: no-repeat;
   background-size: cover;
 `;

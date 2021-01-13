@@ -4,9 +4,10 @@ import { EmojiText, Image, Modal, Popover } from '@app/components';
 import Avatar from '@app/components/Avatar';
 import { Picture } from '@app/graphql/query';
 import { useAccount } from '@app/stores/hooks';
-import { useTapButton } from '@app/utils/hooks';
+import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
 import dayjs from 'dayjs';
+import { pick } from 'lodash';
 import React, { useMemo } from 'react';
 import { Info, Settings } from 'react-feather';
 import {
@@ -17,6 +18,7 @@ import {
 } from 'react-router-dom';
 import { css } from 'styled-components';
 import ExifModal from './components/ExifModal';
+import SettingModal from './components/SettingModal';
 
 import {
   UserHeader,
@@ -69,6 +71,8 @@ export const PictureSkeleton = () => (
 
 export const PicturePage = () => {
   const { id } = useParams();
+  const [, , exifOpen] = useSearchParamModal('exif');
+  const [, , settingOpen] = useSearchParamModal('setting');
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -163,23 +167,11 @@ export const PicturePage = () => {
               grid-auto-flow: column;
             `}
           >
-            <IconButton
-              onClick={() =>
-                setSearchParams(
-                  { modal: 'info' },
-                  {
-                    state: {
-                      modal: 'info',
-                    },
-                  },
-                )
-              }
-              popover={'详情'}
-            >
+            <IconButton onClick={exifOpen} popover={'详情'}>
               <Info />
             </IconButton>
             {isOwner && (
-              <IconButton popover={'设置'}>
+              <IconButton onClick={settingOpen} popover={'设置'}>
                 <Settings />
               </IconButton>
             )}
@@ -187,6 +179,7 @@ export const PicturePage = () => {
         </PictureBaseInfo>
       </Content>
       <ExifModal picture={picture} />
+      <SettingModal picture={picture} />
     </Wrapper>
   );
 };

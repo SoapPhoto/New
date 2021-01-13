@@ -1,19 +1,27 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 
 import FieldInput from '@app/components/Formik/FieldInput';
 import { Des, Title } from '../elements';
 import { useSpring, animated } from 'react-spring';
-import { Button } from '@app/components';
+import { Button, Toast } from '@app/components';
+import { RegisterSchema } from '../dto';
+import { register } from '@app/services/account';
+import { isArray } from 'lodash';
+import { observer } from 'mobx-react';
+import { useAccount } from '@app/stores/hooks';
 
 interface IValues {
+  email: string;
   username: string;
   password: string;
 }
-const Register = () => {
+const Register = observer(() => {
   const { t } = useTranslation();
+  const { registerLogin } = useAccount();
+  const [confirmLoading, setConfirmLoading] = useState(false);
   const timer = useRef<number>();
   const [props, set] = useSpring(() => ({
     opacity: 0,
@@ -29,6 +37,31 @@ const Register = () => {
     return () => clearTimeout(timer.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const onSubmit = useCallback(
+    async (values: IValues, { setFieldError }: FormikHelpers<IValues>) => {
+      setConfirmLoading(true);
+      try {
+        const data = await register(values);
+        registerLogin(data);
+        Toast.success(t('auth.message.register_success') as string);
+      } catch (error) {
+        if (isArray(error.message)) {
+          error.message.forEach(err => {
+            setFieldError(
+              err.param,
+              t(`error.${err.message[0]}`, {
+                defaultValue: err.message[0],
+              }) as string,
+            );
+          });
+        } else {
+          Toast.error(error.message);
+        }
+        setConfirmLoading(false);
+      }
+    },
+    [],
+  );
   return (
     <animated.div style={props}>
       <Title>{t('accountFeature.registerTitle')}</Title>
@@ -38,28 +71,30 @@ const Register = () => {
         </Trans>
       </Des>
       <Formik<IValues>
-        initialValues={{ username: '', password: '' }}
-        onSubmit={(values, actions) => {
-          console.log({ values, actions });
-        }}
+        initialValues={{ email: '', username: '', password: '' }}
+        onSubmit={onSubmit}
+        validationSchema={RegisterSchema(t)}
       >
         <Form>
-          <FieldInput label={t('label.username') as string} name="username" />
+          <FieldInput name="email" label={t('label.email') as string} />
           <FieldInput
-            label={t('label.password') as string}
-            name="password"
+            name="username"
+            label={t('label.username') as string}
             style={{ marginTop: '6px' }}
           />
           <FieldInput
             label={t('label.password') as string}
             name="password"
+            type="password"
             style={{ marginTop: '6px' }}
           />
-          <Button type="submit">注册</Button>
+          <Button loading={confirmLoading} type="submit">
+            注册
+          </Button>
         </Form>
       </Formik>
     </animated.div>
   );
-};
+});
 
 export default Register;

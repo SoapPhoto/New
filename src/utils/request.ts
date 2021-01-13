@@ -56,9 +56,9 @@ instance.interceptors.response.use(
       // }
       return Promise.reject(response.data);
     }
-    return Promise.resolve(response);
+    return Promise.resolve(response.data);
   },
-  (error: any) => Promise.reject(error),
+  (error: any) => Promise.reject(error.response.data),
 );
 
 export const request = instance;

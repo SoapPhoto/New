@@ -40,13 +40,13 @@ export const Content = styled(animated.div)`
     transform-origin: 50% -20%;
   }
   ${Tooltip}[x-theme^="dark"] & {
-    color: ${p => p.theme.colors.text};
+    color: #fff;
     background-color: #18191c;
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.48),
       0 6px 16px 0 rgba(0, 0, 0, 0.32), 0 9px 28px 8px rgba(0, 0, 0, 0.2);
   }
   ${Tooltip}[x-theme^="light"] & {
-    color: ${p => p.theme.colors.text};
+    color: #000;
     background-color: #fff;
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
       0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);

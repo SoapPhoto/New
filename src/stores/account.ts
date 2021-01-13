@@ -60,7 +60,10 @@ class AccountStore {
             // sink(observable.box(data));
           }
         },
-        error: console.error,
+        error: () => {
+          this.init = true;
+          localStorage.removeItem('token');
+        },
       });
   };
 
@@ -72,6 +75,11 @@ class AccountStore {
     const data = await oauth(params);
     localStorage.setItem('token', JSON.stringify(data.data));
     this.setUserInfo(data.data.user);
+  };
+
+  public registerLogin = (data: any) => {
+    localStorage.setItem('token', JSON.stringify(data));
+    this.setUserInfo(data.user);
   };
 }
 

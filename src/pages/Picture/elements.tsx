@@ -1,8 +1,12 @@
 import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Image } from '@app/components';
-import { skeletonCss } from '@app/styles/mixins';
+import { animated } from 'react-spring';
+import { rgba } from 'polished';
+import { Heart } from 'react-feather';
+
+import { IconButton as IconButtonComponent } from '@app/components';
+import { initButton, skeletonCss } from '@app/styles/mixins';
 
 export const Wrapper = styled.div``;
 
@@ -51,7 +55,7 @@ export const PictureWrapper = styled.article`
 `;
 
 export const PictureContent = styled.div`
-  max-width: 1000px;
+  max-width: 1920px;
   margin: 0 auto;
 `;
 
@@ -61,7 +65,7 @@ export const PictureBox = styled.div<{ num: number }>`
   max-width: 1000px;
   margin: 0 auto;
   ${customMedia.greaterThan('mobile')`
-    max-width: calc(calc(100vh - ${138 + 52}px) * ${_ => (_ as any).num});
+    max-width: calc(calc(100vh - ${138 + 53}px) * ${_ => (_ as any).num});
     min-width: 500px;
   `}
   ${customMedia.lessThan('mobile')`
@@ -116,4 +120,50 @@ export const SkeletonPicture = styled.div`
   height: 100%;
   border-radius: 4px;
   ${skeletonCss}
+`;
+
+export const Content = styled.div`
+  max-width: calc(${customBreakpoints.medium} + 42px);
+  margin: 34px auto 12px auto;
+  padding: 0 24px;
+  margin-top: 0;
+`;
+export const PictureBaseInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: ${p => p.theme.colors.secondary};
+  padding: 18px 0;
+  margin-bottom: 18px;
+  box-shadow: inset 0px -1px 0px ${p => p.theme.colors.gray4};
+`;
+
+export const LikeContent = styled(animated.button)`
+  ${initButton}
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${_ => rgba(_.theme.colors.gray4, 0.8)};
+  padding: 6px 16px;
+  font-size: 12px;
+  border: none;
+  border-radius: 20px;
+  line-height: 20px;
+  font-weight: 600;
+  color: ${p => p.theme.colors.secondary};
+`;
+
+export const HeartIcon = styled(Heart)<{ islike: number }>`
+  stroke: ${p => p.theme.colors.error};
+  fill: ${_ => (_.islike ? _.theme.colors.error : 'none')};
+  stroke: ${_ =>
+    _.islike ? _.theme.colors.error : _.theme.colors.secondary || '#fff'};
+  margin-right: 6px;
+`;
+
+export const IconButton = styled(IconButtonComponent)`
+  svg {
+    stroke: ${p => p.theme.colors.secondary};
+  }
 `;

@@ -49,3 +49,9 @@ export const skeletonCss = css`
   background-size: 400% 400%;
   animation: ${skeletonKeyframes} 8s ease-in-out infinite;
 `;
+
+export const initButton = css`
+  cursor: pointer;
+  outline: none;
+  border: none;
+`;

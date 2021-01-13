@@ -184,8 +184,8 @@ const Popover: React.FC<IPopoverProps> = ({
           const root = referenceElementRef.current;
           const popupNode = popperElementRef.current;
           if (
-            !contains(root, relatedTarget) &&
-            !contains(popupNode, relatedTarget)
+            !contains(root, relatedTarget as HTMLDivElement) &&
+            !contains(popupNode, relatedTarget as HTMLDivElement)
           ) {
             setPopupVisible(false);
           }

@@ -19,7 +19,7 @@ const Account = observer(() => {
     if (init && !isLogin) {
       setLoading(false);
     }
-  }, [isLogin, init]);
+  }, [isLogin, init, navigate]);
   return (
     <Wrapper>
       {loading ? (
@@ -29,10 +29,10 @@ const Account = observer(() => {
       ) : (
         <>
           <BG>
-            <Image
+            {/* <Image
               blurhash="LXL;s+?HM{M{.ToIt7s:S*V@a}t6"
               src="https://cdn-oss.soapphoto.com/photo/6c71ed8a-56de-4e35-90e0-cddd9f2fbd95@!regular_webp"
-            />
+            /> */}
           </BG>
           <RightBox>
             <Content>

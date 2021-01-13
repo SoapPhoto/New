@@ -3,9 +3,12 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { EmojiText, Image, Popover } from '@app/components';
 import Avatar from '@app/components/Avatar';
 import { Picture } from '@app/graphql/query';
+import { useAccount } from '@app/stores/hooks';
+import { useTapButton } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
 import dayjs from 'dayjs';
 import React, { useMemo } from 'react';
+import { Info, Settings } from 'react-feather';
 import { useParams } from 'react-router-dom';
 
 import {
@@ -26,6 +29,11 @@ import {
   SkeletonAvatar,
   SkeletonUserName,
   SkeletonPicture,
+  Content,
+  PictureBaseInfo,
+  LikeContent,
+  HeartIcon,
+  IconButton,
 } from './elements';
 
 export const PictureSkeleton = () => (
@@ -54,12 +62,21 @@ export const PictureSkeleton = () => (
 
 export const PicturePage = () => {
   let { id } = useParams();
+  const { userInfo } = useAccount();
+  const [spring, bind] = useTapButton();
   const { loading, data, fetchMore, networkStatus } = useQuery<{
     picture: PictureEntity;
   }>(Picture, {
     notifyOnNetworkStatusChange: true,
     variables: { id: Number(id) },
   });
+  const isOwner = useMemo(
+    () =>
+      (userInfo &&
+        userInfo.id.toString() === data?.picture.user.id.toString()) ||
+      false,
+    [data?.picture.user.id, userInfo],
+  );
   if (loading || !data) return <PictureSkeleton />;
   const { picture } = data;
   const { user } = picture;
@@ -115,6 +132,32 @@ export const PicturePage = () => {
           </PictureBox>
         </PictureContent>
       </PictureWrapper>
+      <Content>
+        <PictureBaseInfo>
+          <div>
+            <LikeContent
+              {...bind()}
+              style={{
+                transform: spring.transform,
+              }}
+              // onClick={onLike}
+            >
+              <HeartIcon size={20} islike={picture.isLike ? 1 : 0} />
+              <p>{picture.likedCount}</p>
+            </LikeContent>
+          </div>
+          <div>
+            <IconButton popover={'特殊'}>
+              <Info />
+            </IconButton>
+            {isOwner && (
+              <IconButton popover={'设置'}>
+                <Settings />
+              </IconButton>
+            )}
+          </div>
+        </PictureBaseInfo>
+      </Content>
     </Wrapper>
   );
 };

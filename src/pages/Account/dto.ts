@@ -40,3 +40,11 @@ export const LoginSchema = (t: TFunction) =>
   Yup.object().shape({
     ...baseSchema(t),
   });
+
+export const RegisterSchema = (t: TFunction) =>
+  Yup.object().shape({
+    email: Yup.string()
+      .email(t('validation.yup_format', { name: t('label.email') }))
+      .required(t('validation.yup_required', { name: t('label.email') })),
+    ...baseSchema(t),
+  });

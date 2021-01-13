@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import { useSpring, animated } from 'react-spring';
 
 import FieldInput from '@app/components/Formik/FieldInput';
-import { LoginSchema } from './dto';
+import { LoginSchema } from '../dto';
 import { GitHubLogo } from '@app/components/Icons';
 import { Weibo } from '@app/components/Icons/Weibo';
 import {

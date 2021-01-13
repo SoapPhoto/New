@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { Header } from '@app/components';
 import { Outlet } from 'react-router-dom';
+import VerifyMessage from './VerifyMessage';
 
 interface IProps {}
 
@@ -15,6 +16,7 @@ export const Wrapper = styled.div`
 export const DefaultLayout: React.FC<IProps> = ({ children }) => {
   return (
     <Wrapper>
+      <VerifyMessage />
       <Header />
       <Outlet />
     </Wrapper>

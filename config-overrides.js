@@ -22,6 +22,10 @@ const devServer = () => config => {
       target: 'https://soapphoto.com',
       changeOrigin: true,
     },
+    '/api': {
+      target: 'https://soapphoto.com',
+      changeOrigin: true,
+    },
   };
   return config;
 };

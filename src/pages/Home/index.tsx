@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 
 import { Button, PictureList } from '@app/components';

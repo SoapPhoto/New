@@ -8,7 +8,6 @@ import {
   InfoBox,
   ItemBox,
   ItemWrapper,
-  Shadow,
   UserBox,
   UserName,
 } from './elements';

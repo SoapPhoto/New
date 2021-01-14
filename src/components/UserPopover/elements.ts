@@ -1,6 +1,5 @@
 import { skeletonCss } from '@app/styles/mixins';
 import { rgba } from 'polished';
-import React from 'react';
 import styled from 'styled-components';
 
 import { Image } from '..';

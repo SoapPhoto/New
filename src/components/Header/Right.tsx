@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { Moon, Search, Sun, UploadCloud } from 'react-feather';
 import styled from 'styled-components';
 
-import { A, Button, Popover } from '@app/components';
+import { A, Popover } from '@app/components';
 import { space } from '@app/utils/theme';
 import { observer } from 'mobx-react';
 import { useAccount, useThemeStore } from '@app/stores/hooks';

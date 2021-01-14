@@ -7,7 +7,6 @@ import {
   Mask,
   Wrapper,
   Content,
-  Box,
   ModalContent,
   ModalBackground,
   ModalHeader,
@@ -66,6 +65,7 @@ const InternalModal: React.FC<IModalProps> = ({
   });
   useEffect(() => {
     setAnimatedVisible(visible);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (!closed) {
@@ -141,6 +141,7 @@ const InternalModal: React.FC<IModalProps> = ({
     </>
   );
 };
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 type InternalModal = typeof InternalModal;
 
 interface IModal extends InternalModal {

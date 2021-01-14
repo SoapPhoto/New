@@ -73,8 +73,13 @@ const Login = () => {
         onSubmit={onSubmit}
       >
         <Form>
-          <FieldInput label={t('label.username') as string} name="username" />
           <FieldInput
+            required
+            label={t('label.username') as string}
+            name="username"
+          />
+          <FieldInput
+            required
             label={t('label.password') as string}
             name="password"
             type="password"

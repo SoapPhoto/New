@@ -1,5 +1,5 @@
 import { isNull } from 'lodash';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import bytes from 'bytes';
 
@@ -7,8 +7,6 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { Modal } from '@app/components';
 import { EXIFBox, EXIFInfo, EXIFTitle, Info } from './elements';
 import { getPictureUrl } from '@app/utils/image';
-import { rgba } from 'polished';
-import { useTheme } from 'styled-components';
 import { useSearchParamModal } from '@app/utils/hooks';
 
 interface IProps {
@@ -16,20 +14,9 @@ interface IProps {
 }
 
 const ExifModal: React.FC<IProps> = ({ picture }) => {
-  const theme = useTheme();
   const { t } = useTranslation();
   const [visible, close] = useSearchParamModal('exif');
-  const {
-    make,
-    model,
-    exif,
-    width,
-    height,
-    size,
-    key,
-    location,
-    info,
-  } = picture;
+  const { make, model, exif, width, height, size, key } = picture;
   const { focalLength, aperture, exposureTime, ISO } = exif!;
   return (
     <Modal maxWidth={500} centered visible={visible} onClose={close}>

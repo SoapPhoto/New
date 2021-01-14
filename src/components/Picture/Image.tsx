@@ -1,7 +1,7 @@
 import { getPictureUrl } from '@app/utils/image';
 import React from 'react';
 import { Image } from '@app/components';
-import { ImageWrapper, Img, LazyImg } from './elements';
+import { ImageWrapper } from './elements';
 
 interface IPictureImageProps {
   imgkey: string;

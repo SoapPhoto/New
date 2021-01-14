@@ -135,7 +135,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
 };
 
 const UserPopover: React.FC<IUserPopover> = ({ children, username }) => {
-  const [loadUser, { loading, data, networkStatus }] = useLazyQuery<{
+  const [loadUser, { loading, data }] = useLazyQuery<{
     user: UserEntity;
   }>(UserInfo, {
     notifyOnNetworkStatusChange: true,

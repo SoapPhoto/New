@@ -60,6 +60,7 @@ const Register = observer(() => {
         setConfirmLoading(false);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
   return (
@@ -76,13 +77,19 @@ const Register = observer(() => {
         validationSchema={RegisterSchema(t)}
       >
         <Form>
-          <FieldInput name="email" label={t('label.email') as string} />
           <FieldInput
+            required
+            name="email"
+            label={t('label.email') as string}
+          />
+          <FieldInput
+            required
             name="username"
             label={t('label.username') as string}
             style={{ marginTop: '6px' }}
           />
           <FieldInput
+            required
             label={t('label.password') as string}
             name="password"
             type="password"

@@ -11,7 +11,7 @@ import 'react-app-polyfill/stable';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
-import FontFaceObserver from 'fontfaceobserver';
+// import FontFaceObserver from 'fontfaceobserver';
 import { ApolloProvider } from '@apollo/client';
 
 import relativeTime from 'dayjs/plugin/relativeTime';

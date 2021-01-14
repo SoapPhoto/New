@@ -6,8 +6,6 @@ import { Icon } from './Icon';
 import { A } from '@app/components';
 import { Right } from './Right';
 import { space } from '@app/utils/theme';
-import { observer } from 'mobx-react';
-import { useAccount } from '@app/stores/hooks';
 
 const Wrapper = styled.header`
   display: flex;

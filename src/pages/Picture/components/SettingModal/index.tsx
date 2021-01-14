@@ -1,6 +1,5 @@
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { FieldInput, FieldTextarea, Modal } from '@app/components';
-import Textarea from '@app/components/Input/Textarea';
+import { FieldInput, FieldSwitch, FieldTextarea, Modal } from '@app/components';
 import { useSearchParamModal } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
 import { Formik } from 'formik';
@@ -19,15 +18,15 @@ interface IValues {
   tags: string[];
 }
 const SettingModal: React.FC<IProps> = ({ picture }) => {
+  const { key } = picture;
   const [visible, close] = useSearchParamModal('setting');
   const { t } = useTranslation();
-  const { key } = picture;
   const handleOk = () => {};
   return (
     <Modal maxWidth={560} centered visible={visible} onClose={close}>
-      {/* <Modal.Background background={getPictureUrl(key, 'blur')} /> */}
+      <Modal.Background background={getPictureUrl(key, 'blur')} />
       <Modal.Content>
-        <Modal.Title>设置</Modal.Title>
+        <Modal.Title>编辑图片</Modal.Title>
         <Content>
           <Formik<IValues>
             initialValues={{
@@ -37,9 +36,10 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
             onSubmit={handleOk}
             // validationSchema={EditPictureSchema(t)}
           >
-            {({ handleSubmit, isSubmitting }) => (
+            {() => (
               <>
                 <FieldInput
+                  required
                   name="title"
                   label={t('label.picture_title') as string}
                 />
@@ -47,6 +47,12 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
                   name="bio"
                   label={t('label.picture_bio') as string}
                 />
+                <FieldSwitch
+                  name="isPrivate"
+                  label="私人"
+                  bio="这个图片仅自己可见"
+                />
+                <div style={{ height: '12px' }} />
               </>
             )}
           </Formik>

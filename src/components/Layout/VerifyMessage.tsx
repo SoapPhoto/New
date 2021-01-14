@@ -46,7 +46,9 @@ const Close = styled(IconButton)`
 const VerifyMessage = observer(() => {
   const [verifyMessage, setVerifyMessage] = useState(true);
   const { userInfo } = useAccount();
-  const unVerified = useMemo(() => userInfo?.status === 'UNVERIFIED', []);
+  const unVerified = useMemo(() => userInfo?.status === 'UNVERIFIED', [
+    userInfo?.status,
+  ]);
   const reset = () => {};
   if (!unVerified || (!unVerified && !verifyMessage)) return null;
   return (

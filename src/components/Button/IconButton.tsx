@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useGesture } from 'react-use-gesture';
 import { Popover } from '..';
-import { animated, useSpring } from 'react-spring';
+import { animated } from 'react-spring';
 import { useTapButton } from '@app/utils/hooks';
 
 interface IProps {

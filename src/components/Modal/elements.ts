@@ -72,11 +72,12 @@ export const ModalBackground = styled.div<{ background: string }>`
   top: 0;
   z-index: 0;
   width: 100%;
-  height: 150px;
+  height: 90px;
   filter: blur(4px);
+  transform: scale(1.1);
   background: linear-gradient(
-      ${p => rgba(p.theme.background, 0.8)},
-      ${p => p.theme.background} 150px
+      ${p => rgba(p.theme.background, 0.75)},
+      ${p => p.theme.background} 90px
     ),
     url('${p => p.background}');
   background-repeat: no-repeat;

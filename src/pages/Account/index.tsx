@@ -1,9 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useAccount } from '@app/stores/hooks';
 import { observer } from 'mobx-react';
-import { Image, Loading } from '@app/components';
+import { Loading } from '@app/components';
 import { BG, Content, LoadingBox, RightBox, Wrapper } from './elements';
 
 const Account = observer(() => {

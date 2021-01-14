@@ -101,8 +101,8 @@ module.exports = {
     ),
     addDecoratorsLegacy(),
     webpackConfig(),
-    disableEsLint(),
     ...addBabelPlugins('babel-plugin-styled-components'),
+    disableEsLint(),
     addWebpackPlugin(
       new HardSourceWebpackPlugin.ExcludeModulePlugin([
         {

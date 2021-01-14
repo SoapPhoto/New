@@ -1,14 +1,12 @@
 import React, {
-  Children,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
-import ReactDOM from 'react-dom';
 import { usePopper } from 'react-popper';
-import { useSpring, animated } from 'react-spring';
+import { useSpring } from 'react-spring';
 import contains from 'rc-util/lib/Dom/contains';
 import PortalWrapper from 'rc-util/lib/PortalWrapper';
 import { isFunction } from 'lodash';
@@ -43,7 +41,6 @@ const Popover: React.FC<IPopoverProps> = ({
 }) => {
   const themeContext = useTheme();
   const [popperSize, setPopperSize] = useState({ width: 0, height: 0 });
-  const [arrowHide, setArrowHide] = useState(true);
   const [popupVisible, setPopupVisible] = useState(false);
   const [closed, setClosed] = useState(true);
   const openTimer = useRef<number>();
@@ -62,7 +59,7 @@ const Popover: React.FC<IPopoverProps> = ({
     () => (theme ? theme : themeContext.widget.popover.theme),
     [theme, themeContext.widget.popover.theme],
   );
-  const { styles, attributes, forceUpdate, update } = usePopper(
+  const { styles, attributes, update } = usePopper(
     referenceElement,
     popperElement,
     {
@@ -147,6 +144,7 @@ const Popover: React.FC<IPopoverProps> = ({
     if (popupVisible) {
       onOpen?.();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popupVisible]);
 
   useEffect(() => {
@@ -158,6 +156,7 @@ const Popover: React.FC<IPopoverProps> = ({
       }
       return () => document.removeEventListener('mousedown', onDocumentClick);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger, popupVisible]);
   // content变化的话强制更新
   useEffect(() => {
@@ -171,6 +170,7 @@ const Popover: React.FC<IPopoverProps> = ({
     return () => {
       observer.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popperElement]);
   useEffect(() => {
     if (popperElement) {
@@ -225,6 +225,7 @@ const Popover: React.FC<IPopoverProps> = ({
       }
       setPopupVisible(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onChildClick = useCallback(
@@ -236,7 +237,7 @@ const Popover: React.FC<IPopoverProps> = ({
       }
       selfEvents('onClick', e);
     },
-    [popupVisible, selfEvents],
+    [open, popupVisible, selfEvents],
   );
 
   const onMouseEnter = useCallback(
@@ -246,7 +247,7 @@ const Popover: React.FC<IPopoverProps> = ({
       }
       selfEvents('onMouseEnter', e);
     },
-    [popupVisible, selfEvents],
+    [open, popupVisible, selfEvents],
   );
 
   const onMouseLeave = useCallback(

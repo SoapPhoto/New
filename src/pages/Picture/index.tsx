@@ -1,22 +1,15 @@
 import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { EmojiText, Image, Modal, Popover } from '@app/components';
+import { EmojiText, Image, Popover } from '@app/components';
 import Avatar from '@app/components/Avatar';
 import { Picture } from '@app/graphql/query';
 import { useAccount } from '@app/stores/hooks';
 import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
 import dayjs from 'dayjs';
-import { pick } from 'lodash';
 import React, { useMemo } from 'react';
 import { Info, Settings } from 'react-feather';
-import {
-  useLocation,
-  useNavigate,
-  useParams,
-  useSearchParams,
-} from 'react-router-dom';
-import { css } from 'styled-components';
+import { useParams } from 'react-router-dom';
 import ExifModal from './components/ExifModal';
 import SettingModal from './components/SettingModal';
 
@@ -73,12 +66,9 @@ export const PicturePage = () => {
   const { id } = useParams();
   const [, , exifOpen] = useSearchParamModal('exif');
   const [, , settingOpen] = useSearchParamModal('setting');
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
   const { userInfo } = useAccount();
   const [spring, bind] = useTapButton();
-  const { loading, data, fetchMore, networkStatus } = useQuery<{
+  const { loading, data } = useQuery<{
     picture: PictureEntity;
   }>(Picture, {
     notifyOnNetworkStatusChange: true,

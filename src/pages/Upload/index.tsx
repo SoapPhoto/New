@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Upload = () => {
-  return <div>123123</div>;
+  return (
+    <div>
+      <div></div>
+    </div>
+  );
 };
 
 export default Upload;

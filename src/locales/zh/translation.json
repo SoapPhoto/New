@@ -58,5 +58,10 @@
       "dimensions": "尺寸",
       "size": "大小"
     }
+  },
+  "upload": {
+    "message": {
+      "image_format_error": "图片格式错误"
+    }
   }
 }

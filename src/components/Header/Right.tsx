@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { Moon, Search, Sun, UploadCloud } from 'react-feather';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { A, Popover } from '@app/components';
+import { A, IconButton, Popover } from '@app/components';
 import { space } from '@app/utils/theme';
 import { observer } from 'mobx-react';
 import { useAccount, useThemeStore } from '@app/stores/hooks';
@@ -10,6 +10,7 @@ import Avatar from '../Avatar';
 import { skeletonCss } from '@app/styles/mixins';
 import { Menu, MenuItem, MenuItemLink } from './Menu';
 import { useTranslation } from 'react-i18next';
+import { useSearchParamModal } from '@app/utils/hooks';
 
 const Wrapper = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ export const Right = observer(() => {
   const { selected, setTheme } = useThemeStore();
   const { init, userInfo } = useAccount();
   const { t } = useTranslation();
+  const [, , openUpload] = useSearchParamModal('upload');
   const switchTheme = useCallback(() => {
     setTheme(selected === 'dark' ? 'light' : 'dark');
   }, [setTheme, selected]);
@@ -53,9 +55,9 @@ export const Right = observer(() => {
     <Wrapper>
       {userInfo ? (
         <>
-          <A style={{ marginRight: 16 }} to="/upload">
+          <IconButton onClick={openUpload}>
             <UploadCloud />
-          </A>
+          </IconButton>
           <Popover
             trigger="click"
             placement="bottom"
@@ -75,11 +77,6 @@ export const Right = observer(() => {
                     ) : (
                       <Moon size={18} />
                     )}
-                  </MenuItemLink>
-                </MenuItem>
-                <MenuItem>
-                  <MenuItemLink to={`/@${userInfo.username}`}>
-                    设置
                   </MenuItemLink>
                 </MenuItem>
               </Menu>

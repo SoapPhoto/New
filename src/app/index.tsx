@@ -16,6 +16,24 @@ import { useAccount } from '@app/stores/hooks';
 import Test from '@app/pages/Test';
 import PicturePage from '@app/pages/Picture/Loadable';
 import Upload from '@app/pages/Upload';
+import UploadModal from '@app/components/UploadModal';
+
+const Router = () => {
+  return (
+    <Routes>
+      <Route path="" element={<DefaultLayout />}>
+        <Route path="" element={<HomePage />}></Route>
+        <Route path="picture/:id" element={<PicturePage />}></Route>
+        <Route path="test" element={<Test />} />
+        <Route path="upload" element={<Upload />} />
+      </Route>
+      <Route path="" element={<Account />}>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Route>
+    </Routes>
+  );
+};
 
 export const App = observer(() => {
   const { i18n } = useTranslation();
@@ -33,18 +51,8 @@ export const App = observer(() => {
       >
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
-      <Routes>
-        <Route path="" element={<DefaultLayout />}>
-          <Route path="" element={<HomePage />}></Route>
-          <Route path="picture/:id" element={<PicturePage />}></Route>
-          <Route path="test" element={<Test />} />
-          <Route path="upload" element={<Upload />} />
-        </Route>
-        <Route path="" element={<Account />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-        </Route>
-      </Routes>
+      <Router />
+      <UploadModal />
       <GlobalStyle />
     </BrowserRouter>
   );

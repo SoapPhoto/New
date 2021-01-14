@@ -15,6 +15,7 @@ import Register from '@app/pages/Account/Register';
 import { useAccount } from '@app/stores/hooks';
 import Test from '@app/pages/Test';
 import PicturePage from '@app/pages/Picture/Loadable';
+import Upload from '@app/pages/Upload';
 
 export const App = observer(() => {
   const { i18n } = useTranslation();
@@ -34,9 +35,10 @@ export const App = observer(() => {
       </Helmet>
       <Routes>
         <Route path="" element={<DefaultLayout />}>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/picture/:id" element={<PicturePage />}></Route>
+          <Route path="" element={<HomePage />}></Route>
+          <Route path="picture/:id" element={<PicturePage />}></Route>
           <Route path="test" element={<Test />} />
+          <Route path="upload" element={<Upload />} />
         </Route>
         <Route path="" element={<Account />}>
           <Route path="login" element={<Login />} />

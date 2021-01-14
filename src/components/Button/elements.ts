@@ -3,17 +3,12 @@ import { position, rgba } from 'polished';
 
 import { btnMixin } from '@app/styles/mixins';
 
-export const StyleButton = styled.button<{ loading: number }>`
+export const StyleButton = styled.button<{ loading: number; size?: string }>`
   ${btnMixin}
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 24px;
   width: 100%;
-  height: 36px;
+  height: 32px;
   min-width: 64px;
-  padding: 0 16px;
+  padding: 0 12px;
   box-shadow: 0 10px 20px -10px ${p => rgba(p.theme.colors.primary, 0.5)};
   background-color: ${p => p.theme.colors.primary};
   color: #fff;

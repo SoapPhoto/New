@@ -167,3 +167,14 @@ export const IconButton = styled(IconButtonComponent)`
     stroke: ${p => p.theme.colors.secondary};
   }
 `;
+
+export const Title = styled.h2`
+  font-size: 20px;
+  margin-bottom: 16px;
+`;
+
+export const Bio = styled.div`
+  font-size: 14px;
+  margin-top: 16px;
+  padding-bottom: 24px;
+`;

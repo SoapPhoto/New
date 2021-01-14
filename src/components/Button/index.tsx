@@ -7,12 +7,14 @@ import { Content, LoadingBox, StyleButton } from './elements';
 export interface IButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
+  size?: 'small' | 'large';
 }
 
 const Button: React.FC<IButtonProps> = ({
   loading,
   children,
   onClick,
+  size,
   ...props
 }) => {
   const handleClick = (
@@ -28,7 +30,12 @@ const Button: React.FC<IButtonProps> = ({
     }
   };
   return (
-    <StyleButton onClick={handleClick} loading={loading ? 1 : 0} {...props}>
+    <StyleButton
+      size={size}
+      onClick={handleClick}
+      loading={loading ? 1 : 0}
+      {...props}
+    >
       <Content>{children}</Content>
       <Transition
         config={{ ...config.stiff, friction: 18, mass: 0.8 }}

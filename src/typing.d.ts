@@ -1,4 +1,5 @@
 declare module '*/fragments.graphql';
+declare module '*/mutations.graphql';
 
 declare module '@app/graphql/query/query.graphql' {
   import { DocumentNode } from 'graphql';
@@ -26,4 +27,21 @@ declare module '@app/graphql/query/query.graphql' {
   export const ReverseGeocoding: DocumentNode;
   export const SearchPlace: DocumentNode;
   export const PictureRelatedCollection: DocumentNode;
+}
+
+declare module '@app/graphql/mutations/mutations.graphql' {
+  import { DocumentNode } from 'graphql';
+
+  export const UpdatePicture: DocumentNode;
+  export const LikePicture: DocumentNode;
+  export const UnLikePicture: DocumentNode;
+  export const MarkNotificationReadAll: DocumentNode;
+  export const AddPictureCollection: DocumentNode;
+  export const RemovePictureCollection: DocumentNode;
+  export const DeleteCollection: DocumentNode;
+  export const UpdateProfile: DocumentNode;
+  export const UpdateCover: DocumentNode;
+  export const AddComment: DocumentNode;
+  export const FollowUser: DocumentNode;
+  export const UnFollowUser: DocumentNode;
 }

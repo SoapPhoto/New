@@ -1,175 +1,65 @@
 import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { EmojiText, Image, Popover } from '@app/components';
-import Avatar from '@app/components/Avatar';
+import { EmojiText, Image } from '@app/components';
 import { Picture } from '@app/graphql/query';
 import { useAccount } from '@app/stores/hooks';
 import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
-import dayjs from 'dayjs';
+import { observer } from 'mobx-react';
 import React, { useMemo } from 'react';
 import { Info, Settings } from 'react-feather';
 import { useParams } from 'react-router-dom';
 import ExifModal from './components/ExifModal';
+import HeaderUserInfo from './components/HeaderUserInfo';
+import PictureCenter from './components/PictureCenter';
+import PictureInfo from './components/PictureInfo';
 import SettingModal from './components/SettingModal';
 
 import {
-  UserHeader,
-  UserHeaderWrapper,
   Wrapper,
-  UserInfo,
-  UserLink,
-  UserName,
-  TimeSpan,
-  BaseInfoItem,
-  UserInfoRight,
   PictureBox,
   PictureContent,
   PictureWrapper,
   PictureImage,
   PictureImageBox,
-  SkeletonAvatar,
-  SkeletonUserName,
-  SkeletonPicture,
   Content,
   PictureBaseInfo,
   LikeContent,
   HeartIcon,
   IconButton,
+  Title,
+  Bio,
 } from './elements';
+import PictureSkeleton from './Skeleton';
 
-export const PictureSkeleton = () => (
-  <Wrapper>
-    <UserHeaderWrapper>
-      <UserHeader>
-        <UserInfo>
-          <SkeletonAvatar />
-          <UserInfoRight>
-            <SkeletonUserName />
-          </UserInfoRight>
-        </UserInfo>
-      </UserHeader>
-    </UserHeaderWrapper>
-    <PictureWrapper>
-      <PictureContent>
-        <PictureBox num={1}>
-          <PictureImageBox height={100} background="transparent">
-            <SkeletonPicture />
-          </PictureImageBox>
-        </PictureBox>
-      </PictureContent>
-    </PictureWrapper>
-  </Wrapper>
-);
-
-export const PicturePage = () => {
+export const PicturePage = observer(() => {
   const { id } = useParams();
-  const [, , exifOpen] = useSearchParamModal('exif');
-  const [, , settingOpen] = useSearchParamModal('setting');
-  const { userInfo } = useAccount();
-  const [spring, bind] = useTapButton();
   const { loading, data } = useQuery<{
     picture: PictureEntity;
   }>(Picture, {
     notifyOnNetworkStatusChange: true,
     variables: { id: Number(id) },
   });
-  const isOwner = useMemo(
-    () =>
-      (userInfo &&
-        userInfo.id.toString() === data?.picture.user.id.toString()) ||
-      false,
-    [data?.picture.user.id, userInfo],
-  );
   if (loading || !data) return <PictureSkeleton />;
   const { picture } = data;
   const { user } = picture;
-  const num = picture.width / picture.height;
-  const height =
-    (1 - (picture.width - picture.height) / picture.width) * 100 || 100;
   return (
     <Wrapper>
-      <UserHeaderWrapper>
-        <UserHeader>
-          <UserInfo>
-            <Avatar src={user.avatar} size={44} />
-            <UserInfoRight>
-              <UserLink
-                style={{ marginBottom: '4px' }}
-                to={`/@${user.username}`}
-              >
-                <UserName>
-                  <EmojiText text={user.fullName} />
-                </UserName>
-              </UserLink>
-              <BaseInfoItem>
-                <Popover
-                  openDelay={100}
-                  trigger="hover"
-                  placement="top"
-                  theme="dark"
-                  content={
-                    <span>
-                      {dayjs(picture.createTime).format('YYYY-MM-DD HH:mm:ss')}
-                    </span>
-                  }
-                >
-                  <TimeSpan>{dayjs(picture.createTime).fromNow()}</TimeSpan>
-                </Popover>
-              </BaseInfoItem>
-            </UserInfoRight>
-          </UserInfo>
-        </UserHeader>
-      </UserHeaderWrapper>
-      <PictureWrapper>
-        <PictureContent>
-          <PictureBox num={num}>
-            <PictureImageBox height={height} background={picture.color}>
-              <PictureImage>
-                <Image
-                  src={getPictureUrl(picture.key, 'full')}
-                  blurhash={picture.blurhash}
-                  lazyload={false}
-                />
-              </PictureImage>
-            </PictureImageBox>
-          </PictureBox>
-        </PictureContent>
-      </PictureWrapper>
+      <HeaderUserInfo user={user} createTime={picture.createTime} />
+      <PictureCenter picture={picture} />
       <Content>
-        <PictureBaseInfo>
-          <div>
-            <LikeContent
-              {...bind()}
-              style={{
-                transform: spring.transform,
-              }}
-              // onClick={onLike}
-            >
-              <HeartIcon size={20} islike={picture.isLike ? 1 : 0} />
-              <p>{picture.likedCount}</p>
-            </LikeContent>
-          </div>
-          <div
-            css={`
-              display: grid;
-              gap: 8px;
-              grid-auto-flow: column;
-            `}
-          >
-            <IconButton onClick={exifOpen} popover={'详情'}>
-              <Info />
-            </IconButton>
-            {isOwner && (
-              <IconButton onClick={settingOpen} popover={'设置'}>
-                <Settings />
-              </IconButton>
-            )}
-          </div>
-        </PictureBaseInfo>
+        <PictureInfo picture={picture} />
+        <Title>
+          <EmojiText text={picture.title} />
+        </Title>
+        {picture.bio && (
+          <Bio>
+            <EmojiText text={picture.bio} />
+          </Bio>
+        )}
       </Content>
       <ExifModal picture={picture} />
       <SettingModal picture={picture} />
     </Wrapper>
   );
-};
+});

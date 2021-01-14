@@ -1,5 +1,5 @@
 import { isNull } from 'lodash';
-import React from 'react';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import bytes from 'bytes';
 
@@ -13,7 +13,7 @@ interface IProps {
   picture: PictureEntity;
 }
 
-const ExifModal: React.FC<IProps> = ({ picture }) => {
+const ExifModal: React.FC<IProps> = memo(({ picture }) => {
   const { t } = useTranslation();
   const [visible, close] = useSearchParamModal('exif');
   const { make, model, exif, width, height, size, key } = picture;
@@ -66,6 +66,6 @@ const ExifModal: React.FC<IProps> = ({ picture }) => {
       </Modal.Content>
     </Modal>
   );
-};
+});
 
 export default ExifModal;

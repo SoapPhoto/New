@@ -68,7 +68,7 @@ const UploadModal = () => {
         <div
           css={css`
             padding: 24px;
-            padding-top: 0px;
+            padding-top: 12px;
           `}
         >
           <Formik

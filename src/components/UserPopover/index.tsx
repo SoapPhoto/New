@@ -45,12 +45,12 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
     () => !!user?.badge.find(v => v.name === 'prestige'),
     [user?.badge],
   );
-  const isLoading = useMemo(() => loading || !user, [loading, user]);
+  const isOk = useMemo(() => !loading && !!user, [loading, user]);
   return (
     <div>
       <Wrapper>
         <Header>
-          {isLoading ? (
+          {!isOk ? (
             <SkeletonAvatar />
           ) : (
             <Link to={`/@${user?.username}`}>
@@ -59,26 +59,25 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
           )}
           <UserBox>
             <UserNameBox>
-              {isLoading ? (
+              {!isOk ? (
                 <SkeletonName />
               ) : (
                 <UserName>
-                  {/* {user?.fullName} */}
-                  <EmojiText text={user?.fullName} />
+                  <EmojiText text={user?.fullName || ''} />
                 </UserName>
               )}
             </UserNameBox>
-            {isLoading ? (
+            {!isOk ? (
               <SkeletonBio />
             ) : (
               <Bio>
-                <EmojiText text={user?.bio} />
+                <EmojiText text={user?.bio || ''} />
               </Bio>
             )}
           </UserBox>
         </Header>
         <PicturePreview>
-          {isLoading
+          {!isOk
             ? [0, 1, 3].map(key => (
                 <SkeletonPreview
                   key={key}
@@ -112,19 +111,19 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
         <Info>
           <InfoItem>
             <InfoItemCount>
-              {isLoading ? <SkeletonCount /> : user?.followerCount}
+              {!isOk ? <SkeletonCount /> : user?.followerCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.followers')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
             <InfoItemCount>
-              {isLoading ? <SkeletonCount /> : user?.followedCount}
+              {!isOk ? <SkeletonCount /> : user?.followedCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.followed')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
             <InfoItemCount>
-              {isLoading ? <SkeletonCount /> : user?.likesCount}
+              {!isOk ? <SkeletonCount /> : user?.likesCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.likes')}</InfoItemLabel>
           </InfoItem>

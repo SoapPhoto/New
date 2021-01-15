@@ -67,12 +67,15 @@ export const ModalContent = styled.div`
   height: 100%;
 `;
 
-export const ModalBackground = styled.div<{ background: string }>`
+export const ModalBackground = styled.div<{
+  background: string;
+  height?: number;
+}>`
   position: absolute;
   top: 0;
   z-index: 0;
   width: 100%;
-  height: 90px;
+  height: ${p => p.height || 90}px;
   filter: blur(4px);
   transform: scale(1.1);
   background: linear-gradient(

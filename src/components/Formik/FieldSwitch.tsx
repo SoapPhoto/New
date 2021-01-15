@@ -12,7 +12,7 @@ interface IProps extends Omit<ReactSwitchProps, 'checked' | 'onChange'> {
   style?: CSSProperties;
 }
 
-const Component = memo<FieldProps & IProps>(
+const Component = memo<FieldProps<boolean> & IProps>(
   ({
     bio,
     field,

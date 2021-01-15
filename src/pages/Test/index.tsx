@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import UserPopover from '@app/components/UserPopover';
 import { Button, FieldItem, Switch } from '@app/components';
+import Tag from '@app/components/Tag';
 
 const Test = () => {
-  const [checked, setChecked] = useState(false);
+  const [value, setValue] = useState<string[]>(['还行']);
   return (
     <div>
       <div style={{ marginLeft: 200, marginTop: 200 }}>
@@ -16,13 +17,14 @@ const Test = () => {
             width: 320px;
           `}
         >
-          <FieldItem
+          <Tag value={value} onChange={v => setValue(v)} />
+          {/* <FieldItem
             onClick={() => setChecked(v => !v)}
             label="私人"
             bio="这个图片仅自己可见"
           >
             <Switch checked={checked} onChange={() => {}} />
-          </FieldItem>
+          </FieldItem> */}
         </div>
       </div>
     </div>

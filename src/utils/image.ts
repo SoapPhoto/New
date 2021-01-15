@@ -1,6 +1,7 @@
 import { omit } from 'lodash';
 import { extname } from 'path';
 import { getImageEXIF, IEXIF } from './exif';
+import FastAverageColor from 'fast-average-color';
 
 import { isWebp } from './mixed';
 
@@ -86,49 +87,59 @@ export function isImage(fileName: string) {
 export async function getImageInfo(
   image: File,
 ): Promise<[IImageInfo, string, string]> {
-  const info: IImageInfo = {
-    exif: {},
-    color: '#fff',
-    isDark: false,
-    height: 0,
-    width: 0,
-    make: undefined,
-    model: undefined,
-  };
-  const imgSrc = window.URL.createObjectURL(image);
-  const imgHtml = document.createElement('img');
-  imgHtml.src = imgSrc;
-  const previewSrc = await (async () =>
-    new Promise<string>(res => {
-      const setInfo = async () => {
-        // 获取主色调过慢，拆分开来
-        // const color = fac.getColor(imgHtml);
-        // info.color = color.hex;
-        // info.isDark = color.isDark;
-        info.height = imgHtml.naturalHeight;
-        info.width = imgHtml.naturalWidth;
-        if (info.exif && info.exif.orientation) {
-          // 有翻转的长宽对调
-          if (info.exif.orientation >= 5) {
-            info.height = imgHtml.naturalWidth;
-            info.width = imgHtml.naturalHeight;
-          }
+  return new Promise(async res => {
+    const info: IImageInfo = {
+      exif: {},
+      color: '#fff',
+      isDark: false,
+      height: 0,
+      width: 0,
+      make: undefined,
+      model: undefined,
+    };
+    const imgSrc = window.URL.createObjectURL(image);
+    const imgHtml = document.createElement('img');
+    imgHtml.src = imgSrc;
+    const exif = await getImageEXIF(image);
+    if (exif) {
+      info.exif = exif;
+      info.make = exif.make;
+      info.model = exif.model;
+    }
+    let previewSrc: string;
+    let previewBase64: string;
+    const setPreviewImage = async () => {
+      info.height = imgHtml.naturalHeight;
+      info.width = imgHtml.naturalWidth;
+      if (info.exif && info.exif.orientation) {
+        // 有翻转的长宽对调
+        if (info.exif.orientation >= 5) {
+          info.height = imgHtml.naturalWidth;
+          info.width = imgHtml.naturalHeight;
         }
-        res(await previewImage(imgHtml, 800, info.exif.orientation));
-      };
-      if (imgHtml.complete) {
-        setInfo();
-      } else {
-        imgHtml.onload = async () => {
-          setInfo();
-        };
       }
-    }))();
-  return [
-    info,
-    previewSrc,
-    await previewImage(imgHtml, 500, info.exif.orientation, true),
-  ];
+      [previewSrc, previewBase64] = await Promise.all([
+        previewImage(imgHtml, 800, info.exif.orientation),
+        previewImage(imgHtml, 300, info.exif.orientation, true),
+      ]);
+    };
+    const setColor = async () => {
+      const colorData = await getImageColor(imgHtml);
+      info.isDark = colorData.isDark;
+      info.color = colorData.hex;
+    };
+    const setInfo = async () => {
+      await Promise.all([setPreviewImage(), setColor()]);
+      res([info, previewSrc!, previewBase64!]);
+    };
+    if (imgHtml.complete) {
+      setInfo();
+    } else {
+      imgHtml.onload = async () => {
+        setInfo();
+      };
+    }
+  });
 }
 
 export function getImageMinSize(
@@ -236,4 +247,10 @@ export function previewImage(
       });
     }
   });
+}
+
+export async function getImageColor(img: HTMLImageElement) {
+  const fac = new FastAverageColor();
+  const color = await fac.getColorAsync(img);
+  return color;
 }

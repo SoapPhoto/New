@@ -23,7 +23,10 @@
   "i18n-ally.keystyle": "nested",
   "cSpell.words": [
     "Blurhash",
+    "Exif",
+    "IEXIF",
     "Weibo",
+    "exifr",
     "lazyload"
   ],
   "i18n-ally.sourceLanguage": "zh"

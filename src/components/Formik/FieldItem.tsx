@@ -26,7 +26,7 @@ const FieldItem: React.FC<IFieldItemProps> = ({
     <ItemContent
       style={{ ...style, ...spring }}
       {...bind()}
-      isClicked={isClicked ? 1 : 0}
+      isclicked={isClicked ? 1 : 0}
       onClick={onClick}
     >
       <ItemBox>

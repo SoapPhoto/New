@@ -30,6 +30,8 @@ const springConfig = {
   friction: 30,
 };
 
+let openTotal = 0;
+
 const InternalModal: React.FC<IModalProps> = ({
   visible,
   onClose,
@@ -39,6 +41,7 @@ const InternalModal: React.FC<IModalProps> = ({
   maxWidth,
   children,
 }) => {
+  const isInit = useRef(false);
   const [animatedVisible, setAnimatedVisible] = useState(false);
   const [closed, setClosed] = useState(!visible);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -57,36 +60,51 @@ const InternalModal: React.FC<IModalProps> = ({
       ? `scale3d(1, 1, 1) translate3d(0px, 0px, 0px)`
       : `scale3d(0.94, 0.94, 0.94) translate3d(0px, 30px, 0px)`,
     config: springConfig,
-    onRest: () => {
-      if (!animatedVisible) {
-        setClosed(true);
+    onRest: endValues => {
+      if (!visible && endValues.opacity === 0 && !closed) {
+        destroy();
       }
     },
   });
   useEffect(() => {
-    setAnimatedVisible(visible);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    isInit.current = true;
   }, []);
   useEffect(() => {
-    if (!closed) {
-      scrollLocker.lock();
-    } else {
-      scrollLocker.unLock();
-    }
-    return () => scrollLocker.unLock();
-  }, [closed]);
-  useEffect(() => {
-    if (visible) {
-      setAnimatedVisible(true);
-    } else {
-      setAnimatedVisible(false);
+    if (visible !== animatedVisible) {
+      if (visible) {
+        setTimeout(() => open(), 10);
+      } else {
+        close();
+      }
     }
   }, [visible]);
-  useEffect(() => {
-    if (animatedVisible) {
-      setClosed(!animatedVisible);
+  // useEffect(() => {
+  //   if (animatedVisible) {
+  //     setClosed(!animatedVisible);
+  //   } else {
+  //     if (openTotal !== 0) {
+  //       openTotal--;
+  //     }
+  //   }
+  // }, [animatedVisible]);
+  const open = () => {
+    setAnimatedVisible(true);
+    setClosed(false);
+    openTotal++;
+    scrollLocker.lock();
+  };
+  const close = () => {
+    setAnimatedVisible(false);
+  };
+  const destroy = () => {
+    setClosed(true);
+    console.log(openTotal);
+    openTotal--;
+    if (openTotal <= 0) {
+      openTotal = 0;
+      scrollLocker.unLock();
     }
-  }, [animatedVisible]);
+  };
   const onContentMouseDown: React.MouseEventHandler = () => {
     clearTimeout(contentTimeoutRef.current);
     contentClickRef.current = true;

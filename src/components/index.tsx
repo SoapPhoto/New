@@ -11,6 +11,7 @@ export { default as IconButton } from './Button/IconButton';
 export { default as Modal } from './Modal';
 export { default as Switch } from './Switch';
 export { default as Upload } from './Upload';
+export { default as Tag } from './Tag';
 
 export * from './Formik';
 export * from './Picture';

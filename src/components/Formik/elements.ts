@@ -1,7 +1,7 @@
 import { animated } from 'react-spring';
 import styled, { css } from 'styled-components';
 
-export const LabelBox = styled.label`
+export const LabelBox = styled.div`
   position: relative;
   text-align: left;
   display: block;
@@ -27,7 +27,7 @@ export const Error = styled.div`
 
 const OFFSET = 12;
 
-export const ItemContent = styled(animated.div)<{ isClicked: number }>`
+export const ItemContent = styled(animated.div)<{ isclicked: number }>`
   z-index: 0;
   position: relative;
   display: flex;
@@ -47,7 +47,7 @@ export const ItemContent = styled(animated.div)<{ isClicked: number }>`
     transition: 0.2s all ease;
   }
   ${_ =>
-    _.isClicked
+    _.isclicked
       ? css`
           cursor: pointer;
           &:hover {

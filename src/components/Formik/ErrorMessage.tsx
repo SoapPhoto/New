@@ -1,5 +1,6 @@
 import { FieldInputProps, FormikErrors, FormikTouched } from 'formik';
-import React, { memo, useMemo } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
+import { useSpring } from 'react-spring';
 import { config, Transition } from 'react-spring/renderprops';
 import { ErrorBox, Error } from './elements';
 
@@ -9,24 +10,29 @@ interface IProps {
   errors: FormikErrors<any>;
 }
 
-const ErrorMessage: React.FC<IProps> = memo(({ field, touched, errors }) => {
+const ErrorMessage: React.FC<IProps> = ({ field, touched, errors }) => {
+  const [err, setErr] = useState<string>('');
+  useEffect(() => {
+    if (touched[field.name] && errors[field.name]) {
+      setErr(errors[field.name] as string);
+    }
+  }, [errors, field.name, touched]);
   const error = useMemo(
     () => (touched[field.name] ? (errors[field.name] as string) : undefined),
     [errors, field.name, touched],
   );
+  const props = useSpring({
+    opacity: error ? 1 : 0,
+    transform: error ? 'translateY(0%)' : 'translateY(-100%)',
+    config: { ...config.stiff, friction: 18, mass: 0.8 },
+  });
   return (
     <ErrorBox>
-      <Transition
-        config={{ ...config.stiff, friction: 18, mass: 0.8 }}
-        items={!!error}
-        from={{ opacity: 0, transform: 'translateY(-100%)' }}
-        enter={{ opacity: 1, transform: 'translateY(0%)' }}
-        leave={{ opacity: 0 }}
-      >
-        {show => show && (props => <Error style={props}>{error}</Error>)}
-      </Transition>
+      <div>
+        <Error style={props}>{err}</Error>
+      </div>
     </ErrorBox>
   );
-});
+};
 
 export default ErrorMessage;

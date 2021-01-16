@@ -7,6 +7,7 @@ import { Content, LoadingBox, StyleButton } from './elements';
 export interface IButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
+  htmlType?: 'submit' | 'reset' | 'button';
   size?: 'small' | 'large';
 }
 
@@ -15,6 +16,7 @@ const Button: React.FC<IButtonProps> = ({
   children,
   onClick,
   size,
+  htmlType,
   ...props
 }) => {
   const handleClick = (
@@ -35,6 +37,7 @@ const Button: React.FC<IButtonProps> = ({
       onClick={handleClick}
       loading={loading ? 1 : 0}
       {...props}
+      type={htmlType}
     >
       <Content>{children}</Content>
       <Transition

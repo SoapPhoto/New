@@ -23,7 +23,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
   const { t } = useTranslation();
   const handleOk = () => {};
   return (
-    <Modal maxWidth={560} centered visible={visible} onClose={close}>
+    <Modal maxWidth={560} centered visible={visible} onClose={() => close()}>
       <Modal.Background background={getPictureUrl(key, 'blur')} />
       <Modal.Content>
         <Modal.Title>编辑图片</Modal.Title>

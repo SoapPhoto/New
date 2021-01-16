@@ -19,7 +19,7 @@ const ExifModal: React.FC<IProps> = memo(({ picture }) => {
   const { make, model, exif, width, height, size, key } = picture;
   const { focalLength, aperture, exposureTime, ISO } = exif!;
   return (
-    <Modal maxWidth={500} centered visible={visible} onClose={close}>
+    <Modal maxWidth={500} centered visible={visible} onClose={() => close()}>
       <Modal.Background background={getPictureUrl(key, 'blur')} />
       <Modal.Content>
         <Modal.Title>信息</Modal.Title>

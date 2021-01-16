@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { useImageInfo, useSearchParamModal } from '@app/utils/hooks';
 import { FieldInput, FieldSwitch, FieldTag, FieldTextarea, Modal } from '..';
@@ -11,14 +11,17 @@ import {
   UploadTips,
 } from './elements';
 import { css } from 'styled-components';
-import Input from '../Input';
-import Textarea from '../Input/Textarea';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import EditExifModal from '../EditExifModal.tsx';
 
 const UploadModal = () => {
   const { t } = useTranslation();
   const [visible, close] = useSearchParamModal('upload');
+  const [editExifVisible, closeEditExif, openEditExif] = useSearchParamModal(
+    'editExif',
+    'modal-child',
+  );
   const imageRef = useRef<File>();
   const [info, thumbnail, setFile] = useImageInfo(imageRef);
   const handleChange = async (files: Maybe<FileList>) => {
@@ -26,8 +29,13 @@ const UploadModal = () => {
       setFile(files[0]);
     }
   };
+  useEffect(() => {
+    if (editExifVisible && !thumbnail) {
+      closeEditExif(true);
+    }
+  }, [closeEditExif, editExifVisible, thumbnail]);
   return (
-    <Modal centered maxWidth={600} visible={visible} onClose={close}>
+    <Modal centered maxWidth={600} visible={visible} onClose={() => close()}>
       {thumbnail && <Modal.Background height={140} background={thumbnail!} />}
       <Modal.Content>
         {!thumbnail ? (
@@ -37,7 +45,7 @@ const UploadModal = () => {
           </UploadHeader>
         ) : (
           <UploadImageHeader>
-            <Thumbnail>
+            <Thumbnail onClick={() => openEditExif()}>
               <img alt="" src={thumbnail} />
               <ThumbnailHover color={info?.color}>
                 <Edit />
@@ -104,6 +112,7 @@ const UploadModal = () => {
           </Formik>
         </div>
       </Modal.Content>
+      {thumbnail && <EditExifModal />}
     </Modal>
   );
 };

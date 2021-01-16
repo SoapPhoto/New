@@ -47,11 +47,11 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
           grid-auto-flow: column;
         `}
       >
-        <IconButton onClick={exifOpen} popover={'详情'}>
+        <IconButton onClick={() => exifOpen()} popover={'详情'}>
           <Info />
         </IconButton>
         {isOwner && (
-          <IconButton onClick={settingOpen} popover={'设置'}>
+          <IconButton onClick={() => settingOpen()} popover={'设置'}>
             <Settings />
           </IconButton>
         )}

@@ -20,7 +20,7 @@ export const ErrorBox = styled.div`
   line-height: 18px;
   overflow: hidden;
 `;
-export const Error = styled.div`
+export const Error = styled(animated.div)`
   font-size: 12px;
   color: ${p => p.theme.colors.error};
 `;

@@ -55,7 +55,7 @@ export const Right = observer(() => {
     <Wrapper>
       {userInfo ? (
         <>
-          <IconButton onClick={openUpload}>
+          <IconButton onClick={() => openUpload()}>
             <UploadCloud />
           </IconButton>
           <Popover

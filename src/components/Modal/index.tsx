@@ -14,6 +14,7 @@ import {
 } from './elements';
 
 export interface IModalProps {
+  afterClose?: () => any;
   centered?: boolean;
   destroyOnClose?: boolean;
   maxWidth?: number | string;
@@ -35,6 +36,7 @@ let openTotal = 0;
 const InternalModal: React.FC<IModalProps> = ({
   visible,
   onClose,
+  afterClose,
   centered,
   maskClosable = true,
   destroyOnClose,
@@ -98,12 +100,12 @@ const InternalModal: React.FC<IModalProps> = ({
   };
   const destroy = () => {
     setClosed(true);
-    console.log(openTotal);
     openTotal--;
     if (openTotal <= 0) {
       openTotal = 0;
       scrollLocker.unLock();
     }
+    afterClose?.();
   };
   const onContentMouseDown: React.MouseEventHandler = () => {
     clearTimeout(contentTimeoutRef.current);

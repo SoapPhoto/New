@@ -8,10 +8,11 @@ export const Mask = styled(animated.div)`
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
   height: 100%;
   filter: alpha(opacity=50);
   z-index: 1000;
+  /* backdrop-filter: saturate(180%) blur(4px); */
 `;
 
 export const Content = styled(animated.div)`

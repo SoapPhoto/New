@@ -6,13 +6,17 @@ import { getImageInfo, IImageInfo, isImage } from '../image';
 
 export default function useImageInfo(
   imageRef: MutableRefObject<File | undefined>,
-): [IImageInfo | undefined, string | undefined, (file: File) => void] {
+): [
+  IImageInfo | undefined,
+  string | undefined,
+  (file: File) => void,
+  () => void,
+] {
   const [info, setInfo] = useState<IImageInfo>();
   const [thumbnail, setThumbnail] = useState<string>();
   const { t } = useTranslation();
   const getInfo = async () => {
-    const [data, url, base64] = await getImageInfo(imageRef.current!);
-    console.log(base64);
+    const [data, url] = await getImageInfo(imageRef.current!);
     setInfo(data);
     setThumbnail(url);
   };
@@ -24,5 +28,10 @@ export default function useImageInfo(
       Toast.warning(t('upload.message.image_format_error') as string);
     }
   };
-  return [info, thumbnail, setFile];
+  const clear = () => {
+    setThumbnail(undefined);
+    setInfo(undefined);
+    imageRef.current = undefined;
+  };
+  return [info, thumbnail, setFile, clear];
 }

@@ -12,16 +12,21 @@ export const StyleButton = styled.button<{ loading: number; size?: string }>`
   box-shadow: 0 10px 20px -10px ${p => rgba(p.theme.colors.primary, 0.5)};
   background-color: ${p => p.theme.colors.primary};
   color: #fff;
-  cursor: ${p => (p.loading ? 'default' : 'pointer')};
   ${p =>
-    !p.loading
+    p.loading
       ? css`
-          &:hover {
-            box-shadow: 0 15px 20px -10px ${p => rgba(p.theme.colors.primary, 0.6)};
-            transform: translateY(-2px);
-          }
+          pointer-events: none;
         `
-      : css``}
+      : ''}
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.35;
+    cursor: default;
+  }
+  &:hover {
+    box-shadow: 0 15px 20px -10px ${p => rgba(p.theme.colors.primary, 0.6)};
+    transform: translateY(-2px);
+  }
 `;
 
 export const Content = styled.div`

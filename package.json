@@ -26,6 +26,7 @@
     "@mapbox/mapbox-gl-language": "^0.10.1",
     "@popperjs/core": "^2.6.0",
     "@types/bytes": "^3.1.0",
+    "ali-oss": "^6.13.1",
     "apollo-link-batch-http": "^1.2.14",
     "apollo-link-context": "^1.0.20",
     "apollo-link-error": "^1.1.13",

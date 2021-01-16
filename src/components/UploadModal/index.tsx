@@ -1,7 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import * as Yup from 'yup';
 
-import { useImageInfo, useSearchParamModal } from '@app/utils/hooks';
-import { FieldInput, FieldSwitch, FieldTag, FieldTextarea, Modal } from '..';
+import {
+  useImageInfo,
+  useSearchParamModal,
+  useTapButton,
+} from '@app/utils/hooks';
+import {
+  Button,
+  FieldInput,
+  FieldSwitch,
+  FieldTag,
+  FieldTextarea,
+  Modal,
+  Toast,
+} from '..';
 import { Edit, Image, Trash2 } from '../Icons';
 import {
   Thumbnail,
@@ -11,19 +24,64 @@ import {
   UploadTips,
 } from './elements';
 import { css } from 'styled-components';
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import EditExifModal from '../EditExifModal.tsx';
+import { pick } from 'lodash';
+import { animated } from 'react-spring';
+import { uploadOSS } from '@app/services/file';
+import { observer } from 'mobx-react';
+import { useAccount } from '@app/stores/hooks';
+import { UploadType } from '@app/common/enum/upload';
 
-const UploadModal = () => {
+export interface IValues {
+  isLocation: boolean;
+  isPrivate: boolean;
+  title: string;
+  bio: string;
+  tags: string[];
+}
+
+const DeleteImageBtn: React.FC<
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+> = ({ style, onClick, ...props }) => {
+  const [spring, bind] = useTapButton(1.03, 0.95);
+  return (
+    <animated.button
+      {...props}
+      {...bind()}
+      style={{ ...style, ...spring }}
+      onClick={onClick}
+      css={css`
+        color: ${p => p.theme.colors.error};
+        outline: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+      `}
+    >
+      <Trash2
+        size={18}
+        css={css`
+          margin-right: 4px;
+        `}
+      />
+      删除图片
+    </animated.button>
+  );
+};
+
+const UploadModal = observer(() => {
   const { t } = useTranslation();
+  const { userInfo } = useAccount();
+  const [percentComplete, setPercentComplete] = useState(0);
   const [visible, close] = useSearchParamModal('upload');
   const [editExifVisible, closeEditExif, openEditExif] = useSearchParamModal(
     'editExif',
     'modal-child',
   );
   const imageRef = useRef<File>();
-  const [info, thumbnail, setFile] = useImageInfo(imageRef);
+  const [info, thumbnail, setFile, clearImage] = useImageInfo(imageRef);
   const handleChange = async (files: Maybe<FileList>) => {
     if (files && files[0]) {
       setFile(files[0]);
@@ -34,8 +92,38 @@ const UploadModal = () => {
       closeEditExif(true);
     }
   }, [closeEditExif, editExifVisible, thumbnail]);
+  const onUploadProgress = useCallback((percent: number) => {
+    setPercentComplete(percent);
+  }, []);
+
+  const onSubmit = useCallback(
+    async (values: IValues) => {
+      if (info && imageRef.current) {
+        // const key = await uploadOSS(
+        //   imageRef.current,
+        //   userInfo!.id,
+        //   UploadType.PICTURE,
+        //   onUploadProgress,
+        // );
+        console.log(info);
+      } else {
+        Toast.warning('');
+      }
+    },
+    [info, onUploadProgress, userInfo],
+  );
+  const afterClose = useCallback(() => {
+    clearImage();
+  }, [clearImage]);
   return (
-    <Modal centered maxWidth={600} visible={visible} onClose={() => close()}>
+    <Modal
+      afterClose={afterClose}
+      centered
+      destroyOnClose
+      maxWidth={600}
+      visible={visible}
+      onClose={() => close()}
+    >
       {thumbnail && <Modal.Background height={140} background={thumbnail!} />}
       <Modal.Content>
         {!thumbnail ? (
@@ -56,20 +144,7 @@ const UploadModal = () => {
                 margin-left: 24px;
               `}
             >
-              {/* <div onClick={() => openLocation()}>图片位置</div> */}
-              <div
-                css={css`
-                  color: ${p => p.theme.colors.error};
-                `}
-              >
-                <Trash2
-                  size={18}
-                  css={css`
-                    margin-right: 4px;
-                  `}
-                />
-                删除图片
-              </div>
+              <DeleteImageBtn onClick={() => clearImage()} />
             </div>
           </UploadImageHeader>
         )}
@@ -79,17 +154,21 @@ const UploadModal = () => {
             padding-top: 12px;
           `}
         >
-          <Formik
+          <Formik<IValues>
             initialValues={{
               title: '',
+              isLocation: false,
               bio: '',
               isPrivate: false,
               tags: [],
             }}
-            onSubmit={() => {}}
+            validationSchema={Yup.object().shape({
+              title: Yup.string().required('请输入标题'),
+            })}
+            onSubmit={onSubmit}
           >
-            {() => (
-              <>
+            {({ isValid }) => (
+              <Form>
                 <FieldInput
                   required
                   name="title"
@@ -107,14 +186,32 @@ const UploadModal = () => {
                 />
                 <div style={{ height: '24px' }} />
                 <div style={{ height: '12px' }} />
-              </>
+                <div>
+                  <Button htmlType="submit" disabled={!(isValid && thumbnail)}>
+                    上传
+                  </Button>
+                </div>
+              </Form>
             )}
           </Formik>
         </div>
       </Modal.Content>
-      {thumbnail && <EditExifModal />}
+      {thumbnail && (
+        <EditExifModal
+          initialValues={{
+            make: info!.make,
+            model: info!.model,
+            ...pick(info!.exif, [
+              'focalLength',
+              'aperture',
+              'exposureTime',
+              'ISO',
+            ]),
+          }}
+        />
+      )}
     </Modal>
   );
-};
+});
 
 export default UploadModal;

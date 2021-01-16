@@ -19,6 +19,10 @@ export interface IEXIFEditValues {
   ISO: ValueType;
 }
 
+interface IProps {
+  initialValues: Partial<IEXIFEditValues>;
+}
+
 const initValue = {
   make: '',
   model: '',
@@ -27,11 +31,17 @@ const initValue = {
   exposureTime: '',
   ISO: undefined,
 };
-const EditExifModal = () => {
+const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
   const [visible, close] = useSearchParamModal('editExif', 'modal-child');
   const { t } = useTranslation();
   return (
-    <Modal maxWidth={560} centered visible={visible} onClose={() => close()}>
+    <Modal
+      destroyOnClose
+      maxWidth={560}
+      centered
+      visible={visible}
+      onClose={() => close()}
+    >
       <Modal.Title>图片信息修改</Modal.Title>
       <Modal.Content>
         <Formik<IEXIFEditValues>
@@ -40,7 +50,10 @@ const EditExifModal = () => {
             aperture: Yup.number().typeError('请输入数字'),
             focalLength: Yup.number().typeError('请输入数字'),
           })}
-          initialValues={initValue}
+          initialValues={{
+            ...initValue,
+            ...initialValues,
+          }}
           onSubmit={value => console.log(value)}
         >
           <Form>

@@ -11,14 +11,18 @@ import {
   ModalBackground,
   ModalHeader,
   ModalTitle,
+  CloseBox,
 } from './elements';
+import { X } from '../Icons';
 
 export interface IModalProps {
+  closable?: boolean;
   afterClose?: () => any;
   centered?: boolean;
   destroyOnClose?: boolean;
   maxWidth?: number | string;
   visible: boolean;
+  fullscreen?: boolean;
   onClose?: (e: SyntheticEvent) => any;
   maskClosable?: boolean;
 }
@@ -38,6 +42,8 @@ const InternalModal: React.FC<IModalProps> = ({
   onClose,
   afterClose,
   centered,
+  fullscreen,
+  closable = false,
   maskClosable = true,
   destroyOnClose,
   maxWidth,
@@ -128,6 +134,15 @@ const InternalModal: React.FC<IModalProps> = ({
       return null;
     };
   }
+  const closeIconToRender = (
+    <CloseBox
+      onClick={e => {
+        onClose?.(e);
+      }}
+    >
+      <X />
+    </CloseBox>
+  );
   if (destroyOnClose && closed) {
     return null;
   }
@@ -139,6 +154,7 @@ const InternalModal: React.FC<IModalProps> = ({
             <div style={{ display: closed ? 'none' : 'block' }}>
               <Mask style={{ ...maskSpringProps }} />
               <Wrapper
+                fullscreen={fullscreen ? 1 : 0}
                 centered={centered ? 1 : 0}
                 ref={wrapperRef}
                 onClick={onWrapperClick}
@@ -151,6 +167,7 @@ const InternalModal: React.FC<IModalProps> = ({
                   onMouseDown={onContentMouseDown}
                   onMouseUp={onContentMouseUp}
                 >
+                  {closable && closeIconToRender}
                   {children}
                 </Content>
               </Wrapper>

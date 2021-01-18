@@ -38,6 +38,7 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
     <Modal
       destroyOnClose
       maxWidth={560}
+      closable
       centered
       visible={visible}
       onClose={() => close()}
@@ -62,6 +63,7 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
                 <FieldInput
                   key={value}
                   name={value}
+                  disabled
                   label={t(`picture.info.${value}`) as string}
                 />
               ))}

@@ -13,9 +13,11 @@ export interface ITag {
 const Tag: React.FC<ITag> = ({ value, onChange }) => {
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.keyCode === 13) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
         onChange([...(new Set([...value, e.currentTarget.value]) as any)]);
         e.currentTarget.value = '';
+        return false;
       }
     },
     [onChange, value],
@@ -49,7 +51,7 @@ const Tag: React.FC<ITag> = ({ value, onChange }) => {
         </TagItem>
       ))}
       <TagInput>
-        <input onKeyDown={handleKeyDown} placeholder="请输入标签" />
+        <input onKeyPress={handleKeyDown} placeholder="请输入标签" />
       </TagInput>
     </Wrapper>
   );

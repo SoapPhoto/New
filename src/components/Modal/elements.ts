@@ -1,6 +1,8 @@
+import { customMedia } from '@app/styles/mediaQuery';
 import { rgba } from 'polished';
 import { animated } from 'react-spring';
 import styled, { css } from 'styled-components';
+import { IconButton } from '..';
 
 export const Mask = styled(animated.div)`
   position: fixed;
@@ -15,17 +17,7 @@ export const Mask = styled(animated.div)`
   /* backdrop-filter: saturate(180%) blur(4px); */
 `;
 
-export const Content = styled(animated.div)`
-  position: relative;
-  top: 100px;
-  margin: 0 auto;
-  background: ${p => p.theme.background};
-  border-radius: 4px;
-  width: 100%;
-  overflow: hidden;
-`;
-
-export const Wrapper = styled.div<{ centered: number }>`
+export const Wrapper = styled.div<{ centered: number; fullscreen: number }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -55,11 +47,44 @@ export const Wrapper = styled.div<{ centered: number }>`
           }
         `
       : ''}
+  ${p => customMedia.lessThan('mobile')`
+  ${
+    p.fullscreen
+      ? `
+      padding: 0;
+        ${Content} {
+      width: 100%;
+      max-width: 100% !important;
+      height: 100vh;
+      border-radius: 0px;
+      overflow-y: auto;
+    }
+  `
+      : ''
+  }
+  `}
+`;
+
+export const Content = styled(animated.div)`
+  position: relative;
+  top: 100px;
+  margin: 0 auto;
+  background: ${p => p.theme.background};
+  border-radius: 4px;
+  width: 100%;
+  overflow: hidden;
 `;
 
 export const Box = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+export const CloseBox = styled(IconButton)`
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 2;
 `;
 
 export const ModalContent = styled.div`
@@ -92,7 +117,7 @@ export const ModalHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px;
+  padding: 16px;
 `;
 
 export const ModalTitle = styled.h2`

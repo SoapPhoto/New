@@ -24,14 +24,14 @@ export const uploadOSS = async (
   const { data: creds } = await getSts();
   const key = uuid();
   const client = new OSS({
-    region: process.env.OSS_REGION,
-    bucket: process.env.OSS_BUCKET,
+    region: process.env.REACT_APP_OSS_REGION,
+    bucket: process.env.REACT_APP_OSS_BUCKET,
     accessKeyId: creds.AccessKeyId,
     accessKeySecret: creds.AccessKeySecret,
     stsToken: creds.SecurityToken,
   });
   const { data } = await client.multipartUpload(
-    process.env.OSS_PATH + key,
+    process.env.REACT_APP_OSS_PATH + key,
     file,
     {
       progress,

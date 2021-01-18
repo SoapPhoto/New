@@ -33,6 +33,7 @@ import { uploadOSS } from '@app/services/file';
 import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
 import { UploadType } from '@app/common/enum/upload';
+import { addPicture } from '@app/services/picture';
 
 export interface IValues {
   isLocation: boolean;
@@ -75,6 +76,7 @@ const UploadModal = observer(() => {
   const { t } = useTranslation();
   const { userInfo } = useAccount();
   const [percentComplete, setPercentComplete] = useState(0);
+  const [uploadLoading, setUploadLoading] = React.useState(false);
   const [visible, close] = useSearchParamModal('upload');
   const [editExifVisible, closeEditExif, openEditExif] = useSearchParamModal(
     'editExif',
@@ -99,15 +101,28 @@ const UploadModal = observer(() => {
   const onSubmit = useCallback(
     async (values: IValues) => {
       if (info && imageRef.current) {
-        // const key = await uploadOSS(
-        //   imageRef.current,
-        //   userInfo!.id,
-        //   UploadType.PICTURE,
-        //   onUploadProgress,
-        // );
-        console.log(info);
+        setUploadLoading(true);
+        let key;
+        try {
+          key = await uploadOSS(
+            imageRef.current,
+            userInfo!.id,
+            UploadType.PICTURE,
+            onUploadProgress,
+          );
+        } catch (err) {
+          Toast.error(err.message || '图片上传失败！');
+        }
+        if (key) {
+          await addPicture({
+            info,
+            key,
+            ...values,
+            tags: values.tags.map(v => ({ name: v })),
+          });
+        }
       } else {
-        Toast.warning('');
+        Toast.warning('请选择图片');
       }
     },
     [info, onUploadProgress, userInfo],
@@ -120,9 +135,12 @@ const UploadModal = observer(() => {
       afterClose={afterClose}
       centered
       destroyOnClose
+      closable
+      fullscreen
       maxWidth={600}
       visible={visible}
       onClose={() => close()}
+      maskClosable={false}
     >
       {thumbnail && <Modal.Background height={140} background={thumbnail!} />}
       <Modal.Content>
@@ -187,7 +205,11 @@ const UploadModal = observer(() => {
                 <div style={{ height: '24px' }} />
                 <div style={{ height: '12px' }} />
                 <div>
-                  <Button htmlType="submit" disabled={!(isValid && thumbnail)}>
+                  <Button
+                    loading={uploadLoading}
+                    htmlType="submit"
+                    disabled={!(isValid && thumbnail)}
+                  >
                     上传
                   </Button>
                 </div>

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { initButton } from '@app/styles/mixins';
 import { Upload } from '..';
 import { darken, rgba } from 'polished';
+import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 
 export const UploadHeader = styled(Upload)`
   ${initButton}
@@ -41,6 +42,9 @@ export const ThumbnailHover = styled.div`
   svg {
     stroke: ${p => rgba(darken(0.5, p.color || p.theme.colors.text), 0.6)};
   }
+  ${customMedia.lessThan('mobile')`
+    opacity: 1;
+  `}
 `;
 export const Thumbnail = styled.button`
   ${initButton}

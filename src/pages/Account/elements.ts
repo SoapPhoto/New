@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 import { btnMixin } from '@app/styles/mixins';
@@ -26,7 +25,7 @@ export const Content = styled.section`
   max-width: 380px;
 `;
 
-export const Title = styled(motion.h2)`
+export const Title = styled.h2`
   text-align: center;
   font-size: 32px;
   margin-bottom: 12px;

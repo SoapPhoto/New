@@ -10,8 +10,6 @@ export interface IFieldItemProps extends React.HTMLAttributes<HTMLDivElement> {
   onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-const template = ({ scale }: any) => `translate(0, 0) scale(${scale})`;
-
 const FieldItem: React.FC<IFieldItemProps> = ({
   label,
   bio,

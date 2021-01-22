@@ -1,13 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { EmojiText, Image } from '@app/components';
+import { EmojiText } from '@app/components';
 import { Picture } from '@app/graphql/query';
-import { useAccount } from '@app/stores/hooks';
-import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
-import { getPictureUrl } from '@app/utils/image';
 import { observer } from 'mobx-react';
-import React, { useMemo } from 'react';
-import { Info, Settings } from 'react-feather';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import ExifModal from './components/ExifModal';
 import HeaderUserInfo from './components/HeaderUserInfo';
@@ -15,21 +11,7 @@ import PictureCenter from './components/PictureCenter';
 import PictureInfo from './components/PictureInfo';
 import SettingModal from './components/SettingModal';
 
-import {
-  Wrapper,
-  PictureBox,
-  PictureContent,
-  PictureWrapper,
-  PictureImage,
-  PictureImageBox,
-  Content,
-  PictureBaseInfo,
-  LikeContent,
-  HeartIcon,
-  IconButton,
-  Title,
-  Bio,
-} from './elements';
+import { Wrapper, Content, Title, Bio } from './elements';
 import PictureSkeleton from './Skeleton';
 
 export const PicturePage = observer(() => {

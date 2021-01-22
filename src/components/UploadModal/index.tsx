@@ -75,7 +75,7 @@ const DeleteImageBtn: React.FC<
 const UploadModal = observer(() => {
   const { t } = useTranslation();
   const { userInfo } = useAccount();
-  const [percentComplete, setPercentComplete] = useState(0);
+  const [, setPercentComplete] = useState(0);
   const [uploadLoading, setUploadLoading] = React.useState(false);
   const [visible, close] = useSearchParamModal('upload');
   const [editExifVisible, closeEditExif, openEditExif] = useSearchParamModal(

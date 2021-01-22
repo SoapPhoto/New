@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { css } from 'styled-components';
 import { IconButton } from '..';
-import { Hash, Trash2, X } from '../Icons';
-import Input from '../Input';
+import { Hash, Trash2 } from '../Icons';
 import { TagInput, TagItem, Wrapper } from './elements';
 
 export interface ITag {

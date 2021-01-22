@@ -85,6 +85,7 @@ const InternalModal: React.FC<IModalProps> = ({
         close();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
   // useEffect(() => {
   //   if (animatedVisible) {

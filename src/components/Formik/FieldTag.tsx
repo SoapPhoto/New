@@ -1,10 +1,9 @@
 import React, { memo } from 'react';
 import { Field, FieldProps } from 'formik';
 
-import Textarea, { ITextareaAutosizeProps } from '../Input/Textarea';
-import { Label, LabelBox } from './elements';
+import { ITextareaAutosizeProps } from '../Input/Textarea';
+import { LabelBox } from './elements';
 import ErrorMessage from './ErrorMessage';
-import { css } from 'styled-components';
 import { Tag } from '..';
 
 interface IProps extends ITextareaAutosizeProps {

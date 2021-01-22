@@ -1,5 +1,5 @@
 import { Field, FieldProps } from 'formik';
-import React, { CSSProperties, memo, useState } from 'react';
+import React, { CSSProperties, memo } from 'react';
 import { ReactSwitchProps } from 'react-switch';
 
 import { FieldItem } from '.';

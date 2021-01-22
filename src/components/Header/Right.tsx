@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Moon, Search, Sun, UploadCloud } from 'react-feather';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import { A, IconButton, Popover } from '@app/components';
 import { space } from '@app/utils/theme';

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useApolloClient, useLazyQuery } from '@apollo/client';
+import { useCallback, useState } from 'react';
+import { useApolloClient } from '@apollo/client';
 
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { UserIsFollowing } from '@app/graphql/query';

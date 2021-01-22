@@ -1,4 +1,3 @@
-import { omit } from 'lodash';
 import { extname } from 'path';
 import { getImageEXIF, IEXIF } from './exif';
 import FastAverageColor from 'fast-average-color';

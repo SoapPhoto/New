@@ -1,7 +1,7 @@
 import { FieldInputProps, FormikErrors, FormikTouched } from 'formik';
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSpring } from 'react-spring';
-import { config, Transition } from 'react-spring/renderprops';
+import { config } from 'react-spring/renderprops';
 import { ErrorBox, Error } from './elements';
 
 interface IProps {

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import UserPopover from '@app/components/UserPopover';
-import { Button, FieldItem, Switch } from '@app/components';
 import Tag from '@app/components/Tag';
 
 const Test = () => {

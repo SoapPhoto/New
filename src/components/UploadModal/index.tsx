@@ -34,6 +34,11 @@ import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
 import { UploadType } from '@app/common/enum/upload';
 import { addPicture } from '@app/services/picture';
+import { useApolloClient } from '@apollo/client';
+import { Pictures } from '@app/graphql/query';
+import { PicturesType } from '@app/common/enum/picture';
+import { IPaginationListData } from '@app/graphql/interface';
+import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 
 export interface IValues {
   isLocation: boolean;
@@ -73,6 +78,7 @@ const DeleteImageBtn: React.FC<
 };
 
 const UploadModal = observer(() => {
+  const client = useApolloClient();
   const { t } = useTranslation();
   const { userInfo } = useAccount();
   const [, setPercentComplete] = useState(0);
@@ -101,26 +107,125 @@ const UploadModal = observer(() => {
   const onSubmit = useCallback(
     async (values: IValues) => {
       if (info && imageRef.current) {
-        setUploadLoading(true);
-        let key;
-        try {
-          key = await uploadOSS(
-            imageRef.current,
-            userInfo!.id,
-            UploadType.PICTURE,
-            onUploadProgress,
-          );
-        } catch (err) {
-          Toast.error(err.message || '图片上传失败！');
-        }
-        if (key) {
-          await addPicture({
-            info,
-            key,
-            ...values,
-            tags: values.tags.map(v => ({ name: v })),
+        type DataType = {
+          pictures: IPaginationListData<PictureEntity>;
+        };
+        // 查到缓存之后，插入新的数据
+        const data = client.readQuery<DataType>({
+          query: Pictures,
+          variables: {
+            type: PicturesType.NEW,
+            query: {
+              page: 1,
+              pageSize: 20,
+            },
+          },
+        });
+        if (data?.pictures?.data) {
+          client.writeQuery<DataType>({
+            query: Pictures,
+            variables: {
+              type: PicturesType.NEW,
+              query: {
+                page: 1,
+                pageSize: 20,
+              },
+            },
+            data: {
+              pictures: {
+                ...data.pictures,
+                data: [
+                  {
+                    id: 283,
+                    key: 'photo/a5c1c99b-4840-42b0-b55f-ccd40b7cc952',
+                    hash: null,
+                    title: '小狸',
+                    bio: '2020-07-24',
+                    views: 75,
+                    originalname: '8A25AE0698091E7D698CB6BBAF273AB4.png',
+                    mimetype: 'image/png',
+                    size: 337405,
+                    isLike: true,
+                    likedCount: 2,
+                    color: '#fff',
+                    isDark: false,
+                    height: 806,
+                    width: 817,
+                    make: null,
+                    model: null,
+                    createTime: '2020-07-27T09:23:34.667Z',
+                    updateTime: '2021-01-21T19:12:18.000Z',
+                    blurhash: 'B9JRKv~q9FWB?bIU',
+                    __typename: 'Picture',
+                    badge: [
+                      {
+                        id: 1,
+                        type: 'PICTURE',
+                        name: 'choice',
+                        rate: 'ordinary',
+                        __typename: 'Badge',
+                      },
+                    ],
+                    isPrivate: false,
+                    user: {
+                      id: 7,
+                      username: 'nightcatsama',
+                      fullName: 'NightCat',
+                      name: 'NightCat',
+                      email: '',
+                      avatar: 'photo/699e6864-1368-4baa-a7a5-d4b313baba08',
+                      bio: 'emmmm...',
+                      website: 'https://nightcat.win/',
+                      createTime: '2019-09-19T07:52:58.090Z',
+                      updateTime: '2020-07-16T08:28:01.000Z',
+                      cover: null,
+                      __typename: 'User',
+                      badge: [
+                        {
+                          id: 2,
+                          type: 'USER',
+                          name: 'prestige',
+                          rate: 'ordinary',
+                          __typename: 'Badge',
+                        },
+                      ],
+                    },
+                    exif: {
+                      aperture: null,
+                      exposureTime: null,
+                      focalLength: null,
+                      ISO: null,
+                      location: null,
+                      __typename: 'EXIF',
+                    },
+                  } as any,
+                  ...data.pictures.data,
+                ],
+              },
+            },
           });
+          console.log(data);
         }
+        // setUploadLoading(true);
+        // let key;
+        // try {
+        //   key = await uploadOSS(
+        //     imageRef.current,
+        //     userInfo!.id,
+        //     UploadType.PICTURE,
+        //     onUploadProgress,
+        //   );
+        // } catch (err) {
+        //   Toast.error(err.message || '图片上传失败！');
+        // }
+        // if (key) {
+        //   await addPicture({
+        //     info,
+        //     key,
+        //     ...values,
+        //     tags: values.tags.map(v => ({ name: v })),
+        //   });
+        // }
       } else {
         Toast.warning('请选择图片');
       }

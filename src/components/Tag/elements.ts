@@ -43,5 +43,9 @@ export const TagInput = styled.span`
     width: 100%;
     height: 100%;
     outline: 0;
+    color: ${p => p.theme.colors.text};
+    ::placeholder {
+      color: ${p => p.theme.colors.text};
+    }
   }
 `;

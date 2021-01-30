@@ -61,8 +61,11 @@ export function initClient() {
           fields: {
             pictures: {
               keyArgs: false,
-              merge(existing, incoming) {
+              merge(existing, incoming, options) {
                 if (!existing) {
+                  return incoming;
+                }
+                if (existing.page === incoming.page) {
                   return incoming;
                 }
                 return {

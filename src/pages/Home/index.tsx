@@ -43,6 +43,7 @@ export const Home = observer(() => {
       },
     });
   }, [data, fetchMore, networkStatus]);
+  console.log(data, loading);
   return (
     <div
       style={{

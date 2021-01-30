@@ -3,6 +3,8 @@ import { getImageEXIF, IEXIF } from './exif';
 import FastAverageColor from 'fast-average-color';
 
 import { isWebp } from './mixed';
+import { isString } from 'lodash';
+import { encode } from 'blurhash';
 
 export interface IImageInfo {
   exif: IEXIF;
@@ -127,8 +129,13 @@ export async function getImageInfo(
       info.isDark = colorData.isDark;
       info.color = colorData.hex;
     };
+    const setBlurhash = async () => {
+      const blurhash = await getImageBlurhash(previewBase64);
+      info.blurhash = blurhash;
+    };
     const setInfo = async () => {
       await Promise.all([setPreviewImage(), setColor()]);
+      await setBlurhash();
       res([info, previewSrc!, previewBase64!]);
     };
     if (imgHtml.complete) {
@@ -252,4 +259,38 @@ export async function getImageColor(img: HTMLImageElement) {
   const fac = new FastAverageColor();
   const color = await fac.getColorAsync(img);
   return color;
+}
+
+export function getImageBlurhash(
+  data: string | HTMLImageElement,
+): Promise<string> {
+  return new Promise(resolve => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d')!;
+    let img: HTMLImageElement;
+    if (isString(data)) {
+      img = new Image();
+      img.src = data;
+    } else {
+      img = data;
+    }
+    const set = () => {
+      const width = img.naturalWidth;
+      const height = img.naturalHeight;
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      URL.revokeObjectURL(img.src);
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const blurhash = encode(imageData.data, width, height, 4, 3);
+      resolve(blurhash);
+    };
+    if (img.complete) {
+      set();
+    } else {
+      img.onload = async () => {
+        set();
+      };
+    }
+  });
 }

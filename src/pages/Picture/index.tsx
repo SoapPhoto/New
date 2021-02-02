@@ -21,8 +21,10 @@ export const PicturePage = observer(() => {
   }>(Picture, {
     notifyOnNetworkStatusChange: true,
     variables: { id: Number(id) },
+    fetchPolicy: 'cache-and-network',
+    nextFetchPolicy: 'cache-first',
   });
-  if (loading || !data) return <PictureSkeleton />;
+  if ((loading && !data) || !data) return <PictureSkeleton />;
   const { picture } = data;
   const { user } = picture;
   return (

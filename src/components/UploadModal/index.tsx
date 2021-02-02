@@ -36,9 +36,7 @@ import { useAccount } from '@app/stores/hooks';
 import { UploadType } from '@app/common/enum/upload';
 import { addPicture } from '@app/services/picture';
 import { useApolloClient } from '@apollo/client';
-import { Picture, Pictures } from '@app/graphql/query';
-import { PicturesType } from '@app/common/enum/picture';
-import { IPaginationListData } from '@app/graphql/interface';
+import { Picture } from '@app/graphql/query';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 
 export interface IValues {

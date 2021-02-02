@@ -17,6 +17,7 @@ import Test from '@app/pages/Test';
 import PicturePage from '@app/pages/Picture/Loadable';
 import Upload from '@app/pages/Upload';
 import UploadModal from '@app/components/UploadModal';
+import User from '@app/pages/User';
 
 const Router = () => {
   return (
@@ -26,6 +27,7 @@ const Router = () => {
         <Route path="picture/:id" element={<PicturePage />}></Route>
         <Route path="test" element={<Test />} />
         <Route path="upload" element={<Upload />} />
+        <Route path="/@:username" element={<User />} />
       </Route>
       <Route path="" element={<Account />}>
         <Route path="login" element={<Login />} />

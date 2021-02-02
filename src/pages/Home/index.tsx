@@ -7,8 +7,8 @@ import { Pictures } from '@app/graphql/query';
 
 import { PicturesType } from '@app/common/enum/picture';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import Skeleton from '@app/components/Picture/Skeleton';
 import { IPaginationListData } from '@app/graphql/interface';
+import Skeleton from './Skeleton';
 
 export const Home = observer(() => {
   const { loading, data, fetchMore, networkStatus } = useQuery<{

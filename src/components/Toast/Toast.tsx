@@ -131,7 +131,7 @@ const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
           }}
           onMouseLeave={() => {
             clearTimeout(timer.current);
-            timer.current = setTimeout(() => {
+            timer.current = window.setTimeout(() => {
               setIsOverviewing(false);
             }, 100);
           }}

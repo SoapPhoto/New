@@ -24,7 +24,7 @@ class ToastInstance extends React.PureComponent<{}, IState> {
   add = (config: IToastArg) => {
     const key = uuidv4();
     if (config.duration && config.duration > 0) {
-      timerCache[key] = setTimeout(() => {
+      timerCache[key] = window.setTimeout(() => {
         delete timerCache[key];
         this.delete(key);
       }, config.duration);

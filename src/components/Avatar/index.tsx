@@ -7,7 +7,7 @@ import { getPictureUrl } from '@app/utils/image';
 
 type ColorType = keyof typeof light.colors;
 
-interface IAvatarProps {
+interface IAvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   text?: string;
   src?: string;
   size?: number;
@@ -24,6 +24,7 @@ const Avatar: React.FC<IAvatarProps> = ({
   text,
   children,
   alt,
+  ...restProps
 }) => {
   const theme = useTheme();
   let content: React.ReactNode = children;
@@ -34,7 +35,12 @@ const Avatar: React.FC<IAvatarProps> = ({
     content = <Img src={getPictureUrl(src, 'thumb')} />;
   }
   return (
-    <Wrapper rainbow={rainbow ? 1 : 0} size={size} color={theme.colors[color]}>
+    <Wrapper
+      {...restProps}
+      rainbow={rainbow ? 1 : 0}
+      size={size}
+      color={theme.colors[color]}
+    >
       {content}
     </Wrapper>
   );

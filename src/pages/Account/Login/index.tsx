@@ -34,7 +34,7 @@ const Login = () => {
     transform: 'translateX(-5%)',
   }));
   useEffect(() => {
-    timer.current = setTimeout(() => {
+    timer.current = window.setTimeout(() => {
       set({
         opacity: 1,
         transform: 'translateX(0%)',

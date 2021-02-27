@@ -1,6 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import { animate } from './animate';
 import normalize from './normalize';
+import scroll from './scroll';
+import scrollbar from './scrollbar';
 
 export const GlobalStyle = createGlobalStyle`
   html,
@@ -29,4 +31,6 @@ export const GlobalStyle = createGlobalStyle`
   }
   ${normalize}
   ${animate}
+  ${scroll}
+  ${scrollbar}
 `;

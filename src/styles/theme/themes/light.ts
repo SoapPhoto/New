@@ -22,6 +22,12 @@ const theme: DefaultTheme = {
   },
   dashboard: {},
   widget: {
+    scrollbar: {
+      graidient: 'rgba(255,255,255,.9)',
+      background: 'rgba(0,0,0,.45)',
+      hover: 'rgba(0,0,0,.55)',
+      active: 'rgba(0,0,0,.7)',
+    },
     input: {
       bg: gray2,
       hoverBg: gray3,

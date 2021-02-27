@@ -1,8 +1,10 @@
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { Avatar, EmojiText } from '@app/components';
+import { Avatar, EmojiText, UserFollowModal } from '@app/components';
 import { customMedia } from '@app/styles/mediaQuery';
-import React from 'react';
+import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
+import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { animated } from 'react-spring';
 import styled from 'styled-components';
 
 interface IProps {
@@ -61,6 +63,10 @@ const UserTotal = styled.div`
   width: 100%;
   margin-left: -12px;
 `;
+const UserTotalItemBtn = styled(animated.div)`
+  padding: 0 12px;
+  cursor: pointer;
+`;
 const UserTotalItem = styled.div`
   padding: 0 12px;
 `;
@@ -74,7 +80,17 @@ const UserTotalItemLabel = styled.span`
   color: ${_ => _.theme.colors.secondary};
 `;
 
-const UserInfoHeader: React.FC<IProps> = ({ user }) => {
+const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {
+  const [, , followerOpen] = useSearchParamModal(
+    'user-follower',
+    'modal-child',
+  );
+  const [, , followedOpen] = useSearchParamModal(
+    'user-followed',
+    'modal-child',
+  );
+  const [spring, bind] = useTapButton(1.05, 0.93);
+  const [spring1, bind1] = useTapButton(1.05, 0.93);
   const { t } = useTranslation();
   return (
     <Wrapper>
@@ -88,18 +104,30 @@ const UserInfoHeader: React.FC<IProps> = ({ user }) => {
           </UserName>
           <UserTotalBox>
             <UserTotal>
-              <UserTotalItem>
+              <UserTotalItemBtn
+                {...bind()}
+                style={{
+                  transform: spring.transform,
+                }}
+                onClick={() => followerOpen()}
+              >
                 <UserTotalItemCount>{user.followerCount}</UserTotalItemCount>
                 <UserTotalItemLabel>
                   {t('user.label.followers')}
                 </UserTotalItemLabel>
-              </UserTotalItem>
-              <UserTotalItem>
+              </UserTotalItemBtn>
+              <UserTotalItemBtn
+                {...bind1()}
+                style={{
+                  transform: spring1.transform,
+                }}
+                onClick={() => followedOpen()}
+              >
                 <UserTotalItemCount>{user.followedCount}</UserTotalItemCount>
                 <UserTotalItemLabel>
                   {t('user.label.followed')}
                 </UserTotalItemLabel>
-              </UserTotalItem>
+              </UserTotalItemBtn>
               <UserTotalItem>
                 <UserTotalItemCount>{user.likesCount}</UserTotalItemCount>
                 <UserTotalItemLabel>{t('user.label.likes')}</UserTotalItemLabel>
@@ -110,6 +138,6 @@ const UserInfoHeader: React.FC<IProps> = ({ user }) => {
       </Box>
     </Wrapper>
   );
-};
+});
 
 export default UserInfoHeader;

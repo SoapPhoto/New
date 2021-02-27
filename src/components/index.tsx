@@ -14,6 +14,7 @@ export { default as Upload } from './Upload';
 export { default as Tag } from './Tag';
 export { default as Avatar } from './Avatar';
 export { default as Tab } from './Tab';
+export { default as UserFollowModal } from './UserFollowModal';
 
 export * from './Formik';
 export * from './Picture';

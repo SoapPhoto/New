@@ -8,12 +8,18 @@ interface IProps {}
 
 const Wrapper = styled.div`
   padding: 0 24px;
+  padding-top: 24px;
 `;
 const UserTab: React.FC<IProps> = memo(() => {
   return (
     <Wrapper>
-      <Tab>
+      <Tab
+        css={css`
+          text-align: center;
+        `}
+      >
         <Tab.Item name="照片" to="."></Tab.Item>
+        <Tab.Item name="精选" to="./choice"></Tab.Item>
         <Tab.Item name="喜欢" to="./like"></Tab.Item>
       </Tab>
     </Wrapper>

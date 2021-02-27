@@ -19,6 +19,12 @@ declare module 'styled-components' {
     };
     dashboard: {};
     widget: {
+      scrollbar: {
+        graidient: string;
+        background: string;
+        hover: string;
+        active: string;
+      };
       input: {
         bg: string;
         hoverBg: string;

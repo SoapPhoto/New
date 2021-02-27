@@ -5,6 +5,7 @@ export const Tooltip = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 10000;
 
   &[data-popper-placement^='top'] [data-popper-arrow] {
     bottom: -4px;

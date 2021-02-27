@@ -113,14 +113,18 @@ export const ModalBackground = styled.div<{
   background-size: cover;
 `;
 
+export const ModalTitle = styled.h2`
+  font-size: 18px;
+  padding: 24px;
+`;
+
 export const ModalHeader = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-`;
-
-export const ModalTitle = styled.h2`
-  font-size: 18px;
-  padding: 24px;
+  border-bottom: 1px solid ${_ => _.theme.colors.gray4};
+  ${ModalTitle} {
+    padding: 0px;
+  }
 `;

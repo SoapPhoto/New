@@ -1,5 +1,13 @@
 type Maybe<T> = T | null;
 
+type IListQueryResult<T> = {
+  count: number;
+  data: T[];
+  page: number;
+  pageSize: number;
+  timestamp: number;
+};
+
 declare module '*/fragments.graphql';
 declare module '*/mutations.graphql';
 declare module '@app/graphql/query/query.graphql' {

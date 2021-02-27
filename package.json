@@ -57,6 +57,8 @@
     "mobx": "^6.1.7",
     "mobx-react": "^7.1.0",
     "node-plop": "0.26.2",
+    "overlayscrollbars": "^1.13.1",
+    "overlayscrollbars-react": "^0.2.2",
     "plop": "2.7.4",
     "polished": "^4.1.1",
     "prettier": "2.2.1",

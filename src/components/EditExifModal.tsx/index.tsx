@@ -64,7 +64,7 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
                   key={value}
                   name={value}
                   disabled
-                  label={t(`picture.info.${value}`) as string}
+                  label={t(`picture.info.${value}` as any) as string}
                 />
               ))}
             </FormBox>

@@ -2,7 +2,6 @@ type Maybe<T> = T | null;
 
 declare module '*/fragments.graphql';
 declare module '*/mutations.graphql';
-
 declare module '@app/graphql/query/query.graphql' {
   import { DocumentNode } from 'graphql';
 

@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   max-width: 600px;
   width: 100%;
   margin: -58px auto 0px;
-  padding: 0px 20px;
+  padding: 0px 24px;
 `;
 
 const Box = styled.div`
@@ -23,6 +23,9 @@ const Box = styled.div`
   grid-auto-rows: minmax(20px, auto);
   grid-template-columns: 140px auto;
   gap: 32px;
+  ${customMedia.lessThan('mobile')`
+    grid-template-columns: 110px auto;
+  `}
 `;
 
 const AvatarStyle = styled(Avatar)`
@@ -57,20 +60,9 @@ const UserTotal = styled.div`
   display: flex;
   width: 100%;
   margin-left: -12px;
-  ${customMedia.lessThan('mobile')`
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: space-around;
-  `}
 `;
 const UserTotalItem = styled.div`
   padding: 0 12px;
-  ${customMedia.lessThan('mobile')`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `}
 `;
 const UserTotalItemCount = styled.span`
   font-size: 20px;

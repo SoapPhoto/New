@@ -49,7 +49,7 @@ const Register = observer(() => {
           error.message.forEach(err => {
             setFieldError(
               err.param,
-              t(`error.${err.message[0]}`, {
+              t(`error.${err.message[0]}` as any, {
                 defaultValue: err.message[0],
               }) as string,
             );

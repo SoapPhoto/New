@@ -1,11 +1,13 @@
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { Image } from '@app/components';
+import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 import { getPictureUrl } from '@app/utils/image';
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 interface IProps {
-  user: UserEntity;
+  cover?: string;
+  avatar: string;
 }
 
 const Cover = styled.div`
@@ -18,6 +20,13 @@ const Cover = styled.div`
   overflow: hidden;
   z-index: 0;
   background-color: ${_ => _.theme.colors.gray3};
+  ${customMedia.lessThan('mobile')`
+    border-radius: 0px;
+    margin-top: 0px;
+  `}
+  ${customMedia.lessThan('medium')`
+    max-width: ${customBreakpoints.mobile};
+  `}
   &:hover {
     &::after {
       opacity: 0;
@@ -56,12 +65,12 @@ const Cover = styled.div`
 `;
 const CoverImage = styled(Image)``;
 
-const UserCover: React.FC<IProps> = ({ user }) => {
+const UserCover: React.FC<IProps> = memo(({ cover, avatar }) => {
   return (
     <Cover>
-      <CoverImage src={getPictureUrl(user.cover || user.avatar, 'regular')} />
+      <CoverImage src={getPictureUrl(cover || avatar, 'regular')} />
     </Cover>
   );
-};
+});
 
 export default UserCover;

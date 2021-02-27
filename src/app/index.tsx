@@ -18,8 +18,10 @@ import PicturePage from '@app/pages/Picture/Loadable';
 import Upload from '@app/pages/Upload';
 import UploadModal from '@app/components/UploadModal';
 import User from '@app/pages/User';
+import { UserTypeValues } from '@app/common/enum/router';
 
 const Router = () => {
+  console.log(`/@:username/:type(${UserTypeValues.join('|')})?`);
   return (
     <Routes>
       <Route path="" element={<DefaultLayout />}>
@@ -27,7 +29,7 @@ const Router = () => {
         <Route path="picture/:id" element={<PicturePage />}></Route>
         <Route path="test" element={<Test />} />
         <Route path="upload" element={<Upload />} />
-        <Route path="/@:username" element={<User />} />
+        <Route path={`/@:username/*`} element={<User />} />
       </Route>
       <Route path="" element={<Account />}>
         <Route path="login" element={<Login />} />

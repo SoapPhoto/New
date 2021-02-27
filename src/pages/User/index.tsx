@@ -1,27 +1,18 @@
-import { useQuery } from '@apollo/client';
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { UserInfo } from '@app/graphql/query';
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import UserCover from './components/UserCover';
-import UserInfoHeader from './components/UserInfoHeader';
-import {} from './elements';
+import React, { memo } from 'react';
+import { Route, Routes, useParams } from 'react-router-dom';
+import UserHeader from './components/UserHeader';
 
-const User = () => {
+const User = memo(() => {
   const { username } = useParams();
-  const { loading, data, fetchMore, networkStatus } = useQuery<{
-    user: UserEntity;
-  }>(UserInfo, {
-    variables: {
-      username,
-    },
-  });
-  if (loading || !data) return null;
   return (
     <div>
-      <UserCover user={data.user} />
-      <UserInfoHeader user={data.user} />
+      <UserHeader username={username} />
+      <Routes>
+        <Route path="like" element={<div>123</div>} />
+        <Route path="collections" element={<div>444</div>} />
+        <Route path="" element={<div>321</div>} />
+      </Routes>
     </div>
   );
-};
+});
 export default User;

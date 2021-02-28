@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useAccount } from '@app/stores/hooks';
 import { observer } from 'mobx-react';
+
+import { Image } from '@app/components';
+import { useAccount } from '@app/stores/hooks';
 import { Loading } from '@app/components';
 import { BG, Content, LoadingBox, RightBox, Wrapper } from './elements';
 
@@ -29,10 +30,10 @@ const Account = observer(() => {
       ) : (
         <>
           <BG>
-            {/* <Image
+            <Image
               blurhash="LXL;s+?HM{M{.ToIt7s:S*V@a}t6"
               src="https://cdn-oss.soapphoto.com/photo/6c71ed8a-56de-4e35-90e0-cddd9f2fbd95@!regular_webp"
-            /> */}
+            />
           </BG>
           <RightBox>
             <Content>

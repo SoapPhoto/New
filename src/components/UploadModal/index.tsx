@@ -117,7 +117,10 @@ const UploadModal = observer(() => {
             onUploadProgress,
           );
         } catch (err) {
-          Toast.error(err.message || '图片上传失败！');
+          Toast.error(err.message || '图片上传失败！', 0, cb => (
+            <Button size="small">关闭</Button>
+          ));
+          setUploadLoading(false);
         }
         if (key) {
           const { data } = await addPicture({

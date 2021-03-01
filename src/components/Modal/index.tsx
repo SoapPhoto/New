@@ -120,7 +120,7 @@ const InternalModal: React.FC<IModalProps> = ({
   };
 
   const onContentMouseUp: React.MouseEventHandler = () => {
-    contentTimeoutRef.current = setTimeout(() => {
+    contentTimeoutRef.current = window.setTimeout(() => {
       contentClickRef.current = false;
     });
   };

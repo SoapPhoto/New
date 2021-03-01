@@ -29,7 +29,10 @@ export default function useMeasure(): [
     right: 0,
   });
   const [ro] = useState(
-    () => new ResizeObserver(([entry]) => set(entry.contentRect)),
+    (): ResizeObserver =>
+      new ResizeObserver((entries: ResizeObserverEntry[]) => {
+        set(entries[0].contentRect);
+      }),
   );
   useEffect(() => {
     ro.observe(ref.current as any);

@@ -76,7 +76,7 @@ const Popover: React.FC<IPopoverProps> = ({
           name: 'preventOverflow',
           options: {
             padding: 12,
-            altBoundary: true,
+            altBoundary: false,
           },
         },
         // {

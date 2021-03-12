@@ -1,0 +1,3061 @@
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
+export type Maybe<T> = T;
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
+  { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  DateTime: any;
+};
+
+export type BaseNode = {
+  id: Scalars['Float'];
+  createTime: Maybe<Scalars['DateTime']>;
+  updateTime: Maybe<Scalars['DateTime']>;
+};
+
+export type BaseList = {
+  count: Maybe<Scalars['Float']>;
+  page: Maybe<Scalars['Float']>;
+  pageSize: Maybe<Scalars['Float']>;
+  timestamp: Maybe<Scalars['Float']>;
+};
+
+export type BaseCountData = {
+  count: Maybe<Scalars['Float']>;
+};
+
+export type Status = {
+  __typename?: 'Status';
+  done: Maybe<Scalars['Boolean']>;
+};
+
+export type PicturesQueryInput = {
+  /** 分页 */
+  page: Maybe<Scalars['Float']>;
+  /** 分页 */
+  pageSize: Maybe<Scalars['Float']>;
+  /** 时间戳 */
+  timestamp: Maybe<Scalars['Float']>;
+};
+
+export type CommentsQueryInput = {
+  /** 分页 */
+  page: Maybe<Scalars['Float']>;
+  /** 分页 */
+  pageSize: Maybe<Scalars['Float']>;
+  /** 时间戳 */
+  timestamp: Maybe<Scalars['Float']>;
+};
+
+export type CollectionsQueryInput = {
+  /** 分页 */
+  page: Maybe<Scalars['Float']>;
+  /** 分页 */
+  pageSize: Maybe<Scalars['Float']>;
+  /** 时间戳 */
+  timestamp: Maybe<Scalars['Float']>;
+};
+
+export enum BadgeType {
+  User = 'USER',
+  Picture = 'PICTURE',
+}
+
+export type Query = {
+  __typename?: 'Query';
+  getBadges: Maybe<Array<Maybe<Badge>>>;
+  /** 获取收藏夹详情 */
+  collection: Maybe<Collection>;
+  /** 获取收藏夹图片列表 */
+  collectionPictures: Maybe<Pictures>;
+  comments: Maybe<Comments>;
+  childComments: Maybe<Comments>;
+  /** 关注的用户 */
+  followedUsers: Maybe<Array<Maybe<User>>>;
+  /** 粉丝 */
+  followerUsers: Maybe<Array<Maybe<User>>>;
+  /** 搜索位置信息 */
+  searchPlace: Maybe<Array<Maybe<SearchPlaceDetail>>>;
+  /** 你想地理编码数据 */
+  reverseGeocoding: Maybe<PictureLocation>;
+  userNotification: Maybe<Array<Maybe<Notification>>>;
+  unreadNotificationCount: Maybe<Count>;
+  /** 获取单个图片 */
+  searchPictures: Maybe<Pictures>;
+  /** 获取单个图片 */
+  picture: Maybe<Picture>;
+  /** 获取图片列表 */
+  pictures: Maybe<Pictures>;
+  /** 获取更新图片列表 */
+  newPictures: Maybe<Pictures>;
+  /** 获取图片相关收藏夹 */
+  pictureRelatedCollection: Maybe<PictureRelatedCollectionReq>;
+  /** 获取用户的图片 */
+  userPictures: Maybe<Pictures>;
+  /** 获取相关图片 */
+  pictureRelatedPictures: Array<Picture>;
+  /** 获取单个用户信息 */
+  tag: Maybe<Tag>;
+  tagPictures: Maybe<Pictures>;
+  /** 获取登录用户信息 */
+  whoami: Maybe<User>;
+  /** 获取单个用户信息 */
+  user: Maybe<User>;
+  /** 获取用户的收藏夹列表 */
+  userCollectionsByName: Maybe<Collections>;
+  /** 获取用户的收藏夹列表 */
+  userCollectionsById: Maybe<Collections>;
+  userPicturesByName: Maybe<Pictures>;
+  userPicturesById: Maybe<Pictures>;
+};
+
+export type QueryGetBadgesArgs = {
+  type: BadgeType;
+  targetId: Scalars['Float'];
+};
+
+export type QueryCollectionArgs = {
+  id: Scalars['Float'];
+};
+
+export type QueryCollectionPicturesArgs = {
+  id: Scalars['Float'];
+  query: Maybe<PicturesQueryInput>;
+};
+
+export type QueryCommentsArgs = {
+  id: Scalars['Float'];
+  query: Maybe<CommentsQueryInput>;
+};
+
+export type QueryChildCommentsArgs = {
+  id: Scalars['Float'];
+  query: Maybe<CommentsQueryInput>;
+};
+
+export type QueryFollowedUsersArgs = {
+  limit: Maybe<Scalars['Float']>;
+  offset: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+};
+
+export type QueryFollowerUsersArgs = {
+  limit: Maybe<Scalars['Float']>;
+  offset: Maybe<Scalars['Float']>;
+  id: Maybe<Scalars['Float']>;
+};
+
+export type QuerySearchPlaceArgs = {
+  value: Maybe<Scalars['String']>;
+  config: Maybe<LocationBaseInput>;
+};
+
+export type QueryReverseGeocodingArgs = {
+  location: Maybe<Scalars['String']>;
+  config: Maybe<LocationBaseInput>;
+};
+
+export type QuerySearchPicturesArgs = {
+  words: Scalars['String'];
+  query: PicturesQueryInput;
+};
+
+export type QueryPictureArgs = {
+  id: Scalars['Float'];
+};
+
+export type QueryPicturesArgs = {
+  type: Maybe<PicturesType>;
+  query: PicturesQueryInput;
+};
+
+export type QueryNewPicturesArgs = {
+  query: NewPicturesQueryInput;
+};
+
+export type QueryPictureRelatedCollectionArgs = {
+  id: Scalars['Float'];
+};
+
+export type QueryUserPicturesArgs = {
+  id: Scalars['Float'];
+  username: Maybe<Scalars['String']>;
+  query: PicturesQueryInput;
+};
+
+export type QueryPictureRelatedPicturesArgs = {
+  id: Scalars['Float'];
+  limit: Maybe<Scalars['Float']>;
+};
+
+export type QueryTagArgs = {
+  name: Maybe<Scalars['String']>;
+};
+
+export type QueryTagPicturesArgs = {
+  name: Scalars['String'];
+  page: Maybe<Scalars['Float']>;
+  pageSize: Maybe<Scalars['Float']>;
+  timestamp: Maybe<Scalars['Float']>;
+};
+
+export type QueryUserArgs = {
+  id: Maybe<Scalars['ID']>;
+  username: Maybe<Scalars['String']>;
+};
+
+export type QueryUserCollectionsByNameArgs = {
+  username: Scalars['String'];
+  query: Maybe<CollectionsQueryInput>;
+};
+
+export type QueryUserCollectionsByIdArgs = {
+  id: Scalars['Float'];
+  query: CollectionsQueryInput;
+};
+
+export type QueryUserPicturesByNameArgs = {
+  type?: Maybe<UserPictureType>;
+  username: Scalars['String'];
+  query: PicturesQueryInput;
+};
+
+export type QueryUserPicturesByIdArgs = {
+  type?: Maybe<UserPictureType>;
+  id: Scalars['Float'];
+  query: Maybe<PicturesQueryInput>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addBadge: Maybe<Status>;
+  /** 添加图片到收藏夹 */
+  addPictureCollection: Maybe<Collection>;
+  /** 从收藏夹删除图片 */
+  removePictureCollection: Maybe<Status>;
+  deleteCollection: Maybe<Status>;
+  addComment: Maybe<Comment>;
+  followUser: Maybe<Status>;
+  unFollowUser: Maybe<Status>;
+  markNotificationReadAll: Maybe<Status>;
+  /** 喜欢图片 */
+  likePicture: Maybe<LikePictureReq>;
+  /** 取消喜欢图片 */
+  unlikePicture: Maybe<LikePictureReq>;
+  updatePicture: Maybe<Picture>;
+  deletePicture: Maybe<Status>;
+  /** 修改用户信息 */
+  updateProfile: Maybe<User>;
+  /** 修改封面 */
+  updateCover: Maybe<User>;
+};
+
+export type MutationAddBadgeArgs = {
+  type: BadgeType;
+  badgeId: Scalars['Float'];
+  targetId: Scalars['Float'];
+};
+
+export type MutationAddPictureCollectionArgs = {
+  id: Scalars['Float'];
+  pictureId: Scalars['Float'];
+};
+
+export type MutationRemovePictureCollectionArgs = {
+  id: Scalars['Float'];
+  pictureId: Scalars['Float'];
+};
+
+export type MutationDeleteCollectionArgs = {
+  id: Scalars['Float'];
+};
+
+export type MutationAddCommentArgs = {
+  id: Scalars['Float'];
+  commentId: Maybe<Scalars['Float']>;
+  data: AddCommentInput;
+};
+
+export type MutationFollowUserArgs = {
+  input: Maybe<FollowUserInput>;
+};
+
+export type MutationUnFollowUserArgs = {
+  input: Maybe<FollowUserInput>;
+};
+
+export type MutationLikePictureArgs = {
+  id: Scalars['Float'];
+};
+
+export type MutationUnlikePictureArgs = {
+  id: Scalars['Float'];
+};
+
+export type MutationUpdatePictureArgs = {
+  id: Scalars['Float'];
+  data: UpdatePictureInput;
+};
+
+export type MutationDeletePictureArgs = {
+  id: Scalars['Float'];
+};
+
+export type MutationUpdateProfileArgs = {
+  data: UpdateProfileInput;
+};
+
+export type MutationUpdateCoverArgs = {
+  cover: Scalars['String'];
+};
+
+export type Badge = {
+  __typename?: 'Badge';
+  id: Maybe<Scalars['Float']>;
+  type: Maybe<BadgeType>;
+  name: Maybe<Scalars['String']>;
+  rate: Maybe<Scalars['String']>;
+};
+
+export type AddPictureCollectionInput = {
+  /** 图片id */
+  pictureId: Scalars['Float'];
+};
+
+export type Collections = BaseList & {
+  __typename?: 'Collections';
+  count: Maybe<Scalars['Float']>;
+  page: Maybe<Scalars['Float']>;
+  pageSize: Maybe<Scalars['Float']>;
+  timestamp: Maybe<Scalars['Float']>;
+  data: Array<Collection>;
+};
+
+export type Collection = BaseNode & {
+  __typename?: 'Collection';
+  /** id */
+  id: Scalars['Float'];
+  /** 名字 */
+  name: Maybe<Scalars['String']>;
+  /** 介绍 */
+  bio: Maybe<Scalars['String']>;
+  /** 图片作者 */
+  user: Maybe<User>;
+  /** 收藏夹预览 */
+  preview: Maybe<Array<Picture>>;
+  /** 私人 */
+  isPrivate: Maybe<Scalars['Boolean']>;
+  /** 图片数量 */
+  pictureCount: Maybe<Scalars['Float']>;
+  /** 创建时间 */
+  createTime: Maybe<Scalars['DateTime']>;
+  /** 修改时间 */
+  updateTime: Maybe<Scalars['DateTime']>;
+};
+
+export type AddCommentInput = {
+  /** 评论内容 */
+  content: Maybe<Scalars['String']>;
+};
+
+export type Comments = BaseList & {
+  __typename?: 'Comments';
+  count: Maybe<Scalars['Float']>;
+  page: Maybe<Scalars['Float']>;
+  pageSize: Maybe<Scalars['Float']>;
+  timestamp: Maybe<Scalars['Float']>;
+  data: Array<Comment>;
+};
+
+export type Comment = BaseNode & {
+  __typename?: 'Comment';
+  id: Scalars['Float'];
+  content: Maybe<Scalars['String']>;
+  /** 评论作者 */
+  user: Maybe<User>;
+  ip: Maybe<Scalars['String']>;
+  userAgent: Maybe<Scalars['String']>;
+  /** 评论的图片 */
+  picture: Maybe<Picture>;
+  createTime: Maybe<Scalars['DateTime']>;
+  updateTime: Maybe<Scalars['DateTime']>;
+  replyUser: Maybe<User>;
+  replyComment: Maybe<Comment>;
+  parentComment: Maybe<Comment>;
+  /** 子评论 */
+  childComments: Maybe<Array<Maybe<Comment>>>;
+  /** 子评论数量 */
+  subCount: Maybe<Scalars['Float']>;
+};
+
+export type CommentChildCommentsArgs = {
+  limit: Maybe<Scalars['Float']>;
+};
+
+export type FollowUserInput = {
+  userId: Scalars['Float'];
+};
+
+export type Follow = {
+  __typename?: 'Follow';
+  /** 被关注的人 */
+  followed: Maybe<User>;
+  /** 关注的人 */
+  follower: Maybe<User>;
+  createTime: Maybe<Scalars['DateTime']>;
+  updateTime: Maybe<Scalars['DateTime']>;
+};
+
+export enum LocationClientType {
+  Baidu = 'BAIDU',
+  Mapbox = 'MAPBOX',
+}
+
+export type LocationBaseInput = {
+  clientType: Maybe<LocationClientType>;
+};
+
+export type PictureLocation = {
+  __typename?: 'PictureLocation';
+  location: Maybe<SearchPlaceDetailLocation>;
+  /** 结构化地址信息 */
+  formatted_address: Maybe<Scalars['String']>;
+  /** 坐标所在商圈信息 */
+  business: Maybe<Scalars['String']>;
+  /** 国家 */
+  country: Maybe<Scalars['String']>;
+  /** 国家代码 */
+  country_code: Maybe<Scalars['String']>;
+  /** 省名 */
+  province: Maybe<Scalars['String']>;
+  /** 城市名 */
+  city: Maybe<Scalars['String']>;
+  /** 区县名 */
+  district: Maybe<Scalars['String']>;
+  /** 乡镇名 */
+  town: Maybe<Scalars['String']>;
+  pois: Maybe<Array<Maybe<Poi>>>;
+};
+
+export type PictureLocationPoisArgs = {
+  limit: Maybe<Scalars['Float']>;
+};
+
+export type SearchPlaceDetailInfo = {
+  __typename?: 'SearchPlaceDetailInfo';
+  tag: Maybe<Scalars['String']>;
+};
+
+export type SearchPlaceDetailLocation = {
+  __typename?: 'SearchPlaceDetailLocation';
+  lat: Maybe<Scalars['Float']>;
+  lng: Maybe<Scalars['Float']>;
+};
+
+export type Poi = {
+  __typename?: 'Poi';
+  addr: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  poiType: Maybe<Scalars['String']>;
+  tag: Maybe<Scalars['String']>;
+};
+
+export type SearchPlaceDetail = {
+  __typename?: 'SearchPlaceDetail';
+  name: Maybe<Scalars['String']>;
+  location: Maybe<SearchPlaceDetailLocation>;
+  address: Maybe<Scalars['String']>;
+  province: Maybe<Scalars['String']>;
+  city: Maybe<Scalars['String']>;
+  area: Maybe<Scalars['String']>;
+  street_id: Maybe<Scalars['String']>;
+  telephone: Maybe<Scalars['String']>;
+  detail: Maybe<Scalars['Float']>;
+  uid: Maybe<Scalars['String']>;
+  detail_info: Maybe<SearchPlaceDetailInfo>;
+};
+
+export enum NotificationCategory {
+  Liked = 'LIKED',
+  Comment = 'COMMENT',
+  Follow = 'FOLLOW',
+  Reply = 'REPLY',
+}
+
+export enum NotificationType {
+  User = 'USER',
+  System = 'SYSTEM',
+}
+
+export type NotificationMedia = Picture | Comment | Collection | User;
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newNotification: Maybe<Notification>;
+};
+
+export type Count = {
+  __typename?: 'Count';
+  count: Maybe<Scalars['Float']>;
+};
+
+export type Notification = BaseNode & {
+  __typename?: 'Notification';
+  id: Scalars['Float'];
+  /** 创建时间 */
+  createTime: Maybe<Scalars['DateTime']>;
+  /** 修改时间 */
+  updateTime: Maybe<Scalars['DateTime']>;
+  /** 消息发布者 */
+  publisher: Maybe<User>;
+  /** 种类 */
+  category: Maybe<NotificationCategory>;
+  /** 是否已读 */
+  read: Maybe<Scalars['Boolean']>;
+  /** 是否已读 */
+  media: Maybe<NotificationMedia>;
+  picture: Maybe<Picture>;
+  comment: Maybe<Comment>;
+  user: Maybe<User>;
+};
+
+export enum PicturesType {
+  New = 'NEW',
+  Hot = 'HOT',
+  Choice = 'CHOICE',
+  Feed = 'FEED',
+}
+
+export type UpdatePictureInput = {
+  title: Maybe<Scalars['String']>;
+  bio: Maybe<Scalars['String']>;
+  isPrivate: Maybe<Scalars['Boolean']>;
+  tags: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+export type NewPicturesQueryInput = {
+  /** 分页 */
+  page: Maybe<Scalars['Float']>;
+  /** 分页 */
+  pageSize: Maybe<Scalars['Float']>;
+  /** 时间戳 */
+  timestamp: Maybe<Scalars['Float']>;
+  /** 起始时间戳 */
+  lastTimestamp: Maybe<Scalars['Float']>;
+};
+
+export type PictureRelatedCollectionReq = BaseCountData & {
+  __typename?: 'PictureRelatedCollectionReq';
+  count: Maybe<Scalars['Float']>;
+  data: Array<Collection>;
+};
+
+export type LikePictureReq = {
+  __typename?: 'LikePictureReq';
+  count: Maybe<Scalars['Float']>;
+  isLike: Maybe<Scalars['Boolean']>;
+};
+
+export type Pictures = BaseList & {
+  __typename?: 'Pictures';
+  count: Maybe<Scalars['Float']>;
+  page: Maybe<Scalars['Float']>;
+  pageSize: Maybe<Scalars['Float']>;
+  timestamp: Maybe<Scalars['Float']>;
+  data: Array<Picture>;
+};
+
+export type Exif = {
+  __typename?: 'EXIF';
+  aperture: Maybe<Scalars['Float']>;
+  exposureTime: Maybe<Scalars['String']>;
+  focalLength: Maybe<Scalars['Float']>;
+  ISO: Maybe<Scalars['Float']>;
+  location: Maybe<Array<Maybe<Scalars['Float']>>>;
+};
+
+/** 图片 */
+export type Picture = BaseNode & {
+  __typename?: 'Picture';
+  /** id */
+  id: Scalars['Float'];
+  /** 七牛的key */
+  key: Maybe<Scalars['String']>;
+  /** 七牛的hash */
+  hash: Maybe<Scalars['String']>;
+  /** 图片标题 */
+  title: Maybe<Scalars['String']>;
+  /** 图片介绍 */
+  bio: Maybe<Scalars['String']>;
+  /** 浏览次数 */
+  views: Maybe<Scalars['Float']>;
+  /** 图片评论数量 */
+  commentCount: Maybe<Scalars['Float']>;
+  /** 图片原始文件名 */
+  originalname: Maybe<Scalars['String']>;
+  /** 图片类型 */
+  mimetype: Maybe<Scalars['String']>;
+  /** 图片大小 */
+  size: Maybe<Scalars['Float']>;
+  /** 当前登录用户是否喜欢 */
+  isLike: Maybe<Scalars['Boolean']>;
+  /** picture喜欢的数量 */
+  likedCount: Maybe<Scalars['Float']>;
+  /** 图片的主色调 */
+  color: Maybe<Scalars['String']>;
+  /** 图片的颜色是明还是暗 */
+  isDark: Maybe<Scalars['Boolean']>;
+  /** 图片长度 */
+  height: Maybe<Scalars['Float']>;
+  /** 图片宽度 */
+  width: Maybe<Scalars['Float']>;
+  /** 设备品牌 */
+  make: Maybe<Scalars['String']>;
+  /** 设备型号 */
+  model: Maybe<Scalars['String']>;
+  /** EXIF信息 */
+  exif: Maybe<Exif>;
+  /** blurhash */
+  blurhash: Maybe<Scalars['String']>;
+  /** blurhash src */
+  blurhashSrc: Maybe<Scalars['String']>;
+  /** 图片作者 */
+  user: Maybe<User>;
+  /** 创建时间 */
+  createTime: Maybe<Scalars['DateTime']>;
+  /** 修改时间 */
+  updateTime: Maybe<Scalars['DateTime']>;
+  tags: Maybe<Array<Maybe<Tag>>>;
+  /** 是否是私人的 */
+  isPrivate: Maybe<Scalars['Boolean']>;
+  /** 当前用户收藏了此图片的收藏夹列表 */
+  currentCollections: Maybe<Array<Maybe<Collection>>>;
+  /** 当前用户收藏了此图片的收藏夹列表 */
+  relatedCollections: Maybe<PictureRelatedCollectionReq>;
+  /** 徽章 */
+  badge: Maybe<Array<Maybe<Badge>>>;
+  /** 位置信息 */
+  location: Maybe<PictureLocation>;
+};
+
+/** 图片 */
+export type PictureRelatedCollectionsArgs = {
+  limit: Maybe<Scalars['Float']>;
+};
+
+/** 标签 */
+export type Tag = BaseNode & {
+  __typename?: 'Tag';
+  /** id */
+  id: Scalars['Float'];
+  /** 标签名称 */
+  name: Maybe<Scalars['String']>;
+  /** 图片数量 */
+  pictureCount: Maybe<Scalars['Float']>;
+  createTime: Maybe<Scalars['DateTime']>;
+  updateTime: Maybe<Scalars['DateTime']>;
+};
+
+export enum UserPictureType {
+  My = 'MY',
+  Liked = 'LIKED',
+  Choice = 'CHOICE',
+}
+
+export enum UserSignupType {
+  Email = 'EMAIL',
+  Github = 'GITHUB',
+  Google = 'GOOGLE',
+  Weibo = 'WEIBO',
+}
+
+export enum UserStatusType {
+  Unverified = 'UNVERIFIED',
+  Verified = 'VERIFIED',
+  Suspended = 'SUSPENDED',
+  Banned = 'BANNED',
+}
+
+export type UpdateProfileInput = {
+  name: Maybe<Scalars['String']>;
+  bio: Maybe<Scalars['String']>;
+  website: Maybe<Scalars['String']>;
+  key: Maybe<Scalars['String']>;
+};
+
+/** 用户 */
+export type User = BaseNode & {
+  __typename?: 'User';
+  /** id */
+  id: Scalars['Float'];
+  /** 用户名 */
+  username: Maybe<Scalars['String']>;
+  /** 显示的名称 */
+  name: Maybe<Scalars['String']>;
+  fullName: Maybe<Scalars['String']>;
+  /** 邮箱 */
+  email: Maybe<Scalars['String']>;
+  /** 用户头像 */
+  avatar: Maybe<Scalars['String']>;
+  /** 用户封面 */
+  cover: Maybe<Scalars['String']>;
+  /** 个人介绍 */
+  bio: Maybe<Scalars['String']>;
+  /** 个人网站 */
+  website: Maybe<Scalars['String']>;
+  /** 喜欢的picture数量 */
+  likedCount: Maybe<Scalars['Float']>;
+  /** 用户被喜欢的数量 */
+  likesCount: Maybe<Scalars['Float']>;
+  /** 用户的picture数量 */
+  pictureCount: Maybe<Scalars['Float']>;
+  /** 粉丝数量 */
+  followerCount: Maybe<Scalars['Float']>;
+  /** 关注的人数量 */
+  followedCount: Maybe<Scalars['Float']>;
+  /** 是否私人 */
+  isPrivate: Maybe<Scalars['Boolean']>;
+  /** 是否关注 */
+  isFollowing: Maybe<Scalars['Float']>;
+  /** 是否有设置密码 */
+  isPassword: Maybe<Scalars['Boolean']>;
+  /** 是否验证邮箱 */
+  isEmailVerified: Maybe<Scalars['Boolean']>;
+  /** 注册方式 */
+  signupType: Maybe<UserSignupType>;
+  status: Maybe<UserStatusType>;
+  createTime: Maybe<Scalars['DateTime']>;
+  updateTime: Maybe<Scalars['DateTime']>;
+  pictures: Maybe<Array<Maybe<Picture>>>;
+  /** 徽章 */
+  badge: Maybe<Array<Maybe<Badge>>>;
+};
+
+/** 用户 */
+export type UserAvatarArgs = {
+  size: Maybe<Scalars['Float']>;
+};
+
+/** 用户 */
+export type UserPicturesArgs = {
+  limit: Maybe<Scalars['Float']>;
+};
+
+export type UserCoverRes = {
+  __typename?: 'UserCoverRes';
+  id: Scalars['Float'];
+  cover: Scalars['String'];
+};
+
+export const PictureFragmentFragmentDoc = gql`
+  fragment PictureFragment on Picture {
+    id
+    key
+    hash
+    title
+    bio
+    views
+    originalname
+    mimetype
+    size
+    isLike
+    likedCount
+    color
+    isDark
+    height
+    width
+    make
+    model
+    createTime
+    updateTime
+    blurhash
+  }
+`;
+export const CollectionFragmentFragmentDoc = gql`
+  fragment CollectionFragment on Collection {
+    id
+    name
+    bio
+    isPrivate
+    createTime
+    updateTime
+    pictureCount
+  }
+`;
+export const UserFragmentFragmentDoc = gql`
+  fragment UserFragment on User {
+    id
+    username
+    fullName
+    name
+    email
+    avatar
+    bio
+    website
+    createTime
+    updateTime
+    cover
+  }
+`;
+export const BadgeFragmentFragmentDoc = gql`
+  fragment BadgeFragment on Badge {
+    id
+    type
+    name
+    rate
+  }
+`;
+export const UserBaseFragmentFragmentDoc = gql`
+  fragment UserBaseFragment on User {
+    ...UserFragment
+    badge {
+      ...BadgeFragment
+    }
+  }
+  ${UserFragmentFragmentDoc}
+  ${BadgeFragmentFragmentDoc}
+`;
+export const TagFragmentFragmentDoc = gql`
+  fragment TagFragment on Tag {
+    id
+    name
+    createTime
+    updateTime
+    pictureCount
+  }
+`;
+export const ExifFragmentFragmentDoc = gql`
+  fragment EXIFFragment on EXIF {
+    aperture
+    exposureTime
+    focalLength
+    ISO
+    location
+  }
+`;
+export const PictureLocationFragmentFragmentDoc = gql`
+  fragment PictureLocationFragment on PictureLocation {
+    formatted_address
+    business
+    country
+    country_code
+    province
+    city
+    district
+    town
+    location {
+      lat
+      lng
+    }
+    pois(limit: 3) {
+      addr
+      name
+      poiType
+      tag
+    }
+  }
+`;
+export const PictureDetailFragmentFragmentDoc = gql`
+  fragment PictureDetailFragment on Picture {
+    ...PictureFragment
+    isPrivate
+    commentCount
+    currentCollections {
+      ...CollectionFragment
+    }
+    user {
+      ...UserBaseFragment
+      isFollowing
+    }
+    tags {
+      ...TagFragment
+    }
+    exif {
+      ...EXIFFragment
+    }
+    badge {
+      ...BadgeFragment
+    }
+    location {
+      ...PictureLocationFragment
+    }
+  }
+  ${PictureFragmentFragmentDoc}
+  ${CollectionFragmentFragmentDoc}
+  ${UserBaseFragmentFragmentDoc}
+  ${TagFragmentFragmentDoc}
+  ${ExifFragmentFragmentDoc}
+  ${BadgeFragmentFragmentDoc}
+  ${PictureLocationFragmentFragmentDoc}
+`;
+export const PictureListFragmentFragmentDoc = gql`
+  fragment PictureListFragment on Pictures {
+    count
+    page
+    pageSize
+    timestamp
+    data {
+      ...PictureFragment
+      badge {
+        ...BadgeFragment
+      }
+      blurhash
+      isPrivate
+      user {
+        ...UserBaseFragment
+        badge {
+          ...BadgeFragment
+        }
+      }
+      exif {
+        ...EXIFFragment
+      }
+    }
+  }
+  ${PictureFragmentFragmentDoc}
+  ${BadgeFragmentFragmentDoc}
+  ${UserBaseFragmentFragmentDoc}
+  ${ExifFragmentFragmentDoc}
+`;
+export const UpdatePictureFragmentFragmentDoc = gql`
+  fragment UpdatePictureFragment on Picture {
+    title
+    bio
+    isPrivate
+    tags {
+      ...TagFragment
+    }
+  }
+  ${TagFragmentFragmentDoc}
+`;
+export const PictureLikeFragmentFragmentDoc = gql`
+  fragment PictureLikeFragment on LikePictureReq {
+    count
+    isLike
+  }
+`;
+export const PicturePreviewFragmentFragmentDoc = gql`
+  fragment PicturePreviewFragment on Picture {
+    id
+    key
+    hash
+    title
+    bio
+    views
+    originalname
+    mimetype
+    size
+    color
+    isDark
+    height
+    width
+    make
+    model
+    createTime
+    updateTime
+  }
+`;
+export const RelatedCollectionFragmentFragmentDoc = gql`
+  fragment RelatedCollectionFragment on PictureRelatedCollectionReq {
+    count
+    data {
+      ...CollectionFragment
+      preview {
+        ...PicturePreviewFragment
+      }
+    }
+  }
+  ${CollectionFragmentFragmentDoc}
+  ${PicturePreviewFragmentFragmentDoc}
+`;
+export const CollectionDetailFragmentFragmentDoc = gql`
+  fragment CollectionDetailFragment on Collection {
+    pictureCount
+    ...CollectionFragment
+    user {
+      ...UserFragment
+    }
+    preview {
+      ...PicturePreviewFragment
+    }
+  }
+  ${CollectionFragmentFragmentDoc}
+  ${UserFragmentFragmentDoc}
+  ${PicturePreviewFragmentFragmentDoc}
+`;
+export const CollectionListFragmentFragmentDoc = gql`
+  fragment CollectionListFragment on Collections {
+    count
+    page
+    pageSize
+    data {
+      ...CollectionFragment
+      pictureCount
+      user {
+        ...UserFragment
+      }
+      preview {
+        ...PicturePreviewFragment
+      }
+    }
+  }
+  ${CollectionFragmentFragmentDoc}
+  ${UserFragmentFragmentDoc}
+  ${PicturePreviewFragmentFragmentDoc}
+`;
+export const UserFollowInfoFragmentFragmentDoc = gql`
+  fragment UserFollowInfoFragment on User {
+    id
+    username
+    isFollowing
+    followerCount
+    followedCount
+  }
+`;
+export const CommentBaseFragmentFragmentDoc = gql`
+  fragment CommentBaseFragment on Comment {
+    id
+    content
+    createTime
+    updateTime
+    subCount
+  }
+`;
+export const CommentNotificationFragmentFragmentDoc = gql`
+  fragment CommentNotificationFragment on Comment {
+    ...CommentBaseFragment
+    replyComment {
+      ...CommentBaseFragment
+    }
+    parentComment {
+      ...CommentBaseFragment
+    }
+    user {
+      ...UserFragment
+    }
+    replyUser {
+      ...UserFragment
+    }
+    picture {
+      ...PicturePreviewFragment
+    }
+  }
+  ${CommentBaseFragmentFragmentDoc}
+  ${UserFragmentFragmentDoc}
+  ${PicturePreviewFragmentFragmentDoc}
+`;
+export const UserDetailFragmentFragmentDoc = gql`
+  fragment UserDetailFragment on User {
+    ...UserFragment
+    likedCount
+    pictureCount
+    isFollowing
+    likesCount
+    followerCount
+    followedCount
+    isEmailVerified
+    isPassword
+    signupType
+    status
+    pictures(limit: 3) {
+      ...PicturePreviewFragment
+    }
+    badge {
+      ...BadgeFragment
+    }
+  }
+  ${UserFragmentFragmentDoc}
+  ${PicturePreviewFragmentFragmentDoc}
+  ${BadgeFragmentFragmentDoc}
+`;
+export const NotificationFragmentFragmentDoc = gql`
+  fragment NotificationFragment on Notification {
+    id
+    createTime
+    updateTime
+    publisher {
+      ...UserFragment
+    }
+    category
+    read
+    picture {
+      ...PicturePreviewFragment
+    }
+    comment {
+      ...CommentNotificationFragment
+    }
+    user {
+      ...UserDetailFragment
+    }
+  }
+  ${UserFragmentFragmentDoc}
+  ${PicturePreviewFragmentFragmentDoc}
+  ${CommentNotificationFragmentFragmentDoc}
+  ${UserDetailFragmentFragmentDoc}
+`;
+export const CommentChildFragmentFragmentDoc = gql`
+  fragment CommentChildFragment on Comment {
+    ...CommentBaseFragment
+    replyComment {
+      ...CommentBaseFragment
+    }
+    parentComment {
+      ...CommentBaseFragment
+    }
+    user {
+      ...UserBaseFragment
+    }
+    replyUser {
+      ...UserFragment
+    }
+  }
+  ${CommentBaseFragmentFragmentDoc}
+  ${UserBaseFragmentFragmentDoc}
+  ${UserFragmentFragmentDoc}
+`;
+export const ChildCommentListFragmentFragmentDoc = gql`
+  fragment ChildCommentListFragment on Comments {
+    count
+    page
+    pageSize
+    timestamp
+    data {
+      ...CommentChildFragment
+    }
+  }
+  ${CommentChildFragmentFragmentDoc}
+`;
+export const CommentFragmentFragmentDoc = gql`
+  fragment CommentFragment on Comment {
+    ...CommentBaseFragment
+    replyComment {
+      ...CommentBaseFragment
+    }
+    parentComment {
+      ...CommentBaseFragment
+    }
+    childComments(limit: 3) {
+      ...CommentChildFragment
+    }
+    user {
+      ...UserBaseFragment
+    }
+    replyUser {
+      ...UserFragment
+    }
+  }
+  ${CommentBaseFragmentFragmentDoc}
+  ${CommentChildFragmentFragmentDoc}
+  ${UserBaseFragmentFragmentDoc}
+  ${UserFragmentFragmentDoc}
+`;
+export const CommentListFragmentFragmentDoc = gql`
+  fragment CommentListFragment on Comments {
+    count
+    page
+    pageSize
+    timestamp
+    data {
+      ...CommentFragment
+    }
+  }
+  ${CommentFragmentFragmentDoc}
+`;
+export const SearchPlaceDetailFragmentFragmentDoc = gql`
+  fragment SearchPlaceDetailFragment on SearchPlaceDetail {
+    name
+    location {
+      lat
+      lng
+    }
+    address
+    province
+    city
+    area
+    street_id
+    telephone
+    detail
+    uid
+    detail_info {
+      tag
+    }
+  }
+`;
+export const UpdatePictureDocument = gql`
+  mutation UpdatePicture($data: UpdatePictureInput!, $id: Float!) {
+    updatePicture(data: $data, id: $id) {
+      ...UpdatePictureFragment
+    }
+  }
+  ${UpdatePictureFragmentFragmentDoc}
+`;
+export type UpdatePictureMutationFn = Apollo.MutationFunction<
+  UpdatePictureMutation,
+  UpdatePictureMutationVariables
+>;
+
+/**
+ * __useUpdatePictureMutation__
+ *
+ * To run a mutation, you first call `useUpdatePictureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePictureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePictureMutation, { data, loading, error }] = useUpdatePictureMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdatePictureMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdatePictureMutation,
+    UpdatePictureMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdatePictureMutation,
+    UpdatePictureMutationVariables
+  >(UpdatePictureDocument, options);
+}
+export type UpdatePictureMutationHookResult = ReturnType<
+  typeof useUpdatePictureMutation
+>;
+export type UpdatePictureMutationResult = Apollo.MutationResult<UpdatePictureMutation>;
+export type UpdatePictureMutationOptions = Apollo.BaseMutationOptions<
+  UpdatePictureMutation,
+  UpdatePictureMutationVariables
+>;
+export const LikePictureDocument = gql`
+  mutation LikePicture($id: Float!) {
+    likePicture(id: $id) {
+      ...PictureLikeFragment
+    }
+  }
+  ${PictureLikeFragmentFragmentDoc}
+`;
+export type LikePictureMutationFn = Apollo.MutationFunction<
+  LikePictureMutation,
+  LikePictureMutationVariables
+>;
+
+/**
+ * __useLikePictureMutation__
+ *
+ * To run a mutation, you first call `useLikePictureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLikePictureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [likePictureMutation, { data, loading, error }] = useLikePictureMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useLikePictureMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    LikePictureMutation,
+    LikePictureMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<LikePictureMutation, LikePictureMutationVariables>(
+    LikePictureDocument,
+    options,
+  );
+}
+export type LikePictureMutationHookResult = ReturnType<
+  typeof useLikePictureMutation
+>;
+export type LikePictureMutationResult = Apollo.MutationResult<LikePictureMutation>;
+export type LikePictureMutationOptions = Apollo.BaseMutationOptions<
+  LikePictureMutation,
+  LikePictureMutationVariables
+>;
+export const UnLikePictureDocument = gql`
+  mutation UnLikePicture($id: Float!) {
+    unlikePicture(id: $id) {
+      ...PictureLikeFragment
+    }
+  }
+  ${PictureLikeFragmentFragmentDoc}
+`;
+export type UnLikePictureMutationFn = Apollo.MutationFunction<
+  UnLikePictureMutation,
+  UnLikePictureMutationVariables
+>;
+
+/**
+ * __useUnLikePictureMutation__
+ *
+ * To run a mutation, you first call `useUnLikePictureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnLikePictureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unLikePictureMutation, { data, loading, error }] = useUnLikePictureMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUnLikePictureMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UnLikePictureMutation,
+    UnLikePictureMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UnLikePictureMutation,
+    UnLikePictureMutationVariables
+  >(UnLikePictureDocument, options);
+}
+export type UnLikePictureMutationHookResult = ReturnType<
+  typeof useUnLikePictureMutation
+>;
+export type UnLikePictureMutationResult = Apollo.MutationResult<UnLikePictureMutation>;
+export type UnLikePictureMutationOptions = Apollo.BaseMutationOptions<
+  UnLikePictureMutation,
+  UnLikePictureMutationVariables
+>;
+export const MarkNotificationReadAllDocument = gql`
+  mutation MarkNotificationReadAll {
+    markNotificationReadAll {
+      done
+    }
+  }
+`;
+export type MarkNotificationReadAllMutationFn = Apollo.MutationFunction<
+  MarkNotificationReadAllMutation,
+  MarkNotificationReadAllMutationVariables
+>;
+
+/**
+ * __useMarkNotificationReadAllMutation__
+ *
+ * To run a mutation, you first call `useMarkNotificationReadAllMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkNotificationReadAllMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markNotificationReadAllMutation, { data, loading, error }] = useMarkNotificationReadAllMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMarkNotificationReadAllMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    MarkNotificationReadAllMutation,
+    MarkNotificationReadAllMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    MarkNotificationReadAllMutation,
+    MarkNotificationReadAllMutationVariables
+  >(MarkNotificationReadAllDocument, options);
+}
+export type MarkNotificationReadAllMutationHookResult = ReturnType<
+  typeof useMarkNotificationReadAllMutation
+>;
+export type MarkNotificationReadAllMutationResult = Apollo.MutationResult<MarkNotificationReadAllMutation>;
+export type MarkNotificationReadAllMutationOptions = Apollo.BaseMutationOptions<
+  MarkNotificationReadAllMutation,
+  MarkNotificationReadAllMutationVariables
+>;
+export const AddPictureCollectionDocument = gql`
+  mutation AddPictureCollection($id: Float!, $pictureId: Float!) {
+    addPictureCollection(id: $id, pictureId: $pictureId) {
+      ...CollectionFragment
+    }
+  }
+  ${CollectionFragmentFragmentDoc}
+`;
+export type AddPictureCollectionMutationFn = Apollo.MutationFunction<
+  AddPictureCollectionMutation,
+  AddPictureCollectionMutationVariables
+>;
+
+/**
+ * __useAddPictureCollectionMutation__
+ *
+ * To run a mutation, you first call `useAddPictureCollectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPictureCollectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPictureCollectionMutation, { data, loading, error }] = useAddPictureCollectionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      pictureId: // value for 'pictureId'
+ *   },
+ * });
+ */
+export function useAddPictureCollectionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddPictureCollectionMutation,
+    AddPictureCollectionMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    AddPictureCollectionMutation,
+    AddPictureCollectionMutationVariables
+  >(AddPictureCollectionDocument, options);
+}
+export type AddPictureCollectionMutationHookResult = ReturnType<
+  typeof useAddPictureCollectionMutation
+>;
+export type AddPictureCollectionMutationResult = Apollo.MutationResult<AddPictureCollectionMutation>;
+export type AddPictureCollectionMutationOptions = Apollo.BaseMutationOptions<
+  AddPictureCollectionMutation,
+  AddPictureCollectionMutationVariables
+>;
+export const RemovePictureCollectionDocument = gql`
+  mutation RemovePictureCollection($id: Float!, $pictureId: Float!) {
+    removePictureCollection(id: $id, pictureId: $pictureId) {
+      done
+    }
+  }
+`;
+export type RemovePictureCollectionMutationFn = Apollo.MutationFunction<
+  RemovePictureCollectionMutation,
+  RemovePictureCollectionMutationVariables
+>;
+
+/**
+ * __useRemovePictureCollectionMutation__
+ *
+ * To run a mutation, you first call `useRemovePictureCollectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemovePictureCollectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removePictureCollectionMutation, { data, loading, error }] = useRemovePictureCollectionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      pictureId: // value for 'pictureId'
+ *   },
+ * });
+ */
+export function useRemovePictureCollectionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RemovePictureCollectionMutation,
+    RemovePictureCollectionMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RemovePictureCollectionMutation,
+    RemovePictureCollectionMutationVariables
+  >(RemovePictureCollectionDocument, options);
+}
+export type RemovePictureCollectionMutationHookResult = ReturnType<
+  typeof useRemovePictureCollectionMutation
+>;
+export type RemovePictureCollectionMutationResult = Apollo.MutationResult<RemovePictureCollectionMutation>;
+export type RemovePictureCollectionMutationOptions = Apollo.BaseMutationOptions<
+  RemovePictureCollectionMutation,
+  RemovePictureCollectionMutationVariables
+>;
+export const DeleteCollectionDocument = gql`
+  mutation DeleteCollection($id: Float!) {
+    deleteCollection(id: $id) {
+      done
+    }
+  }
+`;
+export type DeleteCollectionMutationFn = Apollo.MutationFunction<
+  DeleteCollectionMutation,
+  DeleteCollectionMutationVariables
+>;
+
+/**
+ * __useDeleteCollectionMutation__
+ *
+ * To run a mutation, you first call `useDeleteCollectionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCollectionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCollectionMutation, { data, loading, error }] = useDeleteCollectionMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCollectionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    DeleteCollectionMutation,
+    DeleteCollectionMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    DeleteCollectionMutation,
+    DeleteCollectionMutationVariables
+  >(DeleteCollectionDocument, options);
+}
+export type DeleteCollectionMutationHookResult = ReturnType<
+  typeof useDeleteCollectionMutation
+>;
+export type DeleteCollectionMutationResult = Apollo.MutationResult<DeleteCollectionMutation>;
+export type DeleteCollectionMutationOptions = Apollo.BaseMutationOptions<
+  DeleteCollectionMutation,
+  DeleteCollectionMutationVariables
+>;
+export const UpdateProfileDocument = gql`
+  mutation UpdateProfile($data: UpdateProfileInput!) {
+    updateProfile(data: $data) {
+      ...UserFragment
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+export type UpdateProfileMutationFn = Apollo.MutationFunction<
+  UpdateProfileMutation,
+  UpdateProfileMutationVariables
+>;
+
+/**
+ * __useUpdateProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProfileMutation, { data, loading, error }] = useUpdateProfileMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateProfileMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateProfileMutation,
+    UpdateProfileMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UpdateProfileMutation,
+    UpdateProfileMutationVariables
+  >(UpdateProfileDocument, options);
+}
+export type UpdateProfileMutationHookResult = ReturnType<
+  typeof useUpdateProfileMutation
+>;
+export type UpdateProfileMutationResult = Apollo.MutationResult<UpdateProfileMutation>;
+export type UpdateProfileMutationOptions = Apollo.BaseMutationOptions<
+  UpdateProfileMutation,
+  UpdateProfileMutationVariables
+>;
+export const UpdateCoverDocument = gql`
+  mutation UpdateCover($cover: String!) {
+    updateCover(cover: $cover) {
+      ...UserFragment
+    }
+  }
+  ${UserFragmentFragmentDoc}
+`;
+export type UpdateCoverMutationFn = Apollo.MutationFunction<
+  UpdateCoverMutation,
+  UpdateCoverMutationVariables
+>;
+
+/**
+ * __useUpdateCoverMutation__
+ *
+ * To run a mutation, you first call `useUpdateCoverMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCoverMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCoverMutation, { data, loading, error }] = useUpdateCoverMutation({
+ *   variables: {
+ *      cover: // value for 'cover'
+ *   },
+ * });
+ */
+export function useUpdateCoverMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UpdateCoverMutation,
+    UpdateCoverMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<UpdateCoverMutation, UpdateCoverMutationVariables>(
+    UpdateCoverDocument,
+    options,
+  );
+}
+export type UpdateCoverMutationHookResult = ReturnType<
+  typeof useUpdateCoverMutation
+>;
+export type UpdateCoverMutationResult = Apollo.MutationResult<UpdateCoverMutation>;
+export type UpdateCoverMutationOptions = Apollo.BaseMutationOptions<
+  UpdateCoverMutation,
+  UpdateCoverMutationVariables
+>;
+export const FollowUserDocument = gql`
+  mutation FollowUser($input: FollowUserInput!) {
+    followUser(input: $input) {
+      done
+    }
+  }
+`;
+export type FollowUserMutationFn = Apollo.MutationFunction<
+  FollowUserMutation,
+  FollowUserMutationVariables
+>;
+
+/**
+ * __useFollowUserMutation__
+ *
+ * To run a mutation, you first call `useFollowUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followUserMutation, { data, loading, error }] = useFollowUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useFollowUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    FollowUserMutation,
+    FollowUserMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<FollowUserMutation, FollowUserMutationVariables>(
+    FollowUserDocument,
+    options,
+  );
+}
+export type FollowUserMutationHookResult = ReturnType<
+  typeof useFollowUserMutation
+>;
+export type FollowUserMutationResult = Apollo.MutationResult<FollowUserMutation>;
+export type FollowUserMutationOptions = Apollo.BaseMutationOptions<
+  FollowUserMutation,
+  FollowUserMutationVariables
+>;
+export const UnFollowUserDocument = gql`
+  mutation UnFollowUser($input: FollowUserInput!) {
+    unFollowUser(input: $input) {
+      done
+    }
+  }
+`;
+export type UnFollowUserMutationFn = Apollo.MutationFunction<
+  UnFollowUserMutation,
+  UnFollowUserMutationVariables
+>;
+
+/**
+ * __useUnFollowUserMutation__
+ *
+ * To run a mutation, you first call `useUnFollowUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnFollowUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unFollowUserMutation, { data, loading, error }] = useUnFollowUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUnFollowUserMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    UnFollowUserMutation,
+    UnFollowUserMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    UnFollowUserMutation,
+    UnFollowUserMutationVariables
+  >(UnFollowUserDocument, options);
+}
+export type UnFollowUserMutationHookResult = ReturnType<
+  typeof useUnFollowUserMutation
+>;
+export type UnFollowUserMutationResult = Apollo.MutationResult<UnFollowUserMutation>;
+export type UnFollowUserMutationOptions = Apollo.BaseMutationOptions<
+  UnFollowUserMutation,
+  UnFollowUserMutationVariables
+>;
+export const AddCommentDocument = gql`
+  mutation AddComment($id: Float!, $commentId: Float, $data: AddCommentInput!) {
+    addComment(id: $id, commentId: $commentId, data: $data) {
+      ...CommentChildFragment
+    }
+  }
+  ${CommentChildFragmentFragmentDoc}
+`;
+export type AddCommentMutationFn = Apollo.MutationFunction<
+  AddCommentMutation,
+  AddCommentMutationVariables
+>;
+
+/**
+ * __useAddCommentMutation__
+ *
+ * To run a mutation, you first call `useAddCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCommentMutation, { data, loading, error }] = useAddCommentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      commentId: // value for 'commentId'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useAddCommentMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddCommentMutation,
+    AddCommentMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddCommentMutation, AddCommentMutationVariables>(
+    AddCommentDocument,
+    options,
+  );
+}
+export type AddCommentMutationHookResult = ReturnType<
+  typeof useAddCommentMutation
+>;
+export type AddCommentMutationResult = Apollo.MutationResult<AddCommentMutation>;
+export type AddCommentMutationOptions = Apollo.BaseMutationOptions<
+  AddCommentMutation,
+  AddCommentMutationVariables
+>;
+export const PictureDocument = gql`
+  query Picture($id: Float!) {
+    picture(id: $id) {
+      ...PictureDetailFragment
+    }
+  }
+  ${PictureDetailFragmentFragmentDoc}
+`;
+
+/**
+ * __usePictureQuery__
+ *
+ * To run a query within a React component, call `usePictureQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePictureQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePictureQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePictureQuery(
+  baseOptions: Apollo.QueryHookOptions<PictureQuery, PictureQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<PictureQuery, PictureQueryVariables>(
+    PictureDocument,
+    options,
+  );
+}
+export function usePictureLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PictureQuery,
+    PictureQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<PictureQuery, PictureQueryVariables>(
+    PictureDocument,
+    options,
+  );
+}
+export type PictureQueryHookResult = ReturnType<typeof usePictureQuery>;
+export type PictureLazyQueryHookResult = ReturnType<typeof usePictureLazyQuery>;
+export type PictureQueryResult = Apollo.QueryResult<
+  PictureQuery,
+  PictureQueryVariables
+>;
+export const SearchPicturesDocument = gql`
+  query SearchPictures($words: String!, $query: PicturesQueryInput!) {
+    searchPictures(words: $words, query: $query) {
+      ...PictureListFragment
+    }
+  }
+  ${PictureListFragmentFragmentDoc}
+`;
+
+/**
+ * __useSearchPicturesQuery__
+ *
+ * To run a query within a React component, call `useSearchPicturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPicturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPicturesQuery({
+ *   variables: {
+ *      words: // value for 'words'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useSearchPicturesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    SearchPicturesQuery,
+    SearchPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SearchPicturesQuery, SearchPicturesQueryVariables>(
+    SearchPicturesDocument,
+    options,
+  );
+}
+export function useSearchPicturesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SearchPicturesQuery,
+    SearchPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SearchPicturesQuery, SearchPicturesQueryVariables>(
+    SearchPicturesDocument,
+    options,
+  );
+}
+export type SearchPicturesQueryHookResult = ReturnType<
+  typeof useSearchPicturesQuery
+>;
+export type SearchPicturesLazyQueryHookResult = ReturnType<
+  typeof useSearchPicturesLazyQuery
+>;
+export type SearchPicturesQueryResult = Apollo.QueryResult<
+  SearchPicturesQuery,
+  SearchPicturesQueryVariables
+>;
+export const PicturesDocument = gql`
+  query Pictures($query: PicturesQueryInput!, $type: PicturesType) {
+    pictures(query: $query, type: $type) {
+      ...PictureListFragment
+    }
+  }
+  ${PictureListFragmentFragmentDoc}
+`;
+
+/**
+ * __usePicturesQuery__
+ *
+ * To run a query within a React component, call `usePicturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePicturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePicturesQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function usePicturesQuery(
+  baseOptions: Apollo.QueryHookOptions<PicturesQuery, PicturesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<PicturesQuery, PicturesQueryVariables>(
+    PicturesDocument,
+    options,
+  );
+}
+export function usePicturesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PicturesQuery,
+    PicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<PicturesQuery, PicturesQueryVariables>(
+    PicturesDocument,
+    options,
+  );
+}
+export type PicturesQueryHookResult = ReturnType<typeof usePicturesQuery>;
+export type PicturesLazyQueryHookResult = ReturnType<
+  typeof usePicturesLazyQuery
+>;
+export type PicturesQueryResult = Apollo.QueryResult<
+  PicturesQuery,
+  PicturesQueryVariables
+>;
+export const NewPicturesDocument = gql`
+  query NewPictures($query: NewPicturesQueryInput!) {
+    newPictures(query: $query) {
+      ...PictureListFragment
+    }
+  }
+  ${PictureListFragmentFragmentDoc}
+`;
+
+/**
+ * __useNewPicturesQuery__
+ *
+ * To run a query within a React component, call `useNewPicturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useNewPicturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNewPicturesQuery({
+ *   variables: {
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useNewPicturesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    NewPicturesQuery,
+    NewPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<NewPicturesQuery, NewPicturesQueryVariables>(
+    NewPicturesDocument,
+    options,
+  );
+}
+export function useNewPicturesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    NewPicturesQuery,
+    NewPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<NewPicturesQuery, NewPicturesQueryVariables>(
+    NewPicturesDocument,
+    options,
+  );
+}
+export type NewPicturesQueryHookResult = ReturnType<typeof useNewPicturesQuery>;
+export type NewPicturesLazyQueryHookResult = ReturnType<
+  typeof useNewPicturesLazyQuery
+>;
+export type NewPicturesQueryResult = Apollo.QueryResult<
+  NewPicturesQuery,
+  NewPicturesQueryVariables
+>;
+export const UserInfoDocument = gql`
+  query UserInfo($username: String) {
+    user(username: $username) {
+      ...UserDetailFragment
+    }
+  }
+  ${UserDetailFragmentFragmentDoc}
+`;
+
+/**
+ * __useUserInfoQuery__
+ *
+ * To run a query within a React component, call `useUserInfoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserInfoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserInfoQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useUserInfoQuery(
+  baseOptions?: Apollo.QueryHookOptions<UserInfoQuery, UserInfoQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserInfoQuery, UserInfoQueryVariables>(
+    UserInfoDocument,
+    options,
+  );
+}
+export function useUserInfoLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserInfoQuery,
+    UserInfoQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserInfoQuery, UserInfoQueryVariables>(
+    UserInfoDocument,
+    options,
+  );
+}
+export type UserInfoQueryHookResult = ReturnType<typeof useUserInfoQuery>;
+export type UserInfoLazyQueryHookResult = ReturnType<
+  typeof useUserInfoLazyQuery
+>;
+export type UserInfoQueryResult = Apollo.QueryResult<
+  UserInfoQuery,
+  UserInfoQueryVariables
+>;
+export const UserIsFollowingDocument = gql`
+  query UserIsFollowing($username: String) {
+    user(username: $username) {
+      ...UserFollowInfoFragment
+    }
+  }
+  ${UserFollowInfoFragmentFragmentDoc}
+`;
+
+/**
+ * __useUserIsFollowingQuery__
+ *
+ * To run a query within a React component, call `useUserIsFollowingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserIsFollowingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserIsFollowingQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useUserIsFollowingQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    UserIsFollowingQuery,
+    UserIsFollowingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserIsFollowingQuery, UserIsFollowingQueryVariables>(
+    UserIsFollowingDocument,
+    options,
+  );
+}
+export function useUserIsFollowingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserIsFollowingQuery,
+    UserIsFollowingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    UserIsFollowingQuery,
+    UserIsFollowingQueryVariables
+  >(UserIsFollowingDocument, options);
+}
+export type UserIsFollowingQueryHookResult = ReturnType<
+  typeof useUserIsFollowingQuery
+>;
+export type UserIsFollowingLazyQueryHookResult = ReturnType<
+  typeof useUserIsFollowingLazyQuery
+>;
+export type UserIsFollowingQueryResult = Apollo.QueryResult<
+  UserIsFollowingQuery,
+  UserIsFollowingQueryVariables
+>;
+export const WhoamiDocument = gql`
+  query Whoami {
+    whoami {
+      ...UserDetailFragment
+    }
+  }
+  ${UserDetailFragmentFragmentDoc}
+`;
+
+/**
+ * __useWhoamiQuery__
+ *
+ * To run a query within a React component, call `useWhoamiQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWhoamiQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWhoamiQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useWhoamiQuery(
+  baseOptions?: Apollo.QueryHookOptions<WhoamiQuery, WhoamiQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<WhoamiQuery, WhoamiQueryVariables>(
+    WhoamiDocument,
+    options,
+  );
+}
+export function useWhoamiLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<WhoamiQuery, WhoamiQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<WhoamiQuery, WhoamiQueryVariables>(
+    WhoamiDocument,
+    options,
+  );
+}
+export type WhoamiQueryHookResult = ReturnType<typeof useWhoamiQuery>;
+export type WhoamiLazyQueryHookResult = ReturnType<typeof useWhoamiLazyQuery>;
+export type WhoamiQueryResult = Apollo.QueryResult<
+  WhoamiQuery,
+  WhoamiQueryVariables
+>;
+export const UserPicturesDocument = gql`
+  query UserPictures(
+    $type: UserPictureType = MY
+    $username: String!
+    $query: PicturesQueryInput!
+  ) {
+    userPicturesByName(type: $type, username: $username, query: $query) {
+      ...PictureListFragment
+    }
+  }
+  ${PictureListFragmentFragmentDoc}
+`;
+
+/**
+ * __useUserPicturesQuery__
+ *
+ * To run a query within a React component, call `useUserPicturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserPicturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserPicturesQuery({
+ *   variables: {
+ *      type: // value for 'type'
+ *      username: // value for 'username'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useUserPicturesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserPicturesQuery,
+    UserPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserPicturesQuery, UserPicturesQueryVariables>(
+    UserPicturesDocument,
+    options,
+  );
+}
+export function useUserPicturesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserPicturesQuery,
+    UserPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<UserPicturesQuery, UserPicturesQueryVariables>(
+    UserPicturesDocument,
+    options,
+  );
+}
+export type UserPicturesQueryHookResult = ReturnType<
+  typeof useUserPicturesQuery
+>;
+export type UserPicturesLazyQueryHookResult = ReturnType<
+  typeof useUserPicturesLazyQuery
+>;
+export type UserPicturesQueryResult = Apollo.QueryResult<
+  UserPicturesQuery,
+  UserPicturesQueryVariables
+>;
+export const UserCollectionsByNameDocument = gql`
+  query UserCollectionsByName(
+    $username: String!
+    $query: CollectionsQueryInput
+  ) {
+    userCollectionsByName(username: $username, query: $query) {
+      ...CollectionListFragment
+    }
+  }
+  ${CollectionListFragmentFragmentDoc}
+`;
+
+/**
+ * __useUserCollectionsByNameQuery__
+ *
+ * To run a query within a React component, call `useUserCollectionsByNameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserCollectionsByNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserCollectionsByNameQuery({
+ *   variables: {
+ *      username: // value for 'username'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useUserCollectionsByNameQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    UserCollectionsByNameQuery,
+    UserCollectionsByNameQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    UserCollectionsByNameQuery,
+    UserCollectionsByNameQueryVariables
+  >(UserCollectionsByNameDocument, options);
+}
+export function useUserCollectionsByNameLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserCollectionsByNameQuery,
+    UserCollectionsByNameQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    UserCollectionsByNameQuery,
+    UserCollectionsByNameQueryVariables
+  >(UserCollectionsByNameDocument, options);
+}
+export type UserCollectionsByNameQueryHookResult = ReturnType<
+  typeof useUserCollectionsByNameQuery
+>;
+export type UserCollectionsByNameLazyQueryHookResult = ReturnType<
+  typeof useUserCollectionsByNameLazyQuery
+>;
+export type UserCollectionsByNameQueryResult = Apollo.QueryResult<
+  UserCollectionsByNameQuery,
+  UserCollectionsByNameQueryVariables
+>;
+export const PictureRelatedCollectionDocument = gql`
+  query PictureRelatedCollection($id: Float!) {
+    pictureRelatedCollection(id: $id) {
+      ...RelatedCollectionFragment
+    }
+  }
+  ${RelatedCollectionFragmentFragmentDoc}
+`;
+
+/**
+ * __usePictureRelatedCollectionQuery__
+ *
+ * To run a query within a React component, call `usePictureRelatedCollectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePictureRelatedCollectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePictureRelatedCollectionQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePictureRelatedCollectionQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    PictureRelatedCollectionQuery,
+    PictureRelatedCollectionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    PictureRelatedCollectionQuery,
+    PictureRelatedCollectionQueryVariables
+  >(PictureRelatedCollectionDocument, options);
+}
+export function usePictureRelatedCollectionLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    PictureRelatedCollectionQuery,
+    PictureRelatedCollectionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    PictureRelatedCollectionQuery,
+    PictureRelatedCollectionQueryVariables
+  >(PictureRelatedCollectionDocument, options);
+}
+export type PictureRelatedCollectionQueryHookResult = ReturnType<
+  typeof usePictureRelatedCollectionQuery
+>;
+export type PictureRelatedCollectionLazyQueryHookResult = ReturnType<
+  typeof usePictureRelatedCollectionLazyQuery
+>;
+export type PictureRelatedCollectionQueryResult = Apollo.QueryResult<
+  PictureRelatedCollectionQuery,
+  PictureRelatedCollectionQueryVariables
+>;
+export const CollectionDocument = gql`
+  query Collection($id: Float!) {
+    collection(id: $id) {
+      ...CollectionDetailFragment
+    }
+  }
+  ${CollectionDetailFragmentFragmentDoc}
+`;
+
+/**
+ * __useCollectionQuery__
+ *
+ * To run a query within a React component, call `useCollectionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCollectionQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    CollectionQuery,
+    CollectionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CollectionQuery, CollectionQueryVariables>(
+    CollectionDocument,
+    options,
+  );
+}
+export function useCollectionLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CollectionQuery,
+    CollectionQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<CollectionQuery, CollectionQueryVariables>(
+    CollectionDocument,
+    options,
+  );
+}
+export type CollectionQueryHookResult = ReturnType<typeof useCollectionQuery>;
+export type CollectionLazyQueryHookResult = ReturnType<
+  typeof useCollectionLazyQuery
+>;
+export type CollectionQueryResult = Apollo.QueryResult<
+  CollectionQuery,
+  CollectionQueryVariables
+>;
+export const CollectionPicturesDocument = gql`
+  query CollectionPictures($id: Float!, $query: PicturesQueryInput!) {
+    collectionPictures(id: $id, query: $query) {
+      ...PictureListFragment
+    }
+  }
+  ${PictureListFragmentFragmentDoc}
+`;
+
+/**
+ * __useCollectionPicturesQuery__
+ *
+ * To run a query within a React component, call `useCollectionPicturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCollectionPicturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCollectionPicturesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useCollectionPicturesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    CollectionPicturesQuery,
+    CollectionPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    CollectionPicturesQuery,
+    CollectionPicturesQueryVariables
+  >(CollectionPicturesDocument, options);
+}
+export function useCollectionPicturesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CollectionPicturesQuery,
+    CollectionPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    CollectionPicturesQuery,
+    CollectionPicturesQueryVariables
+  >(CollectionPicturesDocument, options);
+}
+export type CollectionPicturesQueryHookResult = ReturnType<
+  typeof useCollectionPicturesQuery
+>;
+export type CollectionPicturesLazyQueryHookResult = ReturnType<
+  typeof useCollectionPicturesLazyQuery
+>;
+export type CollectionPicturesQueryResult = Apollo.QueryResult<
+  CollectionPicturesQuery,
+  CollectionPicturesQueryVariables
+>;
+export const TagDocument = gql`
+  query Tag($name: String!) {
+    tag(name: $name) {
+      ...TagFragment
+    }
+  }
+  ${TagFragmentFragmentDoc}
+`;
+
+/**
+ * __useTagQuery__
+ *
+ * To run a query within a React component, call `useTagQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTagQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTagQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *   },
+ * });
+ */
+export function useTagQuery(
+  baseOptions: Apollo.QueryHookOptions<TagQuery, TagQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<TagQuery, TagQueryVariables>(TagDocument, options);
+}
+export function useTagLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<TagQuery, TagQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<TagQuery, TagQueryVariables>(TagDocument, options);
+}
+export type TagQueryHookResult = ReturnType<typeof useTagQuery>;
+export type TagLazyQueryHookResult = ReturnType<typeof useTagLazyQuery>;
+export type TagQueryResult = Apollo.QueryResult<TagQuery, TagQueryVariables>;
+export const TagPicturesDocument = gql`
+  query TagPictures(
+    $name: String!
+    $page: Float
+    $pageSize: Float
+    $timestamp: Float
+  ) {
+    tagPictures(
+      name: $name
+      page: $page
+      pageSize: $pageSize
+      timestamp: $timestamp
+    ) {
+      ...PictureListFragment
+    }
+  }
+  ${PictureListFragmentFragmentDoc}
+`;
+
+/**
+ * __useTagPicturesQuery__
+ *
+ * To run a query within a React component, call `useTagPicturesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useTagPicturesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useTagPicturesQuery({
+ *   variables: {
+ *      name: // value for 'name'
+ *      page: // value for 'page'
+ *      pageSize: // value for 'pageSize'
+ *      timestamp: // value for 'timestamp'
+ *   },
+ * });
+ */
+export function useTagPicturesQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    TagPicturesQuery,
+    TagPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<TagPicturesQuery, TagPicturesQueryVariables>(
+    TagPicturesDocument,
+    options,
+  );
+}
+export function useTagPicturesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    TagPicturesQuery,
+    TagPicturesQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<TagPicturesQuery, TagPicturesQueryVariables>(
+    TagPicturesDocument,
+    options,
+  );
+}
+export type TagPicturesQueryHookResult = ReturnType<typeof useTagPicturesQuery>;
+export type TagPicturesLazyQueryHookResult = ReturnType<
+  typeof useTagPicturesLazyQuery
+>;
+export type TagPicturesQueryResult = Apollo.QueryResult<
+  TagPicturesQuery,
+  TagPicturesQueryVariables
+>;
+export const UserNotificationDocument = gql`
+  query UserNotification {
+    userNotification {
+      ...NotificationFragment
+    }
+  }
+  ${NotificationFragmentFragmentDoc}
+`;
+
+/**
+ * __useUserNotificationQuery__
+ *
+ * To run a query within a React component, call `useUserNotificationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserNotificationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserNotificationQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserNotificationQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    UserNotificationQuery,
+    UserNotificationQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<UserNotificationQuery, UserNotificationQueryVariables>(
+    UserNotificationDocument,
+    options,
+  );
+}
+export function useUserNotificationLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UserNotificationQuery,
+    UserNotificationQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    UserNotificationQuery,
+    UserNotificationQueryVariables
+  >(UserNotificationDocument, options);
+}
+export type UserNotificationQueryHookResult = ReturnType<
+  typeof useUserNotificationQuery
+>;
+export type UserNotificationLazyQueryHookResult = ReturnType<
+  typeof useUserNotificationLazyQuery
+>;
+export type UserNotificationQueryResult = Apollo.QueryResult<
+  UserNotificationQuery,
+  UserNotificationQueryVariables
+>;
+export const UnreadNotificationCountDocument = gql`
+  query UnreadNotificationCount {
+    unreadNotificationCount {
+      count
+    }
+  }
+`;
+
+/**
+ * __useUnreadNotificationCountQuery__
+ *
+ * To run a query within a React component, call `useUnreadNotificationCountQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUnreadNotificationCountQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUnreadNotificationCountQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUnreadNotificationCountQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    UnreadNotificationCountQuery,
+    UnreadNotificationCountQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    UnreadNotificationCountQuery,
+    UnreadNotificationCountQueryVariables
+  >(UnreadNotificationCountDocument, options);
+}
+export function useUnreadNotificationCountLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    UnreadNotificationCountQuery,
+    UnreadNotificationCountQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    UnreadNotificationCountQuery,
+    UnreadNotificationCountQueryVariables
+  >(UnreadNotificationCountDocument, options);
+}
+export type UnreadNotificationCountQueryHookResult = ReturnType<
+  typeof useUnreadNotificationCountQuery
+>;
+export type UnreadNotificationCountLazyQueryHookResult = ReturnType<
+  typeof useUnreadNotificationCountLazyQuery
+>;
+export type UnreadNotificationCountQueryResult = Apollo.QueryResult<
+  UnreadNotificationCountQuery,
+  UnreadNotificationCountQueryVariables
+>;
+export const CommentsDocument = gql`
+  query Comments($id: Float!, $query: CommentsQueryInput) {
+    comments(id: $id, query: $query) {
+      ...CommentListFragment
+    }
+  }
+  ${CommentListFragmentFragmentDoc}
+`;
+
+/**
+ * __useCommentsQuery__
+ *
+ * To run a query within a React component, call `useCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useCommentsQuery(
+  baseOptions: Apollo.QueryHookOptions<CommentsQuery, CommentsQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CommentsQuery, CommentsQueryVariables>(
+    CommentsDocument,
+    options,
+  );
+}
+export function useCommentsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CommentsQuery,
+    CommentsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<CommentsQuery, CommentsQueryVariables>(
+    CommentsDocument,
+    options,
+  );
+}
+export type CommentsQueryHookResult = ReturnType<typeof useCommentsQuery>;
+export type CommentsLazyQueryHookResult = ReturnType<
+  typeof useCommentsLazyQuery
+>;
+export type CommentsQueryResult = Apollo.QueryResult<
+  CommentsQuery,
+  CommentsQueryVariables
+>;
+export const ChildCommentsDocument = gql`
+  query ChildComments($id: Float!, $query: CommentsQueryInput) {
+    childComments(id: $id, query: $query) {
+      ...ChildCommentListFragment
+    }
+  }
+  ${ChildCommentListFragmentFragmentDoc}
+`;
+
+/**
+ * __useChildCommentsQuery__
+ *
+ * To run a query within a React component, call `useChildCommentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChildCommentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChildCommentsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      query: // value for 'query'
+ *   },
+ * });
+ */
+export function useChildCommentsQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ChildCommentsQuery,
+    ChildCommentsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ChildCommentsQuery, ChildCommentsQueryVariables>(
+    ChildCommentsDocument,
+    options,
+  );
+}
+export function useChildCommentsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ChildCommentsQuery,
+    ChildCommentsQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<ChildCommentsQuery, ChildCommentsQueryVariables>(
+    ChildCommentsDocument,
+    options,
+  );
+}
+export type ChildCommentsQueryHookResult = ReturnType<
+  typeof useChildCommentsQuery
+>;
+export type ChildCommentsLazyQueryHookResult = ReturnType<
+  typeof useChildCommentsLazyQuery
+>;
+export type ChildCommentsQueryResult = Apollo.QueryResult<
+  ChildCommentsQuery,
+  ChildCommentsQueryVariables
+>;
+export const FollowedUsersDocument = gql`
+  query FollowedUsers($id: Float!, $limit: Float!, $offset: Float!) {
+    followedUsers(id: $id, limit: $limit, offset: $offset) {
+      ...UserDetailFragment
+    }
+  }
+  ${UserDetailFragmentFragmentDoc}
+`;
+
+/**
+ * __useFollowedUsersQuery__
+ *
+ * To run a query within a React component, call `useFollowedUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFollowedUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFollowedUsersQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useFollowedUsersQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    FollowedUsersQuery,
+    FollowedUsersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FollowedUsersQuery, FollowedUsersQueryVariables>(
+    FollowedUsersDocument,
+    options,
+  );
+}
+export function useFollowedUsersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FollowedUsersQuery,
+    FollowedUsersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<FollowedUsersQuery, FollowedUsersQueryVariables>(
+    FollowedUsersDocument,
+    options,
+  );
+}
+export type FollowedUsersQueryHookResult = ReturnType<
+  typeof useFollowedUsersQuery
+>;
+export type FollowedUsersLazyQueryHookResult = ReturnType<
+  typeof useFollowedUsersLazyQuery
+>;
+export type FollowedUsersQueryResult = Apollo.QueryResult<
+  FollowedUsersQuery,
+  FollowedUsersQueryVariables
+>;
+export const FollowerUsersDocument = gql`
+  query FollowerUsers($id: Float!, $limit: Float!, $offset: Float!) {
+    followerUsers(id: $id, limit: $limit, offset: $offset) {
+      ...UserDetailFragment
+    }
+  }
+  ${UserDetailFragmentFragmentDoc}
+`;
+
+/**
+ * __useFollowerUsersQuery__
+ *
+ * To run a query within a React component, call `useFollowerUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFollowerUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFollowerUsersQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useFollowerUsersQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    FollowerUsersQuery,
+    FollowerUsersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<FollowerUsersQuery, FollowerUsersQueryVariables>(
+    FollowerUsersDocument,
+    options,
+  );
+}
+export function useFollowerUsersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FollowerUsersQuery,
+    FollowerUsersQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<FollowerUsersQuery, FollowerUsersQueryVariables>(
+    FollowerUsersDocument,
+    options,
+  );
+}
+export type FollowerUsersQueryHookResult = ReturnType<
+  typeof useFollowerUsersQuery
+>;
+export type FollowerUsersLazyQueryHookResult = ReturnType<
+  typeof useFollowerUsersLazyQuery
+>;
+export type FollowerUsersQueryResult = Apollo.QueryResult<
+  FollowerUsersQuery,
+  FollowerUsersQueryVariables
+>;
+export const ReverseGeocodingDocument = gql`
+  query ReverseGeocoding($location: String!) {
+    reverseGeocoding(location: $location) {
+      ...PictureLocationFragment
+    }
+  }
+  ${PictureLocationFragmentFragmentDoc}
+`;
+
+/**
+ * __useReverseGeocodingQuery__
+ *
+ * To run a query within a React component, call `useReverseGeocodingQuery` and pass it any options that fit your needs.
+ * When your component renders, `useReverseGeocodingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useReverseGeocodingQuery({
+ *   variables: {
+ *      location: // value for 'location'
+ *   },
+ * });
+ */
+export function useReverseGeocodingQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    ReverseGeocodingQuery,
+    ReverseGeocodingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<ReverseGeocodingQuery, ReverseGeocodingQueryVariables>(
+    ReverseGeocodingDocument,
+    options,
+  );
+}
+export function useReverseGeocodingLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    ReverseGeocodingQuery,
+    ReverseGeocodingQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    ReverseGeocodingQuery,
+    ReverseGeocodingQueryVariables
+  >(ReverseGeocodingDocument, options);
+}
+export type ReverseGeocodingQueryHookResult = ReturnType<
+  typeof useReverseGeocodingQuery
+>;
+export type ReverseGeocodingLazyQueryHookResult = ReturnType<
+  typeof useReverseGeocodingLazyQuery
+>;
+export type ReverseGeocodingQueryResult = Apollo.QueryResult<
+  ReverseGeocodingQuery,
+  ReverseGeocodingQueryVariables
+>;
+export const SearchPlaceDocument = gql`
+  query SearchPlace($value: String!) {
+    searchPlace(value: $value) {
+      ...SearchPlaceDetailFragment
+    }
+  }
+  ${SearchPlaceDetailFragmentFragmentDoc}
+`;
+
+/**
+ * __useSearchPlaceQuery__
+ *
+ * To run a query within a React component, call `useSearchPlaceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchPlaceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchPlaceQuery({
+ *   variables: {
+ *      value: // value for 'value'
+ *   },
+ * });
+ */
+export function useSearchPlaceQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    SearchPlaceQuery,
+    SearchPlaceQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SearchPlaceQuery, SearchPlaceQueryVariables>(
+    SearchPlaceDocument,
+    options,
+  );
+}
+export function useSearchPlaceLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SearchPlaceQuery,
+    SearchPlaceQueryVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SearchPlaceQuery, SearchPlaceQueryVariables>(
+    SearchPlaceDocument,
+    options,
+  );
+}
+export type SearchPlaceQueryHookResult = ReturnType<typeof useSearchPlaceQuery>;
+export type SearchPlaceLazyQueryHookResult = ReturnType<
+  typeof useSearchPlaceLazyQuery
+>;
+export type SearchPlaceQueryResult = Apollo.QueryResult<
+  SearchPlaceQuery,
+  SearchPlaceQueryVariables
+>;

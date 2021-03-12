@@ -1,14 +1,11 @@
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { Image } from '@app/components';
 import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 import { getPictureUrl } from '@app/utils/image';
 import React, { memo } from 'react';
 import styled from 'styled-components';
+import { UserEntity } from '@app/common/types/modules/user/user.entity';
 
-interface IProps {
-  cover?: string;
-  avatar: string;
-}
+type IProps = Pick<UserEntity, 'cover' | 'avatar'>;
 
 const Cover = styled.div`
   position: relative;
@@ -68,7 +65,7 @@ const CoverImage = styled(Image)``;
 const UserCover: React.FC<IProps> = memo(({ cover, avatar }) => {
   return (
     <Cover>
-      <CoverImage src={getPictureUrl(cover || avatar, 'regular')} />
+      <CoverImage src={getPictureUrl(cover || avatar!, 'regular')} />
     </Cover>
   );
 });

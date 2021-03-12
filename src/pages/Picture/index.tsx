@@ -19,7 +19,6 @@ export const PicturePage = observer(() => {
   const { loading, data } = useQuery<{
     picture: PictureEntity;
   }>(Picture, {
-    notifyOnNetworkStatusChange: true,
     variables: { id: Number(id) },
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-first',

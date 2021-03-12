@@ -6,21 +6,15 @@ import { NetworkStatus, useQuery } from '@apollo/client';
 import { Pictures } from '@app/graphql/query';
 
 import { PicturesType } from '@app/common/enum/picture';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { IPaginationListData } from '@app/graphql/interface';
 import Skeleton from './Skeleton';
+import { usePicturesQuery } from '@app/graphql/hooks/query';
 
 export const Home = observer(() => {
-  const { loading, data, fetchMore, networkStatus } = useQuery<{
-    pictures: IPaginationListData<PictureEntity>;
-  }>(Pictures, {
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      type: PicturesType.NEW,
-      query: {
-        page: 1,
-        pageSize: 20,
-      },
+  const { loading, data, fetchMore, networkStatus } = usePicturesQuery({
+    type: PicturesType.NEW,
+    query: {
+      page: 1,
+      pageSize: 20,
     },
   });
 
@@ -43,7 +37,6 @@ export const Home = observer(() => {
       },
     });
   }, [data, fetchMore, networkStatus]);
-  console.log(data, loading);
   return (
     <div
       style={{

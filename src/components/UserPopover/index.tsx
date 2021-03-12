@@ -29,6 +29,7 @@ import Avatar from '../Avatar';
 import { Link } from 'react-router-dom';
 import { getPictureUrl } from '@app/utils/image';
 import { useTranslation } from 'react-i18next';
+import { QueryData } from '@app/graphql/interface';
 
 interface IUserPopover {
   username: string;
@@ -134,11 +135,9 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
 };
 
 const UserPopover: React.FC<IUserPopover> = ({ children, username }) => {
-  const [loadUser, { loading, data }] = useLazyQuery<{
-    user: UserEntity;
-  }>(UserInfo, {
-    notifyOnNetworkStatusChange: true,
-  });
+  const [loadUser, { loading, data }] = useLazyQuery<
+    QueryData<'user', UserEntity>
+  >(UserInfo);
   const onOpen = useCallback(() => {
     loadUser({
       variables: {

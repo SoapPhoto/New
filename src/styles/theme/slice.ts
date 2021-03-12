@@ -2,7 +2,7 @@
 import { ThemeState, ThemeKeyType } from './types';
 import { themes } from './themes';
 import { getThemeFromStorage, isSystemDark } from './utils';
-import { RootState } from '@app/types';
+// import { RootState } from '@app/types';
 
 export const initialState: ThemeState = {
   selected: getThemeFromStorage() || 'system',

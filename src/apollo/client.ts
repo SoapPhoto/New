@@ -78,6 +78,14 @@ export function initClient() {
         },
       },
     }),
+    defaultOptions: {
+      query: {
+        notifyOnNetworkStatusChange: true,
+      },
+      watchQuery: {
+        notifyOnNetworkStatusChange: true,
+      },
+    },
     link: httpLink,
   });
   return client;

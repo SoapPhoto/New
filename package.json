@@ -16,6 +16,7 @@
     "lint:fix": "yarn run eslint --fix src",
     "lint:css": "stylelint src/**/*.css",
     "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts",
+    "codegen-generate": "graphql-codegen",
     "cleanAndSetup": "ts-node --project=./internals/ts-node.tsconfig.json ./internals/scripts/clean.ts",
     "prettify": "prettier --write",
     "extract-messages": "i18next-scanner --config=internals/extractMessages/i18next-scanner.config.js"
@@ -103,6 +104,9 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.21.2",
+    "@graphql-codegen/typescript-operations": "^1.17.15",
+    "@graphql-codegen/typescript-react-apollo": "^2.2.2",
     "@testing-library/jest-dom": "5.11.9",
     "@testing-library/react": "11.2.5",
     "@types/fontfaceobserver": "0.0.6",

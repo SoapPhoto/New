@@ -1,5 +1,11 @@
 import { CSSProperties } from 'react';
-import { AnimatedValue, ForwardedProps, useSpring } from 'react-spring';
+import {
+  Interpolation,
+  SpringValue,
+  SpringValues,
+  to,
+  useSpring,
+} from 'react-spring';
 import { useGesture } from 'react-use-gesture';
 import { ReactEventHandlers } from 'react-use-gesture/dist/types';
 
@@ -9,26 +15,30 @@ export default function useTapButton(
   big: number = 1.1,
   small: number = 0.9,
 ): [
-  AnimatedValue<
-    ForwardedProps<OverwriteKeys<{ transform: string }, CSSProperties>>
-  >,
+  { transform: Interpolation<string, any> },
   (...args: any[]) => ReactEventHandlers,
 ] {
-  const [spring, set] = useSpring(() => ({
-    transform: 'scale(1)',
-    config: {
-      mass: 1,
-      tension: 300,
-      friction: 26,
+  const [spring, animate] = useSpring(
+    {
+      x: 1,
+      config: {
+        mass: 1,
+        tension: 300,
+        friction: 26,
+      },
     },
-  }));
+    [],
+  );
   const bind = useGesture({
-    onDrag: () => set({ transform: `scale(${small})` }),
-    onDragEnd: () => set({ transform: `scale(${big})` }),
+    onDrag: () => animate.start({ x: small }),
+    onDragEnd: () => animate.start({ x: big }),
     onHover: ({ hovering }) =>
-      hovering
-        ? set({ transform: `scale(${big})` })
-        : set({ transform: `scale(1)` }),
+      hovering ? animate.start({ x: big }) : animate.start({ x: 1 }),
   });
-  return [spring, bind];
+  return [
+    {
+      transform: to(spring.x, x => `scale(${x})`),
+    },
+    bind,
+  ];
 }

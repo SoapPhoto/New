@@ -69,7 +69,7 @@ const InternalModal: React.FC<IModalProps> = ({
       : `scale3d(0.94, 0.94, 0.94) translate3d(0px, 30px, 0px)`,
     config: springConfig,
     onRest: endValues => {
-      if (!visible && endValues.opacity === 0 && !closed) {
+      if (!visible && endValues.value.opacity === 0 && !closed) {
         destroy();
       }
     },

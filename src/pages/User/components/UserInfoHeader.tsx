@@ -63,7 +63,7 @@ const UserTotal = styled.div`
   width: 100%;
   margin-left: -12px;
 `;
-const UserTotalItemBtn = styled(animated.div)`
+const UserTotalItemBtn = styled(animated.div as any)`
   padding: 0 12px;
   cursor: pointer;
 `;

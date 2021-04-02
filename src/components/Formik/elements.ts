@@ -20,14 +20,14 @@ export const ErrorBox = styled.div`
   line-height: 18px;
   overflow: hidden;
 `;
-export const Error = styled(animated.div)`
+export const Error = styled(animated.div as any)`
   font-size: 12px;
   color: ${p => p.theme.colors.error};
 `;
 
 const OFFSET = 12;
 
-export const ItemContent = styled(animated.div)<{ isclicked: number }>`
+export const ItemContent = styled(animated.div as any)<{ isclicked: number }>`
   z-index: 0;
   position: relative;
   display: flex;

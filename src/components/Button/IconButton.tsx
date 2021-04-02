@@ -10,7 +10,7 @@ interface IProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-export const IconButtonStyled = styled(animated.button)`
+export const IconButtonStyled = styled(animated.button as any)`
   font-size: 0;
   outline: none;
   background: transparent;

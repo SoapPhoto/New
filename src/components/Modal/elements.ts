@@ -4,7 +4,7 @@ import { animated } from 'react-spring';
 import styled, { css } from 'styled-components';
 import { IconButton } from '..';
 
-export const Mask = styled(animated.div)`
+export const Mask = styled(animated.div as any)`
   position: fixed;
   top: 0;
   right: 0;
@@ -65,7 +65,7 @@ export const Wrapper = styled.div<{ centered: number; fullscreen: number }>`
   `}
 `;
 
-export const Content = styled(animated.div)`
+export const Content = styled(animated.div as any)`
   position: relative;
   top: 100px;
   margin: 0 auto;

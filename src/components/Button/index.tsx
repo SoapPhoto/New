@@ -1,5 +1,5 @@
 import React from 'react';
-import { config, Transition } from 'react-spring/renderprops';
+import { config, Transition } from 'react-spring';
 
 import { Loading } from '..';
 import { Content, LoadingBox, StyleButton } from './elements';

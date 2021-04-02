@@ -13,6 +13,7 @@ import { isArray } from 'lodash';
 import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
 
+const a = animated as any;
 interface IValues {
   email: string;
   username: string;
@@ -23,13 +24,13 @@ const Register = observer(() => {
   const { registerLogin } = useAccount();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const timer = useRef<number>();
-  const [props, set] = useSpring(() => ({
+  const [props, animate] = useSpring(() => ({
     opacity: 0,
     transform: 'translateX(-5%)',
   }));
   useEffect(() => {
     timer.current = window.setTimeout(() => {
-      set({
+      animate.start({
         opacity: 1,
         transform: 'translateX(0%)',
       });
@@ -64,7 +65,7 @@ const Register = observer(() => {
     [],
   );
   return (
-    <animated.div style={props}>
+    <a.div style={props}>
       <Title>{t('accountFeature.registerTitle')}</Title>
       <Des>
         <Trans i18nKey="accountFeature.registerMessage">
@@ -100,7 +101,7 @@ const Register = observer(() => {
           </Button>
         </Form>
       </Formik>
-    </animated.div>
+    </a.div>
   );
 });
 

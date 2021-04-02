@@ -47,12 +47,14 @@ export interface IValues {
   tags: string[];
 }
 
+const a = animated as any;
+
 const DeleteImageBtn: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ style, onClick, ...props }) => {
   const [spring, bind] = useTapButton(1.03, 0.95);
   return (
-    <animated.button
+    <a.button
       {...props}
       {...bind()}
       style={{ ...style, ...spring }}
@@ -72,7 +74,7 @@ const DeleteImageBtn: React.FC<
         `}
       />
       删除图片
-    </animated.button>
+    </a.button>
   );
 };
 

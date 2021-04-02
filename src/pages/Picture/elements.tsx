@@ -138,7 +138,7 @@ export const PictureBaseInfo = styled.div`
   box-shadow: inset 0px -1px 0px ${p => p.theme.colors.gray4};
 `;
 
-export const LikeContent = styled(animated.button)`
+export const LikeContent = styled(animated.button as any)`
   ${initButton}
   z-index: 3;
   display: flex;

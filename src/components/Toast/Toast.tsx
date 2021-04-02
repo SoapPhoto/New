@@ -92,71 +92,69 @@ const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
     }
   };
 
-  const transitions = useTransition(toasts, (item: ITotalConfig) => item.key, {
-    update: updateTransition as any,
+  const transition = useTransition(toasts, {
+    key: v => v.key,
+    update: updateTransition,
     from: {
       opacity: 0,
       childOpacity: 0,
       transform: `translate3d(0px, 100px, 0px)  scale(1)`,
-    } as any,
+    },
     leave: {
       opacity: 0,
       childOpacity: 0,
       transform: `translate3d(0px, 100px, 0px)  scale(1)`,
-    } as any,
-    enter: ((item: ITotalConfig) => async (next: any) => {
+    },
+    enter: (item: ITotalConfig) => async (next: any) => {
       await next({
         opacity: 1,
         childOpacity: 1,
         maxHeight: refMap.get(item).offsetHeight,
         transform: `translate3d(0px, 0px, 0px)  scale(1)`,
       });
-    }) as any,
+    },
   });
-  return (
-    <Container>
-      {transitions.map(({ key, item, props: { ...style } }) => (
-        <ToastBox
+  const elems = transition((style, item, t, i) => (
+    <ToastBox
+      style={{
+        ...style,
+        maxHeight: 'auto',
+        zIndex: 9900 - item.index,
+        display: item.index > 3 ? 'none' : 'block',
+      }}
+      ref={ref => setRef(ref, item)}
+      key={item.key}
+      onMouseEnter={() => {
+        clearTimeout(timer.current);
+        setIsOverviewing(true);
+      }}
+      onMouseLeave={() => {
+        clearTimeout(timer.current);
+        timer.current = window.setTimeout(() => {
+          setIsOverviewing(false);
+        }, 100);
+      }}
+    >
+      <Toast
+        type={item.type || 'success'}
+        style={{
+          maxHeight: (style as any).maxHeight as number,
+        }}
+      >
+        <Content
           style={{
-            ...style,
-            maxHeight: 'auto',
-            zIndex: 9900 - item.index,
-            display: item.index > 3 ? 'none' : 'block',
-          }}
-          ref={ref => setRef(ref, item)}
-          key={key}
-          onMouseEnter={() => {
-            clearTimeout(timer.current);
-            setIsOverviewing(true);
-          }}
-          onMouseLeave={() => {
-            clearTimeout(timer.current);
-            timer.current = window.setTimeout(() => {
-              setIsOverviewing(false);
-            }, 100);
+            opacity: style.childOpacity,
           }}
         >
-          <Toast
-            type={item.type || 'success'}
-            style={{
-              maxHeight: style.maxHeight,
-            }}
-          >
-            <Content
-              style={{
-                opacity: (style as any).childOpacity,
-              }}
-            >
-              <div style={{ flex: 1 }}>{item.title}</div>
-              {item.action && (
-                <ActionBox>{item.action(() => onDelete(item.key))}</ActionBox>
-              )}
-            </Content>
-          </Toast>
-        </ToastBox>
-      ))}
-    </Container>
-  );
+          <div style={{ flex: 1 }}>{item.title}</div>
+          {item.action && (
+            <ActionBox>{item.action(() => onDelete(item.key))}</ActionBox>
+          )}
+        </Content>
+      </Toast>
+    </ToastBox>
+  ));
+  return <Container>{elems}</Container>;
 };
 
 export default ToastComponent;

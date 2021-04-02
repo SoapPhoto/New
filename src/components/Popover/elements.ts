@@ -27,7 +27,7 @@ export const Tooltip = styled.div`
   }
 `;
 
-export const Content = styled(animated.div)`
+export const Content = styled(animated.div as any)`
   ${Tooltip}[data-popper-placement^="top"] & {
     transform-origin: 50% 120%;
   }

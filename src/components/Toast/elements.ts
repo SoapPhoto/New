@@ -27,14 +27,14 @@ export const Container = styled.div`
   transition: all 0.4s ease;
 `;
 
-export const ToastBox = styled(animated.div)`
+export const ToastBox = styled(animated.div as any)`
   position: absolute;
   bottom: 0;
   right: 0;
   width: 468px;
 `;
 
-export const Toast = styled(animated.div)<{ type: ToastType }>`
+export const Toast = styled(animated.div as any)<{ type: ToastType }>`
   overflow: hidden;
   word-break: break-all;
   box-sizing: border-box;
@@ -50,7 +50,7 @@ export const Toast = styled(animated.div)<{ type: ToastType }>`
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 `;
 
-export const Content = styled(animated.div)`
+export const Content = styled(animated.div as any)`
   text-align: left;
   display: flex;
   flex: 1;

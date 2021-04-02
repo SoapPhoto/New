@@ -24,18 +24,23 @@ interface IValues {
   password: string;
 }
 
+const a = animated as any;
+
 const Login = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const { login } = useAccount();
   const { t } = useTranslation();
   const timer = useRef<number>();
-  const [props, set] = useSpring(() => ({
-    opacity: 0,
-    transform: 'translateX(-5%)',
-  }));
+  const [props, animate] = useSpring(
+    {
+      opacity: 0,
+      transform: 'translateX(-5%)',
+    },
+    [],
+  );
   useEffect(() => {
     timer.current = window.setTimeout(() => {
-      set({
+      animate.start({
         opacity: 1,
         transform: 'translateX(0%)',
       });
@@ -60,7 +65,7 @@ const Login = () => {
     [login, t],
   );
   return (
-    <animated.div style={props}>
+    <a.div style={props}>
       <Title>{t('accountFeature.loginTitle')}</Title>
       <Des>
         <Trans i18nKey="accountFeature.loginMessage">
@@ -99,7 +104,7 @@ const Login = () => {
           <Weibo color="#fff" />
         </WeiboOauthBtn>
       </OauthBox>
-    </animated.div>
+    </a.div>
   );
 };
 

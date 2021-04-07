@@ -16,6 +16,7 @@ declare module 'styled-components' {
       gray4: string;
       layout: string;
       secondary: string;
+      border: string;
     };
     dashboard: {};
     widget: {

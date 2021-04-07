@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 export const ListWrapper = styled.div`
-  /* max-width: 1440px; */
+  max-width: 1500px;
   margin: 0 auto;
 `;
 

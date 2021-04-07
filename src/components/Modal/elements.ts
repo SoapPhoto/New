@@ -85,6 +85,11 @@ export const CloseBox = styled(IconButton)`
   right: 16px;
   top: 16px;
   z-index: 2;
+  color: ${_ => _.theme.colors.secondary};
+  transition: color 0.25s ease;
+  &:hover {
+    color: ${_ => _.theme.colors.text};
+  }
 `;
 
 export const ModalContent = styled.div`

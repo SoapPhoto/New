@@ -19,8 +19,8 @@ function App({ list }) {
   );
   const [ref, { width }] = useMeasure();
   const [heights, gridItems] = useMemo(() => {
-    const baseWidth = width === 0 ? document.body.clientWidth - 48 : width;
-    const padding = 20;
+    const baseWidth = width === 0 ? document.body.clientWidth - 56 : width;
+    const padding = 24;
     let heights = new Array(columns).fill(0);
     let gridItems = list.map((child, i) => {
       const colPadding = padding * (columns - 1);

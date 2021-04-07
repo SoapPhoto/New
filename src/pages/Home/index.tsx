@@ -40,7 +40,7 @@ export const Home = observer(() => {
   return (
     <div
       style={{
-        padding: '24px',
+        padding: '28px',
         paddingTop: 0,
         width: '100%',
         minHeight: 'calc(100vh - 80px)',

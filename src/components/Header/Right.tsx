@@ -18,6 +18,13 @@ const Wrapper = styled.div`
   align-items: center;
   height: 100%;
   margin-right: ${space(8)}px;
+  svg {
+    color: ${_ => _.theme.colors.secondary};
+    transition: color 0.25s ease;
+    &:hover {
+      color: ${_ => _.theme.colors.text};
+    }
+  }
 `;
 
 export const SkeletonItem = styled.div`
@@ -58,6 +65,7 @@ export const Right = observer(() => {
           <IconButton onClick={() => openUpload()}>
             <UploadCloud />
           </IconButton>
+          <div style={{ width: '22px' }}></div>
           <Popover
             trigger="click"
             placement="bottom"

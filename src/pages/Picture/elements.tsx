@@ -11,8 +11,8 @@ import { initButton, skeletonCss } from '@app/styles/mixins';
 export const Wrapper = styled.div``;
 
 export const UserHeaderWrapper = styled.div`
-  border-top: 1px solid ${p => p.theme.colors.gray3};
-  border-bottom: 1px solid ${p => p.theme.colors.gray3};
+  border-top: 1px solid ${p => p.theme.colors.border};
+  border-bottom: 1px solid ${p => p.theme.colors.border};
 `;
 export const UserHeader = styled.div`
   margin: 0 auto;
@@ -27,6 +27,7 @@ export const UserLink = styled(Link)`
 `;
 export const UserName = styled.div`
   font-size: 16px;
+  font-weight: 500;
 `;
 export const UserInfo = styled.div`
   display: flex;
@@ -46,12 +47,14 @@ export const BaseInfoItem = styled.div`
   }
 `;
 export const TimeSpan = styled.span`
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 400;
 `;
 
 export const PictureWrapper = styled.article`
-  background-color: ${p => p.theme.colors.gray1};
+  /* background-color: ${p => p.theme.colors.gray1}; */
   padding: 24px;
+  border-bottom: 1px solid ${p => p.theme.colors.border};
 `;
 
 export const PictureContent = styled.div`
@@ -135,7 +138,7 @@ export const PictureBaseInfo = styled.div`
   color: ${p => p.theme.colors.secondary};
   padding: 18px 0;
   margin-bottom: 18px;
-  box-shadow: inset 0px -1px 0px ${p => p.theme.colors.gray4};
+  box-shadow: inset 0px -1px 0px ${p => p.theme.colors.border};
 `;
 
 export const LikeContent = styled(animated.button as any)`

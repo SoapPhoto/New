@@ -11,7 +11,7 @@ const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: ${_ => rem(70)};
+  height: ${_ => rem(84)};
   transition: 0.2s all ease;
 `;
 
@@ -28,7 +28,7 @@ const Header = () => {
     <Wrapper>
       <Logo>
         <A to="/">
-          <Icon color={theme.colors.text} />
+          <Icon size={36} color={theme.colors.text} />
         </A>
       </Logo>
       <Right />

@@ -41,6 +41,9 @@ declare module 'styled-components' {
         radius: number;
         background: string;
       };
+      modal: {
+        background: string;
+      };
     };
   }
 }

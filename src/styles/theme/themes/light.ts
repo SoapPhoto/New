@@ -44,6 +44,9 @@ const theme: DefaultTheme = {
       radius: 4,
       background: '#333',
     },
+    modal: {
+      background: '#fff',
+    },
   },
 };
 

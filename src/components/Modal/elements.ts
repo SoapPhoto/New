@@ -69,8 +69,8 @@ export const Content = styled(animated.div as any)`
   position: relative;
   top: 100px;
   margin: 0 auto;
-  background: ${p => p.theme.background};
-  border-radius: 4px;
+  background: ${p => p.theme.widget.modal.background};
+  border-radius: 6px;
   width: 100%;
   overflow: hidden;
 `;
@@ -128,7 +128,7 @@ export const ModalHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  border-bottom: 1px solid ${_ => _.theme.colors.gray4};
+  border-bottom: 1px solid ${_ => _.theme.colors.border};
   ${ModalTitle} {
     padding: 0px;
   }

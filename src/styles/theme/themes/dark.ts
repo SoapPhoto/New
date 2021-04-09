@@ -44,6 +44,9 @@ const theme: DefaultTheme = {
       radius: 4,
       background: '#333',
     },
+    modal: {
+      background: '#1f1f1f',
+    },
   },
   // primary: 'rgba(26, 92, 255, 1)',
   // error: 'rgb(255,77,79)',

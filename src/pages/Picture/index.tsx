@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { EmojiText } from '@app/components';
+import Comment from '@app/components/Comment';
 import { Picture } from '@app/graphql/query';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -40,6 +41,7 @@ export const PicturePage = observer(() => {
             <EmojiText text={picture.bio} />
           </Bio>
         )}
+        <Comment />
       </Content>
       <ExifModal picture={picture} />
       <SettingModal picture={picture} />

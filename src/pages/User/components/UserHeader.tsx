@@ -4,6 +4,7 @@ import { UserFollowModal } from '@app/components';
 import { UserInfo } from '@app/graphql/query';
 import { useSearchParamModal } from '@app/utils/hooks';
 import React, { memo } from 'react';
+import UserSkeleton from '../Skeleton';
 import UserCover from './UserCover';
 import UserInfoHeader from './UserInfoHeader';
 import UserTab from './UserTab';
@@ -30,7 +31,9 @@ const UserHeader: React.FC<IProps> = memo(({ username }) => {
   });
   return (
     <>
-      {loading || !data ? null : (
+      {loading || !data ? (
+        <UserSkeleton />
+      ) : (
         <>
           <UserCover cover={data.user.cover} avatar={data.user.avatar} />
           <UserInfoHeader user={data.user} />

@@ -37,6 +37,7 @@ export const Home = observer(() => {
       },
     });
   }, [data, fetchMore, networkStatus]);
+  return <Skeleton />;
   return (
     <div
       style={{

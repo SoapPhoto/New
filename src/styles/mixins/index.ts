@@ -1,4 +1,5 @@
 import { css, keyframes } from 'styled-components';
+import { rgba } from 'polished';
 
 export const boxMixin = css`
   width: 100%;
@@ -41,10 +42,22 @@ export const skeletonKeyframes = keyframes`
 export const skeletonCss = css`
   background: linear-gradient(
     270deg,
-    ${p => p.theme.widget.skeleton.accents1},
-    ${p => p.theme.widget.skeleton.accents2},
-    ${p => p.theme.widget.skeleton.accents2},
-    ${p => p.theme.widget.skeleton.accents1}
+    ${p => rgba(p.theme.widget.skeleton.accents1, 1)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 1)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 1)},
+    ${p => rgba(p.theme.widget.skeleton.accents1, 1)}
+  );
+  background-size: 400% 400%;
+  animation: ${skeletonKeyframes} 8s ease-in-out infinite;
+`;
+
+export const skeletonCss2 = css`
+  background: linear-gradient(
+    270deg,
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.4)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.6)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.6)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.4)}
   );
   background-size: 400% 400%;
   animation: ${skeletonKeyframes} 8s ease-in-out infinite;

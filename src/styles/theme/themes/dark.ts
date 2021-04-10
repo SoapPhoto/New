@@ -30,7 +30,7 @@ const theme: DefaultTheme = {
       active: 'rgba(0,0,0,.7)',
     },
     input: {
-      bg: gray2,
+      bg: '#232323',
       hoverBg: gray3,
     },
     skeleton: {

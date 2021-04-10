@@ -68,7 +68,8 @@ export const PictureBox = styled.div<{ num: number }>`
   max-width: 1000px;
   margin: 0 auto;
   ${customMedia.greaterThan('mobile')`
-    max-width: calc(calc(100vh - ${138 + 53}px) * ${_ => (_ as any).num});
+    max-width: calc(calc(100vh - ${84 + 71 + 2 + 48}px) * ${_ =>
+    (_ as any).num});
     min-width: 500px;
   `}
   ${customMedia.lessThan('mobile')`
@@ -147,10 +148,10 @@ export const LikeContent = styled(animated.button as any)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${_ => rgba(_.theme.colors.gray4, 0.8)};
+  /* background: ${_ => rgba(_.theme.colors.gray4, 0.8)}; */
+  border: 1px solid ${p => p.theme.colors.border};
   padding: 6px 16px;
   font-size: 12px;
-  border: none;
   border-radius: 20px;
   line-height: 20px;
   font-weight: 600;
@@ -180,4 +181,20 @@ export const Bio = styled.div`
   font-size: 14px;
   margin-top: 16px;
   padding-bottom: 24px;
+`;
+
+export const NewContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  border-top: 1px solid ${p => p.theme.colors.border};
+`;
+
+export const LeftBox = styled.div`
+  flex: 1;
+  border-right: 1px solid ${p => p.theme.colors.border};
+`;
+
+export const RightBox = styled.div`
+  width: 430px;
 `;

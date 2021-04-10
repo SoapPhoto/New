@@ -12,7 +12,15 @@ import PictureCenter from './components/PictureCenter';
 import PictureInfo from './components/PictureInfo';
 import SettingModal from './components/SettingModal';
 
-import { Wrapper, Content, Title, Bio } from './elements';
+import {
+  Wrapper,
+  Content,
+  Title,
+  Bio,
+  NewContainer,
+  RightBox,
+  LeftBox,
+} from './elements';
 import PictureSkeleton from './Skeleton';
 
 export const PicturePage = observer(() => {
@@ -29,6 +37,16 @@ export const PicturePage = observer(() => {
   const { user } = picture;
   return (
     <Wrapper>
+      {/* <NewContainer>
+        <LeftBox>
+          <PictureCenter picture={picture} />
+        </LeftBox>
+        <RightBox>
+          <Title>
+            <EmojiText text={picture.title} />
+          </Title>
+        </RightBox>
+      </NewContainer> */}
       <HeaderUserInfo user={user} createTime={picture.createTime} />
       <PictureCenter picture={picture} />
       <Content>

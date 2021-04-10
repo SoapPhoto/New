@@ -1,5 +1,5 @@
 import { customMedia } from '@app/styles/mediaQuery';
-import { skeletonCss } from '@app/styles/mixins';
+import { skeletonCss, skeletonCss2 } from '@app/styles/mixins';
 import { cover, darken, rgba } from 'polished';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
@@ -139,6 +139,8 @@ export const UserName = styled(Link)`
 `;
 
 export const SkeletonContent = styled.div`
+  max-width: 1500px;
+  margin: 0 auto;
   display: grid;
   grid-gap: 24px;
   ${customMedia.lessThan('mobile')`
@@ -162,8 +164,9 @@ export const SkeletonItem = styled.picture`
   position: relative;
   height: 210px;
   border-radius: 4px;
-  background: ${p => p.theme.widget.skeleton.background};
-  box-shadow: 0 5px 10px ${p => p.theme.widget.skeleton.shadow};
+  /* opacity: 0.4; */
+  ${skeletonCss2}/* background: ${p => p.theme.widget.skeleton.background};
+  box-shadow: 0 5px 10px ${p => p.theme.widget.skeleton.shadow}; */
 `;
 
 export const SkeletonAvatar = styled.div`

@@ -19,7 +19,7 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
   const [, , exifOpen] = useSearchParamModal('exif');
   const [, , settingOpen] = useSearchParamModal('setting');
   const { userInfo } = useAccount();
-  const [spring, bind] = useTapButton();
+  const [spring, bind] = useTapButton(1.05, 0.92);
   const isOwner = useMemo(
     () =>
       (userInfo && userInfo.id.toString() === picture.user.id.toString()) ||

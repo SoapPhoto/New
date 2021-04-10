@@ -31,7 +31,12 @@ const UserHome: React.FC<IProps> = memo(({ username, type }) => {
       },
     },
   });
-  if (loading && !data) return <PictureSkeleton />;
+  if (loading && !data)
+    return (
+      <Wrapper>
+        <PictureSkeleton />
+      </Wrapper>
+    );
   return (
     <Wrapper>
       <PictureList list={data!.userPicturesByName.data} />

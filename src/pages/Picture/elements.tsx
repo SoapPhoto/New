@@ -2,7 +2,7 @@ import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { animated } from 'react-spring';
-import { rgba } from 'polished';
+import { darken, lighten, rgba } from 'polished';
 import { Heart } from 'react-feather';
 
 import { IconButton as IconButtonComponent } from '@app/components';
@@ -173,7 +173,7 @@ export const IconButton = styled(IconButtonComponent)`
 `;
 
 export const Title = styled.h2`
-  font-size: 20px;
+  font-size: 26px;
   margin-bottom: 16px;
 `;
 
@@ -197,4 +197,32 @@ export const LeftBox = styled.div`
 
 export const RightBox = styled.div`
   width: 430px;
+`;
+
+export const TagBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: -12px;
+`;
+
+export const Tag = styled.div`
+  border: 1px solid ${p => p.theme.colors.border};
+  line-height: 16px;
+  height: 32px;
+  padding-left: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 32px;
+  margin-left: 12px;
+  font-size: 13px;
+  transition: all 0.25s ease;
+  color: ${_ => _.theme.colors.text};
+  &:hover {
+    background: ${_ => _.theme.colors.primary};
+    color: #fff;
+  }
 `;

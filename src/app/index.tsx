@@ -19,6 +19,7 @@ import Upload from '@app/pages/Upload';
 import UploadModal from '@app/components/UploadModal';
 import User from '@app/pages/User';
 import { UserTypeValues } from '@app/common/enum/router';
+import TagPage from '@app/pages/Tag';
 
 const Router = () => {
   console.log(`/@:username/:type(${UserTypeValues.join('|')})?`);
@@ -30,6 +31,7 @@ const Router = () => {
         <Route path="test" element={<Test />} />
         <Route path="upload" element={<Upload />} />
         <Route path={`/@:username/*`} element={<User />} />
+        <Route path={`/tag/:name`} element={<TagPage />} />
       </Route>
       <Route path="" element={<Account />}>
         <Route path="login" element={<Login />} />

@@ -5,7 +5,7 @@ import Comment from '@app/components/Comment';
 import { Picture } from '@app/graphql/query';
 import { observer } from 'mobx-react';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ExifModal from './components/ExifModal';
 import HeaderUserInfo from './components/HeaderUserInfo';
 import PictureCenter from './components/PictureCenter';
@@ -20,6 +20,8 @@ import {
   NewContainer,
   RightBox,
   LeftBox,
+  TagBox,
+  Tag,
 } from './elements';
 import PictureSkeleton from './Skeleton';
 
@@ -58,6 +60,15 @@ export const PicturePage = observer(() => {
           <Bio>
             <EmojiText text={picture.bio} />
           </Bio>
+        )}
+        {picture.tags.length > 0 && (
+          <TagBox>
+            {picture.tags.map(tag => (
+              <Link to={`/tag/${tag.name}`}>
+                <Tag key={tag.id}>{tag.name}</Tag>
+              </Link>
+            ))}
+          </TagBox>
         )}
         <Comment />
       </Content>

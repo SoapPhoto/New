@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 
 import Tag from '@app/components/Tag';
+import { Button } from '@app/components';
 
 const Test = () => {
   const [value, setValue] = useState<string[]>(['还行']);
+  const [loading, setLoading] = useState(false);
   return (
     <div>
       <div style={{ marginLeft: 200, marginTop: 200 }}>
@@ -16,6 +18,9 @@ const Test = () => {
           `}
         >
           <Tag value={value} onChange={v => setValue(v)} />
+          <Button loading={loading} onClick={() => setLoading(v => !v)}>
+            哈哈哈哈哈哈
+          </Button>
           {/* <FieldItem
             onClick={() => setChecked(v => !v)}
             label="私人"

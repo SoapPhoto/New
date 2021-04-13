@@ -1,7 +1,27 @@
-import React from 'react';
+import { useQuery } from '@apollo/client';
+import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import { Tag } from '@app/graphql/query';
+import React, { memo, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
+import List from './components/PictureList';
+import { Title } from './elements';
 
-const TagPage = () => {
-  return <div>12313</div>;
-};
+const TagPage = memo(() => {
+  const params = useParams();
+  const name = useMemo(() => decodeURI(params.name), [params.name]);
+  // const { loading, data } = useQuery<{
+  //   tag: IListQueryResult<PictureEntity>;
+  // }>(Tag, {
+  //   variables: {
+  //     name: name,
+  //   },
+  // });
+  return (
+    <div>
+      <Title>{name}</Title>
+      <List name={name} />
+    </div>
+  );
+});
 
 export default TagPage;

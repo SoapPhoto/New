@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import { position, rgba } from 'polished';
 
 import { btnMixin } from '@app/styles/mixins';
+import { animated } from 'react-spring';
 
 export const StyleButton = styled.button<{ loading: number; size?: string }>`
   ${btnMixin}
@@ -16,6 +17,12 @@ export const StyleButton = styled.button<{ loading: number; size?: string }>`
     p.loading
       ? css`
           pointer-events: none;
+          &:disabled {
+            opacity: 1 !important;
+          }
+          /* ${Content} {
+            visibility: hidden;
+          } */
         `
       : ''}
   &:disabled {
@@ -36,12 +43,13 @@ export const Content = styled.div`
   justify-content: center;
 `;
 
-export const LoadingBox = styled.div`
+export const LoadingBox = styled(animated.div as any)`
   position: absolute;
   ${position(0, 0, 0, 0)}
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${p => rgba(p.theme.colors.primary, 0.8)};
+  background-color: ${p => rgba(p.theme.colors.primary, 0.8)};
+  /* background: ${p => rgba('#000', 0.2)}; */
   border-radius: inherit;
 `;

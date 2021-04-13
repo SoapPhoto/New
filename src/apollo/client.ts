@@ -1,10 +1,15 @@
-import { ApolloClient, InMemoryCache, ApolloLink } from '@apollo/client';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloLink,
+  HttpLink,
+} from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { isString } from 'lodash';
-import { BatchHttpLink } from '@apollo/client/link/batch-http';
+// import { HttpLink } from '@apollo/client/link/batch-http';
 
 export function initClient() {
-  const batchLink = new BatchHttpLink({
+  const batchLink = new HttpLink({
     uri: process.env.REACT_APP_API_URL + 'graphql',
     credentials: 'include',
   });

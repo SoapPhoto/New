@@ -153,6 +153,7 @@ const UploadModal = observer(() => {
   );
   const afterClose = useCallback(() => {
     clearImage();
+    setUploadLoading(false);
   }, [clearImage]);
   return (
     <Modal

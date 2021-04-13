@@ -1,5 +1,5 @@
 import React from 'react';
-import { config, Transition } from 'react-spring';
+import { config, Transition, useSpring } from 'react-spring';
 
 import { Loading } from '..';
 import { Content, LoadingBox, StyleButton } from './elements';
@@ -31,6 +31,10 @@ const Button: React.FC<IButtonProps> = ({
       >)(e);
     }
   };
+  const loadingSpringProps = useSpring({
+    opacity: loading ? 1 : 0,
+    // config: { ...config.stiff, friction: 18, mass: 0.8 },
+  });
   return (
     <StyleButton
       size={size}
@@ -40,22 +44,9 @@ const Button: React.FC<IButtonProps> = ({
       type={htmlType}
     >
       <Content>{children}</Content>
-      <Transition
-        config={{ ...config.stiff, friction: 18, mass: 0.8 }}
-        items={!!loading}
-        from={{ opacity: 0 }}
-        enter={{ opacity: 1 }}
-        leave={{ opacity: 0 }}
-      >
-        {loading =>
-          loading &&
-          (props => (
-            <LoadingBox style={props}>
-              <Loading size={24} color="#fff" />
-            </LoadingBox>
-          ))
-        }
-      </Transition>
+      <LoadingBox style={loadingSpringProps}>
+        <Loading size={24} color="#fff" />
+      </LoadingBox>
     </StyleButton>
   );
 };

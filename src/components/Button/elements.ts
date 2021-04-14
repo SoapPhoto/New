@@ -4,43 +4,93 @@ import { position, rgba } from 'polished';
 import { btnMixin } from '@app/styles/mixins';
 import { animated } from 'react-spring';
 
-export const StyleButton = styled.button<{ loading: number; size?: string }>`
-  ${btnMixin}
-  width: 100%;
-  height: 32px;
-  min-width: 64px;
-  padding: 0 12px;
-  box-shadow: 0 10px 20px -10px ${p => rgba(p.theme.colors.primary, 0.5)};
-  background-color: ${p => p.theme.colors.primary};
-  color: #fff;
-  ${p =>
-    p.loading
+interface IStyle {
+  loading?: boolean;
+  size?: string;
+  danger?: boolean;
+  btnType: string;
+}
+
+const btnText = ({ btnType, danger }: IStyle) => {
+  if (btnType === 'text') {
+    if (danger) {
+      return css`
+        ${_ => _.theme.colors.error}
+      `;
+    }
+    return css`
+      ${_ => _.theme.colors.primary}
+    `;
+  }
+  return '#fff';
+};
+
+const btnBg = ({ btnType, danger }: IStyle) => {
+  if (btnType === 'text') {
+    return 'transparent';
+  }
+  if (danger) {
+    return css`
+      ${_ => _.theme.colors.error}
+    `;
+  }
+  return css`
+    ${_ => _.theme.colors.primary}
+  `;
+};
+const btnShadow = ({ btnType, danger }: IStyle) => {
+  if (btnType === 'text') {
+    return 'transparent';
+  }
+  if (danger) {
+    return css`
+      ${_ => rgba(_.theme.colors.error, 0.5)}
+    `;
+  }
+  return css`
+    ${_ => rgba(_.theme.colors.primary, 0.5)}
+  `;
+};
+
+export const StyleButton = styled.button<IStyle>(
+  ({ loading, btnType, danger }) => css`
+    ${btnMixin}
+    width: 100%;
+    height: 32px;
+    min-width: 64px;
+    padding: 0 12px;
+    box-shadow: 0 10px 20px -10px ${btnShadow({ btnType, danger })};
+    background-color: ${btnBg({ btnType, danger })};
+    color: ${btnText({ btnType, danger })};
+    ${loading
       ? css`
           pointer-events: none;
           &:disabled {
             opacity: 1 !important;
           }
-          /* ${Content} {
-            visibility: hidden;
-          } */
         `
       : ''}
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.35;
-    cursor: default;
-  }
-  &:hover {
-    box-shadow: 0 15px 20px -10px ${p => rgba(p.theme.colors.primary, 0.6)};
-    transform: translateY(-2px);
-  }
-`;
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.35;
+      cursor: default;
+    }
+    &:hover {
+      box-shadow: 0 15px 20px -10px ${btnShadow({ btnType, danger })};
+      transform: translateY(-2px);
+    }
+  `,
+);
 
 export const Content = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  svg {
+    margin-top: -2px;
+    margin-right: 4px;
+  }
 `;
 
 export const LoadingBox = styled(animated.div as any)`

@@ -1,12 +1,22 @@
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { FieldInput, FieldSwitch, FieldTextarea, Modal } from '@app/components';
+import {
+  Button,
+  FieldInput,
+  FieldSwitch,
+  FieldTextarea,
+  IconButton,
+  Modal,
+} from '@app/components';
 import { useSearchParamModal } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
 import { Formik } from 'formik';
 import { pick } from 'lodash';
-import React from 'react';
+import React, { useState } from 'react';
+import { Trash2 } from 'react-feather';
 import { useTranslation } from 'react-i18next';
+import { useTheme } from 'styled-components';
 import { Content } from '../../elements';
+import { Footer } from './elements';
 
 interface IProps {
   picture: PictureEntity;
@@ -18,6 +28,8 @@ interface IValues {
   tags: string[];
 }
 const SettingModal: React.FC<IProps> = ({ picture }) => {
+  const { colors } = useTheme();
+  const [confirmVisible, setConfirmVisible] = useState(false);
   const { key } = picture;
   const [visible, close] = useSearchParamModal('setting');
   const { t } = useTranslation();
@@ -53,10 +65,24 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
                   bio="这个图片仅自己可见"
                 />
                 <div style={{ height: '12px' }} />
+                <Footer>
+                  <div>
+                    <IconButton onClick={() => setConfirmVisible(true)}>
+                      <Trash2 color={colors.error} />
+                    </IconButton>
+                  </div>
+                  <div>
+                    <Button htmlType="submit">保存</Button>
+                  </div>
+                </Footer>
               </>
             )}
           </Formik>
         </Content>
+        <Modal.Confirm
+          visible={confirmVisible}
+          onClose={() => setConfirmVisible(false)}
+        />
       </Modal.Content>
     </Modal>
   );

@@ -17,18 +17,22 @@ export const Mask = styled(animated.div as any)`
   /* backdrop-filter: saturate(180%) blur(4px); */
 `;
 
-export const Wrapper = styled.div<{ centered: number; fullscreen: number }>`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: auto;
-  outline: 0;
-  -webkit-overflow-scrolling: touch;
-  z-index: 1000;
-  ${p =>
-    p.centered
+export const Wrapper = styled.div<{
+  centered: boolean;
+  fullscreen: boolean;
+  autoMobile: boolean;
+}>(
+  ({ centered, fullscreen, autoMobile }) => css`
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    outline: 0;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1000;
+    ${centered
       ? css`
           text-align: center;
           padding: 12px 0px;
@@ -47,23 +51,41 @@ export const Wrapper = styled.div<{ centered: number; fullscreen: number }>`
           }
         `
       : ''}
-  ${p => customMedia.lessThan('mobile')`
-  ${
-    p.fullscreen
-      ? `
-      padding: 0;
-        ${Content} {
-      width: 100%;
-      max-width: 100% !important;
-      height: 100vh;
-      border-radius: 0px;
-      overflow-y: auto;
-    }
-  `
-      : ''
-  }
-  `}
-`;
+    ${customMedia.lessThan('mobile')`
+      ${
+        fullscreen
+          ? css`
+              padding: 0;
+              ${Content} {
+                width: 100%;
+                max-width: 100% !important;
+                height: 100vh;
+                border-radius: 0px;
+                overflow-y: auto;
+              }
+            `
+          : autoMobile &&
+            css`
+              padding: 0;
+              &::before {
+                content: none;
+              }
+              ${Content} {
+                position: absolute;
+                top: auto;
+                bottom: 0px;
+                left: 0;
+                right: 0;
+                max-height: 87vh;
+                overflow-y: auto;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+              }
+            `
+      }
+    `}
+  `,
+);
 
 export const Content = styled(animated.div as any)`
   position: relative;

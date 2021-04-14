@@ -90,7 +90,7 @@ const Login = () => {
             type="password"
             style={{ marginTop: '6px' }}
           />
-          <Button loading={confirmLoading} type="submit">
+          <Button loading={confirmLoading} htmlType="submit">
             登录
           </Button>
         </Form>

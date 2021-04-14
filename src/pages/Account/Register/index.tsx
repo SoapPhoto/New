@@ -96,7 +96,7 @@ const Register = observer(() => {
             type="password"
             style={{ marginTop: '6px' }}
           />
-          <Button loading={confirmLoading} type="submit">
+          <Button loading={confirmLoading} htmlType="submit">
             注册
           </Button>
         </Form>

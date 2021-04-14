@@ -3,6 +3,8 @@ import PortalWrapper from 'rc-util/lib/PortalWrapper';
 import ScrollLocker from 'rc-util/lib/Dom/scrollLocker';
 import { useSpring } from 'react-spring';
 
+import Confirm from './Confirm';
+
 import {
   Mask,
   Wrapper,
@@ -25,6 +27,8 @@ export interface IModalProps {
   fullscreen?: boolean;
   onClose?: (e: SyntheticEvent) => any;
   maskClosable?: boolean;
+  autoMobile?: boolean;
+  contentStyle?: React.CSSProperties | undefined;
 }
 
 const scrollLocker = new ScrollLocker();
@@ -48,6 +52,8 @@ const InternalModal: React.FC<IModalProps> = ({
   destroyOnClose,
   maxWidth,
   children,
+  autoMobile = true,
+  contentStyle,
 }) => {
   const isInit = useRef(false);
   const [animatedVisible, setAnimatedVisible] = useState(false);
@@ -155,8 +161,9 @@ const InternalModal: React.FC<IModalProps> = ({
             <div style={{ display: closed ? 'none' : 'block' }}>
               <Mask style={{ ...maskSpringProps }} />
               <Wrapper
-                fullscreen={fullscreen ? 1 : 0}
-                centered={centered ? 1 : 0}
+                fullscreen={!!fullscreen}
+                centered={!!centered}
+                autoMobile={!!autoMobile}
                 ref={wrapperRef}
                 onClick={onWrapperClick}
               >
@@ -164,6 +171,7 @@ const InternalModal: React.FC<IModalProps> = ({
                   style={{
                     ...contentSpringProps,
                     ...(maxWidth ? { maxWidth: maxWidth } : {}),
+                    ...contentStyle,
                   }}
                   onMouseDown={onContentMouseDown}
                   onMouseUp={onContentMouseUp}
@@ -187,6 +195,7 @@ interface IModal extends InternalModal {
   Background: typeof ModalBackground;
   Header: typeof ModalHeader;
   Title: typeof ModalTitle;
+  Confirm: typeof Confirm;
 }
 
 const Modal: IModal = InternalModal as IModal;
@@ -194,5 +203,6 @@ Modal.Content = ModalContent;
 Modal.Background = ModalBackground;
 Modal.Header = ModalHeader;
 Modal.Title = ModalTitle;
+Modal.Confirm = Confirm;
 
 export default Modal;

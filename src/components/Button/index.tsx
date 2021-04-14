@@ -2,13 +2,17 @@ import React from 'react';
 import { config, Transition, useSpring } from 'react-spring';
 
 import { Loading } from '..';
+import { StrutAlign } from '../Icons';
 import { Content, LoadingBox, StyleButton } from './elements';
 
 export interface IButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   loading?: boolean;
+  type?: 'primary' | 'text';
   htmlType?: 'submit' | 'reset' | 'button';
   size?: 'small' | 'large';
+  danger?: boolean;
+  icon?: React.ReactNode;
 }
 
 const Button: React.FC<IButtonProps> = ({
@@ -17,6 +21,9 @@ const Button: React.FC<IButtonProps> = ({
   onClick,
   size,
   htmlType,
+  icon,
+  type = 'primary',
+  danger,
   ...props
 }) => {
   const handleClick = (
@@ -39,11 +46,16 @@ const Button: React.FC<IButtonProps> = ({
     <StyleButton
       size={size}
       onClick={handleClick}
-      loading={loading ? 1 : 0}
+      loading={loading}
+      danger={danger}
       {...props}
+      btnType={type}
       type={htmlType}
     >
-      <Content>{children}</Content>
+      <Content>
+        <StrutAlign>{icon}</StrutAlign>
+        {children}
+      </Content>
       <LoadingBox style={loadingSpringProps}>
         <Loading size={24} color="#fff" />
       </LoadingBox>

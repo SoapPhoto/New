@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AlertCircle, Trash2 } from 'react-feather';
 import { IModalProps } from '.';
 import { Button, Modal } from '..';
+import { IButtonProps } from '../Button';
 
-interface IConfirmProps extends Pick<IModalProps, 'visible' | 'onClose'> {}
+interface IConfirmProps extends Pick<IModalProps, 'visible' | 'onClose'> {
+  icon?: React.ReactNode;
+  onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
+  confirmText?: string;
+  cancelText?: string;
+  confirmButtonProps?: IButtonProps;
+  cancelButtonProps?: IButtonProps;
+  title: string;
+}
 
 const Content = styled.div`
   text-align: center;
-  padding: 24px 12px;
+  padding: 24px 16px;
 `;
 
 const Icon = styled.div`
@@ -17,7 +26,7 @@ const Icon = styled.div`
 `;
 
 const Title = styled.h3`
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 `;
 
 const Handle = styled.div`
@@ -26,10 +35,20 @@ const Handle = styled.div`
   align-content: center;
 `;
 
-const Confirm: React.FC<IConfirmProps> = ({ visible, onClose }) => {
+const Confirm: React.FC<IConfirmProps> = ({
+  visible,
+  onClose,
+  onConfirm,
+  icon,
+  title,
+  cancelButtonProps,
+  cancelText = '取消',
+  confirmText = '确定',
+  confirmButtonProps,
+}) => {
   return (
     <Modal
-      maxWidth="320px"
+      maxWidth="340px"
       autoMobile={false}
       centered
       visible={visible}
@@ -37,16 +56,22 @@ const Confirm: React.FC<IConfirmProps> = ({ visible, onClose }) => {
     >
       <Content>
         <Icon>
-          <AlertCircle color="rgba(255, 130, 0, .8)" size={48} />
+          {icon ? (
+            icon
+          ) : (
+            <AlertCircle color="rgba(255, 130, 0, .8)" size={48} />
+          )}
         </Icon>
-        <Title>是否要删除</Title>
+        <Title>{title}</Title>
         <Handle>
           <div style={{ marginRight: 12 }}>
-            <Button type="text">取消</Button>
+            <Button type="text" {...cancelButtonProps} onClick={onClose}>
+              {cancelText}
+            </Button>
           </div>
           <div>
-            <Button icon={<Trash2 size={16} />} danger>
-              确定
+            <Button {...confirmButtonProps} onClick={onConfirm}>
+              {confirmText}
             </Button>
           </div>
         </Handle>

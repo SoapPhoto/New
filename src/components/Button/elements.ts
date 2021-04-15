@@ -62,6 +62,12 @@ export const StyleButton = styled.button<IStyle>(
     box-shadow: 0 10px 20px -10px ${btnShadow({ btnType, danger })};
     background-color: ${btnBg({ btnType, danger })};
     color: ${btnText({ btnType, danger })};
+    ${danger &&
+    css`
+      ${LoadingBox} {
+        background-color: ${p => rgba(p.theme.colors.error, 0.8)};
+      }
+    `}
     ${loading
       ? css`
           pointer-events: none;

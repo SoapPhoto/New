@@ -28,7 +28,7 @@ export interface IModalProps {
   onClose?: (e: SyntheticEvent) => any;
   maskClosable?: boolean;
   autoMobile?: boolean;
-  contentStyle?: React.CSSProperties | undefined;
+  contentStyle?: React.CSSProperties;
 }
 
 const scrollLocker = new ScrollLocker();

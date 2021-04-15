@@ -1,1 +1,1 @@
-export * from './mutations.graphql';
+export * from '@app/graphql/mutations/mutations.graphql';

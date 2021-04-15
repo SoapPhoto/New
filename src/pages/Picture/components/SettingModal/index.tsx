@@ -1,3 +1,4 @@
+import { useMutation } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import {
   Button,
@@ -6,12 +7,14 @@ import {
   FieldTextarea,
   IconButton,
   Modal,
+  Toast,
 } from '@app/components';
+import { DeletePicture } from '@app/graphql/mutations';
 import { useSearchParamModal } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
 import { Formik } from 'formik';
 import { pick } from 'lodash';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Trash2 } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'styled-components';
@@ -30,10 +33,21 @@ interface IValues {
 const SettingModal: React.FC<IProps> = ({ picture }) => {
   const { colors } = useTheme();
   const [confirmVisible, setConfirmVisible] = useState(false);
-  const { key } = picture;
+  const { key, id } = picture;
   const [visible, close] = useSearchParamModal('setting');
   const { t } = useTranslation();
+  const [deleteItem, { loading }] = useMutation(DeletePicture);
   const handleOk = () => {};
+  const deletePicture = useCallback(async () => {
+    try {
+      const data = await deleteItem({ variables: { id } });
+      console.log(data);
+    } catch (err) {
+      Toast.error(err.message, 10000000, onDelete => (
+        <button onClick={onDelete}>关闭</button>
+      ));
+    }
+  }, [deleteItem, id]);
   return (
     <Modal maxWidth={560} centered visible={visible} onClose={() => close()}>
       <Modal.Background background={getPictureUrl(key, 'blur')} />
@@ -82,6 +96,14 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
         <Modal.Confirm
           visible={confirmVisible}
           onClose={() => setConfirmVisible(false)}
+          onConfirm={deletePicture}
+          confirmText="删除"
+          confirmButtonProps={{
+            danger: true,
+            icon: <Trash2 size={16} />,
+            loading: loading,
+          }}
+          title="是否确认删除，删除之后不能恢复！"
         />
       </Modal.Content>
     </Modal>

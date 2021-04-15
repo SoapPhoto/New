@@ -17,6 +17,12 @@ mutation UnLikePicture($id: Float!) {
     ...PictureLikeFragment
   }
 }
+mutation DeletePicture($id: Float!) {
+  deletePicture(id: $id) {
+    done
+  }
+}
+
 
 mutation MarkNotificationReadAll {
   markNotificationReadAll {

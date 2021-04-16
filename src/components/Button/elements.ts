@@ -5,9 +5,9 @@ import { btnMixin } from '@app/styles/mixins';
 import { animated } from 'react-spring';
 
 interface IStyle {
-  loading?: boolean;
+  loading?: number;
   size?: string;
-  danger?: boolean;
+  danger?: number;
   btnType: string;
 }
 

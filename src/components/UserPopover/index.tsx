@@ -102,7 +102,10 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
                   }}
                 >
                   <Link to={`/picture/${picture.id}`}>
-                    <Img src={getPictureUrl(picture.key, 'thumb')} />
+                    <Img
+                      blurhash={picture.blurhash!}
+                      src={getPictureUrl(picture.key, 'thumb')}
+                    />
                   </Link>
                 </PreviewBox>
               ))}

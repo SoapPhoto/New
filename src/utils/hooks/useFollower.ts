@@ -5,11 +5,11 @@ import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { UserIsFollowing } from '@app/graphql/query';
 import { useAccount } from '@app/stores/hooks';
 import { throttle } from 'lodash';
-import { Toast } from '@app/components';
 import {
   FollowUser,
   UnFollowUser,
 } from '@app/graphql/mutations/mutations.graphql';
+import { toast } from 'react-hot-toast';
 
 export default function useFollower(): [(user: UserEntity) => any, boolean] {
   const { userInfo } = useAccount();
@@ -19,7 +19,7 @@ export default function useFollower(): [(user: UserEntity) => any, boolean] {
   const follow = useCallback(
     throttle(async (user: UserEntity) => {
       if (!userInfo) {
-        Toast.warning('请登录！');
+        toast.error('请登录！');
         return;
       }
       if (followLoading) return;
@@ -44,7 +44,7 @@ export default function useFollower(): [(user: UserEntity) => any, boolean] {
         });
         setFollowLoading(false);
       } catch (error) {
-        Toast.error(error.message);
+        toast.error(error.message);
         setFollowLoading(false);
         console.log(error);
       }

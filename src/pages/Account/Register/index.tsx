@@ -6,12 +6,13 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import FieldInput from '@app/components/Formik/FieldInput';
 import { Des, Title } from '../elements';
 import { useSpring, animated } from 'react-spring';
-import { Button, Toast } from '@app/components';
+import { Button } from '@app/components';
 import { RegisterSchema } from '../dto';
 import { register } from '@app/services/account';
 import { isArray } from 'lodash';
 import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
+import { toast } from 'react-hot-toast';
 
 const a = animated as any;
 interface IValues {
@@ -44,7 +45,7 @@ const Register = observer(() => {
       try {
         const data = await register(values);
         registerLogin(data);
-        Toast.success(t('auth.message.register_success') as string);
+        toast.success(t('auth.message.register_success') as string);
       } catch (error) {
         if (isArray(error.message)) {
           error.message.forEach(err => {
@@ -56,7 +57,7 @@ const Register = observer(() => {
             );
           });
         } else {
-          Toast.error(error.message);
+          toast.error(error.message);
         }
         setConfirmLoading(false);
       }
@@ -97,7 +98,7 @@ const Register = observer(() => {
             style={{ marginTop: '6px' }}
           />
           <Button loading={confirmLoading} htmlType="submit">
-            注册
+            {t('accountFeature.registerBtn')}
           </Button>
         </Form>
       </Formik>

@@ -3,7 +3,10 @@
     "loginTitle": "Login",
     "loginMessage": "New user? <1>Create an account</1>",
     "registerTitle": "Register",
-    "registerMessage": "Already have an account? <1>Login</1>"
+    "registerMessage": "Already have an account? <1>Login</1>",
+    "loginBtn": "Login",
+    "oauthTips": "Login with another account",
+    "registerBtn": "Sign Up"
   },
   "label": {
     "collection": "Collection",
@@ -14,12 +17,91 @@
     "picture_bio": "Bio",
     "email": "Email",
     "url": "URL",
-    "choice": "Choice"
+    "choice": "Choice",
+    "login": "Login",
+    "more": "load more",
+    "printTag": "Please enter a label",
+    "private": "private",
+    "vipppp": "VIP"
   },
   "validation": {
     "yup_longer": "{0} must be greater than {1} digits!",
     "yup_greater": "{0} must not be greater than {1}!",
     "yup_required": "Please enter {0}!",
-    "yup_format": "{{name}} format is incorrect!"
+    "yup_format": "{{name}} format is incorrect!",
+    "yup_number": "Please key in numbers"
+  },
+  "auth": {
+    "message": {
+      "register_success": "Sign Up Success!"
+    }
+  },
+  "comment": {
+    "empty": "No comment"
+  },
+  "error": {
+    "email_exists": "Email has been registered",
+    "oauth": {
+      "user_credentials_invalid": "wrong user name or password"
+    },
+    "username_exists": "Username already exists"
+  },
+  "menu": {
+    "dark": "Dark mode",
+    "light": "Light mode",
+    "setting": "Setting"
+  },
+  "picture": {
+    "edit": {
+      "confirm": "Save",
+      "success": "Saved successfully!",
+      "title": "Edit picture"
+    },
+    "editExif": {
+      "confirmBtn": "Modify",
+      "title": "EXIF Edit"
+    },
+    "info": {
+      "ISO": "ISO",
+      "aperture": "Aperture",
+      "dimensions": "dimensions",
+      "exposureTime": "Exposure Time",
+      "focalLength": "FocalLength",
+      "make": "Make",
+      "model": "Model",
+      "size": "Size",
+      "title": "Info"
+    },
+    "label": {
+      "delete": "Delete",
+      "deleteTitle": "Whether to confirm the deletion, it cannot be restored after deletion!",
+      "privateBio": "This picture is only visible to you"
+    },
+    "upload": {
+      "deleteImage": "Delete picture",
+      "noImgWarn": "Please select a picture",
+      "selectImg": "Please select a picture",
+      "uploadBtn": "Upload",
+      "uploadError": "Image upload failed!",
+      "uploadSuccess": "Picture uploaded successfully!",
+      "yup_title_required": "Please enter the title"
+    }
+  },
+  "upload": {
+    "message": {
+      "image_format_error": "Picture format error"
+    }
+  },
+  "user": {
+    "label": {
+      "followed": "Followed",
+      "followers": "Followers",
+      "likes": "Likes"
+    },
+    "tab": {
+      "choice": "Choice",
+      "likes": "Likes",
+      "new": "Pictures"
+    }
   }
 }

@@ -1,5 +1,11 @@
 # -------------------- Picture
 fragment PictureFragment on Picture {
+  ...PictureBaseFragment
+  isLike
+  likedCount
+}
+
+fragment PictureBaseFragment on Picture {
   id
   key
   hash
@@ -9,8 +15,6 @@ fragment PictureFragment on Picture {
   originalname
   mimetype
   size
-  isLike
-  likedCount
   color
   isDark
   height
@@ -20,26 +24,6 @@ fragment PictureFragment on Picture {
   createTime
   updateTime
   blurhash
-}
-
-fragment PicturePreviewFragment on Picture {
-  id
-  key
-  hash
-  title
-  bio
-  views
-  originalname
-  mimetype
-  size
-  color
-  isDark
-  height
-  width
-  make
-  model
-  createTime
-  updateTime
 }
 
 fragment PictureDetailFragment on Picture {
@@ -124,7 +108,7 @@ fragment RelatedCollectionFragment on PictureRelatedCollectionReq {
     data {
       ...CollectionFragment
       preview {
-        ...PicturePreviewFragment
+        ...PictureBaseFragment
       }
     }
 }
@@ -136,7 +120,7 @@ fragment CollectionDetailFragment on Collection {
     ...UserFragment
   }
   preview {
-    ...PicturePreviewFragment
+    ...PictureBaseFragment
   }
 }
 
@@ -151,7 +135,7 @@ fragment CollectionListFragment on Collections {
       ...UserFragment
     }
     preview {
-      ...PicturePreviewFragment
+      ...PictureBaseFragment
     }
   }
 }
@@ -191,7 +175,7 @@ fragment UserDetailFragment on User {
   signupType
   status
   pictures(limit: 3) {
-    ...PicturePreviewFragment
+    ...PictureBaseFragment
   }
   badge {
     ...BadgeFragment
@@ -234,7 +218,7 @@ fragment NotificationFragment on Notification {
   category
   read
   picture {
-    ...PicturePreviewFragment
+    ...PictureBaseFragment
   }
   comment {
     ...CommentNotificationFragment
@@ -267,7 +251,7 @@ fragment CommentNotificationFragment on Comment {
     ...UserFragment
   }
   picture {
-    ...PicturePreviewFragment
+    ...PictureBaseFragment
   }
 }
 

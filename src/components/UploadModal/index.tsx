@@ -38,6 +38,7 @@ import { addPicture } from '@app/services/picture';
 import { useApolloClient } from '@apollo/client';
 import { Picture } from '@app/graphql/query';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import { toast } from 'react-hot-toast';
 
 export interface IValues {
   isLocation: boolean;
@@ -52,6 +53,7 @@ const a = animated as any;
 const DeleteImageBtn: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ style, onClick, ...props }) => {
+  const { t } = useTranslation();
   const [spring, bind] = useTapButton(1.03, 0.95);
   return (
     <a.button
@@ -73,7 +75,7 @@ const DeleteImageBtn: React.FC<
           margin-right: 4px;
         `}
       />
-      删除图片
+      {t('picture.upload.deleteImage')}
     </a.button>
   );
 };
@@ -119,9 +121,7 @@ const UploadModal = observer(() => {
             onUploadProgress,
           );
         } catch (err) {
-          Toast.error(err.message || '图片上传失败！', 0, cb => (
-            <Button size="small">关闭</Button>
-          ));
+          toast.error(t(err.message) || t('picture.upload.uploadError'));
           setUploadLoading(false);
         }
         if (key) {
@@ -142,14 +142,14 @@ const UploadModal = observer(() => {
             });
             writePictures(picture.picture);
           }
-          Toast.success('图片上传成功！');
+          toast.success(t('picture.upload.uploadSuccess'));
           close();
         }
       } else {
-        Toast.warning('请选择图片');
+        toast.error(t('picture.upload.noImgWarn'));
       }
     },
-    [client, close, info, onUploadProgress, userInfo, writePictures],
+    [client, close, info, onUploadProgress, t, userInfo, writePictures],
   );
   const afterClose = useCallback(() => {
     clearImage();
@@ -172,7 +172,7 @@ const UploadModal = observer(() => {
         {!thumbnail ? (
           <UploadHeader onFileChange={handleChange}>
             <Image size={32} />
-            <UploadTips>请选择图片</UploadTips>
+            <UploadTips>{t('picture.upload.selectImg')}</UploadTips>
           </UploadHeader>
         ) : (
           <UploadImageHeader>
@@ -206,7 +206,9 @@ const UploadModal = observer(() => {
               tags: [],
             }}
             validationSchema={Yup.object().shape({
-              title: Yup.string().required('请输入标题'),
+              title: Yup.string().required(
+                t('picture.upload.yup_title_required'),
+              ),
             })}
             onSubmit={onSubmit}
           >
@@ -224,8 +226,8 @@ const UploadModal = observer(() => {
                 <FieldTag name="tags" />
                 <FieldSwitch
                   name="isPrivate"
-                  label="私人"
-                  bio="这个图片仅自己可见"
+                  label={t('label.private')}
+                  bio={t('picture.label.privateBio')}
                 />
                 <div style={{ height: '24px' }} />
                 <div style={{ height: '12px' }} />
@@ -235,7 +237,7 @@ const UploadModal = observer(() => {
                     htmlType="submit"
                     disabled={!(isValid && thumbnail)}
                   >
-                    上传
+                    {t('picture.upload.uploadBtn')}
                   </Button>
                 </div>
               </Form>

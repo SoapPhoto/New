@@ -43,13 +43,13 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
       visible={visible}
       onClose={() => close()}
     >
-      <Modal.Title>图片信息修改</Modal.Title>
+      <Modal.Title>{t('picture.editExif.title')}</Modal.Title>
       <Modal.Content>
         <Formik<IEXIFEditValues>
           validationSchema={Yup.object().shape({
-            ISO: Yup.number().typeError('请输入数字'),
-            aperture: Yup.number().typeError('请输入数字'),
-            focalLength: Yup.number().typeError('请输入数字'),
+            ISO: Yup.number().typeError(t('validation.yup_number')),
+            aperture: Yup.number().typeError(t('validation.yup_number')),
+            focalLength: Yup.number().typeError(t('validation.yup_number')),
           })}
           initialValues={{
             ...initValue,
@@ -81,7 +81,7 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
                 `}
                 htmlType="submit"
               >
-                修改
+                {t('picture.editExif.confirmBtn')}
               </Button>
             </div>
           </Form>

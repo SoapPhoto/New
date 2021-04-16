@@ -1,5 +1,6 @@
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import React, { memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Avatar, EmojiText, Popover } from '..';
@@ -41,6 +42,7 @@ const Bio = styled(EmojiText)`
 `;
 
 const UserItem: React.FC<IUserItemProps> = memo(({ user }) => {
+  const { t } = useTranslation();
   return (
     <Wrapper key={user.id}>
       <Avatar size={42} src={user.avatar} />
@@ -55,7 +57,7 @@ const UserItem: React.FC<IUserItemProps> = memo(({ user }) => {
                   placement="top"
                   theme="dark"
                   openDelay={100}
-                  content={<span>至臻会员</span>}
+                  content={<span>{t('label.vipppp')}</span>}
                 >
                   <span>
                     <StrutAlign>

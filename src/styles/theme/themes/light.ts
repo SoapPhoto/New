@@ -47,6 +47,10 @@ const theme: DefaultTheme = {
     modal: {
       background: '#fff',
     },
+    toaster: {
+      background: '#fff',
+      color: 'rgba(58,52,51,1)',
+    },
   },
 };
 

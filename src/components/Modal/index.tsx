@@ -82,6 +82,7 @@ const InternalModal: React.FC<IModalProps> = ({
   });
   useEffect(() => {
     isInit.current = true;
+    return () => destroy();
   }, []);
   useEffect(() => {
     if (visible !== animatedVisible) {

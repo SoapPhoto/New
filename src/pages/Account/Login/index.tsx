@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { useSpring, animated } from 'react-spring';
+import { toast } from 'react-hot-toast';
 
 import FieldInput from '@app/components/Formik/FieldInput';
 import { LoginSchema } from '../dto';
@@ -17,7 +18,7 @@ import {
   WeiboOauthBtn,
 } from '../elements';
 import { useAccount } from '@app/stores/hooks';
-import { Button, Toast } from '@app/components';
+import { Button } from '@app/components';
 
 interface IValues {
   username: string;
@@ -55,9 +56,9 @@ const Login = () => {
         await login(values.username, values.password);
       } catch (error) {
         if (error.message === 'Invalid grant: user credentials are invalid') {
-          Toast.error(t('error.oauth.user_credentials_invalid') as string);
+          toast.error(t('error.oauth.user_credentials_invalid'));
         } else {
-          Toast.error(error.message);
+          toast.error(t(error.message));
         }
         setConfirmLoading(false);
       }
@@ -91,11 +92,11 @@ const Login = () => {
             style={{ marginTop: '6px' }}
           />
           <Button loading={confirmLoading} htmlType="submit">
-            登录
+            {t('accountFeature.loginBtn')}
           </Button>
         </Form>
       </Formik>
-      <Tips>使用其他账号登录</Tips>
+      <Tips>{t('accountFeature.oauthTips')}</Tips>
       <OauthBox>
         <GithubOauthBtn>
           <GitHubLogo color="#fff" />

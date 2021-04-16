@@ -1,7 +1,6 @@
 import { Tab } from '@app/components';
-import { btnMixin } from '@app/styles/mixins';
 import React, { memo } from 'react';
-import { Link, resolvePath, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import styled, { css } from 'styled-components';
 
 interface IProps {}
@@ -11,6 +10,7 @@ const Wrapper = styled.div`
   padding-top: 24px;
 `;
 const UserTab: React.FC<IProps> = memo(() => {
+  const { t } = useTranslation();
   return (
     <Wrapper>
       <Tab
@@ -18,9 +18,9 @@ const UserTab: React.FC<IProps> = memo(() => {
           text-align: center;
         `}
       >
-        <Tab.Item name="照片" to="."></Tab.Item>
-        <Tab.Item name="精选" to="./choice"></Tab.Item>
-        <Tab.Item name="喜欢" to="./like"></Tab.Item>
+        <Tab.Item name={t('user.tab.new')} to="."></Tab.Item>
+        <Tab.Item name={t('user.tab.choice')} to="./choice"></Tab.Item>
+        <Tab.Item name={t('user.tab.likes')} to="./like"></Tab.Item>
       </Tab>
     </Wrapper>
   );

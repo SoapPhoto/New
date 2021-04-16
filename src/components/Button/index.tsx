@@ -46,8 +46,8 @@ const Button: React.FC<IButtonProps> = ({
     <StyleButton
       size={size}
       onClick={handleClick}
-      loading={loading}
-      danger={danger}
+      loading={loading ? 1 : 0}
+      danger={danger ? 1 : 0}
       {...props}
       btnType={type}
       type={htmlType}

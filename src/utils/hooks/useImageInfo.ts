@@ -1,5 +1,5 @@
-import { Toast } from '@app/components';
 import { MutableRefObject, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { getImageInfo, IImageInfo, isImage } from '../image';
@@ -25,7 +25,7 @@ export default function useImageInfo(
       imageRef.current = file;
       getInfo();
     } else {
-      Toast.warning(t('upload.message.image_format_error') as string);
+      toast.error(t('upload.message.image_format_error'));
     }
   };
   const clear = () => {

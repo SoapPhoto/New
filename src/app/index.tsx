@@ -3,6 +3,7 @@ import { useLayoutEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 import { GlobalStyle } from '../styles/global-styles';
 
@@ -20,6 +21,7 @@ import UploadModal from '@app/components/UploadModal';
 import User from '@app/pages/User';
 import { UserTypeValues } from '@app/common/enum/router';
 import TagPage from '@app/pages/Tag';
+import { useTheme } from 'styled-components';
 
 const Router = () => {
   console.log(`/@:username/:type(${UserTypeValues.join('|')})?`);
@@ -42,6 +44,7 @@ const Router = () => {
 };
 
 export const App = observer(() => {
+  const { widget } = useTheme();
   const { i18n } = useTranslation();
   const { initHandle } = useAccount();
   useLayoutEffect(() => {
@@ -60,6 +63,13 @@ export const App = observer(() => {
       <Router />
       <UploadModal />
       <GlobalStyle />
+      <Toaster
+        toastOptions={{
+          style: {
+            ...widget.toaster,
+          },
+        }}
+      />
     </BrowserRouter>
   );
 });

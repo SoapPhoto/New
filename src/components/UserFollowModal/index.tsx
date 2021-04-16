@@ -7,6 +7,7 @@ import { useLazyQuery } from '@apollo/client';
 import { FollowedUsers, FollowerUsers } from '@app/graphql/query';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import UserItem from './UserItem';
+import { useTranslation } from 'react-i18next';
 
 const Content = styled(OverlayScrollbarsComponent)`
   flex: 1;
@@ -22,6 +23,7 @@ interface IProps {
 
 const UserFollowModal: React.FC<IProps> = memo(
   ({ visible, onClose, type, userId }) => {
+    const { t } = useTranslation();
     const [followedQuery, followedData] = useLazyQuery<{
       followedUsers: UserEntity[];
     }>(FollowedUsers, {
@@ -86,7 +88,11 @@ const UserFollowModal: React.FC<IProps> = memo(
         maxWidth={400}
       >
         <Modal.Header>
-          <Modal.Title>{type === 'follower' ? '粉丝' : '关注'}</Modal.Title>
+          <Modal.Title>
+            {type === 'follower'
+              ? t('user.label.followers')
+              : t('user.label.followed')}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Content
           css={`

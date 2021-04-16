@@ -1,15 +1,16 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
+import { useTranslation } from 'react-i18next';
+import { NetworkStatus } from '@apollo/client';
 
 import { Button, PictureList } from '@app/components';
-import { NetworkStatus, useQuery } from '@apollo/client';
-import { Pictures } from '@app/graphql/query';
 
 import { PicturesType } from '@app/common/enum/picture';
 import Skeleton from './Skeleton';
 import { usePicturesQuery } from '@app/graphql/hooks/query';
 
 export const Home = observer(() => {
+  const { t } = useTranslation();
   const { loading, data, fetchMore, networkStatus } = usePicturesQuery({
     type: PicturesType.NEW,
     query: {
@@ -37,7 +38,6 @@ export const Home = observer(() => {
       },
     });
   }, [data, fetchMore, networkStatus]);
-  // return <Skeleton />;
   return (
     <div
       style={{
@@ -54,7 +54,7 @@ export const Home = observer(() => {
       ) : (
         <div>
           <PictureList list={data!.pictures.data} />
-          <Button onClick={more}>加载更多</Button>
+          <Button onClick={more}>{t('label.more')}</Button>
         </div>
       )}
     </div>

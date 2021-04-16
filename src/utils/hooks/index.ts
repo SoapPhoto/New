@@ -4,3 +4,4 @@ export { default as useSearchParamModal } from './useSearchParamModal';
 export { default as useFollower } from './useFollower';
 export { default as useImageInfo } from './useImageInfo';
 export { default as useNewPictureCacheWrite } from './useNewPictureCacheWrite';
+export { default as useDeletePicture } from './useDeletePicture';

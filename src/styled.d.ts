@@ -44,6 +44,10 @@ declare module 'styled-components' {
       modal: {
         background: string;
       };
+      toaster: {
+        background: string;
+        color: string;
+      };
     };
   }
 }

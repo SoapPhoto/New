@@ -3,7 +3,10 @@
     "loginTitle": "登录",
     "loginMessage": "新用户？<1>创建账户</1>",
     "registerTitle": "注册",
-    "registerMessage": "已有账户？<1>登录</1>"
+    "registerMessage": "已有账户？<1>登录</1>",
+    "loginBtn": "登录",
+    "oauthTips": "使用其他账号登录",
+    "registerBtn": "注册"
   },
   "label": {
     "collection": "收藏夹",
@@ -14,19 +17,30 @@
     "picture_bio": "说明",
     "email": "邮箱",
     "url": "网址",
-    "choice": "精选"
+    "choice": "精选",
+    "private": "私人",
+    "more": "加载更多",
+    "vipppp": "至臻会员",
+    "printTag": "请输入标签",
+    "login": "登录"
   },
   "validation": {
     "yup_required": "请输入{{name}}！",
     "yup_format": "{{name}}格式不正确!",
     "yup_longer": "{{name}}必须大于{{length}}位！",
-    "yup_greater": "{{name}}不得大于{{length}}位！"
+    "yup_greater": "{{name}}不得大于{{length}}位！",
+    "yup_number": "请输入数字"
   },
   "user": {
     "label": {
       "followers": "粉丝",
       "followed": "关注",
       "likes": "喜欢"
+    },
+    "tab": {
+      "new": "照片",
+      "likes": "喜欢",
+      "choice": "精选"
     }
   },
   "menu": {
@@ -57,11 +71,37 @@
       "ISO": "ISO",
       "dimensions": "尺寸",
       "size": "大小"
+    },
+    "edit": {
+      "title": "编辑图片",
+      "confirm": "保存",
+      "success": "保存成功！"
+    },
+    "label": {
+      "privateBio": "这个图片仅自己可见",
+      "delete": "删除",
+      "deleteTitle": "是否确认删除，删除之后不能恢复！"
+    },
+    "upload": {
+      "deleteImage": "删除图片",
+      "uploadError": "图片上传失败！",
+      "uploadSuccess": "图片上传成功！",
+      "noImgWarn": "请选择图片",
+      "selectImg": "请选择图片",
+      "yup_title_required": "请输入标题",
+      "uploadBtn": "上传"
+    },
+    "editExif": {
+      "title": "图片信息修改",
+      "confirmBtn": "修改"
     }
   },
   "upload": {
     "message": {
       "image_format_error": "图片格式错误"
     }
+  },
+  "comment": {
+    "empty": "暂无评论"
   }
 }

@@ -64,7 +64,7 @@ export const PicturePage = observer(() => {
         {picture.tags.length > 0 && (
           <TagBox>
             {picture.tags.map(tag => (
-              <Link to={`/tag/${tag.name}`}>
+              <Link to={`/tag/${tag.name}`} key={tag.id}>
                 <Tag key={tag.id}>{tag.name}</Tag>
               </Link>
             ))}

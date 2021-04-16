@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { css } from 'styled-components';
 import { IconButton } from '..';
 import { Hash, Trash2 } from '../Icons';
@@ -9,7 +10,8 @@ export interface ITag {
   onChange: (value: string[]) => void;
 }
 
-const Tag: React.FC<ITag> = ({ value, onChange }) => {
+const Tag: React.FC<ITag> = memo(({ value, onChange }) => {
+  const { t } = useTranslation();
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
@@ -50,10 +52,10 @@ const Tag: React.FC<ITag> = ({ value, onChange }) => {
         </TagItem>
       ))}
       <TagInput>
-        <input onKeyPress={handleKeyDown} placeholder="请输入标签" />
+        <input onKeyPress={handleKeyDown} placeholder={t('label.printTag')} />
       </TagInput>
     </Wrapper>
   );
-};
+});
 
 export default Tag;

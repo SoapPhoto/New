@@ -100,7 +100,7 @@ export const Right = observer(() => {
           <A style={{ marginRight: 16 }} to="/search">
             <Search />
           </A>
-          <A to="/login">登录</A>
+          <A to="/login">{t('label.login')}</A>
         </>
       )}
     </Wrapper>

@@ -16,6 +16,7 @@ const theme: DefaultTheme = {
     layout: '#121212',
     secondary: 'rgba(255, 255, 255, 0.5)',
     border: 'rgba(255, 255,255, 0.1)',
+    green: '#47B881',
     gray1,
     gray2,
     gray3,
@@ -32,6 +33,13 @@ const theme: DefaultTheme = {
     input: {
       bg: '#343434',
       hoverBg: gray3,
+    },
+    collection: {
+      background: 'rgb(51, 51, 51)',
+      addPicture: {
+        background: '#1e1e1e',
+        color: '#fff',
+      },
     },
     skeleton: {
       accents1: '#111111',

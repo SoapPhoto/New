@@ -33,7 +33,7 @@ import './locales/i18n';
 import { stores } from '@app/stores';
 import { client } from '@app/apollo/client';
 
-import 'dayjs/locale/es';
+import 'dayjs/locale/en';
 import 'dayjs/locale/zh-cn';
 
 // const openSansObserver = new FontFaceObserver('Rubik', {});
@@ -45,7 +45,7 @@ import 'dayjs/locale/zh-cn';
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
 dayjs.extend(relativeTime);
-dayjs.locale('zh-cn');
+// dayjs.locale('zh-cn');
 
 ReactDOM.render(
   <ApolloProvider client={client}>

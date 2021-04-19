@@ -1,9 +1,12 @@
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import { Star1, Info, Settings } from '@app/components/Icons';
 import { useAccount } from '@app/stores/hooks';
 import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import { observer } from 'mobx-react';
 import React, { useMemo } from 'react';
-import { Info, Settings } from 'react-feather';
+import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from 'styled-components';
 import {
   HeartIcon,
   IconButton,
@@ -16,6 +19,10 @@ interface IProps {
 }
 
 const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
+  const { colors } = useTheme();
+  const { t } = useTranslation();
+  const { isLogin } = useAccount();
+  const [, , collectionOpen] = useSearchParamModal('collection');
   const [, , exifOpen] = useSearchParamModal('exif');
   const [, , settingOpen] = useSearchParamModal('setting');
   const { userInfo } = useAccount();
@@ -25,6 +32,10 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
       (userInfo && userInfo.id.toString() === picture.user.id.toString()) ||
       false,
     [picture.user.id, userInfo],
+  );
+  const isCollected = useMemo(
+    () => !!(picture && picture.currentCollections.length > 0),
+    [],
   );
   return (
     <PictureBaseInfo>
@@ -47,11 +58,33 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
           grid-auto-flow: column;
         `}
       >
-        <IconButton onClick={() => exifOpen()} popover={'详情'}>
+        <IconButton
+          onClick={() => {
+            if (!isLogin) {
+              return toast.error(t('error.login'));
+            }
+            collectionOpen();
+          }}
+          popover={t('picture.label.collection')}
+        >
+          <Star1
+            style={{
+              stroke: isCollected ? colors.green : colors.secondary,
+              fill: isCollected ? colors.green : 'transparent',
+            }}
+          />
+        </IconButton>
+        <IconButton
+          onClick={() => exifOpen()}
+          popover={t('picture.label.detail')}
+        >
           <Info />
         </IconButton>
         {isOwner && (
-          <IconButton onClick={() => settingOpen()} popover={'设置'}>
+          <IconButton
+            onClick={() => settingOpen()}
+            popover={t('picture.label.setting')}
+          >
             <Settings />
           </IconButton>
         )}

@@ -22,7 +22,10 @@
     "more": "加载更多",
     "vipppp": "至臻会员",
     "printTag": "请输入标签",
-    "login": "登录"
+    "login": "登录",
+    "followed": "已关注",
+    "follow": "关注",
+    "img_count": "{{total}}个图片"
   },
   "validation": {
     "yup_required": "请输入{{name}}！",
@@ -53,7 +56,8 @@
     "email_exists": "邮箱已被注册",
     "oauth": {
       "user_credentials_invalid": "用户名或密码错误"
-    }
+    },
+    "login": "请登录!"
   },
   "auth": {
     "message": {
@@ -80,7 +84,10 @@
     "label": {
       "privateBio": "这个图片仅自己可见",
       "delete": "删除",
-      "deleteTitle": "是否确认删除，删除之后不能恢复！"
+      "deleteTitle": "是否确认删除，删除之后不能恢复！",
+      "detail": "详情",
+      "setting": "设置",
+      "collection": "收藏"
     },
     "upload": {
       "deleteImage": "删除图片",

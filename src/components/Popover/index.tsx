@@ -100,9 +100,9 @@ const Popover: React.FC<IPopoverProps> = ({
     opacity: popupVisible ? 1 : 0,
     transform: popupVisible ? `scale3d(1, 1, 1)` : `scale3d(0.88, 0.88, 0.88)`,
     config: {
-      mass: 1,
-      tension: 340,
-      friction: 30,
+      mass: 0.8,
+      tension: 430,
+      friction: 28,
     },
     onRest: () => {
       if (!popupVisible) {

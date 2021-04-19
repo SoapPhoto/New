@@ -6,6 +6,7 @@ import { Picture } from '@app/graphql/query';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import CollectionModal from './components/CollectionModal';
 import ExifModal from './components/ExifModal';
 import HeaderUserInfo from './components/HeaderUserInfo';
 import PictureCenter from './components/PictureCenter';
@@ -74,6 +75,7 @@ export const PicturePage = observer(() => {
       </Content>
       <ExifModal picture={picture} />
       <SettingModal picture={picture} />
+      <CollectionModal picture={picture} />
     </Wrapper>
   );
 });

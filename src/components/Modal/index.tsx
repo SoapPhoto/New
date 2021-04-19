@@ -34,9 +34,9 @@ export interface IModalProps {
 const scrollLocker = new ScrollLocker();
 
 const springConfig = {
-  mass: 1,
-  tension: 340,
-  friction: 30,
+  mass: 0.8,
+  tension: 430,
+  friction: 28,
 };
 
 let openTotal = 0;

@@ -50,7 +50,7 @@ const IconButton: React.FC<IProps> = ({
         trigger="hover"
         placement="top"
         theme="dark"
-        openDelay={100}
+        openDelay={200}
         content={<span>{popover}</span>}
       >
         {content}

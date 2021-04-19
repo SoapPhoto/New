@@ -18,6 +18,7 @@ import {
 } from '../elements';
 import { useAccount } from '@app/stores/hooks';
 import { useFollower } from '@app/utils/hooks';
+import { useTranslation } from 'react-i18next';
 
 interface IProps {
   user: UserEntity;
@@ -25,6 +26,7 @@ interface IProps {
 }
 
 const HeaderUserInfo: React.FC<IProps> = observer(({ user, createTime }) => {
+  const { t } = useTranslation();
   const { userInfo } = useAccount();
   const [follow, followLoading] = useFollower();
   return (
@@ -61,7 +63,7 @@ const HeaderUserInfo: React.FC<IProps> = observer(({ user, createTime }) => {
               `}
             >
               <Button loading={followLoading} onClick={() => follow(user)}>
-                {user.isFollowing ? '已关注' : '关注'}
+                {user.isFollowing ? t('label.followed') : t('label.follow')}
               </Button>
             </div>
           )}

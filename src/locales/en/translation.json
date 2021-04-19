@@ -22,7 +22,10 @@
     "more": "load more",
     "printTag": "Please enter a label",
     "private": "private",
-    "vipppp": "VIP"
+    "vipppp": "VIP",
+    "followed": "Followed",
+    "follow": "Follow",
+    "img_count": "{{total}} pictures"
   },
   "validation": {
     "yup_longer": "{0} must be greater than {1} digits!",
@@ -44,7 +47,8 @@
     "oauth": {
       "user_credentials_invalid": "wrong user name or password"
     },
-    "username_exists": "Username already exists"
+    "username_exists": "Username already exists",
+    "login": "please sign in!"
   },
   "menu": {
     "dark": "Dark mode",
@@ -75,7 +79,10 @@
     "label": {
       "delete": "Delete",
       "deleteTitle": "Whether to confirm the deletion, it cannot be restored after deletion!",
-      "privateBio": "This picture is only visible to you"
+      "privateBio": "This picture is only visible to you",
+      "setting": "Setting",
+      "detail": "Info",
+      "collection": "Collection"
     },
     "upload": {
       "deleteImage": "Delete picture",

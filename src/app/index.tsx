@@ -1,9 +1,10 @@
-import * as React from 'react';
-import { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { useTheme } from 'styled-components';
+import dayjs from 'dayjs';
 
 import { GlobalStyle } from '../styles/global-styles';
 
@@ -19,12 +20,9 @@ import PicturePage from '@app/pages/Picture/Loadable';
 import Upload from '@app/pages/Upload';
 import UploadModal from '@app/components/UploadModal';
 import User from '@app/pages/User';
-import { UserTypeValues } from '@app/common/enum/router';
 import TagPage from '@app/pages/Tag';
-import { useTheme } from 'styled-components';
 
 const Router = () => {
-  console.log(`/@:username/:type(${UserTypeValues.join('|')})?`);
   return (
     <Routes>
       <Route path="" element={<DefaultLayout />}>
@@ -51,6 +49,14 @@ export const App = observer(() => {
     initHandle();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => {
+    if (i18n.language === 'en') {
+      dayjs.locale('en');
+    } else {
+      dayjs.locale('zh-cn');
+    }
+  }, [i18n.language]);
+  console.log(i18n.language);
   return (
     <BrowserRouter>
       <Helmet

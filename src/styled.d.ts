@@ -17,6 +17,7 @@ declare module 'styled-components' {
       layout: string;
       secondary: string;
       border: string;
+      green: string;
     };
     dashboard: {};
     widget: {
@@ -35,6 +36,13 @@ declare module 'styled-components' {
         accents2: string;
         background: string;
         shadow: string;
+      };
+      collection: {
+        background: string;
+        addPicture: {
+          background: string;
+          color: string;
+        };
       };
       popover: {
         theme: string;

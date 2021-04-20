@@ -132,7 +132,7 @@ export const ModalBackground = styled.div<{
   filter: blur(4px);
   transform: scale(1.1);
   background: linear-gradient(
-      ${p => rgba(p.theme.widget.modal.background, 0.75)},
+      ${p => rgba(p.theme.widget.modal.background, 0.85)},
       ${p => p.theme.widget.modal.background} 90px
     ),
     url('${p => p.background}');

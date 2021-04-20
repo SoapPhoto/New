@@ -37,7 +37,7 @@ const theme: DefaultTheme = {
     collection: {
       background: 'rgb(51, 51, 51)',
       addPicture: {
-        background: '#1e1e1e',
+        background: '#000',
         color: '#fff',
       },
     },

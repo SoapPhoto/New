@@ -48,7 +48,7 @@ export const ItemInfoBox = styled.div<{
   left: 0;
   transition: all 0.15s ease-in-out;
   padding: 17px 20px;
-  border-radius: 4px;
+  border-radius: 5px;
   backdrop-filter: saturate(180%) blur(5px);
   color: ${_ => _.theme.widget.collection.addPicture.color};
   & ${CheckIcon} {
@@ -65,7 +65,7 @@ export const ItemInfoBox = styled.div<{
   background: ${_ =>
     rgba(
       _.theme.widget.collection.addPicture.background,
-      _.isPreview ? 0.6 : 0.8,
+      _.isPreview ? 0.2 : 1,
     )};
   ${_ =>
     _.isCollected
@@ -73,7 +73,7 @@ export const ItemInfoBox = styled.div<{
           border: 2px solid ${_.theme.colors.green};
           background: linear-gradient(
             45deg,
-            ${rgba(_.theme.widget.collection.addPicture.background, 0.3)},
+            ${rgba(_.theme.widget.collection.addPicture.background, 0.2)},
             ${_.theme.colors.green}
           );
           & ${CheckIcon} {

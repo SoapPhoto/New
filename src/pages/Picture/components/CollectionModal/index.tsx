@@ -52,7 +52,7 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
         },
       });
     }
-  }, [collectionsQuery, isLogin]);
+  }, [visible, isLogin]);
   useEffect(() => {
     setCurrent(
       new Map(
@@ -69,9 +69,11 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
       return (
         <CollectionItemBox key={collection.id}>
           {preview[0] && (
-            <CollectionItemCover src={getPictureUrl(preview[0].key, 'small')} />
+            <CollectionItemCover
+              src={getPictureUrl(preview[0].key, 'thumbSmall')}
+            />
           )}
-          <ItemInfoBox isCollected={isCollected} isPreview={0}>
+          <ItemInfoBox isCollected={isCollected} isPreview={preview[0] ? 1 : 0}>
             <div>
               <ItemInfoTitle>
                 {collection.isPrivate && (

@@ -1,5 +1,7 @@
-import { Home } from '.';
+import React from 'react';
+import Loadable from '@loadable/component';
+import Skeleton from './Skeleton';
 
-const HomePage = Home;
-
-export default HomePage;
+export default Loadable(() => import('./index'), {
+  fallback: <Skeleton />,
+});

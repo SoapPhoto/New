@@ -8,6 +8,7 @@ import Avatar from '@app/components/Avatar';
 
 import {
   BaseInfoItem,
+  HeaderUserInfoFollowBtnBox,
   TimeSpan,
   UserHeader,
   UserHeaderWrapper,
@@ -55,17 +56,11 @@ const HeaderUserInfo: React.FC<IProps> = observer(({ user, createTime }) => {
             </BaseInfoItem>
           </UserInfoRight>
           {userInfo && (
-            <div
-              css={`
-                margin-left: 12px;
-                display: flex;
-                align-items: center;
-              `}
-            >
+            <HeaderUserInfoFollowBtnBox>
               <Button loading={followLoading} onClick={() => follow(user)}>
                 {user.isFollowing ? t('label.followed') : t('label.follow')}
               </Button>
-            </div>
+            </HeaderUserInfoFollowBtnBox>
           )}
         </UserInfo>
       </UserHeader>

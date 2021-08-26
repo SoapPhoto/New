@@ -4,7 +4,7 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { Pictures } from '@app/graphql/query/query.graphql';
 import { ListQueryData, PicturesQueryVariables } from '../interface';
 
-const defaultOptions: QueryHookOptions = {};
+const defaultOptions: QueryHookOptions<any, any> = {};
 
 export function usePicturesQuery<
   TData = ListQueryData<'pictures', PictureEntity>,

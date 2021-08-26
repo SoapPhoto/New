@@ -75,3 +75,8 @@ export const ItemBio = styled.p`
   color: ${p => p.theme.colors.secondary};
   margin-top: 4px;
 `;
+
+export const RequiredX = styled.span`
+  margin-right: 4px;
+  color: ${p => p.theme.colors.error};
+`;

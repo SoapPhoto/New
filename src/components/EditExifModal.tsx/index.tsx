@@ -6,7 +6,7 @@ import { css } from 'styled-components';
 import * as Yup from 'yup';
 
 import { Button, FieldInput, Modal } from '..';
-import { FormBox } from './elements';
+import { EditBtnBox, FormBox } from './elements';
 
 type ValueType = string | number | undefined;
 
@@ -68,22 +68,11 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
                 />
               ))}
             </FormBox>
-            <div
-              css={css`
-                width: 100%;
-                padding: 24px;
-                padding-top: 0;
-              `}
-            >
-              <Button
-                css={css`
-                  width: 100%;
-                `}
-                htmlType="submit"
-              >
+            <EditBtnBox>
+              <Button style={{ width: '100%' }} htmlType="submit">
                 {t('picture.editExif.confirmBtn')}
               </Button>
-            </div>
+            </EditBtnBox>
           </Form>
         </Formik>
       </Modal.Content>

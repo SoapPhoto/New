@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Field, FieldProps } from 'formik';
 
 import Textarea, { ITextareaAutosizeProps } from '../Input/Textarea';
-import { Label, LabelBox } from './elements';
+import { Label, LabelBox, RequiredX } from './elements';
 import ErrorMessage from './ErrorMessage';
 import { css } from 'styled-components';
 
@@ -26,16 +26,7 @@ const Component: React.FC<FieldProps & IProps> = memo(
       <LabelBox className={className} style={style}>
         {label && (
           <Label>
-            {required && (
-              <span
-                css={css`
-                  margin-right: 4px;
-                  color: ${p => p.theme.colors.error};
-                `}
-              >
-                *
-              </span>
-            )}
+            {required && <RequiredX>*</RequiredX>}
             <span>{label}</span>
           </Label>
         )}

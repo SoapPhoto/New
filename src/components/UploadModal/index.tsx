@@ -18,8 +18,11 @@ import {
 } from '..';
 import { Edit, Image, Trash2 } from '../Icons';
 import {
+  DeleteBtn,
+  DeleteImageBtnBox,
   Thumbnail,
   ThumbnailHover,
+  UploadBox,
   UploadHeader,
   UploadImageHeader,
   UploadTips,
@@ -50,35 +53,22 @@ export interface IValues {
 
 const a = animated as any;
 
-const DeleteImageBtn: React.FC<
-  React.ButtonHTMLAttributes<HTMLButtonElement>
-> = ({ style, onClick, ...props }) => {
-  const { t } = useTranslation();
-  const [spring, bind] = useTapButton(1.03, 0.95);
-  return (
-    <a.button
-      {...props}
-      {...bind()}
-      style={{ ...style, ...spring }}
-      onClick={onClick}
-      css={css`
-        color: ${p => p.theme.colors.error};
-        outline: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-      `}
-    >
-      <Trash2
-        size={18}
-        css={css`
-          margin-right: 4px;
-        `}
-      />
-      {t('picture.upload.deleteImage')}
-    </a.button>
-  );
-};
+const DeleteImageBtn: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> =
+  ({ style, onClick, ...props }) => {
+    const { t } = useTranslation();
+    const [spring, bind] = useTapButton(1.03, 0.95);
+    return (
+      <DeleteBtn
+        {...props}
+        {...bind()}
+        style={{ ...style, ...spring }}
+        onClick={onClick}
+      >
+        <Trash2 size={18} style={{ marginRight: 4 }} />
+        {t('picture.upload.deleteImage')}
+      </DeleteBtn>
+    );
+  };
 
 const UploadModal = observer(() => {
   const client = useApolloClient();
@@ -182,21 +172,12 @@ const UploadModal = observer(() => {
                 <Edit />
               </ThumbnailHover>
             </Thumbnail>
-            <div
-              css={css`
-                margin-left: 24px;
-              `}
-            >
+            <DeleteImageBtnBox>
               <DeleteImageBtn onClick={() => clearImage()} />
-            </div>
+            </DeleteImageBtnBox>
           </UploadImageHeader>
         )}
-        <div
-          css={css`
-            padding: 24px;
-            padding-top: 12px;
-          `}
-        >
+        <UploadBox>
           <Formik<IValues>
             initialValues={{
               title: '',
@@ -243,7 +224,7 @@ const UploadModal = observer(() => {
               </Form>
             )}
           </Formik>
-        </div>
+        </UploadBox>
       </Modal.Content>
       {thumbnail && (
         <EditExifModal

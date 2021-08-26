@@ -26,7 +26,7 @@ import {
 } from './elements';
 import PictureSkeleton from './Skeleton';
 
-export const PicturePage = observer(() => {
+const PicturePage = observer(() => {
   const { id } = useParams();
   const { loading, data } = useQuery<{
     picture: PictureEntity;
@@ -79,3 +79,4 @@ export const PicturePage = observer(() => {
     </Wrapper>
   );
 });
+export default PicturePage;

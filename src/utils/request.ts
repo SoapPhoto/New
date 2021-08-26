@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   validateStatus(status: number) {
     return status < 500 && status !== 404;
   },

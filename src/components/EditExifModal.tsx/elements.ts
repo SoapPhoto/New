@@ -8,3 +8,8 @@ export const FormBox = styled.div`
   padding: 24px;
   padding-top: 0px;
 `;
+export const EditBtnBox = styled.div`
+  width: 100%;
+  padding: 24px;
+  padding-top: 0;
+`;

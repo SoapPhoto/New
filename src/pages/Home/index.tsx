@@ -9,7 +9,7 @@ import { PicturesType } from '@app/common/enum/picture';
 import Skeleton from './Skeleton';
 import { usePicturesQuery } from '@app/graphql/hooks/query';
 
-export const Home = observer(() => {
+const Home = observer(() => {
   const { t } = useTranslation();
   const { loading, data, fetchMore, networkStatus } = usePicturesQuery({
     type: PicturesType.NEW,
@@ -60,3 +60,4 @@ export const Home = observer(() => {
     </div>
   );
 });
+export default Home;

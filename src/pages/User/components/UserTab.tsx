@@ -13,11 +13,7 @@ const UserTab: React.FC<IProps> = memo(() => {
   const { t } = useTranslation();
   return (
     <Wrapper>
-      <Tab
-        css={css`
-          text-align: center;
-        `}
-      >
+      <Tab style={{ textAlign: 'center' }}>
         <Tab.Item name={t('user.tab.new')} to="."></Tab.Item>
         <Tab.Item name={t('user.tab.choice')} to="./choice"></Tab.Item>
         <Tab.Item name={t('user.tab.likes')} to="./like"></Tab.Item>

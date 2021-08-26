@@ -4,7 +4,7 @@ import { Popover } from '..';
 import { animated } from 'react-spring';
 import { useTapButton } from '@app/utils/hooks';
 
-interface IProps {
+interface IProps extends React.HTMLAttributes<HTMLButtonElement> {
   popover?: string;
   disabled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;

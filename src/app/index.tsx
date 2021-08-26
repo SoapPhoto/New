@@ -19,7 +19,7 @@ import Test from '@app/pages/Test';
 import PicturePage from '@app/pages/Picture/Loadable';
 import Upload from '@app/pages/Upload';
 import UploadModal from '@app/components/UploadModal';
-import User from '@app/pages/User';
+import UserPage from '@app/pages/User/Loadable';
 import TagPage from '@app/pages/Tag';
 
 const Router = () => {
@@ -30,7 +30,7 @@ const Router = () => {
         <Route path="picture/:id" element={<PicturePage />}></Route>
         <Route path="test" element={<Test />} />
         <Route path="upload" element={<Upload />} />
-        <Route path={`/@:username/*`} element={<User />} />
+        <Route path={`/@:username/*`} element={<UserPage />} />
         <Route path={`/tag/:name`} element={<TagPage />} />
       </Route>
       <Route path="" element={<Account />}>

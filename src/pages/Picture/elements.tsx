@@ -226,3 +226,15 @@ export const Tag = styled.div`
     color: #fff;
   }
 `;
+
+export const PictureInfoBtnsBox = styled.div`
+  display: grid;
+  gap: 8px;
+  grid-auto-flow: column;
+`;
+
+export const HeaderUserInfoFollowBtnBox = styled.div`
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+`;

@@ -4,6 +4,7 @@ import { initButton } from '@app/styles/mixins';
 import { Upload } from '..';
 import { darken, rgba } from 'polished';
 import { customMedia } from '@app/styles/mediaQuery';
+import { a } from 'react-spring';
 
 export const UploadHeader = styled(Upload)`
   ${initButton}
@@ -76,4 +77,20 @@ export const UploadImageHeader = styled.div`
 export const UploadTips = styled.span`
   color: ${p => p.theme.colors.text};
   margin-left: 24px;
+`;
+
+export const DeleteBtn: typeof a.button = styled(a.button as any)`
+  color: ${p => p.theme.colors.error};
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+` as any;
+
+export const DeleteImageBtnBox = styled.div`
+  margin-left: 24px;
+`;
+export const UploadBox = styled.div`
+  padding: 24px;
+  padding-top: 12px;
 `;

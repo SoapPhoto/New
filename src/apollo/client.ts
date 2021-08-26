@@ -7,10 +7,10 @@ import {
 import { onError } from '@apollo/client/link/error';
 import { isString } from 'lodash';
 // import { HttpLink } from '@apollo/client/link/batch-http';
-
+console.log(import.meta);
 export function initClient() {
   const batchLink = new HttpLink({
-    uri: process.env.REACT_APP_API_URL + 'graphql',
+    uri: import.meta.env.VITE_API_URL + 'graphql',
     credentials: 'include',
   });
   const authLink = new ApolloLink((operation, next) => {

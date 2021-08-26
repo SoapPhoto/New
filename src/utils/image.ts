@@ -1,4 +1,4 @@
-import { extname } from 'path';
+import pathCompleteExtname from 'path-complete-extname';
 import { getImageEXIF, IEXIF } from './exif';
 import FastAverageColor from 'fast-average-color';
 
@@ -75,7 +75,8 @@ export function getPictureUrl(
  */
 export function isImage(fileName: string) {
   const imgType = ['.jpg', '.jpeg', '.png'];
-  const ext = extname(fileName);
+  const ext = pathCompleteExtname(fileName);
+  console.log(ext);
   return imgType.indexOf(ext.toLocaleLowerCase()) >= 0;
 }
 

@@ -53,6 +53,7 @@ mutation UpdateProfile($data: UpdateProfileInput!) {
     ...UserFragment
   }
 }
+
 mutation UpdateCover($cover: String!) {
   updateCover(cover: $cover) {
     ...UserFragment

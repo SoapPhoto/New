@@ -12,6 +12,7 @@ import {
   IconButton,
   LikeContent,
   PictureBaseInfo,
+  PictureInfoBtnsBox,
 } from '../elements';
 
 interface IProps {
@@ -51,13 +52,7 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
           <p>{picture.likedCount}</p>
         </LikeContent>
       </div>
-      <div
-        css={`
-          display: grid;
-          gap: 8px;
-          grid-auto-flow: column;
-        `}
-      >
+      <PictureInfoBtnsBox>
         <IconButton
           onClick={() => {
             if (!isLogin) {
@@ -88,7 +83,7 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
             <Settings />
           </IconButton>
         )}
-      </div>
+      </PictureInfoBtnsBox>
     </PictureBaseInfo>
   );
 });

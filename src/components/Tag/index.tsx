@@ -41,12 +41,7 @@ const Tag: React.FC<ITag> = memo(({ value, onChange }) => {
         >
           <Hash size={13} />
           {e}
-          <IconButton
-            css={css`
-              margin-left: 6px;
-            `}
-            onClick={() => {}}
-          >
+          <IconButton style={{ marginLeft: 6 }} onClick={() => {}}>
             <Trash2 size={14} onClick={() => deleteTag(e)} />
           </IconButton>
         </TagItem>

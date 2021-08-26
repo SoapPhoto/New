@@ -12,11 +12,7 @@ const Test = () => {
         {/* <UserPopover username="yiiu">
           <span>12312313</span>
         </UserPopover> */}
-        <div
-          css={`
-            width: 320px;
-          `}
-        >
+        <div style={{ width: '320px' }}>
           <Tag value={value} onChange={v => setValue(v)} />
           <Button loading={loading} onClick={() => setLoading(v => !v)}>
             哈哈哈哈哈哈

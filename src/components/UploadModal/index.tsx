@@ -27,7 +27,6 @@ import {
   UploadImageHeader,
   UploadTips,
 } from './elements';
-import { css } from 'styled-components';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import EditExifModal from '../EditExifModal.tsx';
@@ -111,7 +110,11 @@ const UploadModal = observer(() => {
             onUploadProgress,
           );
         } catch (err) {
-          toast.error(t(err.message) || t('picture.upload.uploadError'));
+          if (err instanceof Error) {
+            toast.error(t(err.message as any) as string || t('picture.upload.uploadError'));
+          } else {
+            toast.error(t('picture.upload.uploadError'));
+          }
           setUploadLoading(false);
         }
         if (key) {
@@ -195,7 +198,7 @@ const UploadModal = observer(() => {
           >
             {({ isValid }) => (
               <Form>
-                <FieldInput
+                 <FieldInput
                   required
                   name="title"
                   label={t('label.picture_title') as string}

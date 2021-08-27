@@ -17,8 +17,9 @@ export default function useDeletePicture(
         await deleteItem({ variables: { id } });
         toast.success('删除成功');
         navigate(cbUrl, { replace: true });
-      } catch (err) {
-        toast.error(err.message);
+      } catch (error) {
+        const {message} = error as any
+        toast.error(message);
       }
     },
     [cbUrl, deleteItem, navigate],

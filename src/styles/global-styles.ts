@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components/macro';
 import { animate } from './animate';
 import normalize from './normalize';
 import scroll from './scroll';

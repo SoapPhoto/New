@@ -29,8 +29,7 @@ export const i18n = i18next
   .init({
     resources: translationsJson,
     fallbackLng: 'zhCN',
-    debug:
-      process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test',
+    debug: import.meta.env.DEV,
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default

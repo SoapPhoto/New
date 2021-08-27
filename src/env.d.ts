@@ -6,5 +6,6 @@ interface ImportMeta {
     VITE_OSS_REGION: string;
     VITE_OSS_BUCKET: string;
     VITE_OSS_PATH: string;
+    DEV: boolean;
   };
 }

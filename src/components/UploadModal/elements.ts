@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import { initButton } from '@app/styles/mixins';
 import { Upload } from '..';
@@ -33,7 +33,7 @@ export const ThumbnailHover = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  backdrop-filter: url(filters.svg#filter) blur(6px) saturate(150%);
+  backdrop-filter: url(svg/filters.svg#filter) blur(6px) saturate(150%);
   background-color: ${p => rgba(p.color || '#000', 0.6)};
   transition: 0.3s opacity ease;
   border-radius: inherit;
@@ -79,7 +79,7 @@ export const UploadTips = styled.span`
   margin-left: 24px;
 `;
 
-export const DeleteBtn: typeof a.button = styled(a.button as any)`
+export const DeleteBtn: any = styled(a.button as any)`
   color: ${p => p.theme.colors.error};
   outline: none;
   cursor: pointer;

@@ -17,8 +17,6 @@ import { ApolloProvider } from '@apollo/client';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
 
-import * as serviceWorker from '@app/serviceWorker';
-
 // Use consistent styling
 import 'sanitize.css/sanitize.css';
 

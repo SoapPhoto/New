@@ -4,11 +4,11 @@ import reactRefresh from '@vitejs/plugin-react-refresh';
 import vitePluginImp from 'vite-plugin-imp';
 import graphql from '@rollup/plugin-graphql';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
-import globals from 'rollup-plugin-node-globals';
+import macrosPlugin from 'vite-plugin-babel-macros';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactRefresh(), graphql()],
+  plugins: [reactRefresh(), graphql(), macrosPlugin()],
   resolve: {
     alias: [
       { find: '@app', replacement: path.resolve(__dirname, 'src') },

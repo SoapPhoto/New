@@ -55,11 +55,14 @@ const Login = () => {
       try {
         await login(values.username, values.password);
       } catch (error) {
-        if (error.message === 'Invalid grant: user credentials are invalid') {
-          toast.error(t('error.oauth.user_credentials_invalid'));
-        } else {
-          toast.error(t(error.message));
+        if (error instanceof Error) {
+          if (error.message === 'Invalid grant: user credentials are invalid') {
+            toast.error(t('error.oauth.user_credentials_invalid'));
+          } else {
+            toast.error(t(error.message as any));
+          }
         }
+        toast.error(t('error.oauth.login_error'));
         setConfirmLoading(false);
       }
     },

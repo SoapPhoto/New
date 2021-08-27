@@ -47,8 +47,9 @@ const Register = observer(() => {
         registerLogin(data);
         toast.success(t('auth.message.register_success') as string);
       } catch (error) {
-        if (isArray(error.message)) {
-          error.message.forEach(err => {
+        const {message} = error as any
+        if (isArray(message)) {
+          message.forEach(err => {
             setFieldError(
               err.param,
               t(`error.${err.message[0]}` as any, {
@@ -57,7 +58,7 @@ const Register = observer(() => {
             );
           });
         } else {
-          toast.error(error.message);
+          toast.error(message);
         }
         setConfirmLoading(false);
       }

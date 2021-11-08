@@ -54,7 +54,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
           {!isOk ? (
             <SkeletonAvatar />
           ) : (
-            <Link to={`/@${user?.username}`}>
+            <Link to={`/user/${user?.username}`}>
               <Avatar rainbow={prestige} src={user?.avatar} size={48} />
             </Link>
           )}

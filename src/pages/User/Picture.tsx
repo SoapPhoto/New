@@ -7,6 +7,7 @@ import { UserPictures } from '@app/graphql/query';
 import PictureSkeleton from '@app/components/Picture/Skeleton';
 import { PictureList } from '@app/components';
 import styled from 'styled-components';
+import { useMatch, useParams } from 'react-router';
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -14,11 +15,11 @@ const Wrapper = styled.div`
 `;
 
 interface IProps {
-  username: string;
   type: UserPictureType;
 }
 
-const UserHome: React.FC<IProps> = memo(({ username, type }) => {
+const UserHome: React.FC<IProps> = memo(({ type }) => {
+  const { username } = useParams();
   const { loading, data } = useQuery<{
     userPicturesByName: IListQueryResult<PictureEntity>;
   }>(UserPictures, {
@@ -31,12 +32,13 @@ const UserHome: React.FC<IProps> = memo(({ username, type }) => {
       },
     },
   });
-  if (loading && !data)
+  if (loading && !data) {
     return (
       <Wrapper>
         <PictureSkeleton />
       </Wrapper>
     );
+  }
   return (
     <Wrapper>
       <PictureList list={data!.userPicturesByName.data} />

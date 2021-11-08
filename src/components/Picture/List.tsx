@@ -21,8 +21,8 @@ function App({ list }) {
   const [heights, gridItems] = useMemo(() => {
     const baseWidth = width === 0 ? document.body.clientWidth - 56 : width;
     const padding = 24;
-    let heights = new Array(columns).fill(0);
-    let gridItems = list.map((child, i) => {
+    const heights = new Array(columns).fill(0);
+    const gridItems = list.map((child, i) => {
       const colPadding = padding * (columns - 1);
       const column = heights.indexOf(Math.min(...heights));
       const itemWidth = (baseWidth - colPadding) / columns;
@@ -30,8 +30,8 @@ function App({ list }) {
       const itemHeight = child.height / itemC;
       const xy = [
         (itemWidth + padding) * column,
-        (heights[column] +=
-          itemHeight + (heights[column] === 0 ? 0 : padding)) - itemHeight,
+        (heights[column]
+          += itemHeight + (heights[column] === 0 ? 0 : padding)) - itemHeight,
       ];
       return {
         ...child,
@@ -52,19 +52,19 @@ function App({ list }) {
   // });
   return (
     <ListWrapper ref={ref as any} style={{ height: Math.max(...heights) }}>
-      {gridItems.map(({ xy, width, height, ...picture }) => {
-        return (
-          <PictureItem
-            key={picture.id}
-            style={{
-              transform: `translate3d(${xy[0]}px,${xy[1]}px,0)`,
-              width,
-              height,
-            }}
-            picture={picture as PictureEntity}
-          />
-        );
-      })}
+      {gridItems.map(({
+        xy, width, height, ...picture
+      }) => (
+        <PictureItem
+          key={picture.id}
+          style={{
+            transform: `translate3d(${xy[0]}px,${xy[1]}px,0)`,
+            width,
+            height,
+          }}
+          picture={picture as PictureEntity}
+        />
+      ))}
     </ListWrapper>
   );
 }

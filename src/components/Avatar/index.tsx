@@ -1,9 +1,9 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
-import { Wrapper, Text, Img } from './elements';
 
 import light from '@app/styles/theme/themes/light';
 import { getPictureUrl } from '@app/utils/image';
+import { Wrapper, Text, Img } from './elements';
 
 type ColorType = keyof typeof light.colors;
 

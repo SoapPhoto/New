@@ -36,7 +36,7 @@ const HeaderUserInfo: React.FC<IProps> = observer(({ user, createTime }) => {
         <UserInfo>
           <Avatar src={user.avatar} size={44} />
           <UserInfoRight>
-            <UserLink style={{ marginBottom: '4px' }} to={`/@${user.username}`}>
+            <UserLink style={{ marginBottom: '4px' }} to={`/user/${user.username}`}>
               <UserName>
                 <EmojiText text={user.fullName} />
               </UserName>

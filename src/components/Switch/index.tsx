@@ -20,19 +20,19 @@ import {
 const Switch: React.FC<ReactSwitchProps> = ({ ...props }) => {
   const theme = useTheme();
   return (
-    <div>1</div>
+    // <div>1</div>
     // <IosSwitch />
-    // <SwitchCom
-    //   onColor={rgbToColorString(parseToRgb(theme.colors.primary))}
-    //   handleDiameter={20}
-    //   uncheckedIcon={false}
-    //   checkedIcon={false}
-    //   boxShadow="none"
-    //   activeBoxShadow="none"
-    //   height={26}
-    //   width={48}
-    //   {...props}
-    // />
+    <SwitchCom
+      onColor={rgbToColorString(parseToRgb(theme.colors.primary))}
+      handleDiameter={20}
+      uncheckedIcon={false}
+      checkedIcon={false}
+      boxShadow="none"
+      activeBoxShadow="none"
+      height={26}
+      width={48}
+      {...props}
+    />
   );
 };
 

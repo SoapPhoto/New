@@ -32,7 +32,7 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
         <UserBox>
           <UserPopover username={picture.user.username}>
             <Link
-              to={`/@${picture.user.username}`}
+              to={`/user/${picture.user.username}`}
               state={{
                 picture: '222',
               }}
@@ -44,7 +44,7 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
               />
             </Link>
           </UserPopover>
-          <UserName to={`/@${picture.user.username}`}>
+          <UserName to={`/user/${picture.user.username}`}>
             <EmojiText text={picture.user.fullName} />
           </UserName>
         </UserBox>

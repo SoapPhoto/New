@@ -1,16 +1,18 @@
 import React, { useCallback } from 'react';
-import { Moon, Search, Sun, UploadCloud } from 'react-feather';
+import {
+  Moon, Search, Sun, UploadCloud,
+} from 'react-feather';
 import styled from 'styled-components';
 
 import { A, IconButton, Popover } from '@app/components';
 import { space } from '@app/utils/theme';
 import { observer } from 'mobx-react';
 import { useAccount, useThemeStore } from '@app/stores/hooks';
-import Avatar from '../Avatar';
 import { skeletonCss } from '@app/styles/mixins';
-import { Menu, MenuItem, MenuItemLink } from './Menu';
 import { useTranslation } from 'react-i18next';
 import { useSearchParamModal } from '@app/utils/hooks';
+import { Menu, MenuItem, MenuItemLink } from './Menu';
+import Avatar from '../Avatar';
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,10 +21,10 @@ const Wrapper = styled.div`
   height: 100%;
   margin-right: ${space(8)}px;
   svg {
-    color: ${_ => _.theme.colors.secondary};
+    color: ${(_) => _.theme.colors.secondary};
     transition: color 0.25s ease;
     &:hover {
-      color: ${_ => _.theme.colors.text};
+      color: ${(_) => _.theme.colors.text};
     }
   }
 `;
@@ -65,15 +67,15 @@ export const Right = observer(() => {
           <IconButton onClick={() => openUpload()}>
             <UploadCloud />
           </IconButton>
-          <div style={{ width: '22px' }}></div>
+          <div style={{ width: '22px' }} />
           <Popover
             trigger="click"
             placement="bottom"
             contentStyle={{ padding: 0 }}
-            content={
+            content={(
               <Menu>
                 <MenuItem>
-                  <MenuItemLink to={`/@${userInfo.username}`}>
+                  <MenuItemLink to={`/user/${userInfo.username}`}>
                     {t('menu.setting')}
                   </MenuItemLink>
                 </MenuItem>
@@ -88,7 +90,7 @@ export const Right = observer(() => {
                   </MenuItemLink>
                 </MenuItem>
               </Menu>
-            }
+            )}
           >
             <div>
               <Avatar size={36} src={userInfo.avatar} />

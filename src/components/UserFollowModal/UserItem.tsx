@@ -48,7 +48,7 @@ const UserItem: React.FC<IUserItemProps> = memo(({ user }) => {
       <Avatar size={42} src={user.avatar} />
       <Info>
         <p>
-          <Link to={`/@${user.username}`}>
+          <Link to={`/user/${user.username}`}>
             <Username>
               <EmojiText text={user.fullName} />
               {user.badge.find(v => v.name === 'prestige') && (

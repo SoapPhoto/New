@@ -1,20 +1,23 @@
-const fs = require('fs');
-const path = require('path');
-
-const prettierOptions = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'),
-);
-
 module.exports = {
-  extends: ['react-app', 'prettier'],
-  plugins: ['prettier'],
-  rules: {
-    'prettier/prettier': ['error', prettierOptions],
-  },
-  overrides: [
-    {
-      files: ['**/*.ts?(x)'],
-      rules: { 'prettier/prettier': ['warn', prettierOptions] },
-    },
+  extends: [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
   ],
+  parserOptions: {
+    project: "./tsconfig.json",
+  },
+  rules: {
+    // "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }],
+    "linebreak-style": [0],
+    "react/jsx-props-no-spreading": [0],
+    "import/extensions": [0],
+    "react/prop-types": [0],
+    "import/no-named-as-default": [0],
+    "import/prefer-default-export": [0],
+    "react-hooks/exhaustive-deps": "error",
+    "max-len": [0],
+    "no-underscore-dangle": [0],
+    "react/require-default-props": [0]
+  },
 };

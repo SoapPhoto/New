@@ -8,11 +8,6 @@ interface ITabItemProps {
 
 const TabItem: React.FC<ITabItemProps> = ({ name, to }) => (
   <ItemLink
-    className={({ isActive }) => [
-      isActive ? 'active' : null,
-    ]
-      .filter(Boolean)
-      .join(' ')}
     caseSensitive={false}
     end
     to={to}

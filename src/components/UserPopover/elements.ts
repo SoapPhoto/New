@@ -2,7 +2,7 @@ import { skeletonCss } from '@app/styles/mixins';
 import { rgba } from 'polished';
 import styled from 'styled-components/macro';
 
-import { Image } from '..';
+import Image from '@app/components/Image';
 
 export const Wrapper = styled.div`
   width: 340px;
@@ -32,15 +32,15 @@ export const UserName = styled.span`
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 2px;
-  color: ${p => p.theme.colors.text};
-  text-decoration-color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.text};
+  text-decoration-color: ${(p) => p.theme.colors.primary};
 `;
 
 export const Bio = styled.p`
   font-size: 12px;
   font-weight: 400;
-  text-decoration-color: ${p => p.theme.colors.gray4};
-  color: ${p => rgba(p.theme.colors.text, 0.6)};
+  text-decoration-color: ${(p) => p.theme.colors.gray4};
+  color: ${(p) => rgba(p.theme.colors.text, 0.6)};
 `;
 
 export const PicturePreview = styled.div`
@@ -66,7 +66,7 @@ export const Img = styled(Image)`
 `;
 
 export const UserInfoWrapper = styled.div`
-  border-top: 1px solid ${p => p.theme.colors.gray4};
+  border-top: 1px solid ${(p) => p.theme.colors.gray4};
   padding: 14px 10px;
   margin-top: 16px;
 `;
@@ -86,11 +86,11 @@ export const InfoItemCount = styled.span`
   margin-right: 8px;
   font-weight: 600;
   font-family: Rubik;
-  color: ${p => p.theme.colors.text};
+  color: ${(p) => p.theme.colors.text};
 `;
 
 export const InfoItemLabel = styled.span`
-  color: ${p => rgba(p.theme.colors.text, 0.4)};
+  color: ${(p) => rgba(p.theme.colors.text, 0.4)};
   font-size: 12px;
   font-weight: 400;
 `;

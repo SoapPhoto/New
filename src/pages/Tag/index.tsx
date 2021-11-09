@@ -8,7 +8,7 @@ import { Title } from './elements';
 
 const TagPage = memo(() => {
   const params = useParams();
-  const name = useMemo(() => decodeURI(params.name), [params.name]);
+  const name = useMemo(() => decodeURI(params.name as string), [params.name]);
   // const { loading, data } = useQuery<{
   //   tag: IListQueryResult<PictureEntity>;
   // }>(Tag, {

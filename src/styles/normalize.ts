@@ -20,7 +20,7 @@ const normalize = () => css`
     line-height: 1.5;
     overflow-y: scroll;
     overflow-x: hidden;
-    font-family: ${font};
+    font-family: ${font} !important;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;

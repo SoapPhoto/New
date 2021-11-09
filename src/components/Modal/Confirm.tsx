@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { AlertCircle, Trash2 } from 'react-feather';
-import { IModalProps } from '.';
-import { Button, Modal } from '..';
-import { IButtonProps } from '../Button';
+import Modal, { IModalProps } from '.';
+import Button, { IButtonProps } from '../Button';
 
 interface IConfirmProps extends Pick<IModalProps, 'visible' | 'onClose'> {
   icon?: React.ReactNode;

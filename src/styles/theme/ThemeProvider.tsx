@@ -6,8 +6,9 @@ import { observer } from 'mobx-react';
 export const ThemeProvider = observer(
   (props: { children: React.ReactChild }) => {
     const theme = useThemeStore();
+    console.log(theme.theme);
     return (
-      <OriginalThemeProvider theme={theme.theme}>
+      <OriginalThemeProvider theme={() => theme.theme}>
         {React.Children.only(props.children)}
       </OriginalThemeProvider>
     );

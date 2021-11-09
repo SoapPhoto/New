@@ -1,28 +1,29 @@
+import React, { useCallback, useState } from 'react';
+import { Form, Formik } from 'formik';
+import { omit, pick } from 'lodash';
+import { Trash2 } from 'react-feather';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from 'styled-components/macro';
+import { gql, useApolloClient, useMutation } from '@apollo/client';
+import toast from 'react-hot-toast';
+
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import {
-  Button,
   FieldInput,
   FieldSwitch,
   FieldTag,
   FieldTextarea,
-  IconButton,
-  Modal,
 } from '@app/components';
 import { useDeletePicture, useSearchParamModal } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
-import { Form, Formik } from 'formik';
-import { omit, pick } from 'lodash';
-import React, { useCallback, useState } from 'react';
-import { Trash2 } from 'react-feather';
-import { useTranslation } from 'react-i18next';
-import { useTheme } from 'styled-components/macro';
+import { UpdatePicture } from '@app/graphql/mutations';
+import Modal from '@app/components/Modal';
+import IconButton from '@app/components/Button/IconButton';
+import Button from '@app/components/Button';
 import { Content } from '../../elements';
 import { Footer } from './elements';
 
 import { EditPictureSchema } from './dto';
-import { gql, useApolloClient, useMutation } from '@apollo/client';
-import { UpdatePicture } from '@app/graphql/mutations';
-import toast from 'react-hot-toast';
 
 interface IProps {
   picture: PictureEntity;
@@ -75,8 +76,9 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
         },
       });
       toast.success(t('picture.edit.success'));
+      close();
     },
-    [client, id, t, update],
+    [client, close, id, t, update],
   );
   const deletePicture = useCallback(() => del(id), [del, id]);
   return (
@@ -88,7 +90,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
           <Formik<IValues>
             initialValues={{
               ...pick(picture, ['title', 'bio', 'isPrivate']),
-              tags: picture.tags.map(tag => tag.name),
+              tags: picture.tags.map((tag) => tag.name),
             }}
             onSubmit={handleOk}
             validationSchema={EditPictureSchema(t)}
@@ -117,7 +119,12 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
                   </IconButton>
                 </div>
                 <div>
-                  <Button htmlType="submit">{t('picture.edit.confirm')}</Button>
+                  <Button
+                    htmlType="submit"
+                    loading={updateProp.loading}
+                  >
+                    {t('picture.edit.confirm')}
+                  </Button>
                 </div>
               </Footer>
             </Form>
@@ -131,7 +138,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
           confirmButtonProps={{
             danger: true,
             icon: <Trash2 size={16} />,
-            loading: loading,
+            loading,
           }}
           title={t('picture.label.deleteTitle')}
         />

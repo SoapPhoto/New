@@ -10,7 +10,7 @@ import { isString } from 'lodash';
 console.log(import.meta);
 export function initClient() {
   const batchLink = new HttpLink({
-    uri: import.meta.env.VITE_API_URL + 'graphql',
+    uri: `${import.meta.env.VITE_API_URL}graphql`,
     credentials: 'include',
   });
   const authLink = new ApolloLink((operation, next) => {
@@ -20,7 +20,7 @@ export function initClient() {
       const { accessToken } = JSON.parse(token);
       Authorization = `Bearer ${accessToken || ''}`;
     }
-    operation.setContext(context => ({
+    operation.setContext((context) => ({
       ...context,
       headers: {
         accept: 'application/json',
@@ -33,7 +33,7 @@ export function initClient() {
   });
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      graphQLErrors.forEach(err => {
+      graphQLErrors.forEach((err) => {
         if (isString(err.message)) {
           console.error(
             `[GraphQL error]{${err.path}}: Message: ${err.message}`,

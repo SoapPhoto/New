@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { UserFollowModal } from '@app/components';
+import UserFollowModal from '@app/components/UserFollowModal';
 import { UserInfo } from '@app/graphql/query';
 import { useSearchParamModal } from '@app/utils/hooks';
 import React, { memo } from 'react';

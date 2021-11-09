@@ -1,12 +1,18 @@
-import { css, keyframes } from 'styled-components/macro';
+import { css, DefaultTheme, keyframes } from 'styled-components/macro';
 import { rgba } from 'polished';
 
-export const boxMixin = css`
+export const boxMixin = (theme: DefaultTheme, width: string, wrapper = false) => `
   width: 100%;
+  max-width: ${width};
   border-radius: 4px;
+  background-color: ${theme.background};
+  box-shadow: ${theme.shadowColor} 0 6px 20px;
+  border: 1px solid ${theme.widget.box.borderColor};
+  ${wrapper ? 'margin: 0 auto;' : ''}
   padding: 32px;
   overflow: hidden;
 `;
+
 export const btnMixin = css`
   align-items: center;
   border-radius: 4px;

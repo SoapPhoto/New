@@ -4,7 +4,7 @@ import { Field, FieldProps } from 'formik';
 import { ITextareaAutosizeProps } from '../Input/Textarea';
 import { LabelBox } from './elements';
 import ErrorMessage from './ErrorMessage';
-import { Tag } from '..';
+import Tag from '../Tag';
 
 interface IProps extends ITextareaAutosizeProps {
   name: string;
@@ -19,14 +19,12 @@ const Component: React.FC<FieldProps<string[]> & IProps> = memo(
     required,
     form: { touched, errors, setFieldValue },
     ...restFieldProps
-  }) => {
-    return (
-      <LabelBox className={className} style={style}>
-        <Tag value={field.value} onChange={v => setFieldValue(field.name, v)} />
-        <ErrorMessage field={field} touched={touched} errors={errors} />
-      </LabelBox>
-    );
-  },
+  }) => (
+    <LabelBox className={className} style={style}>
+      <Tag value={field.value} onChange={(v) => setFieldValue(field.name, v)} />
+      <ErrorMessage field={field} touched={touched} errors={errors} />
+    </LabelBox>
+  ),
 );
 
 const FieldTag: React.FC<IProps> = ({ name, ...restProps }) => (

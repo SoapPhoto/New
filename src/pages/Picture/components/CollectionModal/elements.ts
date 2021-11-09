@@ -1,4 +1,4 @@
-import { Image } from '@app/components';
+import Image from '@app/components/Image';
 import { Check, Minus } from '@app/components/Icons';
 import { rgba } from 'polished';
 import styled, { css } from 'styled-components/macro';
@@ -17,7 +17,7 @@ export const CollectionItemBox = styled.button`
   width: 100%;
   height: 80px;
   border-radius: 5px;
-  background-color: ${p => p.theme.colors.gray1};
+  background-color: ${(p) => p.theme.colors.gray1};
   overflow: hidden;
   border: none;
   padding: 0;
@@ -50,7 +50,7 @@ export const ItemInfoBox = styled.div<{
   padding: 17px 20px;
   border-radius: 5px;
   backdrop-filter: saturate(180%) blur(5px);
-  color: ${_ => _.theme.widget.collection.addPicture.color};
+  color: ${(_) => _.theme.widget.collection.addPicture.color};
   & ${CheckIcon} {
     opacity: 0;
   }
@@ -62,14 +62,12 @@ export const ItemInfoBox = styled.div<{
       opacity: 1;
     }
   }
-  background: ${_ =>
-    rgba(
-      _.theme.widget.collection.addPicture.background,
-      _.isPreview ? 0.2 : 1,
-    )};
-  ${_ =>
-    _.isCollected
-      ? css`
+  background: ${(_) => rgba(
+    _.theme.widget.collection.addPicture.background,
+    _.isPreview ? 0.2 : 1,
+  )};
+  ${(_) => (_.isCollected
+    ? css`
           border: 2px solid ${_.theme.colors.green};
           background: linear-gradient(
             45deg,
@@ -88,7 +86,7 @@ export const ItemInfoBox = styled.div<{
             }
           }
         `
-      : css``}
+    : css``)}
 `;
 
 export const ItemInfoTitle = styled.p`

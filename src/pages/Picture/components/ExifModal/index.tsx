@@ -4,10 +4,12 @@ import { useTranslation } from 'react-i18next';
 import bytes from 'bytes';
 
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { Modal } from '@app/components';
-import { EXIFBox, EXIFInfo, EXIFTitle, Info } from './elements';
 import { getPictureUrl } from '@app/utils/image';
 import { useSearchParamModal } from '@app/utils/hooks';
+import Modal from '@app/components/Modal';
+import {
+  EXIFBox, EXIFInfo, EXIFTitle, Info,
+} from './elements';
 
 interface IProps {
   picture: PictureEntity;
@@ -16,8 +18,12 @@ interface IProps {
 const ExifModal: React.FC<IProps> = memo(({ picture }) => {
   const { t } = useTranslation();
   const [visible, close] = useSearchParamModal('exif');
-  const { make, model, exif, width, height, size, key } = picture;
-  const { focalLength, aperture, exposureTime, ISO } = exif!;
+  const {
+    make, model, exif, width, height, size, key,
+  } = picture;
+  const {
+    focalLength, aperture, exposureTime, ISO,
+  } = exif!;
   return (
     <Modal
       autoMobile={false}

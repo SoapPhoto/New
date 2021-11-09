@@ -12,6 +12,7 @@ import {
 
 class AccountStore {
   public init = false;
+
   public userInfo?: UserEntity;
 
   get isLogin() {
@@ -50,10 +51,10 @@ class AccountStore {
   public getUserInfo = async () => {
     client
       .watchQuery<{ whoami: UserEntity }>({
-        query: Whoami,
-      })
+      query: Whoami,
+    })
       .subscribe({
-        next: data => {
+        next: (data) => {
           if (data) {
             this.setUserInfo(data.data.whoami);
           } else {

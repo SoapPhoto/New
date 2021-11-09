@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
@@ -6,9 +8,10 @@ import { useSpring, animated } from 'react-spring';
 import { toast } from 'react-hot-toast';
 
 import FieldInput from '@app/components/Formik/FieldInput';
-import { LoginSchema } from '../dto';
 import { GitHubLogo } from '@app/components/Icons';
 import { Weibo } from '@app/components/Icons/Weibo';
+import { useAccount } from '@app/stores/hooks';
+import Button from '@app/components/Button';
 import {
   Des,
   GithubOauthBtn,
@@ -17,8 +20,7 @@ import {
   Title,
   WeiboOauthBtn,
 } from '../elements';
-import { useAccount } from '@app/stores/hooks';
-import { Button } from '@app/components';
+import { LoginSchema } from '../dto';
 
 interface IValues {
   username: string;
@@ -73,7 +75,8 @@ const Login = () => {
       <Title>{t('accountFeature.loginTitle')}</Title>
       <Des>
         <Trans i18nKey="accountFeature.loginMessage">
-          新用户？<Link to="/register">创建账户</Link>
+          新用户？
+          <Link to="/register">创建账户</Link>
         </Trans>
       </Des>
       <Formik<IValues>

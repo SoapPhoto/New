@@ -26,7 +26,7 @@ const ItemWrapper = styled.div`
     padding-bottom: ${rem('16px')};
   }
   &:not(:first-child) {
-    border-top: 1px solid ${p => p.theme.colors.gray4};
+    border-top: 1px solid ${(p) => p.theme.colors.gray4};
     padding-top: ${rem('16px')};
     padding-bottom: ${rem('16px')};
   }
@@ -37,17 +37,17 @@ const MenuLink = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  color: ${p => p.theme.colors.secondary};
+  color: ${(p) => p.theme.colors.secondary};
   text-decoration: none;
   transition: color 0.2s ease 0s;
   margin: ${rem('-8px')} ${rem('-20px')};
   padding: ${rem('8px')} ${rem('20px')};
   transition: 0.2s color ease, 0.2s background ease;
   &:hover {
-    color: ${p => p.theme.colors.text};
-    background: ${p => p.theme.colors.gray2};
+    color: ${(p) => p.theme.colors.text};
+    background: ${(p) => p.theme.colors.gray2};
     & svg {
-      stroke: ${p => p.theme.colors.text};
+      stroke: ${(p) => p.theme.colors.text};
     }
   }
   & svg {
@@ -56,7 +56,7 @@ const MenuLink = styled.div`
     bottom: 0px;
     right: 20px;
     height: 37px;
-    stroke: ${p => p.theme.colors.secondary};
+    stroke: ${(p) => p.theme.colors.secondary};
     transition: 0.2s stroke ease, 0.2s background ease;
   }
 `;
@@ -68,11 +68,23 @@ export const MenuArrow = styled.span`
   width: ${rem('10px')};
   height: ${rem('10px')};
   transform: rotate(45deg);
-  background-color: ${p => p.theme.background};
-  border: 1px solid ${p => p.theme.colors.gray1};
+  background-color: ${(p) => p.theme.background};
+  border: 1px solid ${(p) => p.theme.colors.gray1};
   margin-top: ${rem('-5px')};
   border-right-color: transparent;
   border-bottom-color: transparent;
+`;
+
+export const MenuProfile = styled.div`
+  display: flex;
+`;
+
+export const UserName = styled.div`
+  display: flex;
+  font-size: 14px;
+  margin-left: 12px;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const Menu: React.FC<IProps> = ({ children, ...restProps }) => (
@@ -83,11 +95,10 @@ export const MenuItem: React.FC = ({ children }) => (
   <ItemWrapper>{children}</ItemWrapper>
 );
 
-export const MenuItemLink: React.FC<ILinkProps> = ({ to, onClick, children }) =>
-  to ? (
-    <Link to={to}>
-      <MenuLink onClick={onClick}>{children}</MenuLink>
-    </Link>
-  ) : (
+export const MenuItemLink: React.FC<ILinkProps> = ({ to, onClick, children }) => (to ? (
+  <Link to={to}>
     <MenuLink onClick={onClick}>{children}</MenuLink>
-  );
+  </Link>
+) : (
+  <MenuLink onClick={onClick}>{children}</MenuLink>
+));

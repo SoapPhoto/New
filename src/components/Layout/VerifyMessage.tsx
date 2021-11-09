@@ -25,7 +25,7 @@ const Again = styled.button`
   outline: 0;
   border: none;
   background: none;
-  color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
   cursor: pointer;
 `;
 

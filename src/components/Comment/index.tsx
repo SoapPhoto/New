@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Empty } from '..';
+import Empty from '../Empty';
 import { Wrapper } from './elements';
 
 const Comment = () => {

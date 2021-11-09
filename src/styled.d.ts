@@ -5,6 +5,7 @@ declare module 'styled-components/macro' {
   export interface DefaultTheme {
     foreground: string;
     background: string;
+    shadowColor: string;
     space: number;
     colors: {
       text: string;
@@ -21,6 +22,9 @@ declare module 'styled-components/macro' {
     };
     dashboard: {};
     widget: {
+      box: {
+        borderColor: string;
+      }
       scrollbar: {
         graidient: string;
         background: string;

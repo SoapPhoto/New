@@ -5,7 +5,9 @@ import { useTranslation } from 'react-i18next';
 import { css } from 'styled-components/macro';
 import * as Yup from 'yup';
 
-import { Button, FieldInput, Modal } from '..';
+import { FieldInput } from '..';
+import Button from '../Button';
+import Modal from '../Modal';
 import { EditBtnBox, FormBox } from './elements';
 
 type ValueType = string | number | undefined;
@@ -55,7 +57,7 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
             ...initValue,
             ...initialValues,
           }}
-          onSubmit={value => console.log(value)}
+          onSubmit={(value) => console.log(value)}
         >
           <Form>
             <FormBox>

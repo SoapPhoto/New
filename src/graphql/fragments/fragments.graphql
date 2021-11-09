@@ -153,6 +153,10 @@ fragment UserFragment on User {
   createTime
   updateTime
   cover
+  gender
+  genderSecret
+  birthday
+  birthdayShow
 }
 
 fragment UserBaseFragment on User {

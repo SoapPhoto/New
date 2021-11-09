@@ -3,9 +3,13 @@ import { observer } from 'mobx-react';
 import React from 'react';
 
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { EmojiText, Popover, Button } from '@app/components';
+import { EmojiText, Popover } from '@app/components';
+import Button from '@app/components/Button';
 import Avatar from '@app/components/Avatar';
 
+import { useAccount } from '@app/stores/hooks';
+import { useFollower } from '@app/utils/hooks';
+import { useTranslation } from 'react-i18next';
 import {
   BaseInfoItem,
   HeaderUserInfoFollowBtnBox,
@@ -17,9 +21,6 @@ import {
   UserLink,
   UserName,
 } from '../elements';
-import { useAccount } from '@app/stores/hooks';
-import { useFollower } from '@app/utils/hooks';
-import { useTranslation } from 'react-i18next';
 
 interface IProps {
   user: UserEntity;

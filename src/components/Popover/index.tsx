@@ -10,12 +10,17 @@ import { useSpring } from 'react-spring';
 import contains from 'rc-util/lib/Dom/contains';
 import PortalWrapper from 'rc-util/lib/PortalWrapper';
 import { isFunction } from 'lodash';
-import { Arrow, Content, Tooltip } from './elements';
 import { Placement } from '@popperjs/core';
 import ResizeObserver from 'resize-observer-polyfill';
 import { useTheme } from 'styled-components/macro';
+import { Arrow, Content, Tooltip } from './elements';
+
+export interface PopoverRef {
+  close: Function;
+}
 
 interface IPopoverProps {
+  popoverRef?: React.RefObject<PopoverRef>;
   onOpen?: () => void;
   content: React.ReactElement;
   trigger?: 'hover' | 'click';
@@ -29,6 +34,7 @@ interface IPopoverProps {
 export type PopoverTheme = 'dark' | 'light';
 
 const Popover: React.FC<IPopoverProps> = ({
+  popoverRef,
   content,
   children,
   trigger,
@@ -56,7 +62,7 @@ const Popover: React.FC<IPopoverProps> = ({
   );
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
   const themeState = useMemo(
-    () => (theme ? theme : themeContext.widget.popover.theme),
+    () => (theme || themeContext.widget.popover.theme),
     [theme, themeContext.widget.popover.theme],
   );
   const { styles, attributes, update } = usePopper(
@@ -98,7 +104,7 @@ const Popover: React.FC<IPopoverProps> = ({
   );
   const props = useSpring({
     opacity: popupVisible ? 1 : 0,
-    transform: popupVisible ? `scale3d(1, 1, 1)` : `scale3d(0.88, 0.88, 0.88)`,
+    transform: popupVisible ? 'scale3d(1, 1, 1)' : 'scale3d(0.88, 0.88, 0.88)',
     config: {
       mass: 0.8,
       tension: 430,
@@ -111,13 +117,12 @@ const Popover: React.FC<IPopoverProps> = ({
     },
   });
   const observer = useMemo(
-    () =>
-      new ResizeObserver(entries => {
-        if (entries[0]) {
-          const { width, height } = entries[0].contentRect;
-          setPopperSize({ width, height });
-        }
-      }),
+    () => new ResizeObserver((entries) => {
+      if (entries[0]) {
+        const { width, height } = entries[0].contentRect;
+        setPopperSize({ width, height });
+      }
+    }),
     [],
   );
 
@@ -131,7 +136,7 @@ const Popover: React.FC<IPopoverProps> = ({
     popperElementRef.current = state;
   };
 
-  const onDocumentClick = useCallback(e => {
+  const onDocumentClick = useCallback((e) => {
     const { target } = e;
     const root = referenceElementRef.current;
     const popupNode = popperElementRef.current;
@@ -146,6 +151,16 @@ const Popover: React.FC<IPopoverProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popupVisible]);
+  useEffect(() => {
+    if (popoverRef) {
+      // eslint-disable-next-line no-param-reassign
+      ((popoverRef as any).current as any) = {
+        close: () => {
+          setPopupVisible(false);
+        },
+      };
+    }
+  }, [popoverRef]);
 
   useEffect(() => {
     if (trigger === 'click') {
@@ -175,17 +190,17 @@ const Popover: React.FC<IPopoverProps> = ({
   useEffect(() => {
     if (popperElement) {
       if (popupVisible && trigger === 'hover') {
-        popperElement.addEventListener('mouseover', e => {
+        popperElement.addEventListener('mouseover', (e) => {
           e.stopPropagation();
           clearTimeout(closeTimer.current);
         });
-        popperElement.addEventListener('mouseout', e => {
+        popperElement.addEventListener('mouseout', (e) => {
           const { relatedTarget } = e;
           const root = referenceElementRef.current;
           const popupNode = popperElementRef.current;
           if (
-            !contains(root, relatedTarget as HTMLDivElement) &&
-            !contains(popupNode, relatedTarget as HTMLDivElement)
+            !contains(root, relatedTarget as HTMLDivElement)
+            && !contains(popupNode, relatedTarget as HTMLDivElement)
           ) {
             setPopupVisible(false);
           }
@@ -229,7 +244,7 @@ const Popover: React.FC<IPopoverProps> = ({
   }, []);
 
   const onChildClick = useCallback(
-    e => {
+    (e) => {
       if (!popupVisible) {
         open();
       } else {
@@ -241,7 +256,7 @@ const Popover: React.FC<IPopoverProps> = ({
   );
 
   const onMouseEnter = useCallback(
-    e => {
+    (e) => {
       if (!popupVisible) {
         open();
       }
@@ -251,7 +266,7 @@ const Popover: React.FC<IPopoverProps> = ({
   );
 
   const onMouseLeave = useCallback(
-    e => {
+    (e) => {
       if (popupVisible) {
         clearTimeout(closeTimer.current);
         closeTimer.current = window.setTimeout(() => {
@@ -296,7 +311,7 @@ const Popover: React.FC<IPopoverProps> = ({
             <Content
               style={{
                 ...props,
-                ...(contentStyle ? contentStyle : {}),
+                ...(contentStyle || {}),
                 position: 'relative',
               }}
             >

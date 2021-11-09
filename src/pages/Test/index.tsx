@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Tag from '@app/components/Tag';
-import { Button } from '@app/components';
+import Button from '@app/components/Button';
 
 const Test = () => {
   const [value, setValue] = useState<string[]>(['还行']);
@@ -13,8 +13,8 @@ const Test = () => {
           <span>12312313</span>
         </UserPopover> */}
         <div style={{ width: '320px' }}>
-          <Tag value={value} onChange={v => setValue(v)} />
-          <Button loading={loading} onClick={() => setLoading(v => !v)}>
+          <Tag value={value} onChange={(v) => setValue(v)} />
+          <Button loading={loading} onClick={() => setLoading((v) => !v)}>
             哈哈哈哈哈哈
           </Button>
           {/* <FieldItem

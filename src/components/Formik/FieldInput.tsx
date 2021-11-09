@@ -1,10 +1,10 @@
 import React, { memo } from 'react';
 import { Field, FieldProps } from 'formik';
 
+import { css } from 'styled-components';
 import Input, { IInputProps } from '../Input';
 import { Label, LabelBox, RequiredX } from './elements';
 import ErrorMessage from './ErrorMessage';
-import { css } from 'styled-components/macro';
 
 interface IProps extends IInputProps {
   name: string;
@@ -20,20 +20,18 @@ const Component: React.FC<FieldProps & IProps> = memo(
     required,
     form: { touched, errors },
     ...restFieldProps
-  }) => {
-    return (
-      <LabelBox className={className} style={style}>
-        {label && (
-          <Label>
-            {required && <RequiredX>*</RequiredX>}
-            <span>{label}</span>
-          </Label>
-        )}
-        <Input {...restFieldProps} {...field} />
-        <ErrorMessage field={field} touched={touched} errors={errors} />
-      </LabelBox>
-    );
-  },
+  }) => (
+    <LabelBox className={className} style={style}>
+      {label && (
+      <Label>
+        {required && <RequiredX>*</RequiredX>}
+        <span>{label}</span>
+      </Label>
+      )}
+      <Input {...restFieldProps} {...field} />
+      <ErrorMessage field={field} touched={touched} errors={errors} />
+    </LabelBox>
+  ),
 );
 
 const FieldInput: React.FC<IProps> = ({ name, ...restProps }) => (

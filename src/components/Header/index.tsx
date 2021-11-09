@@ -2,16 +2,16 @@ import React from 'react';
 import styled, { useTheme } from 'styled-components/macro';
 import { rem } from 'polished';
 
-import { Icon } from './Icon';
 import { A } from '@app/components';
-import { Right } from './Right';
 import { space } from '@app/utils/theme';
+import { Icon } from './Icon';
+import { Right } from './Right';
 
 const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: ${_ => rem(84)};
+  height: ${() => rem(84)};
   transition: 0.2s all ease;
 `;
 

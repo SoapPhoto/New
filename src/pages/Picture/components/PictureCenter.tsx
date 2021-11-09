@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Image } from '@app/components';
+import Image from '@app/components/Image';
 import { getPictureUrl } from '@app/utils/image';
+import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import {
   PictureBox,
   PictureContent,
@@ -9,7 +10,6 @@ import {
   PictureImageBox,
   PictureWrapper,
 } from '../elements';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 
 interface IProps {
   picture: PictureEntity;
@@ -17,8 +17,7 @@ interface IProps {
 
 const PictureCenter: React.FC<IProps> = ({ picture }) => {
   const num = picture.width / picture.height;
-  const height =
-    (1 - (picture.width - picture.height) / picture.width) * 100 || 100;
+  const height = (1 - (picture.width - picture.height) / picture.width) * 100 || 100;
   return (
     <PictureWrapper>
       <PictureContent>

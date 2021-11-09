@@ -1,8 +1,8 @@
+import { IconButton } from '@app/pages/Picture/elements';
 import { customMedia } from '@app/styles/mediaQuery';
 import { rgba } from 'polished';
 import { animated } from 'react-spring';
 import styled, { css } from 'styled-components/macro';
-import { IconButton } from '..';
 
 export const Mask = styled(animated.div as any)`
   position: fixed;
@@ -33,7 +33,7 @@ export const Wrapper = styled.div<{
     -webkit-overflow-scrolling: touch;
     z-index: 1000;
     ${centered
-      ? css`
+    ? css`
           text-align: center;
           padding: 12px 0px;
           &::before {
@@ -50,11 +50,11 @@ export const Wrapper = styled.div<{
             vertical-align: middle;
           }
         `
-      : ''}
+    : ''}
     ${customMedia.lessThan('mobile')`
       ${
-        fullscreen
-          ? css`
+  fullscreen
+    ? css`
               padding: 0;
               ${Content} {
                 width: 100%;
@@ -64,8 +64,8 @@ export const Wrapper = styled.div<{
                 overflow-y: auto;
               }
             `
-          : autoMobile &&
-            css`
+    : autoMobile
+            && css`
               padding: 0;
               &::before {
                 content: none;
@@ -82,7 +82,7 @@ export const Wrapper = styled.div<{
                 border-bottom-right-radius: 0;
               }
             `
-      }
+}
     `}
   `,
 );
@@ -91,7 +91,7 @@ export const Content = styled(animated.div as any)`
   position: relative;
   top: 100px;
   margin: 0 auto;
-  background: ${p => p.theme.widget.modal.background};
+  background: ${(p) => p.theme.widget.modal.background};
   border-radius: 6px;
   width: 100%;
   overflow: hidden;
@@ -107,10 +107,10 @@ export const CloseBox = styled(IconButton)`
   right: 16px;
   top: 16px;
   z-index: 2;
-  color: ${_ => _.theme.colors.secondary};
+  color: ${(_) => _.theme.colors.secondary};
   transition: color 0.25s ease;
   &:hover {
-    color: ${_ => _.theme.colors.text};
+    color: ${(_) => _.theme.colors.text};
   }
 `;
 
@@ -128,14 +128,14 @@ export const ModalBackground = styled.div<{
   top: 0;
   z-index: 0;
   width: 100%;
-  height: ${p => p.height || 90}px;
+  height: ${(p) => p.height || 90}px;
   filter: blur(4px);
   transform: scale(1.1);
   background: linear-gradient(
-      ${p => rgba(p.theme.widget.modal.background, 0.85)},
-      ${p => p.theme.widget.modal.background} 90px
+      ${(p) => rgba(p.theme.widget.modal.background, 0.85)},
+      ${(p) => p.theme.widget.modal.background} 90px
     ),
-    url('${p => p.background}');
+    url('${(p) => p.background}');
   background-repeat: no-repeat;
   background-size: cover;
 `;
@@ -150,7 +150,7 @@ export const ModalHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  border-bottom: 1px solid ${_ => _.theme.colors.border};
+  border-bottom: 1px solid ${(_) => _.theme.colors.border};
   ${ModalTitle} {
     padding: 0px;
   }

@@ -1,14 +1,17 @@
 import React, { useEffect, useLayoutEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import {
+  Route, BrowserRouter, Routes, Navigate,
+} from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useTheme } from 'styled-components/macro';
 import dayjs from 'dayjs';
+import Loadable from '@loadable/component';
 
 import HomePage from '@app/pages/Home/Loadable';
 import { useTranslation } from 'react-i18next';
-import { DefaultLayout } from '@app/components/Layout';
+import { DefaultLayout, SecurityLayout } from '@app/components/Layout';
 import Account from '@app/pages/Account';
 import Login from '@app/pages/Account/Login';
 import Register from '@app/pages/Account/Register';
@@ -21,7 +24,10 @@ import UserPage from '@app/pages/User/Loadable';
 import TagPage from '@app/pages/Tag';
 import UserHome from '@app/pages/User/Picture';
 import { UserPictureType } from '@app/common/enum/picture';
+import SettingPage from '@app/pages/Setting';
 import { GlobalStyle } from '../styles/global-styles';
+
+const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
 
 const Router = () => (
   <Routes>
@@ -49,6 +55,24 @@ const Router = () => (
         />
       </Route>
       <Route path="/tag/:name" element={<TagPage />} />
+      <Route path="" element={<SecurityLayout />}>
+        <Route path="/setting" element={<SettingPage />}>
+          <Route
+            path="profile"
+            element={<SettingProfilePage />}
+          />
+          <Route
+            path="account"
+            element={<div>2</div>}
+          />
+          <Route
+            path="resetPassword"
+            element={<div>3</div>}
+          />
+        </Route>
+        <Route path="/setting" element={<Navigate replace to="/setting/profile" />} />
+        <Route path="/setting/:type" element={<Navigate replace to="/setting/profile" />} />
+      </Route>
     </Route>
     <Route path="" element={<Account />}>
       <Route path="login" element={<Login />} />

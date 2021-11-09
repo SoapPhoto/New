@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 
-import { Image } from '@app/components';
-import { useAccount } from '@app/stores/hooks';
 import { Loading } from '@app/components';
-import { BG, Content, LoadingBox, RightBox, Wrapper } from './elements';
+import Image from '@app/components/Image';
+import { useAccount } from '@app/stores/hooks';
+
+import {
+  BG, Content, LoadingBox, RightBox, Wrapper,
+} from './elements';
 
 const Account = observer(() => {
   const [loading, setLoading] = useState(true);
   const { isLogin, init } = useAccount();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   useEffect(() => {
     if (isLogin) {
       navigate('/', {

@@ -111,5 +111,23 @@
   },
   "comment": {
     "empty": "暂无评论"
+  },
+  "setting": {
+    "menu": {
+      "profile": "用户设置",
+      "account": "账号设置",
+      "resetPassword": "重置密码"
+    },
+    "profile": {
+      "label": {
+        "username": "用户名（登录名）",
+        "name": "昵称",
+        "website": "个人网站",
+        "bio": "简介"
+      },
+      "message": {
+        "updateSuccess": "修改成功！"
+      }
+    }
   }
 }

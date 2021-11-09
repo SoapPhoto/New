@@ -1,18 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { Formik, Form, FormikHelpers } from 'formik';
 
 import FieldInput from '@app/components/Formik/FieldInput';
-import { Des, Title } from '../elements';
 import { useSpring, animated } from 'react-spring';
-import { Button } from '@app/components';
-import { RegisterSchema } from '../dto';
+import Button from '@app/components/Button';
 import { register } from '@app/services/account';
 import { isArray } from 'lodash';
 import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
 import { toast } from 'react-hot-toast';
+import { RegisterSchema } from '../dto';
+import { Des, Title } from '../elements';
 
 const a = animated as any;
 interface IValues {
@@ -47,9 +49,9 @@ const Register = observer(() => {
         registerLogin(data);
         toast.success(t('auth.message.register_success') as string);
       } catch (error) {
-        const {message} = error as any
+        const { message } = error as any;
         if (isArray(message)) {
-          message.forEach(err => {
+          message.forEach((err) => {
             setFieldError(
               err.param,
               t(`error.${err.message[0]}` as any, {
@@ -71,7 +73,8 @@ const Register = observer(() => {
       <Title>{t('accountFeature.registerTitle')}</Title>
       <Des>
         <Trans i18nKey="accountFeature.registerMessage">
-          已有账户？<Link to="/login">登录</Link>
+          已有账户？
+          <Link to="/login">登录</Link>
         </Trans>
       </Des>
       <Formik<IValues>

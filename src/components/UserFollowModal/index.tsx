@@ -6,8 +6,9 @@ import { useLazyQuery } from '@apollo/client';
 import { FollowedUsers, FollowerUsers } from '@app/graphql/query';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { useTranslation } from 'react-i18next';
+import Modal from '@app/components/Modal';
 import UserItem from './UserItem';
-import { Loading, Modal } from '..';
+import { Loading } from '..';
 
 const Content = styled(OverlayScrollbarsComponent)`
   flex: 1;

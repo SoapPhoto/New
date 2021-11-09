@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Popover } from '..';
 import { animated } from 'react-spring';
 import { useTapButton } from '@app/utils/hooks';
+import { Popover } from '..';
 
 interface IProps extends React.HTMLAttributes<HTMLButtonElement> {
   popover?: string;

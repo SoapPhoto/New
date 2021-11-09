@@ -33,27 +33,25 @@ const Blurhash: React.FC<Props> = ({
   resolutionX = 32,
   resolutionY = 32,
   ...rest
-}) => {
-  return (
-    <div
-      {...rest}
-      style={{
-        display: 'inline-block',
-        height,
-        width,
-        ...style,
-        position: 'relative',
-      }}
-    >
-      <BlurhashCanvas
-        hash={hash}
-        height={resolutionY}
-        width={resolutionX}
-        punch={punch}
-        style={canvasStyle}
-      />
-    </div>
-  );
-};
+}) => (
+  <div
+    {...rest}
+    style={{
+      display: 'inline-block',
+      height,
+      width,
+      ...style,
+      position: 'relative',
+    }}
+  >
+    <BlurhashCanvas
+      hash={hash}
+      height={resolutionY}
+      width={resolutionX}
+      punch={punch}
+      style={canvasStyle}
+    />
+  </div>
+);
 
 export default Blurhash;

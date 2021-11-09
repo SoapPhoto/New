@@ -1,4 +1,4 @@
-import { Image } from '@app/components';
+import Image from '@app/components/Image';
 import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 import { getPictureUrl } from '@app/utils/image';
 import React, { memo } from 'react';

@@ -1,7 +1,8 @@
 import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { EmojiText } from '@app/components';
+import { EmojiText, Popover } from '@app/components';
 import Comment from '@app/components/Comment';
+import { Lock } from '@app/components/Icons';
 import { Picture } from '@app/graphql/query';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -23,6 +24,7 @@ import {
   LeftBox,
   TagBox,
   Tag,
+  LockIcon,
 } from './elements';
 import PictureSkeleton from './Skeleton';
 
@@ -55,6 +57,19 @@ const PicturePage = observer(() => {
       <Content>
         <PictureInfo picture={picture} />
         <Title>
+          {
+            picture.isPrivate && (
+              <Popover
+                trigger="hover"
+                placement="top"
+                theme="dark"
+                openDelay={100}
+                content={<span>私人</span>}
+              >
+                <Lock style={{ marginRight: '6px', strokeWidth: '3px' }} size={26} />
+              </Popover>
+            )
+          }
           <EmojiText text={picture.title} />
         </Title>
         {picture.bio && (
@@ -64,7 +79,7 @@ const PicturePage = observer(() => {
         )}
         {picture.tags.length > 0 && (
           <TagBox>
-            {picture.tags.map(tag => (
+            {picture.tags.map((tag) => (
               <Link to={`/tag/${tag.name}`} key={tag.id}>
                 <Tag key={tag.id}>{tag.name}</Tag>
               </Link>

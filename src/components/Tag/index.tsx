@@ -1,7 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { css } from 'styled-components/macro';
-import { IconButton } from '..';
+import IconButton from '../Button/IconButton';
 import { Hash, Trash2 } from '../Icons';
 import { TagInput, TagItem, Wrapper } from './elements';
 
@@ -25,13 +24,13 @@ const Tag: React.FC<ITag> = memo(({ value, onChange }) => {
   );
   const deleteTag = useCallback(
     (e: string) => {
-      onChange(value.filter(v => v !== e));
+      onChange(value.filter((v) => v !== e));
     },
     [onChange, value],
   );
   return (
     <Wrapper>
-      {value.map(e => (
+      {value.map((e) => (
         <TagItem
           style={{
             marginRight: '12px',

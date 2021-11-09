@@ -1,14 +1,28 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 import reactRefresh from '@vitejs/plugin-react-refresh';
-import vitePluginImp from 'vite-plugin-imp';
 import graphql from '@rollup/plugin-graphql';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 import macrosPlugin from 'vite-plugin-babel-macros';
+import vitePluginImp from 'vite-plugin-imp';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactRefresh(), graphql(), macrosPlugin()],
+  plugins: [reactRefresh(), graphql(), macrosPlugin(),
+    vitePluginImp([
+      {
+        libraryName: '@arco-design/web-react',
+        libraryDirectory: 'es',
+        camel2DashComponentName: false,
+        style: (name) => {
+          return `@arco-design/web-react/es/${name}/style/index.js`;
+        },
+      },
+    ])
+  ],
+  build: {
+    minify: false,
+  },
   resolve: {
     alias: [
       { find: '@app', replacement: path.resolve(__dirname, 'src') },

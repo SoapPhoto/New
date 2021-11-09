@@ -3,7 +3,8 @@ import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { Avatar, EmojiText, Popover } from '..';
+import Avatar from '@app/components/Avatar';
+import { EmojiText, Popover } from '..';
 import { StrutAlign } from '../Icons';
 import { VipBadge } from '../Icons/VipBadge';
 

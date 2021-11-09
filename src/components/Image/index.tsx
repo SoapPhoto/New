@@ -1,8 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import styled from 'styled-components/macro';
 import LazyLoad from 'react-lazyload';
 
 import { Blurhash } from '..';
+
 interface IImageProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
   src?: string;
   blurhash?: string;
@@ -29,14 +32,13 @@ const Img = styled.img<{ loaded: number; complete: number }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: ${p => (p.loaded || p.complete ? 1 : 0)};
-  filter: brightness(${p => (p.loaded || p.complete ? '100%' : '100%')})
-    saturate(${p => (p.loaded || p.complete ? '100%' : '20%')});
-  transition: ${p =>
-    p.complete
-      ? 'none'
-      : `filter 700ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)`};
+  opacity: ${(p) => (p.loaded || p.complete ? 1 : 0)};
+  filter: brightness(${(p) => (p.loaded || p.complete ? '100%' : '100%')})
+    saturate(${(p) => (p.loaded || p.complete ? '100%' : '20%')});
+  transition: ${(p) => (p.complete
+    ? 'none'
+    : `filter 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)`)};
 `;
 
 const ImageComponents: React.FC<IImageProps> = ({
@@ -80,8 +82,8 @@ const ImageComponents: React.FC<IImageProps> = ({
         <BlurHashBox>
           <Blurhash
             hash={blurhash}
-            width={'100%'}
-            height={'100%'}
+            width="100%"
+            height="100%"
             resolutionX={32}
             resolutionY={32}
             punch={1}

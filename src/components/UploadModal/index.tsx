@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import * as Yup from 'yup';
 
 import {
@@ -7,29 +9,8 @@ import {
   useSearchParamModal,
   useTapButton,
 } from '@app/utils/hooks';
-import {
-  Button,
-  FieldInput,
-  FieldSwitch,
-  FieldTag,
-  FieldTextarea,
-  Modal,
-  Toast,
-} from '..';
-import { Edit, Image, Trash2 } from '../Icons';
-import {
-  DeleteBtn,
-  DeleteImageBtnBox,
-  Thumbnail,
-  ThumbnailHover,
-  UploadBox,
-  UploadHeader,
-  UploadImageHeader,
-  UploadTips,
-} from './elements';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import EditExifModal from '../EditExifModal.tsx';
 import { pick } from 'lodash';
 import { animated } from 'react-spring';
 import { uploadOSS } from '@app/services/file';
@@ -41,6 +22,26 @@ import { useApolloClient } from '@apollo/client';
 import { Picture } from '@app/graphql/query';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { toast } from 'react-hot-toast';
+import Modal from '@app/components/Modal';
+import Button from '@app/components/Button';
+import EditExifModal from '../EditExifModal.tsx';
+import {
+  DeleteBtn,
+  DeleteImageBtnBox,
+  Thumbnail,
+  ThumbnailHover,
+  UploadBox,
+  UploadHeader,
+  UploadImageHeader,
+  UploadTips,
+} from './elements';
+import { Edit, Image, Trash2 } from '../Icons';
+import {
+  FieldInput,
+  FieldSwitch,
+  FieldTag,
+  FieldTextarea,
+} from '..';
 
 export interface IValues {
   isLocation: boolean;
@@ -52,22 +53,21 @@ export interface IValues {
 
 const a = animated as any;
 
-const DeleteImageBtn: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> =
-  ({ style, onClick, ...props }) => {
-    const { t } = useTranslation();
-    const [spring, bind] = useTapButton(1.03, 0.95);
-    return (
-      <DeleteBtn
-        {...props}
-        {...bind()}
-        style={{ ...style, ...spring }}
-        onClick={onClick}
-      >
-        <Trash2 size={18} style={{ marginRight: 4 }} />
-        {t('picture.upload.deleteImage')}
-      </DeleteBtn>
-    );
-  };
+const DeleteImageBtn: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({ style, onClick, ...props }) => {
+  const { t } = useTranslation();
+  const [spring, bind] = useTapButton(1.03, 0.95);
+  return (
+    <DeleteBtn
+      {...props}
+      {...bind()}
+      style={{ ...style, ...spring }}
+      onClick={onClick}
+    >
+      <Trash2 size={18} style={{ marginRight: 4 }} />
+      {t('picture.upload.deleteImage')}
+    </DeleteBtn>
+  );
+};
 
 const UploadModal = observer(() => {
   const client = useApolloClient();
@@ -122,7 +122,7 @@ const UploadModal = observer(() => {
             info,
             key,
             ...values,
-            tags: values.tags.map(v => ({ name: v })),
+            tags: values.tags.map((v) => ({ name: v })),
           });
           if (data && !data.isPrivate) {
             const { data: picture } = await client.query<{
@@ -198,7 +198,7 @@ const UploadModal = observer(() => {
           >
             {({ isValid }) => (
               <Form>
-                 <FieldInput
+                <FieldInput
                   required
                   name="title"
                   label={t('label.picture_title') as string}

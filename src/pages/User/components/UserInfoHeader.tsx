@@ -1,5 +1,6 @@
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { Avatar, EmojiText, UserFollowModal } from '@app/components';
+import { EmojiText } from '@app/components';
+import Avatar from '@app/components/Avatar';
 import { customMedia } from '@app/styles/mediaQuery';
 import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import React, { memo } from 'react';

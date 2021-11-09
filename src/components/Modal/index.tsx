@@ -1,4 +1,6 @@
-import React, { SyntheticEvent, useEffect, useRef, useState } from 'react';
+import React, {
+  SyntheticEvent, useEffect, useRef, useState,
+} from 'react';
 import PortalWrapper from 'rc-util/lib/PortalWrapper';
 import ScrollLocker from 'rc-util/lib/Dom/scrollLocker';
 import { useSpring } from 'react-spring';
@@ -71,10 +73,10 @@ const InternalModal: React.FC<IModalProps> = ({
   const contentSpringProps = useSpring({
     opacity: animatedVisible ? 1 : 0,
     transform: animatedVisible
-      ? `scale3d(1, 1, 1) translate3d(0px, 0px, 0px)`
-      : `scale3d(0.94, 0.94, 0.94) translate3d(0px, 30px, 0px)`,
+      ? 'scale3d(1, 1, 1) translate3d(0px, 0px, 0px)'
+      : 'scale3d(0.94, 0.94, 0.94) translate3d(0px, 30px, 0px)',
     config: springConfig,
-    onRest: endValues => {
+    onRest: (endValues) => {
       if (!visible && endValues.value.opacity === 0 && !closed) {
         destroy();
       }
@@ -133,7 +135,7 @@ const InternalModal: React.FC<IModalProps> = ({
   };
   let onWrapperClick: (e: React.SyntheticEvent) => null;
   if (maskClosable) {
-    onWrapperClick = e => {
+    onWrapperClick = (e) => {
       if (contentClickRef.current) {
         contentClickRef.current = false;
       } else if (wrapperRef.current === e.target) {
@@ -144,7 +146,7 @@ const InternalModal: React.FC<IModalProps> = ({
   }
   const closeIconToRender = (
     <CloseBox
-      onClick={e => {
+      onClick={(e) => {
         onClose?.(e);
       }}
     >
@@ -157,33 +159,31 @@ const InternalModal: React.FC<IModalProps> = ({
   return (
     <>
       <PortalWrapper visible={!closed} getContainer={document.body as any}>
-        {() => {
-          return (
-            <div style={{ display: closed ? 'none' : 'block' }}>
-              <Mask style={{ ...maskSpringProps }} />
-              <Wrapper
-                fullscreen={!!fullscreen}
-                centered={!!centered}
-                autoMobile={!!autoMobile}
-                ref={wrapperRef}
-                onClick={onWrapperClick}
+        {() => (
+          <div style={{ display: closed ? 'none' : 'block' }}>
+            <Mask style={{ ...maskSpringProps }} />
+            <Wrapper
+              fullscreen={!!fullscreen}
+              centered={!!centered}
+              autoMobile={!!autoMobile}
+              ref={wrapperRef}
+              onClick={onWrapperClick}
+            >
+              <Content
+                style={{
+                  ...contentSpringProps,
+                  ...(maxWidth ? { maxWidth } : {}),
+                  ...contentStyle,
+                }}
+                onMouseDown={onContentMouseDown}
+                onMouseUp={onContentMouseUp}
               >
-                <Content
-                  style={{
-                    ...contentSpringProps,
-                    ...(maxWidth ? { maxWidth: maxWidth } : {}),
-                    ...contentStyle,
-                  }}
-                  onMouseDown={onContentMouseDown}
-                  onMouseUp={onContentMouseUp}
-                >
-                  {closable && closeIconToRender}
-                  {children}
-                </Content>
-              </Wrapper>
-            </div>
-          );
-        }}
+                {closable && closeIconToRender}
+                {children}
+              </Content>
+            </Wrapper>
+          </div>
+        )}
       </PortalWrapper>
     </>
   );

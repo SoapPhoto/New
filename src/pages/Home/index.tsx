@@ -3,15 +3,18 @@ import { observer } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 import { NetworkStatus } from '@apollo/client';
 
-import { Button, PictureList } from '@app/components';
+import { PictureList } from '@app/components';
+import Button from '@app/components/Button';
 
 import { PicturesType } from '@app/common/enum/picture';
-import Skeleton from './Skeleton';
 import { usePicturesQuery } from '@app/graphql/hooks/query';
+import Skeleton from './Skeleton';
 
 const Home = observer(() => {
   const { t } = useTranslation();
-  const { loading, data, fetchMore, networkStatus } = usePicturesQuery({
+  const {
+    loading, data, fetchMore, networkStatus,
+  } = usePicturesQuery({
     type: PicturesType.NEW,
     query: {
       page: 1,

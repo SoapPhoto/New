@@ -9,6 +9,7 @@ const theme: DefaultTheme = {
   space: 4,
   background: '#fff',
   foreground: 'rgb(44, 62, 80)',
+  shadowColor: 'rgba(0, 0, 0, 0.06)',
   colors: {
     border: gray3,
     error: 'rgb(255,77,79)',
@@ -24,6 +25,9 @@ const theme: DefaultTheme = {
   },
   dashboard: {},
   widget: {
+    box: {
+      borderColor: '#eaeaea',
+    },
     scrollbar: {
       graidient: 'rgba(255,255,255,.9)',
       background: 'rgba(0,0,0,.45)',

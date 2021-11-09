@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { useSearchParamModal } from '@app/utils/hooks';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { EmojiText, Loading, Modal, Popover } from '@app/components';
+import {
+  EmojiText, Loading, Modal, Popover,
+} from '@app/components';
 import { getPictureUrl } from '@app/utils/image';
+import { Lock, PlusCircle } from '@app/components/Icons';
+import { useLazyQuery } from '@apollo/client';
+import { UserCollectionsByName } from '@app/graphql/query';
+import { IPaginationListData } from '@app/graphql/interface';
+import { CollectionEntity } from '@app/common/types/modules/collection/collection.entity';
+import { observer } from 'mobx-react';
+import { useAccount } from '@app/stores/hooks';
+import { useTranslation } from 'react-i18next';
+import styled from 'styled-components/macro';
+import { divide } from 'lodash';
 import {
   CheckIcon,
   CollectionBox,
@@ -15,18 +28,16 @@ import {
   ItemInfoTitle,
   MinusIcon,
 } from './elements';
-import { Lock, PlusCircle } from '@app/components/Icons';
-import { useLazyQuery } from '@apollo/client';
-import { UserCollectionsByName } from '@app/graphql/query';
-import { IPaginationListData } from '@app/graphql/interface';
-import { CollectionEntity } from '@app/common/types/modules/collection/collection.entity';
-import { observer } from 'mobx-react';
-import { useAccount } from '@app/stores/hooks';
-import { useTranslation } from 'react-i18next';
 
 interface IProps {
   picture: PictureEntity;
 }
+
+const Content = styled(OverlayScrollbarsComponent)`
+  flex: 1;
+  /* max-height: 80vh;
+  height: 100px; */
+`;
 
 const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
   const { t } = useTranslation();
@@ -43,7 +54,7 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
     if (visible && isLogin) {
       setCurrent(
         new Map(
-          currentCollections.map(collection => [collection.id, collection]),
+          currentCollections.map((collection) => [collection.id, collection]),
         ),
       );
       collectionsQuery({
@@ -52,17 +63,18 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
         },
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible, isLogin]);
   useEffect(() => {
     setCurrent(
       new Map(
-        currentCollections.map(collection => [collection.id, collection]),
+        currentCollections.map((collection) => [collection.id, collection]),
       ),
     );
   }, [currentCollections]);
   let content: JSX.Element[] = [];
   if (data?.userCollectionsByName) {
-    content = data.userCollectionsByName.data.map(collection => {
+    content = data.userCollectionsByName.data.map((collection) => {
       const isCollected = current.has(collection.id) ? 1 : 0;
       // const isLoading = loadingObj[collection.id] ? 1 : 0;
       const preview = collection.preview.slice();
@@ -115,7 +127,6 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
       );
     });
   }
-  console.log(loading, data?.userCollectionsByName);
   return (
     <Modal
       autoMobile={false}
@@ -123,23 +134,42 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
       centered
       visible={visible}
       onClose={() => close()}
+      css={`
+        max-height: 400px;
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+      `}
     >
       <Modal.Background background={getPictureUrl(key, 'blur')} />
-      <Modal.Content>
+      <Modal.Content
+        css={`
+          height: 80vh;
+          display: flex;
+          flex-direction: column;
+        `}
+      >
         <Modal.Title>信息</Modal.Title>
-        <CollectionBox>
-          <CollectionItemBox>
-            <ItemInfoBox isCollected={0} isPreview={0}>
-              <div>
-                <ItemInfoTitle style={{ marginBottom: 0 }}>
-                  <PlusCircle style={{ marginRight: '12px' }} />
-                  <span>添加</span>
-                </ItemInfoTitle>
-              </div>
-            </ItemInfoBox>
-          </CollectionItemBox>
-          {content}
-        </CollectionBox>
+        <Content
+          options={{
+            scrollbars: { autoHide: 'move' },
+            sizeAutoCapable: false,
+          }}
+        >
+          <CollectionBox>
+            <CollectionItemBox>
+              <ItemInfoBox isCollected={0} isPreview={0}>
+                <div>
+                  <ItemInfoTitle style={{ marginBottom: 0 }}>
+                    <PlusCircle style={{ marginRight: '12px' }} />
+                    <span>添加</span>
+                  </ItemInfoTitle>
+                </div>
+              </ItemInfoBox>
+            </CollectionItemBox>
+            {content}
+          </CollectionBox>
+        </Content>
       </Modal.Content>
     </Modal>
   );

@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { css } from 'styled-components';
+import { css } from 'styled-components/macro';
 import { IconButton } from '..';
 import { Hash, Trash2 } from '../Icons';
 import { TagInput, TagItem, Wrapper } from './elements';

@@ -2,7 +2,7 @@ import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Avatar, EmojiText, Popover } from '..';
 import { StrutAlign } from '../Icons';
 import { VipBadge } from '../Icons/VipBadge';
@@ -24,8 +24,8 @@ const Info = styled.div`
 `;
 
 const Username = styled.span`
-  font-weight: 500;
-  color: ${_ => _.theme.colors.text};
+  font-weight: 600;
+  color: ${(_) => _.theme.colors.text};
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
@@ -34,7 +34,7 @@ const Username = styled.span`
 
 const Bio = styled(EmojiText)`
   font-size: 12px;
-  color: ${_ => _.theme.colors.secondary};
+  color: ${(_) => _.theme.colors.secondary};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -51,7 +51,7 @@ const UserItem: React.FC<IUserItemProps> = memo(({ user }) => {
           <Link to={`/user/${user.username}`}>
             <Username>
               <EmojiText text={user.fullName} />
-              {user.badge.find(v => v.name === 'prestige') && (
+              {user.badge.find((v) => v.name === 'prestige') && (
                 <Popover
                   trigger="hover"
                   placement="top"

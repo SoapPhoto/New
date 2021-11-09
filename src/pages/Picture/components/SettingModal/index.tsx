@@ -15,7 +15,7 @@ import { omit, pick } from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { Trash2 } from 'react-feather';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/macro';
 import { Content } from '../../elements';
 import { Footer } from './elements';
 

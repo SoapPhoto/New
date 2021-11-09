@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Popover } from '..';
 import { animated } from 'react-spring';
 import { useTapButton } from '@app/utils/hooks';

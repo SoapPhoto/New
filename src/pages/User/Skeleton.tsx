@@ -1,7 +1,7 @@
 import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 import { skeletonCss } from '@app/styles/mixins';
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import UserCover from './components/UserCover';
 
 const Wrapper = styled.div`

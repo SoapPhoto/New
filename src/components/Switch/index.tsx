@@ -1,7 +1,7 @@
 import { parseToRgb, rgbToColorString } from 'polished';
 import React from 'react';
 import SwitchCom, { ReactSwitchProps } from 'react-switch';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/macro';
 import {
   IosSwitch,
 } from 'react-styled-switch'

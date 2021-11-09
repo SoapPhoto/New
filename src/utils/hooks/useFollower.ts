@@ -44,7 +44,7 @@ export default function useFollower(): [(user: UserEntity) => any, boolean] {
         });
         setFollowLoading(false);
       } catch (error) {
-        const {message} = error as any
+        const { message } = error as any;
         toast.error(message);
         setFollowLoading(false);
       }

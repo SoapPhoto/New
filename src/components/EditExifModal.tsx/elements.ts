@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export const FormBox = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

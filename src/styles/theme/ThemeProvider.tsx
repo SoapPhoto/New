@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useThemeStore } from '@app/stores/hooks';
-import { ThemeProvider as OriginalThemeProvider } from 'styled-components';
+import { ThemeProvider as OriginalThemeProvider } from 'styled-components/macro';
 import { observer } from 'mobx-react';
 
 export const ThemeProvider = observer(

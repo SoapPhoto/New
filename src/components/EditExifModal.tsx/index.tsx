@@ -2,7 +2,7 @@ import { useSearchParamModal } from '@app/utils/hooks';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { css } from 'styled-components';
+import { css } from 'styled-components/macro';
 import * as Yup from 'yup';
 
 import { Button, FieldInput, Modal } from '..';

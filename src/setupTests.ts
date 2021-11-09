@@ -5,7 +5,7 @@ import '@testing-library/jest-dom/extend-expect';
 import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 
-import 'jest-styled-components';
+import 'jest-styled-components/macro';
 
 // Init i18n for the tests needing it
 import 'locales/i18n';

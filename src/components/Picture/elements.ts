@@ -2,7 +2,7 @@ import { customMedia } from '@app/styles/mediaQuery';
 import { skeletonCss, skeletonCss2 } from '@app/styles/mixins';
 import { cover, darken, rgba } from 'polished';
 import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 
 export const ListWrapper = styled.div`
   max-width: 1500px;

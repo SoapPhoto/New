@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { AlertCircle, Trash2 } from 'react-feather';
 import { IModalProps } from '.';
 import { Button, Modal } from '..';
@@ -45,39 +45,35 @@ const Confirm: React.FC<IConfirmProps> = ({
   cancelText = '取消',
   confirmText = '确定',
   confirmButtonProps,
-}) => {
-  return (
-    <Modal
-      maxWidth="340px"
-      autoMobile={false}
-      centered
-      visible={visible}
-      onClose={onClose}
-    >
-      <Content>
-        <Icon>
-          {icon ? (
-            icon
-          ) : (
-            <AlertCircle color="rgba(255, 130, 0, .8)" size={48} />
-          )}
-        </Icon>
-        <Title>{title}</Title>
-        <Handle>
-          <div style={{ marginRight: 12 }}>
-            <Button type="text" {...cancelButtonProps} onClick={onClose}>
-              {cancelText}
-            </Button>
-          </div>
-          <div>
-            <Button {...confirmButtonProps} onClick={onConfirm}>
-              {confirmText}
-            </Button>
-          </div>
-        </Handle>
-      </Content>
-    </Modal>
-  );
-};
+}) => (
+  <Modal
+    maxWidth="340px"
+    autoMobile={false}
+    centered
+    visible={visible}
+    onClose={onClose}
+  >
+    <Content>
+      <Icon>
+        {icon || (
+        <AlertCircle color="rgba(255, 130, 0, .8)" size={48} />
+        )}
+      </Icon>
+      <Title>{title}</Title>
+      <Handle>
+        <div style={{ marginRight: 12 }}>
+          <Button type="text" {...cancelButtonProps} onClick={onClose}>
+            {cancelText}
+          </Button>
+        </div>
+        <div>
+          <Button {...confirmButtonProps} onClick={onConfirm}>
+            {confirmText}
+          </Button>
+        </div>
+      </Handle>
+    </Content>
+  </Modal>
+);
 
 export default Confirm;

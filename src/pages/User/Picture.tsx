@@ -6,7 +6,7 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { UserPictures } from '@app/graphql/query';
 import PictureSkeleton from '@app/components/Picture/Skeleton';
 import { PictureList } from '@app/components';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { useMatch, useParams } from 'react-router';
 
 const Wrapper = styled.div`

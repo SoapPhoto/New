@@ -1,6 +1,6 @@
 import { isFunction } from 'lodash';
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 type DragType = 'leave' | 'drop' | 'over';
 

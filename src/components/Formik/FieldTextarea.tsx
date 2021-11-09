@@ -4,7 +4,7 @@ import { Field, FieldProps } from 'formik';
 import Textarea, { ITextareaAutosizeProps } from '../Input/Textarea';
 import { Label, LabelBox, RequiredX } from './elements';
 import ErrorMessage from './ErrorMessage';
-import { css } from 'styled-components';
+import { css } from 'styled-components/macro';
 
 interface IProps extends ITextareaAutosizeProps {
   name: string;

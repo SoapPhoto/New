@@ -1,4 +1,4 @@
-import { DefaultTheme } from 'styled-components';
+import { DefaultTheme } from 'styled-components/macro';
 
 const gray1 = 'rgba(24,25,28,1)';
 const gray2 = 'rgba(20,20,23,1)';

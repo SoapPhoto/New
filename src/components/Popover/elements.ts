@@ -1,5 +1,5 @@
 import { animated } from 'react-spring';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export const Tooltip = styled.div`
   position: absolute;

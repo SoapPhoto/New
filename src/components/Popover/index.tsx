@@ -13,7 +13,7 @@ import { isFunction } from 'lodash';
 import { Arrow, Content, Tooltip } from './elements';
 import { Placement } from '@popperjs/core';
 import ResizeObserver from 'resize-observer-polyfill';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/macro';
 
 interface IPopoverProps {
   onOpen?: () => void;

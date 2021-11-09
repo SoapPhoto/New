@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 import { position, rgba } from 'polished';
 
 import { btnMixin } from '@app/styles/mixins';

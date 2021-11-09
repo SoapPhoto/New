@@ -1,7 +1,7 @@
 import { Tab } from '@app/components';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 
 interface IProps {}
 

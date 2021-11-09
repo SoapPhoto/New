@@ -1,6 +1,6 @@
 import React from 'react';
 import { Props, Twemoji } from 'react-emoji-render';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const StyledEmoji = styled(Twemoji)`
   word-wrap: break-word;

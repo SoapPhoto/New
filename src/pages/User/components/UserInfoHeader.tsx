@@ -5,7 +5,7 @@ import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { animated } from 'react-spring';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 interface IProps {
   user: UserEntity;
@@ -71,13 +71,14 @@ const UserTotalItem = styled.div`
   padding: 0 12px;
 `;
 const UserTotalItemCount = styled.span`
+  font-family: Rubik;
   font-size: 20px;
   margin-right: 8px;
   font-weight: 600;
 `;
 const UserTotalItemLabel = styled.span`
   font-size: 12px;
-  color: ${_ => _.theme.colors.secondary};
+  color: ${(_) => _.theme.colors.secondary};
 `;
 
 const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {

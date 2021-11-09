@@ -1,7 +1,7 @@
 import { Image } from '@app/components';
 import { Check, Minus } from '@app/components/Icons';
 import { rgba } from 'polished';
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 
 export const CollectionBox = styled.div`
   padding: 24px;

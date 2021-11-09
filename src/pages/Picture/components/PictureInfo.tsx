@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import React, { useMemo } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/macro';
 import {
   HeartIcon,
   IconButton,

@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { Link as RouterLink } from 'react-router-dom';
 
 const A = styled(RouterLink)`
-  color: ${p => p.theme.colors.primary};
+  color: ${(p) => p.theme.colors.primary};
   text-decoration: none;
   &:hover {
     text-decoration: underline;

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import LazyLoad from 'react-lazyload';
 
 import { Blurhash } from '..';

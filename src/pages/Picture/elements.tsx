@@ -1,6 +1,6 @@
 import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { animated } from 'react-spring';
 import { darken, lighten, rgba } from 'polished';
 import { Heart } from 'react-feather';

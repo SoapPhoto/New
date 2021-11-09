@@ -88,8 +88,8 @@ query Tag($name: String!) {
   }
 }
 
-query TagPictures($name: String!, $page: Float, $pageSize: Float, $timestamp: Float) {
-  tagPictures(name: $name, page: $page, pageSize: $pageSize, timestamp: $timestamp) {
+query TagPictures($name: String!, $query: PicturesQueryInput!) {
+  tagPictures(name: $name, query: $query) {
     ...PictureListFragment
   }
 }
@@ -118,14 +118,14 @@ query ChildComments($id: Float!, $query: CommentsQueryInput) {
   }
 }
 
-query FollowedUsers($id: Float!, $limit: Float!, $offset: Float!) {
-  followedUsers(id: $id, limit: $limit, offset: $offset) {
+query FollowedUsers($id: Float!, $query: FollowUsersQueryInput!) {
+  followedUsers(id: $id, query: $query) {
     ...UserDetailFragment
   }
 }
 
-query FollowerUsers($id: Float!, $limit: Float!, $offset: Float!) {
-  followerUsers(id: $id, limit: $limit, offset: $offset) {
+query FollowerUsers($id: Float!, $query: FollowUsersQueryInput!) {
+  followerUsers(id: $id, query: $query) {
     ...UserDetailFragment
   }
 }

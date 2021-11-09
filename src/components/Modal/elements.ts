@@ -1,7 +1,7 @@
 import { customMedia } from '@app/styles/mediaQuery';
 import { rgba } from 'polished';
 import { animated } from 'react-spring';
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 import { IconButton } from '..';
 
 export const Mask = styled(animated.div as any)`

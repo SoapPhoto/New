@@ -1,5 +1,5 @@
 import { animated } from 'react-spring';
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 
 export const LabelBox = styled.div`
   position: relative;

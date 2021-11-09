@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import { css } from 'styled-components';
+import { css } from 'styled-components/macro';
 
 const font = `
-  Rubik, "Noto Sans SC", PingFang SC, PingFang TC, Microsoft YaHei,
+  Rubik, OPPOSans, "Noto Sans SC", PingFang SC, PingFang TC, Microsoft YaHei,
   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", "Helvetica", Hiragino Sans GB, STHeiti, "WenQuanYi Micro Hei", sans-serif
 `;
 
@@ -28,7 +28,7 @@ const normalize = () => css`
   html,
   body {
     width: 100%;
-    background-color: ${p => p.theme.colors.layout};
+    background-color: ${(p) => p.theme.colors.layout};
   }
   ol,
   ul {

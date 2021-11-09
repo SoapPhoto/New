@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/macro';
 import dayjs from 'dayjs';
 
 import HomePage from '@app/pages/Home/Loadable';

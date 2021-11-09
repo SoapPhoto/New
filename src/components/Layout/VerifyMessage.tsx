@@ -1,7 +1,7 @@
 import { useAccount } from '@app/stores/hooks';
 import { observer } from 'mobx-react';
 import React, { useMemo, useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import IconButton from '../Button/IconButton';
 import { X } from '../Icons';
 

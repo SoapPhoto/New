@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from 'styled-components';
+import { useTheme } from 'styled-components/macro';
 
 import light from '@app/styles/theme/themes/light';
 import { getPictureUrl } from '@app/utils/image';

@@ -10,7 +10,7 @@ import {
   ThemedStyledProps,
   Interpolation,
   FlattenInterpolation,
-} from 'styled-components';
+} from 'styled-components/macro';
 
 /*
  * Taken from https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32914
@@ -40,7 +40,7 @@ export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce(
 
 /*
  * @types/styled-component is not working properly as explained in the github issue referenced above.
- * We must overcome this with custom typings, however, this might not work in time as the styled-components update.
+ * We must overcome this with custom typings, however, this might not work in time as the styled-components/macro update.
  * Be carefull and keep an eye on the issue and the possible improvements
  */
 type MediaFunction = <P extends object>(

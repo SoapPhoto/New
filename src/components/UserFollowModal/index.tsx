@@ -1,17 +1,18 @@
 import React, { memo, useEffect, useMemo } from 'react';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
-import { Loading, Modal } from '..';
 import { useLazyQuery } from '@apollo/client';
 import { FollowedUsers, FollowerUsers } from '@app/graphql/query';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import UserItem from './UserItem';
 import { useTranslation } from 'react-i18next';
+import UserItem from './UserItem';
+import { Loading, Modal } from '..';
 
 const Content = styled(OverlayScrollbarsComponent)`
   flex: 1;
-  /* max-height: 100%; */
+  /* max-height: 80vh;
+  height: 100px; */
 `;
 
 interface IProps {
@@ -22,7 +23,9 @@ interface IProps {
 }
 
 const UserFollowModal: React.FC<IProps> = memo(
-  ({ visible, onClose, type, userId }) => {
+  ({
+    visible, onClose, type, userId,
+  }) => {
     const { t } = useTranslation();
     const [followedQuery, followedData] = useLazyQuery<{
       followedUsers: UserEntity[];
@@ -40,20 +43,25 @@ const UserFollowModal: React.FC<IProps> = memo(
           followerQuery({
             variables: {
               id: userId,
-              limit: 30,
-              offset: 0,
+              query: {
+                page: 1,
+                pageSize: 50,
+              },
             },
           });
         } else {
           followedQuery({
             variables: {
               id: userId,
-              limit: 30,
-              offset: 0,
+              query: {
+                page: 1,
+                pageSize: 50,
+              },
             },
           });
         }
       }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [visible]);
     const result = useMemo(() => {
       if (type === 'follower') {
@@ -62,13 +70,12 @@ const UserFollowModal: React.FC<IProps> = memo(
           loading: followerData.loading,
           data: followerData.data?.followerUsers || [],
         };
-      } else {
-        return {
-          called: followedData.called,
-          loading: followedData.loading,
-          data: followedData.data?.followedUsers || [],
-        };
       }
+      return {
+        called: followedData.called,
+        loading: followedData.loading,
+        data: followedData.data?.followedUsers || [],
+      };
     }, [
       followedData.called,
       followedData.data?.followedUsers,
@@ -83,6 +90,7 @@ const UserFollowModal: React.FC<IProps> = memo(
       <Modal
         closable
         centered
+        autoMobile={false}
         visible={visible}
         onClose={onClose}
         maxWidth={400}
@@ -97,7 +105,7 @@ const UserFollowModal: React.FC<IProps> = memo(
         <Modal.Content
           css={`
             max-height: 400px;
-            height: 90vh;
+            height: 80vh;
             display: flex;
             flex-direction: column;
           `}
@@ -120,7 +128,7 @@ const UserFollowModal: React.FC<IProps> = memo(
                 sizeAutoCapable: false,
               }}
             >
-              {data.map(user => (
+              {data.map((user) => (
                 <UserItem key={user.id} user={user} />
               ))}
             </Content>

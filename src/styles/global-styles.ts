@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
     line-height: 1.5;
-    color: ${p => p.theme.foreground};
+    color: ${(p) => p.theme.foreground};
   }
   p,
   label {
@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: ${p => p.theme.colors.primary}
+    color: ${(p) => p.theme.colors.primary}
   }
   .lazyload-wrapper {
     width: 100%;

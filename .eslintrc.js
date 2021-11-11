@@ -8,6 +8,7 @@ module.exports = {
     project: "./tsconfig.json",
   },
   rules: {
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
     // "react/jsx-filename-extension": [2, { "extensions": [".jsx", ".tsx"] }],
     "linebreak-style": [0],
     "react/jsx-props-no-spreading": [0],

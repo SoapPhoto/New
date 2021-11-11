@@ -1,6 +1,8 @@
 import React, { CSSProperties } from 'react';
 
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import PictureImage from './Image';
 import {
   A,
@@ -11,22 +13,25 @@ import {
   UserBox,
   UserName,
 } from './elements';
-import { Link } from 'react-router-dom';
 import Avatar from '../Avatar';
 import UserPopover from '../UserPopover';
 import { EmojiText } from '..';
 
 interface IPictureItemProps {
   picture: PictureEntity;
-  style: CSSProperties;
+  style?: CSSProperties;
 }
 
 const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
+  const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
   return (
     <ItemWrapper style={style} color={picture.color}>
       <A to={`/picture/${picture.id}`} />
       <ItemBox>
-        <PictureImage blurhash={picture.blurhash} imgkey={picture.key} />
+        <PictureImage
+          blurhash={picture.blurhash}
+          imgkey={picture.key}
+        />
       </ItemBox>
       <InfoBox>
         <UserBox>
@@ -38,7 +43,7 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
               }}
             >
               <Avatar
-                // badge={detail.user.badge}
+                  // badge={detail.user.badge}
                 src={picture.user.avatar}
                 size={32}
               />

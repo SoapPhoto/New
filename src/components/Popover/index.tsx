@@ -57,9 +57,7 @@ const Popover: React.FC<IPopoverProps> = ({
     _setReferenceElement,
   ] = useState<HTMLButtonElement | null>(null);
   const popperElementRef = useRef<HTMLDivElement>();
-  const [popperElement, _setPopperElement] = useState<HTMLDivElement | null>(
-    null,
-  );
+  const [popperElement, _setPopperElement] = useState<HTMLDivElement | null>(null);
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
   const themeState = useMemo(
     () => (theme || themeContext.widget.popover.theme),

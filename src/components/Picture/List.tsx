@@ -1,12 +1,17 @@
 import React, { useMemo } from 'react';
 import { useMeasure } from 'react-use';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { useMedia } from '@app/utils/hooks';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import PictureItem from './Item';
 import { ListWrapper } from './elements';
 
-function App({ list }) {
+interface IProps {
+  list: PictureEntity[]
+}
+
+const PictureList: React.FC<IProps> = ({ list }) => {
   const columns = useMedia(
     [
       '(min-width: 1170px)',
@@ -21,8 +26,10 @@ function App({ list }) {
   const [heights, gridItems] = useMemo(() => {
     const baseWidth = width === 0 ? document.body.clientWidth - 56 : width;
     const padding = 24;
+    // eslint-disable-next-line @typescript-eslint/no-shadow
     const heights = new Array(columns).fill(0);
-    const gridItems = list.map((child, i) => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const gridItems = list.map((child) => {
       const colPadding = padding * (columns - 1);
       const column = heights.indexOf(Math.min(...heights));
       const itemWidth = (baseWidth - colPadding) / columns;
@@ -50,23 +57,65 @@ function App({ list }) {
   //   config: { mass: 5, tension: 300, friction: 100 },
   //   trail: 25,
   // });
+  const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
+  const thumbnailVariants = {
+    // initial: { scale: 0.9, opacity: 0 },
+    hover: { scale: 0.98 },
+    // enter: (i) => {
+    //   const delay = 0;
+    //   return {
+    //     scale: 1,
+    //     opacity: 1,
+    //     transition: {
+    //       scale: { ...transition, delay, duration: 1 },
+    //       opacity: { ...transition, delay },
+    //     },
+    //   };
+    // },
+  };
+
   return (
     <ListWrapper ref={ref as any} style={{ height: Math.max(...heights) }}>
-      {gridItems.map(({
-        xy, width, height, ...picture
-      }) => (
-        <PictureItem
-          key={picture.id}
-          style={{
-            transform: `translate3d(${xy[0]}px,${xy[1]}px,0)`,
-            width,
-            height,
-          }}
-          picture={picture as PictureEntity}
-        />
-      ))}
+      <motion.div
+        initial="initial"
+        animate="enter"
+        exit="exit"
+        variants={{ exit: { transition: { staggerChildren: 0.1 } } }}
+      >
+        {gridItems.map(({
+          // eslint-disable-next-line @typescript-eslint/no-shadow
+          xy, width, height, ...picture
+        }, index) => (
+          <div
+            key={picture.id}
+            style={{
+              position: 'absolute',
+              transform: `translate3d(${xy[0]}px,${xy[1]}px,0)`,
+              width,
+              height,
+            }}
+          >
+            <motion.div
+              variants={thumbnailVariants}
+              custom={index}
+              whileHover="hover"
+              style={{ width: '100%', height: '100%' }}
+            // animate={{
+            //   duration: 1.5, scale: 1, opacity: 1, transition,
+            // }}
+            // enter={{ scale: 1, opacity: 1, transition }}
+            // variants={thumbnailVariants}
+              transition={transition}
+            >
+              <PictureItem
+                picture={picture as PictureEntity}
+              />
+            </motion.div>
+          </div>
+        ))}
+      </motion.div>
     </ListWrapper>
   );
-}
+};
 
-export default App;
+export default PictureList;

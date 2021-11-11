@@ -13,8 +13,10 @@ export const ItemWrapper = styled.div<{ color: string }>`
   position: absolute;
   will-change: transform, width, height, opacity;
   border-radius: 3px;
-  box-shadow: 0px 0px 30px 0px ${p => darken(0.3, rgba(p.color, 0.3))};
-  background-color: ${p => p.color};
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 30px 0px ${(p) => darken(0.3, rgba(p.color, 0.3))};
+  background-color: ${(p) => p.color};
 `;
 
 const handleHover = css`
@@ -165,8 +167,8 @@ export const SkeletonItem = styled.picture`
   height: 210px;
   border-radius: 4px;
   /* opacity: 0.4; */
-  ${skeletonCss2}/* background: ${p => p.theme.widget.skeleton.background};
-  box-shadow: 0 5px 10px ${p => p.theme.widget.skeleton.shadow}; */
+  ${skeletonCss2}/* background: ${(p) => p.theme.widget.skeleton.background};
+  box-shadow: 0 5px 10px ${(p) => p.theme.widget.skeleton.shadow}; */
 `;
 
 export const SkeletonAvatar = styled.div`

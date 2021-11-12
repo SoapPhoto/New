@@ -52,6 +52,9 @@ const ImageComponents: React.FC<IImageProps> = ({
   const [complete, setComplete] = useState(false);
   const [blurhashVisible, setBlurhashVisible] = useState(true);
   const imageRef = useRef<HTMLImageElement>(null);
+  const removeBlurHash = () => {
+    setBlurhashVisible(false);
+  };
   useEffect(() => {
     const img = imageRef.current;
     if (img && img.complete) {
@@ -70,9 +73,6 @@ const ImageComponents: React.FC<IImageProps> = ({
       }
     };
   }, []);
-  const removeBlurHash = () => {
-    setBlurhashVisible(false);
-  };
   const handleLoadImage = useCallback(() => {
     setLoaded(true);
   }, []);

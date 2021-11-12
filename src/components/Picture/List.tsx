@@ -1,18 +1,25 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useMeasure } from 'react-use';
-import { AnimatePresence, motion } from 'framer-motion';
+import { observer } from 'mobx-react';
+import { debounce } from 'lodash';
 
 import { useMedia } from '@app/utils/hooks';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { observer } from 'mobx-react';
-import PictureItem from './Item';
+import { getScrollHeight, getScrollTop, getWindowHeight } from '@app/utils/dom';
 import { ListWrapper } from './elements';
+import PictureLayzItem from './LazyItem';
 
+const OFFSET = 1000;
 interface IProps {
   list: PictureEntity[]
+
+  onPage?: () => Promise<void>;
+
+  noMore: boolean;
 }
 
-const PictureList: React.FC<IProps> = ({ list }) => {
+const PictureList: React.FC<IProps> = ({ list, onPage, noMore }) => {
+  const pageLock = useRef<boolean>(false);
   const columns = useMedia(
     [
       '(min-width: 1170px)',
@@ -50,71 +57,55 @@ const PictureList: React.FC<IProps> = ({ list }) => {
     });
     return [heights, gridItems];
   }, [columns, list, width]);
-  // const transitions = useTransition<any, any>(gridItems, item => item.id, {
-  //   from: ({ xy, width, height }) => ({ xy, width, height, opacity: 0 }),
-  //   enter: ({ xy, width, height }) => ({ xy, width, height, opacity: 1 }),
-  //   update: ({ xy, width, height }) => ({ xy, width, height }),
-  //   leave: { height: 0, opacity: 0 },
-  //   config: { mass: 5, tension: 300, friction: 100 },
-  //   trail: 25,
-  // });
-  const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
-  const thumbnailVariants = {
-    // initial: { scale: 0.9, opacity: 0 },
-    hover: { scale: 0.98 },
-    // enter: (i) => {
-    //   const delay = 0;
-    //   return {
-    //     scale: 1,
-    //     opacity: 1,
-    //     transition: {
-    //       scale: { ...transition, delay, duration: 1 },
-    //       opacity: { ...transition, delay },
-    //     },
-    //   };
-    // },
-  };
 
+  const scrollEvent = debounce(async () => {
+    const offset = getScrollHeight() - (getScrollTop() + getWindowHeight());
+
+    if (offset <= OFFSET && !pageLock.current && !noMore) {
+      if (onPage) {
+        pageLock.current = true;
+        await onPage();
+        setTimeout(() => {
+          pageLock.current = false;
+        }, 800);
+      }
+    }
+  }, 100);
+  useEffect(() => {
+    scrollEvent();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // 滚动事件绑定
+  useEffect(() => {
+    if (!noMore) {
+      window.addEventListener('scroll', scrollEvent);
+      return () => window.removeEventListener('scroll', scrollEvent);
+    }
+    return function () {
+      return null;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <ListWrapper ref={ref as any} style={{ height: Math.max(...heights) }}>
-      <motion.div
-        initial="initial"
-        animate="enter"
-        exit="exit"
-        variants={{ exit: { transition: { staggerChildren: 0.1 } } }}
-      >
-        {gridItems.map(({
-          // eslint-disable-next-line @typescript-eslint/no-shadow
-          xy, width, height, ...picture
-        }, index) => (
-          <div
-            key={picture.id}
-            style={{
-              position: 'absolute',
-              transform: `translate3d(${xy[0]}px,${xy[1]}px,0)`,
-              width,
-              height,
-            }}
-          >
-            <motion.div
-              variants={thumbnailVariants}
-              custom={index}
-              whileHover="hover"
-              style={{ width: '100%', height: '100%' }}
-            // animate={{
-            //   duration: 1.5, scale: 1, opacity: 1, transition,
-            // }}
-            // enter={{ scale: 1, opacity: 1, transition }}
-            // variants={thumbnailVariants}
-              transition={transition}
-            >
-              <PictureItem
-                picture={picture as PictureEntity}
-              />
-            </motion.div>
-          </div>
-        ))}
-      </motion.div>
+      {gridItems.map(({
+        // eslint-disable-next-line @typescript-eslint/no-shadow
+        xy, width, height, ...picture
+      }) => (
+        <div
+          key={picture.id}
+          style={{
+            position: 'absolute',
+            transform: `translate3d(${xy[0]}px,${xy[1]}px,0)`,
+            width,
+            height,
+          }}
+        >
+          <PictureLayzItem
+            picture={picture as PictureEntity}
+          />
+        </div>
+      ))}
     </ListWrapper>
   );
 };

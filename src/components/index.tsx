@@ -9,4 +9,3 @@ export { default as Upload } from './Upload';
 export { default as Tab } from './Tab';
 
 export * from './Formik';
-export * from './Picture';

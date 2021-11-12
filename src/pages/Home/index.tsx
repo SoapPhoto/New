@@ -1,16 +1,16 @@
-import React, { useCallback } from 'react';
-import { observer } from 'mobx-react';
+import React, {
+  useCallback, useMemo, useRef,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { NetworkStatus } from '@apollo/client';
 
-import { PictureList } from '@app/components';
-import Button from '@app/components/Button';
+import PictureList from '@app/components/Picture/List';
 
 import { PicturesType } from '@app/common/enum/picture';
 import { usePicturesQuery } from '@app/graphql/hooks/query';
 import Skeleton from './Skeleton';
 
-const Home = observer(() => {
+const Home = () => {
   const { t } = useTranslation();
   const {
     loading, data, fetchMore, networkStatus,
@@ -18,29 +18,34 @@ const Home = observer(() => {
     type: PicturesType.NEW,
     query: {
       page: 1,
-      pageSize: 20,
+      pageSize: 50,
     },
   });
-
-  const more = useCallback(() => {
+  const currentPage = useRef(data?.pictures.page ?? 1);
+  const maxPage = useMemo(() => (data?.pictures ? Math.ceil(data!.pictures.count / data!.pictures.pageSize) : 0), [data]);
+  const noMore = useMemo(() => {
+    if (!data?.pictures) {
+      return true;
+    }
+    return data.pictures.page >= maxPage;
+  }, [data?.pictures, maxPage]);
+  const more = useCallback(async () => {
     if (!data || networkStatus !== NetworkStatus.ready) {
       return;
     }
-    const { pictures } = data;
-    const { count, page, pageSize } = pictures;
-    const nowPage = page + 1;
-    if (pageSize * page >= count) {
+    if (noMore) {
       return;
     }
-    fetchMore({
+    currentPage.current += 1;
+    await fetchMore({
       variables: {
         query: {
-          page: nowPage,
-          pageSize: 20,
+          page: currentPage.current,
+          pageSize: 50,
         },
       },
     });
-  }, [data, fetchMore, networkStatus]);
+  }, [currentPage, data, fetchMore, networkStatus, noMore]);
   return (
     <div
       style={{
@@ -56,11 +61,10 @@ const Home = observer(() => {
         </div>
       ) : (
         <div>
-          <PictureList list={data!.pictures.data} />
-          <Button onClick={more}>{t('label.more')}</Button>
+          <PictureList onPage={more} noMore={false} list={data!.pictures.data} />
         </div>
       )}
     </div>
   );
-});
+};
 export default Home;

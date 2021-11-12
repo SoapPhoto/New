@@ -1,8 +1,7 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, memo } from 'react';
 
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import PictureImage from './Image';
 import {
   A,
@@ -17,46 +16,42 @@ import Avatar from '../Avatar';
 import UserPopover from '../UserPopover';
 import { EmojiText } from '..';
 
-interface IPictureItemProps {
+export interface IPictureItemProps {
   picture: PictureEntity;
   style?: CSSProperties;
 }
 
-const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
-  const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
-  return (
-    <ItemWrapper style={style} color={picture.color}>
-      <A to={`/picture/${picture.id}`} />
-      <ItemBox>
-        <PictureImage
-          blurhash={picture.blurhash}
-          imgkey={picture.key}
-        />
-      </ItemBox>
-      <InfoBox>
-        <UserBox>
-          <UserPopover username={picture.user.username}>
-            <Link
-              to={`/user/${picture.user.username}`}
-              state={{
-                picture: '222',
-              }}
-            >
-              <Avatar
+const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => (
+  <ItemWrapper style={style} color={picture.color}>
+    <A to={`/picture/${picture.id}`} />
+    <ItemBox>
+      <PictureImage
+        blurhash={picture.blurhash}
+        imgkey={picture.key}
+      />
+    </ItemBox>
+    <InfoBox>
+      <UserBox>
+        <UserPopover username={picture.user.username}>
+          <Link
+            to={`/user/${picture.user.username}`}
+            state={{
+              picture: '222',
+            }}
+          >
+            <Avatar
                   // badge={detail.user.badge}
-                src={picture.user.avatar}
-                size={32}
-              />
-            </Link>
-          </UserPopover>
-          <UserName to={`/user/${picture.user.username}`}>
-            <EmojiText text={picture.user.fullName} />
-          </UserName>
-        </UserBox>
-        <HandleBox />
-      </InfoBox>
-    </ItemWrapper>
-  );
-};
-
-export default PictureItem;
+              src={picture.user.avatar}
+              size={32}
+            />
+          </Link>
+        </UserPopover>
+        <UserName to={`/user/${picture.user.username}`}>
+          <EmojiText text={picture.user.fullName} />
+        </UserName>
+      </UserBox>
+      <HandleBox />
+    </InfoBox>
+  </ItemWrapper>
+);
+export default memo(PictureItem);

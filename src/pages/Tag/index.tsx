@@ -1,6 +1,3 @@
-import { useQuery } from '@apollo/client';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { Tag } from '@app/graphql/query';
 import React, { memo, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import List from './components/PictureList';

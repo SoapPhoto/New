@@ -64,11 +64,12 @@ export function initClient() {
         Query: {
           fields: {
             pictures: {
-              keyArgs: false,
+              keyArgs: [],
               merge(existing, incoming, options) {
                 if (!existing) {
                   return incoming;
                 }
+                console.log(existing.page, incoming.page);
                 if (existing.page === incoming.page) {
                   return incoming;
                 }

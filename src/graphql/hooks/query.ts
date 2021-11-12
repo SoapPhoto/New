@@ -8,7 +8,7 @@ const defaultOptions: QueryHookOptions<any, any> = {};
 
 export function usePicturesQuery<
   TData = ListQueryData<'pictures', PictureEntity>,
-  TVariables = PicturesQueryVariables
+  TVariables = PicturesQueryVariables,
 >(
   variables: TVariables,
   options?: Omit<QueryHookOptions<TData, TVariables>, 'variables'>,

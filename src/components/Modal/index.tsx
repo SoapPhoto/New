@@ -135,7 +135,7 @@ const InternalModal: React.FC<IModalProps> = ({
   };
   let onWrapperClick: (e: React.SyntheticEvent) => null;
   if (maskClosable) {
-    onWrapperClick = (e) => {
+    onWrapperClick = function (e) {
       if (contentClickRef.current) {
         contentClickRef.current = false;
       } else if (wrapperRef.current === e.target) {

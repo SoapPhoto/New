@@ -44,7 +44,7 @@ const HeaderUserInfo: React.FC<IProps> = observer(({ user, createTime }) => {
             </UserLink>
             <BaseInfoItem>
               <Popover
-                openDelay={100}
+                openDelay={200}
                 trigger="hover"
                 placement="top"
                 theme="dark"
@@ -58,7 +58,7 @@ const HeaderUserInfo: React.FC<IProps> = observer(({ user, createTime }) => {
           </UserInfoRight>
           {userInfo && (
             <HeaderUserInfoFollowBtnBox>
-              <Button loading={followLoading} onClick={() => follow(user)}>
+              <Button type={user.isFollowing ? 'secondary' : 'primary'} loading={followLoading} onClick={() => follow(user)}>
                 {user.isFollowing ? t('label.followed') : t('label.follow')}
               </Button>
             </HeaderUserInfoFollowBtnBox>

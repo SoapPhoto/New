@@ -27,7 +27,7 @@ export const UserLink = styled(Link)`
 `;
 export const UserName = styled.div`
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
 `;
 export const UserInfo = styled.div`
   display: flex;

@@ -12,6 +12,12 @@ import { GitHubLogo } from '@app/components/Icons';
 import { Weibo } from '@app/components/Icons/Weibo';
 import { useAccount } from '@app/stores/hooks';
 import Button from '@app/components/Button';
+import { OauthType } from '@app/common/enum/router';
+import {
+  getOauthUrl, IOauthSuccessData, oauthOpen, oauthSuccess,
+} from '@app/utils/oauth';
+import { OauthActionType, OauthStateType } from '@app/common/enum/oauthState';
+import { observer } from 'mobx-react';
 import {
   Des,
   GithubOauthBtn,
@@ -31,7 +37,7 @@ const a = animated as any;
 
 const Login = () => {
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const { login } = useAccount();
+  const { login, codeLogin } = useAccount();
   const { t } = useTranslation();
   const timer = useRef<number>();
   const [props, animate] = useSpring(
@@ -56,6 +62,7 @@ const Login = () => {
       setConfirmLoading(true);
       try {
         await login(values.username, values.password);
+        toast.success(t('auth.message.login_successful'));
       } catch (error) {
         if (error instanceof Error) {
           if (error.message === 'Invalid grant: user credentials are invalid') {
@@ -70,6 +77,24 @@ const Login = () => {
     },
     [login, t],
   );
+  const getInfo = useCallback(async (data: IOauthSuccessData) => {
+    // 假如没有激活就跳转到激活界面
+    if (data.action === OauthActionType.active) {
+      // console.log(123123);
+      // replaceRoute(`/auth/complete?code=${data.code}`);
+    } else {
+      await codeLogin(data.code!, data.type!);
+      toast.success(t('auth.message.login_successful'));
+    }
+  }, [codeLogin, t]);
+  const messageCb = useCallback((e: MessageEvent) => {
+    oauthSuccess(e, getInfo, () => window.removeEventListener('message', messageCb));
+  }, [getInfo]);
+  const oauth = useCallback((type: OauthType) => {
+    oauthOpen(getOauthUrl(type, OauthStateType.login));
+    window.addEventListener('message', messageCb);
+    return () => window.removeEventListener('message', messageCb);
+  }, [messageCb]);
   return (
     <a.div style={props}>
       <Title>{t('accountFeature.loginTitle')}</Title>
@@ -104,10 +129,14 @@ const Login = () => {
       </Formik>
       <Tips>{t('accountFeature.oauthTips')}</Tips>
       <OauthBox>
-        <GithubOauthBtn>
+        <GithubOauthBtn
+          onClick={() => oauth(OauthType.GITHUB)}
+        >
           <GitHubLogo color="#fff" />
         </GithubOauthBtn>
-        <WeiboOauthBtn>
+        <WeiboOauthBtn
+          onClick={() => oauth(OauthType.WEIBO)}
+        >
           <Weibo color="#fff" />
         </WeiboOauthBtn>
       </OauthBox>
@@ -115,4 +144,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default observer(Login);

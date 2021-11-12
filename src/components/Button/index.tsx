@@ -4,13 +4,14 @@ import { config, Transition, useSpring } from 'react-spring';
 import { Loading } from '..';
 import { StrutAlign } from '../Icons';
 import { Content, LoadingBox, StyleButton } from './elements';
+import { ButtonType, ButtonHtmlType, ButtonSize } from './type';
 
 export interface IButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   loading?: boolean;
-  type?: 'primary' | 'text';
-  htmlType?: 'submit' | 'reset' | 'button';
-  size?: 'small' | 'large';
+  type?: ButtonType;
+  htmlType?: ButtonHtmlType;
+  size?: ButtonSize;
   danger?: boolean;
   icon?: React.ReactNode;
 }
@@ -34,7 +35,7 @@ const Button: React.FC<IButtonProps> = ({
     }
     if (onClick) {
       (onClick as React.MouseEventHandler<
-        HTMLButtonElement | HTMLAnchorElement
+      HTMLButtonElement | HTMLAnchorElement
       >)(e);
     }
   };

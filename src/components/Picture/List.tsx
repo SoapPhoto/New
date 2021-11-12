@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import { useMedia } from '@app/utils/hooks';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import { observer } from 'mobx-react';
 import PictureItem from './Item';
 import { ListWrapper } from './elements';
 
@@ -118,4 +119,4 @@ const PictureList: React.FC<IProps> = ({ list }) => {
   );
 };
 
-export default PictureList;
+export default observer(PictureList);

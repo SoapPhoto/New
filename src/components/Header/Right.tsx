@@ -55,7 +55,7 @@ export const Right = observer(() => {
   const pathname = useLocation();
   const popoverRef = useRef<PopoverRef>(null);
   const { selected, setTheme } = useThemeStore();
-  const { init, userInfo } = useAccount();
+  const { init, userInfo, logout } = useAccount();
   const { t } = useTranslation();
   const [, , openUpload] = useSearchParamModal('upload');
   const switchTheme = useCallback(() => {
@@ -117,6 +117,11 @@ export const Right = observer(() => {
                     ) : (
                       <Moon size={18} />
                     )}
+                  </MenuItemLink>
+                </MenuItem>
+                <MenuItem>
+                  <MenuItemLink onClick={logout}>
+                    {t('menu.signout')}
                   </MenuItemLink>
                 </MenuItem>
               </Menu>

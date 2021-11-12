@@ -23,7 +23,7 @@ const ExifModal: React.FC<IProps> = memo(({ picture }) => {
   } = picture;
   const {
     focalLength, aperture, exposureTime, ISO,
-  } = exif!;
+  } = exif ?? {};
   return (
     <Modal
       autoMobile={false}

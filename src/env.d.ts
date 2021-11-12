@@ -7,5 +7,7 @@ interface ImportMeta {
     VITE_OSS_BUCKET: string;
     VITE_OSS_PATH: string;
     DEV: boolean;
+    VITE_OAUTH_GITHUB_CLIENT_ID: string;
+    VITE_OAUTH_CB_URL: string;
   };
 }

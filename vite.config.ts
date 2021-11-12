@@ -35,15 +35,15 @@ export default defineConfig({
     port: 3002,
     proxy: {
       '/graphql': {
-        target: 'https://soapphoto.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
       },
       '/oauth': {
-        target: 'https://soapphoto.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
       },
       '/api': {
-        target: 'https://soapphoto.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
       },
     },

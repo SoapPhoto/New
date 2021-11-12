@@ -11,9 +11,7 @@ interface TabInterface extends TabType {
 
 interface ITabProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const InternalTab: React.FC<ITabProps> = ({ children, ...props }) => {
-  return <Wrapper {...props}>{children}</Wrapper>;
-};
+const InternalTab: React.FC<ITabProps> = ({ children, ...props }) => <Wrapper {...props}>{children}</Wrapper>;
 
 const Tab = InternalTab as TabInterface;
 

@@ -19,6 +19,7 @@ export const btnMixin = css`
   display: inline-flex;
   flex: 0 0 auto;
   font-weight: 500;
+  line-height: normal;
   /* letter-spacing: 0.0892857143em; */
   justify-content: center;
   outline: 0;

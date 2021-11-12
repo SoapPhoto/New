@@ -18,6 +18,7 @@ import Register from '@app/pages/Account/Register';
 import { useAccount } from '@app/stores/hooks';
 import Test from '@app/pages/Test';
 import PicturePage from '@app/pages/Picture/Loadable';
+import OauthRedirectPage from '@app/pages/Oauth/Redirect';
 import Upload from '@app/pages/Upload';
 import UploadModal from '@app/components/UploadModal';
 import UserPage from '@app/pages/User/Loadable';
@@ -25,6 +26,8 @@ import TagPage from '@app/pages/Tag';
 import UserHome from '@app/pages/User/Picture';
 import { UserPictureType } from '@app/common/enum/picture';
 import SettingPage from '@app/pages/Setting';
+import { OauthLayout } from '@app/components/Layout/OauthLayout';
+import ScrollToTop from '@app/components/ScrollToTop';
 import { GlobalStyle } from '../styles/global-styles';
 
 const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
@@ -78,6 +81,9 @@ const Router = () => (
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
     </Route>
+    <Route path="" element={<OauthLayout />}>
+      <Route path="redirect/oauth/:type" element={<OauthRedirectPage />} />
+    </Route>
   </Routes>
 );
 
@@ -106,7 +112,9 @@ export const App = observer(() => {
       >
         <meta name="description" content="A React Boilerplate application" />
       </Helmet>
-      <Router />
+      <ScrollToTop>
+        <Router />
+      </ScrollToTop>
       <UploadModal />
       <GlobalStyle />
       <Toaster

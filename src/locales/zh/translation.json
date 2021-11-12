@@ -49,7 +49,8 @@
   "menu": {
     "setting": "设置",
     "light": "亮色模式",
-    "dark": "暗色模式"
+    "dark": "暗色模式",
+    "signout": "退出登录"
   },
   "error": {
     "username_exists": "用户名已存在",
@@ -62,7 +63,8 @@
   },
   "auth": {
     "message": {
-      "register_success": "注册成功！"
+      "register_success": "注册成功！",
+      "login_successful": "登录成功！"
     }
   },
   "picture": {

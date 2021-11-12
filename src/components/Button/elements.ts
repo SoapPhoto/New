@@ -1,25 +1,26 @@
 import styled, { css } from 'styled-components/macro';
 import { position, rgba } from 'polished';
+import { animated } from 'react-spring';
 
 import { btnMixin } from '@app/styles/mixins';
-import { animated } from 'react-spring';
+import { ButtonType } from './type';
 
 interface IStyle {
   loading?: number;
   size?: string;
   danger?: number;
-  btnType: string;
+  btnType: ButtonType;
 }
 
 const btnText = ({ btnType, danger }: IStyle) => {
   if (btnType === 'text') {
     if (danger) {
       return css`
-        ${_ => _.theme.colors.error}
+        ${(_) => _.theme.colors.error}
       `;
     }
     return css`
-      ${_ => _.theme.colors.primary}
+      ${(_) => _.theme.colors.primary}
     `;
   }
   return '#fff';
@@ -31,11 +32,16 @@ const btnBg = ({ btnType, danger }: IStyle) => {
   }
   if (danger) {
     return css`
-      ${_ => _.theme.colors.error}
+      ${(_) => _.theme.colors.error}
+    `;
+  }
+  if (btnType === 'secondary') {
+    return css`
+      ${(_) => _.theme.colors.secondary}
     `;
   }
   return css`
-    ${_ => _.theme.colors.primary}
+    ${(_) => _.theme.colors.primary}
   `;
 };
 const btnShadow = ({ btnType, danger }: IStyle) => {
@@ -44,11 +50,11 @@ const btnShadow = ({ btnType, danger }: IStyle) => {
   }
   if (danger) {
     return css`
-      ${_ => rgba(_.theme.colors.error, 0.5)}
+      ${(_) => rgba(_.theme.colors.error, 0.5)}
     `;
   }
   return css`
-    ${_ => rgba(_.theme.colors.primary, 0.5)}
+    ${(_) => rgba(_.theme.colors.primary, 0.5)}
   `;
 };
 
@@ -62,20 +68,20 @@ export const StyleButton = styled.button<IStyle>(
     box-shadow: 0 10px 20px -10px ${btnShadow({ btnType, danger })};
     background-color: ${btnBg({ btnType, danger })};
     color: ${btnText({ btnType, danger })};
-    ${danger &&
-    css`
+    ${danger
+    && css`
       ${LoadingBox} {
-        background-color: ${p => rgba(p.theme.colors.error, 0.8)};
+        background-color: ${(p) => rgba(p.theme.colors.error, 0.8)};
       }
     `}
     ${loading
-      ? css`
+    ? css`
           pointer-events: none;
           &:disabled {
             opacity: 1 !important;
           }
         `
-      : ''}
+    : ''}
     &:disabled {
       pointer-events: none;
       opacity: 0.35;
@@ -105,7 +111,7 @@ export const LoadingBox = styled(animated.div as any)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${p => rgba(p.theme.colors.primary, 0.8)};
-  /* background: ${p => rgba('#000', 0.2)}; */
+  background-color: ${(p) => rgba(p.theme.colors.primary, 0.8)};
+  /* background: ${(p) => rgba('#000', 0.2)}; */
   border-radius: inherit;
 `;

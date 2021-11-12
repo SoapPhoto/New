@@ -7,6 +7,10 @@ import { space } from '@app/utils/theme';
 import { Icon } from './Icon';
 import { Right } from './Right';
 
+interface IProps {
+  right?: boolean
+}
+
 const Wrapper = styled.header`
   display: flex;
   justify-content: space-between;
@@ -22,7 +26,7 @@ export const Logo = styled.div`
   margin-left: ${space(8)}px;
 `;
 
-const Header = () => {
+const Header: React.FC<IProps> = ({ right = true }) => {
   const theme = useTheme();
   return (
     <Wrapper>
@@ -31,7 +35,9 @@ const Header = () => {
           <Icon size={36} color={theme.colors.text} />
         </A>
       </Logo>
-      <Right />
+      {
+        right && <Right />
+      }
     </Wrapper>
   );
 };

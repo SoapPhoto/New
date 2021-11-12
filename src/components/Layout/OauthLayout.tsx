@@ -1,9 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
 
 // import { Header } from '@app/components';
 import { Outlet } from 'react-router-dom';
-import VerifyMessage from './VerifyMessage';
 import Header from '../Header';
 
 interface IProps {}
@@ -14,12 +13,9 @@ export const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-export const DefaultLayout: React.FC<IProps> = memo(({ children }) => (
+export const OauthLayout: React.FC<IProps> = ({ }) => (
   <Wrapper>
-    <VerifyMessage />
-    <Header />
+    <Header right={false} />
     <Outlet />
   </Wrapper>
-));
-
-export * from './SecurityLayout';
+);

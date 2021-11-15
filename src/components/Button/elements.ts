@@ -68,6 +68,15 @@ export const StyleButton = styled.button<IStyle>(
     box-shadow: 0 10px 20px -10px ${btnShadow({ btnType, danger })};
     background-color: ${btnBg({ btnType, danger })};
     color: ${btnText({ btnType, danger })};
+    &:disabled {
+      pointer-events: none;
+      opacity: 0.35;
+      cursor: default;
+    }
+    &:hover {
+      box-shadow: 0 15px 20px -10px ${btnShadow({ btnType, danger })};
+      transform: translateY(-2px);
+    }
     ${danger
     && css`
       ${LoadingBox} {
@@ -81,16 +90,7 @@ export const StyleButton = styled.button<IStyle>(
             opacity: 1 !important;
           }
         `
-    : ''}
-    &:disabled {
-      pointer-events: none;
-      opacity: 0.35;
-      cursor: default;
-    }
-    &:hover {
-      box-shadow: 0 15px 20px -10px ${btnShadow({ btnType, danger })};
-      transform: translateY(-2px);
-    }
+    : null}
   `,
 );
 

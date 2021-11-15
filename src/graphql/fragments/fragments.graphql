@@ -50,7 +50,7 @@ fragment PictureDetailFragment on Picture {
       ...BadgeFragment
     }
     location {
-      ...PictureLocationFragment
+      ...LocationFragment
     }
 }
 
@@ -320,8 +320,8 @@ fragment BadgeFragment on Badge {
   name
   rate
 }
-
-fragment SearchPlaceDetailFragment on SearchPlaceDetail {
+# SearchPlaceDetailFragment
+fragment LocationFragment on Location {
   name
   location {
     lat
@@ -333,30 +333,23 @@ fragment SearchPlaceDetailFragment on SearchPlaceDetail {
   area
   street_id
   telephone
-  detail
   uid
-  detail_info {
-    tag
+  detail {
+    ...LocationDetailFragment
   }
 }
-
-fragment PictureLocationFragment on PictureLocation {
-  formatted_address
-  business
-  country
-  country_code
-  province
-  city
-  district
-  town
-  location {
+fragment LocationDetailFragment on LocationDetail {
+  tag
+  navi_location {
     lat
     lng
   }
-  pois {
-    addr
-    name
-    poiType
-    tag
-  }
+  shop_hours
+  detail_url
+  type
+  overall_rating
+  image_num
+  comment_num
+  scope_type
+  content_tag
 }

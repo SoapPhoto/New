@@ -34,3 +34,14 @@ export function getWindowHeight() {
   }
   return windowHeight;
 }
+
+export function isIn(target: Node, parent: Element) {
+  const path: Node[] = [];
+  let parentNode: Node | null = target;
+  while (parentNode && parentNode !== document.body) {
+    path.push(parentNode);
+    // eslint-disable-next-line prefer-destructuring
+    parentNode = parentNode.parentNode;
+  }
+  return path.indexOf(parent) !== -1;
+}

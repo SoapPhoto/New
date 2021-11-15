@@ -24,6 +24,12 @@ const ExifModal: React.FC<IProps> = memo(({ picture }) => {
   const {
     focalLength, aperture, exposureTime, ISO,
   } = exif ?? {};
+  const maybe = (value: any) => {
+    if (value === null || value === undefined) {
+      return true;
+    }
+    return false;
+  };
   return (
     <Modal
       autoMobile={false}
@@ -39,31 +45,31 @@ const ExifModal: React.FC<IProps> = memo(({ picture }) => {
           <EXIFBox>
             <div>
               <EXIFTitle>{t('picture.info.make')}</EXIFTitle>
-              <EXIFInfo>{isNull(make) ? '--' : make}</EXIFInfo>
+              <EXIFInfo>{maybe(make) ? '--' : make}</EXIFInfo>
             </div>
             <div>
               <EXIFTitle>{t('picture.info.model')}</EXIFTitle>
-              <EXIFInfo>{isNull(model) ? '--' : model}</EXIFInfo>
+              <EXIFInfo>{maybe(model) ? '--' : model}</EXIFInfo>
             </div>
             <div>
               <EXIFTitle>{t('picture.info.focalLength')}</EXIFTitle>
               <EXIFInfo>
-                {isNull(focalLength) ? '--' : `${focalLength}mm`}
+                {maybe(focalLength) ? '--' : `${focalLength}mm`}
               </EXIFInfo>
             </div>
             <div>
               <EXIFTitle>{t('picture.info.aperture')}</EXIFTitle>
-              <EXIFInfo>{isNull(aperture) ? '--' : `f/${aperture}`}</EXIFInfo>
+              <EXIFInfo>{maybe(aperture) ? '--' : `f/${aperture}`}</EXIFInfo>
             </div>
             <div>
               <EXIFTitle>{t('picture.info.exposureTime')}</EXIFTitle>
               <EXIFInfo>
-                {isNull(exposureTime) ? '--' : `${exposureTime}s`}
+                {maybe(exposureTime) ? '--' : `${exposureTime}s`}
               </EXIFInfo>
             </div>
             <div>
               <EXIFTitle>{t('picture.info.ISO')}</EXIFTitle>
-              <EXIFInfo>{isNull(ISO) ? '--' : ISO}</EXIFInfo>
+              <EXIFInfo>{maybe(ISO) ? '--' : ISO}</EXIFInfo>
             </div>
             <div>
               <EXIFTitle>{t('picture.info.dimensions')}</EXIFTitle>

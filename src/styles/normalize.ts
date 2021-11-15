@@ -10,14 +10,12 @@ const font = `
 
 const normalize = () => css`
   html {
-    line-height: 1.15; /* 1 */
     -ms-text-size-adjust: 100%; /* 2 */
     -webkit-text-size-adjust: 100%; /* 2 */
     font-size: 16px;
   }
   body {
     font-size: 14px !important;
-    line-height: 1.5;
     overflow-y: scroll;
     overflow-x: hidden;
     font-family: ${font} !important;
@@ -29,6 +27,7 @@ const normalize = () => css`
   body {
     width: 100%;
     background-color: ${(p) => p.theme.colors.layout};
+    overscroll-behavior-y: contain;
   }
   ol,
   ul {
@@ -207,6 +206,9 @@ const normalize = () => css`
     border-bottom: none;
     text-decoration: underline;
     text-decoration: underline dotted;
+  }
+  .autocomplete-diy {
+    line-height: normal !important;
   }
 `;
 

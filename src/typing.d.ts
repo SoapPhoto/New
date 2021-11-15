@@ -11,7 +11,7 @@ type IListQueryResult<T> = {
 declare module '*/fragments.graphql';
 declare module '*/mutations.graphql';
 declare module '@app/graphql/query/query.graphql' {
-  import { DocumentNode } from 'graphql';
+  import { DocumentNode, DocumentNode } from 'graphql';
 
   export const Picture: DocumentNode;
   export const Pictures: DocumentNode;
@@ -36,10 +36,11 @@ declare module '@app/graphql/query/query.graphql' {
   export const ReverseGeocoding: DocumentNode;
   export const SearchPlace: DocumentNode;
   export const PictureRelatedCollection: DocumentNode;
+  export const PlaceSuggestion: DocumentNode;
+  export const PlaceDetail: DocumentNode;
 }
 
 declare module '@app/graphql/mutations/mutations.graphql' {
-  import { DocumentNode } from 'graphql';
 
   export const UpdatePicture: DocumentNode;
   export const LikePicture: DocumentNode;

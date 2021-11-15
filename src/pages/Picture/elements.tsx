@@ -137,7 +137,7 @@ export const PictureBaseInfo = styled.div`
   align-items: center;
   color: ${(p) => p.theme.colors.secondary};
   padding: 18px 0;
-  margin-bottom: 18px;
+  /* margin-bottom: 18px; */
   box-shadow: inset 0px -1px 0px ${(p) => p.theme.colors.border};
 `;
 
@@ -179,8 +179,8 @@ export const Title = styled.h2`
 
 export const Bio = styled.div`
   font-size: 14px;
-  margin-top: 16px;
-  padding-bottom: 24px;
+  margin-top: 2px;
+  padding-bottom: 20px;
 `;
 
 export const NewContainer = styled.div`
@@ -207,7 +207,6 @@ export const TagBox = styled.div`
 
 export const Tag = styled.div`
   border: 1px solid ${(p) => p.theme.colors.border};
-  line-height: 16px;
   height: 32px;
   padding-left: 16px;
   padding-right: 16px;

@@ -132,12 +132,26 @@ query FollowerUsers($id: Float!, $query: FollowUsersQueryInput!) {
 
 query ReverseGeocoding($location: String!) {
   reverseGeocoding(location: $location) {
-    ...PictureLocationFragment
+    pois {
+      name
+    }
   }
 }
 
-query SearchPlace($value: String!) {
-  searchPlace(value: $value) {
-    ...SearchPlaceDetailFragment
+query SearchPlace($value: String!, $region: String!) {
+  searchPlace(value: $value, region: $region) {
+    ...LocationFragment
+  }
+}
+
+query PlaceSuggestion($value: String!, $region: String!) {
+  placeSuggestion(value: $value, region: $region) {
+    ...LocationFragment
+  }
+}
+
+query PlaceDetail($uid: String!) {
+  placeDetail(uid: $uid) {
+    ...LocationFragment
   }
 }

@@ -385,7 +385,7 @@ type SearchPlaceDetail {
   telephone: String
   detail: Float
   uid: String
-  detail_info: SearchPlaceDetailInfo
+  detail: SearchPlaceDetailInfo
 }
 
 enum NotificationCategory {

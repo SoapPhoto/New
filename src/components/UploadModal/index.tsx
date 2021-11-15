@@ -9,7 +9,7 @@ import {
   useSearchParamModal,
   useTapButton,
 } from '@app/utils/hooks';
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { pick } from 'lodash';
 import { animated } from 'react-spring';
@@ -24,6 +24,7 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { toast } from 'react-hot-toast';
 import Modal from '@app/components/Modal';
 import Button from '@app/components/Button';
+import { Place } from '@app/common/types/modules/location/interface/place.interface';
 import EditExifModal from '../EditExifModal.tsx';
 import {
   DeleteBtn,
@@ -42,12 +43,15 @@ import {
   FieldTag,
   FieldTextarea,
 } from '..';
+import FieldLocation from '../Formik/FieldLocation';
+import LocationModal from '../LocationModal';
 
 export interface IValues {
   isLocation: boolean;
   isPrivate: boolean;
   title: string;
   bio: string;
+  location?: Place;
   tags: string[];
 }
 
@@ -75,19 +79,30 @@ const UploadModal = observer(() => {
   const { userInfo } = useAccount();
   const [writePictures] = useNewPictureCacheWrite();
   const [, setPercentComplete] = useState(0);
-  const [uploadLoading, setUploadLoading] = React.useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [location, setLocation] = useState<Place>();
   const [visible, close] = useSearchParamModal('upload');
   const [editExifVisible, closeEditExif, openEditExif] = useSearchParamModal(
     'editExif',
     'modal-child',
   );
+  const [editLocationVisible, closeEditLocation, openEditLocation] = useSearchParamModal(
+    'editLocation',
+    'modal-child',
+  );
   const imageRef = useRef<File>();
+  const formikRef = useRef<FormikProps<IValues>>(null);
   const [info, thumbnail, setFile, clearImage] = useImageInfo(imageRef);
   const handleChange = async (files: Maybe<FileList>) => {
     if (files && files[0]) {
       setFile(files[0]);
     }
   };
+  useEffect(() => {
+    if (editLocationVisible && !thumbnail) {
+      closeEditLocation(true);
+    }
+  }, [closeEditExif, closeEditLocation, editExifVisible, editLocationVisible, thumbnail]);
   useEffect(() => {
     if (editExifVisible && !thumbnail) {
       closeEditExif(true);
@@ -96,6 +111,12 @@ const UploadModal = observer(() => {
   const onUploadProgress = useCallback((percent: number) => {
     setPercentComplete(percent);
   }, []);
+
+  const onSetLocation = (poi: Place) => {
+    setLocation(poi);
+    formikRef.current?.setFieldValue('location', poi);
+    closeEditLocation();
+  };
 
   const onSubmit = useCallback(
     async (values: IValues) => {
@@ -182,11 +203,13 @@ const UploadModal = observer(() => {
         )}
         <UploadBox>
           <Formik<IValues>
+            innerRef={formikRef}
             initialValues={{
               title: '',
               isLocation: false,
               bio: '',
               isPrivate: false,
+              location: undefined,
               tags: [],
             }}
             validationSchema={Yup.object().shape({
@@ -208,6 +231,9 @@ const UploadModal = observer(() => {
                   label={t('label.picture_bio') as string}
                 />
                 <FieldTag name="tags" />
+                {/* <div style={{ height: '24px' }} /> */}
+                <FieldLocation label="地点" bio="添加地点" name="location" />
+                <div style={{ height: '24px' }} />
                 <FieldSwitch
                   name="isPrivate"
                   label={t('label.private')}
@@ -242,6 +268,9 @@ const UploadModal = observer(() => {
             ]),
           }}
         />
+      )}
+      {thumbnail && (
+      <LocationModal onOk={onSetLocation} />
       )}
     </Modal>
   );

@@ -2,11 +2,12 @@ import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { EmojiText, Popover } from '@app/components';
 import Comment from '@app/components/Comment';
-import { Lock } from '@app/components/Icons';
+import { Hash, Lock } from '@app/components/Icons';
 import { Picture } from '@app/graphql/query';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { css } from 'styled-components/macro';
 import CollectionModal from './components/CollectionModal';
 import ExifModal from './components/ExifModal';
 import HeaderUserInfo from './components/HeaderUserInfo';
@@ -56,6 +57,27 @@ const PicturePage = observer(() => {
       <PictureCenter picture={picture} />
       <Content>
         <PictureInfo picture={picture} />
+        {
+          picture.location ? (
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                box-shadow: inset 0px -1px 0px ${(p) => p.theme.colors.border};
+                padding: 12px 0;
+                margin-bottom: 12px;
+              `}
+            >
+              <EmojiText css={css`display: flex;align-items: center; margin-right: 6px;`} text="🏞️" />
+              <div css={css`width: 6px;`} />
+              {picture.location.city}
+              <span css={css`margin: 0 4px;font-size: 14px;font-family: 700;`}>·</span>
+              {picture.location.name}
+            </div>
+          ) : (
+            <div css={css`height: 18px;`} />
+          )
+        }
         <Title>
           {
             picture.isPrivate && (
@@ -81,11 +103,17 @@ const PicturePage = observer(() => {
           <TagBox>
             {picture.tags.map((tag) => (
               <Link to={`/tag/${tag.name}`} key={tag.id}>
-                <Tag key={tag.id}>{tag.name}</Tag>
+                <Tag key={tag.id}>
+                  <Hash size={12} />
+                  <span css={css`margin-left: 4px;`}>
+                    {tag.name}
+                  </span>
+                </Tag>
               </Link>
             ))}
           </TagBox>
         )}
+        <div css={css`height: 12px;`} />
         <Comment />
       </Content>
       <ExifModal picture={picture} />

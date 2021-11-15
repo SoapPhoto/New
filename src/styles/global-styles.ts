@@ -9,12 +9,10 @@ export const GlobalStyle = createGlobalStyle`
   body {
     height: 100%;
     width: 100%;
-    line-height: 1.5;
     color: ${(p) => p.theme.foreground};
   }
   p,
   label {
-    line-height: 1.5em;
   }
 
   input, select, button {

@@ -90,7 +90,6 @@ const CommentEditor: React.FC<IProps> = observer(({
       if (!child) setLoading(false);
     }
   }, [child, onConfirm, value]);
-  console.log(!value);
   return (
     <Wrapper ref={wrapperRef}>
       <AvatarBox>

@@ -9273,6 +9273,17 @@ subscriptions-transport-ws@^0.10.0:
     symbol-observable "^1.0.4"
     ws "^5.2.0 || ^6.0.0 || ^7.0.0"
 
+subscriptions-transport-ws@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.npmmirror.com/subscriptions-transport-ws/download/subscriptions-transport-ws-0.11.0.tgz#baf88f050cba51d52afe781de5e81b3c31f89883"
+  integrity sha1-uviPBQy6UdUq/ngd5egbPDH4mIM=
+  dependencies:
+    backo2 "^1.0.2"
+    eventemitter3 "^3.1.0"
+    iterall "^1.2.1"
+    symbol-observable "^1.0.4"
+    ws "^5.2.0 || ^6.0.0 || ^7.0.0"
+
 supercluster@^7.1.4:
   version "7.1.4"
   resolved "https://registry.npmmirror.com/supercluster/download/supercluster-7.1.4.tgz#6762aabfd985d3390b49f13b815567d5116a828a"

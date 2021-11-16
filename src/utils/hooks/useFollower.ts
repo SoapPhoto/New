@@ -12,13 +12,13 @@ import {
 import { toast } from 'react-hot-toast';
 
 export default function useFollower(): [(user: UserEntity) => any, boolean] {
-  const { userInfo } = useAccount();
+  const { isLogin } = useAccount();
   const { query, mutate } = useApolloClient();
   const [followLoading, setFollowLoading] = useState(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const follow = useCallback(
     throttle(async (user: UserEntity) => {
-      if (!userInfo) {
+      if (!isLogin) {
         toast.error('请登录！');
         return;
       }
@@ -49,7 +49,7 @@ export default function useFollower(): [(user: UserEntity) => any, boolean] {
         setFollowLoading(false);
       }
     }),
-    [userInfo],
+    [isLogin],
   );
   return [follow, followLoading];
 }

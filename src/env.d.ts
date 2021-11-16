@@ -1,6 +1,7 @@
 interface ImportMeta {
   env: {
     VITE_API_URL: string;
+    VITE_WS_URL: string;
     VITE_BASIC_TOKEN: string;
     VITE_MAPBOX_AK: string;
     VITE_OSS_REGION: string;

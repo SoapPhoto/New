@@ -286,7 +286,7 @@ fragment CommentFragment on Comment {
   parentComment {
     ...CommentBaseFragment
   }
-  childComments(limit: 3) {
+  childComments(limit: $limit) {
     ...CommentChildFragment
   }
   user {

@@ -106,7 +106,7 @@ query UnreadNotificationCount {
   }
 }
 
-query Comments($id: Float!, $query: CommentsQueryInput) {
+query Comments($id: Float!, $query: CommentsQueryInput, $limit: Float) {
   comments(id: $id, query: $query) {
     ...CommentListFragment
   }

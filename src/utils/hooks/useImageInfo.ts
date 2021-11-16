@@ -7,11 +7,11 @@ import { getImageInfo, IImageInfo, isImage } from '../image';
 export default function useImageInfo(
   imageRef: MutableRefObject<File | undefined>,
 ): [
-  IImageInfo | undefined,
-  string | undefined,
-  (file: File) => void,
-  () => void,
-] {
+    IImageInfo | undefined,
+    string | undefined,
+    (file: File) => void,
+    () => void,
+  ] {
   const [info, setInfo] = useState<IImageInfo>();
   const [thumbnail, setThumbnail] = useState<string>();
   const { t } = useTranslation();

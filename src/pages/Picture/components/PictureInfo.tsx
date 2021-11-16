@@ -2,11 +2,12 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { Star1, Info, Settings } from '@app/components/Icons';
 import { useAccount } from '@app/stores/hooks';
 import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
+import useLikePicture from '@app/utils/hooks/useLikePicture';
 import { observer } from 'mobx-react';
 import React, { useMemo } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useTheme } from 'styled-components/macro';
+import { css, useTheme } from 'styled-components/macro';
 import {
   HeartIcon,
   IconButton,
@@ -28,15 +29,15 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
   const [, , settingOpen] = useSearchParamModal('setting');
   const { userInfo } = useAccount();
   const [spring, bind] = useTapButton(1.05, 0.92);
+  const [like] = useLikePicture(picture.id);
   const isOwner = useMemo(
-    () =>
-      (userInfo && userInfo.id.toString() === picture.user.id.toString()) ||
-      false,
+    () => (userInfo && userInfo.id.toString() === picture.user.id.toString())
+      || false,
     [picture.user.id, userInfo],
   );
   const isCollected = useMemo(
     () => !!(picture && picture.currentCollections.length > 0),
-    [],
+    [picture],
   );
   return (
     <PictureBaseInfo>
@@ -46,7 +47,7 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
           style={{
             transform: spring.transform,
           }}
-          // onClick={onLike}
+          onClick={() => like(picture.isLike)}
         >
           <HeartIcon size={20} islike={picture.isLike ? 1 : 0} />
           <p>{picture.likedCount}</p>

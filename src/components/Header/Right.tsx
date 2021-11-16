@@ -20,6 +20,7 @@ import {
 import Avatar from '../Avatar';
 import { PopoverRef } from '../Popover';
 import IconButton from '../Button/IconButton';
+import { Notify } from './Notify';
 
 const Wrapper = styled.div`
   display: flex;
@@ -82,6 +83,7 @@ export const Right = observer(() => {
             <UploadCloud />
           </IconButton>
           <div style={{ width: '22px' }} />
+          <Notify />
           <Popover
             trigger="click"
             popoverRef={popoverRef}

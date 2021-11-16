@@ -10,8 +10,9 @@ type IListQueryResult<T> = {
 
 declare module '*/fragments.graphql';
 declare module '*/mutations.graphql';
+declare module '*/subscription.graphql';
 declare module '@app/graphql/query/query.graphql' {
-  import { DocumentNode, DocumentNode } from 'graphql';
+  import { DocumentNode, DocumentNode, DocumentNode } from 'graphql';
 
   export const Picture: DocumentNode;
   export const Pictures: DocumentNode;
@@ -55,4 +56,9 @@ declare module '@app/graphql/mutations/mutations.graphql' {
   export const AddComment: DocumentNode;
   export const FollowUser: DocumentNode;
   export const UnFollowUser: DocumentNode;
+}
+
+declare module '@app/graphql/subscription/subscription.graphql' {
+
+  export const NewNotification: DocumentNode;
 }

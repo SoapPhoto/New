@@ -25,6 +25,7 @@ const Comment: React.FC<IProps> = ({ id, author }) => {
   const commentsData = useQuery<ListQueryData<'comments', CommentEntity>>(Comments, {
     variables: {
       id,
+      limit: 3,
       query: {
         page: 1,
         pageSize: 10,

@@ -39,7 +39,6 @@ export default function useNewPictureCacheWrite(): ReturnType {
           },
         },
       });
-      console.log([newPicture, ...cacheData.pictures.data]);
     }
   };
   return [write];

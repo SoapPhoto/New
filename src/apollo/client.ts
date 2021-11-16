@@ -3,15 +3,36 @@ import {
   InMemoryCache,
   ApolloLink,
   HttpLink,
+  split,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { isString } from 'lodash';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 export function initClient() {
   const batchLink = new BatchHttpLink({
     uri: `${import.meta.env.VITE_API_URL}graphql`,
     credentials: 'include',
+  });
+  const wsLink = new WebSocketLink({
+    uri: `${import.meta.env.VITE_WS_URL}/graphql`,
+    options: {
+      lazy: true,
+      reconnect: true,
+      connectionParams: async () => {
+        let Authorization = '';
+        const token = localStorage.getItem('token');
+        if (token && JSON.parse(token)) {
+          const { accessToken } = JSON.parse(token);
+          Authorization = `Bearer ${accessToken || ''}`;
+        }
+        return {
+          Authorization,
+        };
+      },
+    },
   });
   const authLink = new ApolloLink((operation, next) => {
     let Authorization = '';
@@ -51,13 +72,17 @@ export function initClient() {
   });
   const httpLink = ApolloLink.from([errorLink, authLink, batchLink]);
 
-  // const link = ApolloLink.split(({ query }) => {
-  //   const definition = getMainDefinition(query);
-  //   return (
-  //     definition.kind === 'OperationDefinition' &&
-  //     definition.operation === 'subscription'
-  //   );
-  // }, httpLink);
+  const splitLink = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === 'OperationDefinition'
+        && definition.operation === 'subscription'
+      );
+    },
+    wsLink as any,
+    httpLink,
+  );
   const client = new ApolloClient({
     connectToDevTools: false,
     cache: new InMemoryCache({
@@ -92,7 +117,7 @@ export function initClient() {
         notifyOnNetworkStatusChange: true,
       },
     },
-    link: httpLink,
+    link: splitLink,
   });
   return client;
 }

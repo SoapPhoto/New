@@ -1,5 +1,11 @@
-import React, { useCallback, useState } from 'react';
-import { Form, Formik } from 'formik';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
+import {
+  FastField,
+  Field,
+  Form, Formik, FormikProps, setIn, useFormikContext,
+} from 'formik';
 import { omit, pick } from 'lodash';
 import { Trash2 } from 'react-feather';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +26,9 @@ import { UpdatePicture } from '@app/graphql/mutations';
 import Modal from '@app/components/Modal';
 import IconButton from '@app/components/Button/IconButton';
 import Button from '@app/components/Button';
+import FieldLocation from '@app/components/Formik/FieldLocation';
+import LocationModal from '@app/components/LocationModal';
+import { LocationEntity } from '@app/common/types/modules/location/location.entity';
 import { Content } from '../../elements';
 import { Footer } from './elements';
 
@@ -32,23 +41,41 @@ interface IValues {
   title: string;
   bio: string;
   isPrivate: boolean;
+  location?: LocationEntity;
   tags: string[];
 }
+const Location = ({ onOk }) => {
+  const { values, submitForm } = useFormikContext<IValues>();
+  return (
+    <LocationModal city={values.location?.city} onOk={onOk} />
+  );
+};
+
 const SettingModal: React.FC<IProps> = ({ picture }) => {
+  const [init, setInit] = useState(false);
+  const formikRef = useRef<FormikProps<IValues>>(null);
   const client = useApolloClient();
   const { colors } = useTheme();
   const [confirmVisible, setConfirmVisible] = useState(false);
   const { key, id } = picture;
   const [visible, close] = useSearchParamModal('setting');
+  const [editLocationVisible, closeEditLocation, openEditLocation] = useSearchParamModal(
+    'editLocation',
+    'modal-child',
+  );
+  const [location, setLocation] = useState<LocationEntity>();
   const { t } = useTranslation();
   const [del, loading] = useDeletePicture();
   const [update, updateProp] = useMutation(UpdatePicture);
   const handleOk = useCallback(
     async (values: IValues) => {
+      const updateData: any = { ...values };
+      updateData.locationUid = values.location?.uid;
+      delete updateData.location;
       const { data } = await update({
         variables: {
           id,
-          data: values,
+          data: updateData,
         },
       });
       client.writeFragment({
@@ -58,6 +85,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
             title
             bio
             isPrivate
+            location
           }
         `,
         data: {
@@ -81,15 +109,27 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
     [client, close, id, t, update],
   );
   const deletePicture = useCallback(() => del(id), [del, id]);
+
+  const onSetLocation = (poi: LocationEntity) => {
+    setLocation(poi);
+    formikRef.current?.setFieldValue('location', poi);
+    closeEditLocation();
+  };
+  useEffect(() => {
+    if (visible) {
+      setTimeout(() => setInit(true), 300);
+    }
+  }, [visible]);
   return (
-    <Modal maxWidth={560} centered visible={visible} onClose={() => close()}>
+    <Modal afterClose={() => setInit(false)} maxWidth={560} centered visible={visible} onClose={() => close()}>
       <Modal.Background background={getPictureUrl(key, 'blur')} />
       <Modal.Content>
         <Modal.Title>{t('picture.edit.title')}</Modal.Title>
         <Content>
           <Formik<IValues>
+            innerRef={formikRef}
             initialValues={{
-              ...pick(picture, ['title', 'bio', 'isPrivate']),
+              ...pick(picture, ['title', 'bio', 'isPrivate', 'location']),
               tags: picture.tags.map((tag) => tag.name),
             }}
             onSubmit={handleOk}
@@ -106,6 +146,8 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
                 label={t('label.picture_bio') as string}
               />
               <FieldTag name="tags" />
+              <FieldLocation label="地点" bio="添加地点" name="location" />
+              <div style={{ height: '24px' }} />
               <FieldSwitch
                 name="isPrivate"
                 label={t('label.private')}
@@ -127,6 +169,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
                   </Button>
                 </div>
               </Footer>
+              <Location onOk={onSetLocation} />
             </Form>
           </Formik>
         </Content>
@@ -142,6 +185,12 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
           }}
           title={t('picture.label.deleteTitle')}
         />
+        {/* <FastField name="t" shouldUpdate={(nextProps, currentProps) => nextProps.location !== currentProps.location}>
+          {
+            ({ field, form, meta }) => (
+            )
+          }
+        </FastField> */}
       </Modal.Content>
     </Modal>
   );

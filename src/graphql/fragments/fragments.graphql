@@ -82,6 +82,9 @@ fragment UpdatePictureFragment on Picture {
   title
   bio
   isPrivate
+  location {
+    ...LocationFragment
+  }
   tags {
     ...TagFragment
   }

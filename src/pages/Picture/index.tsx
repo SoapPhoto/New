@@ -114,7 +114,8 @@ const PicturePage = observer(() => {
           </TagBox>
         )}
         <div css={css`height: 12px;`} />
-        <Comment />
+        <Comment id={picture.id} author={user} />
+        <div css={css`height: 48px;`} />
       </Content>
       <ExifModal picture={picture} />
       <SettingModal picture={picture} />

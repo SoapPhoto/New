@@ -1,13 +1,13 @@
+import React, { useRef, useState, useEffect } from 'react';
 import { useSearchParamModal } from '@app/utils/hooks';
 import { AutoComplete, Select } from '@arco-design/web-react';
-import React, { useRef, useState } from 'react';
 import { css } from 'styled-components/macro';
 import { debounce } from 'lodash';
 import { useLazyQuery } from '@apollo/client';
 
 import { PlaceDetail, PlaceSuggestion } from '@app/graphql/query';
-import { Place } from '@app/common/types/modules/location/interface/place.interface';
 import { OptionInfo } from '@arco-design/web-react/es/Select/interface';
+import { LocationEntity } from '@app/common/types/modules/location/location.entity';
 import Modal from '../Modal';
 
 import cities from './cities.json';
@@ -19,22 +19,24 @@ import Button from '../Button';
 const { Option } = Select;
 
 interface IProps {
-  onOk: (poi: Place) => void;
+  onOk: (poi: LocationEntity) => void;
+  city?: string;
 }
 
 const LocationModal: React.FC<IProps> = ({
   onOk,
+  city,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [visible, close] = useSearchParamModal('editLocation', 'modal-child');
-  const [region, setRegion] = useState();
+  const [region, setRegion] = useState<string>();
   const [loadPlaceSuggestion, placeSuggestionData] = useLazyQuery<{
-    placeSuggestion: Place[];
+    placeSuggestion: LocationEntity[];
   }>(PlaceSuggestion, {
     fetchPolicy: 'network-only',
   });
   const [loadPlaceDetail, placeDetailData] = useLazyQuery<{
-    placeDetail: Place;
+    placeDetail: LocationEntity;
   }>(PlaceDetail, {
     fetchPolicy: 'network-only',
   });
@@ -56,6 +58,12 @@ const LocationModal: React.FC<IProps> = ({
   const ok = () => {
     onOk(placeDetailData.data!.placeDetail);
   };
+  useEffect(() => {
+    if (visible && city) {
+      setRegion(city);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
   return (
     <Modal
       visible={visible}
@@ -79,6 +87,7 @@ const LocationModal: React.FC<IProps> = ({
             placeholder="城市选择"
             showSearch
             allowClear
+            allowCreate
             value={region}
             onChange={(v) => setRegion(v)}
             filterOption={(inputValue, option) => option.props.value.indexOf(inputValue) >= 0

@@ -65,7 +65,7 @@ class AccountStore {
         },
         error: () => {
           this.init = true;
-          localStorage.removeItem('token');
+          // localStorage.removeItem('token');
         },
       });
   };

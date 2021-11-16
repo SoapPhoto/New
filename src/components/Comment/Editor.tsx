@@ -23,7 +23,7 @@ interface IProps {
 const Wrapper = styled.div`
   display: flex;
   padding-bottom: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 24px;
 `;
 
 const Box = styled.div`
@@ -94,7 +94,7 @@ const CommentEditor: React.FC<IProps> = observer(({
   return (
     <Wrapper ref={wrapperRef}>
       <AvatarBox>
-        <Avatar style={{ marginRight: rem(12) }} src={userInfo!.avatar} />
+        <Avatar style={{ marginRight: rem(12) }} src={userInfo?.avatar} />
       </AvatarBox>
       <Box>
         <Textarea

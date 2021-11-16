@@ -40,7 +40,7 @@ const TextareaBox = styled.div<{ error?: boolean; focus?: boolean }>`
     overflow: hidden;
     transition: .1s height ease;
     display: block;
-    color: ${(props) => rgba(props.theme.colors.text, 0.7)};
+    color: ${(props) => rgba(props.theme.colors.text, 0.9)};
     &::placeholder {
       color: ${(_) => rgba(_.theme.colors.text, 0.7)};
     }

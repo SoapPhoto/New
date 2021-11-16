@@ -6,9 +6,10 @@ import {
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import { isString } from 'lodash';
+import { BatchHttpLink } from '@apollo/client/link/batch-http';
 
 export function initClient() {
-  const batchLink = new HttpLink({
+  const batchLink = new BatchHttpLink({
     uri: `${import.meta.env.VITE_API_URL}graphql`,
     credentials: 'include',
   });

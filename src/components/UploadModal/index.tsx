@@ -24,7 +24,7 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { toast } from 'react-hot-toast';
 import Modal from '@app/components/Modal';
 import Button from '@app/components/Button';
-import { Place } from '@app/common/types/modules/location/interface/place.interface';
+import { LocationEntity } from '@app/common/types/modules/location/location.entity';
 import EditExifModal from '../EditExifModal.tsx';
 import {
   DeleteBtn,
@@ -51,7 +51,7 @@ export interface IValues {
   isPrivate: boolean;
   title: string;
   bio: string;
-  location?: Place;
+  location?: LocationEntity;
   tags: string[];
 }
 
@@ -80,7 +80,7 @@ const UploadModal = observer(() => {
   const [writePictures] = useNewPictureCacheWrite();
   const [, setPercentComplete] = useState(0);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [location, setLocation] = useState<Place>();
+  const [location, setLocation] = useState<LocationEntity>();
   const [visible, close] = useSearchParamModal('upload');
   const [editExifVisible, closeEditExif, openEditExif] = useSearchParamModal(
     'editExif',
@@ -99,20 +99,20 @@ const UploadModal = observer(() => {
     }
   };
   useEffect(() => {
-    if (editLocationVisible && !thumbnail) {
+    if (visible && editLocationVisible && !thumbnail) {
       closeEditLocation(true);
     }
-  }, [closeEditExif, closeEditLocation, editExifVisible, editLocationVisible, thumbnail]);
+  }, [closeEditExif, closeEditLocation, editExifVisible, editLocationVisible, thumbnail, visible]);
   useEffect(() => {
-    if (editExifVisible && !thumbnail) {
+    if (visible && editExifVisible && !thumbnail) {
       closeEditExif(true);
     }
-  }, [closeEditExif, editExifVisible, thumbnail]);
+  }, [closeEditExif, editExifVisible, thumbnail, visible]);
   const onUploadProgress = useCallback((percent: number) => {
     setPercentComplete(percent);
   }, []);
 
-  const onSetLocation = (poi: Place) => {
+  const onSetLocation = (poi: LocationEntity) => {
     setLocation(poi);
     formikRef.current?.setFieldValue('location', poi);
     closeEditLocation();

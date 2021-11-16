@@ -112,7 +112,12 @@
     }
   },
   "comment": {
-    "empty": "暂无评论"
+    "empty": "暂无评论",
+    "author": "作者\t",
+    "close_reply": "收起回复",
+    "open_reply": "展开 {{total}} 条回复",
+    "reply": "回复",
+    "open_all_comment": "查看所有回复"
   },
   "setting": {
     "menu": {

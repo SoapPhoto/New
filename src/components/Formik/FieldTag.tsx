@@ -1,12 +1,11 @@
 import React, { memo } from 'react';
 import { Field, FieldProps } from 'formik';
 
-import { ITextareaAutosizeProps } from '../Input/Textarea';
 import { LabelBox } from './elements';
 import ErrorMessage from './ErrorMessage';
 import Tag from '../Tag';
 
-interface IProps extends ITextareaAutosizeProps {
+interface IProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
   required?: boolean;
 }

@@ -35,7 +35,7 @@ export const DefaultLayout: React.FC<IProps> = memo(({ children }) => {
             query: UserNotification,
             data: {
               userNotification: [
-                cacheData.newNotification,
+                data.newNotification,
                 ...cacheData.userNotification,
               ],
             },

@@ -16,6 +16,7 @@ import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { UpdateProfile } from '@app/graphql/mutations';
 import toast from 'react-hot-toast';
 import Button from '@app/components/Button';
+import Head from '@app/components/Head';
 
 const RadioGroup = Radio.Group;
 
@@ -50,6 +51,7 @@ const SettingProfilePage = () => {
   );
   return (
     <div>
+      <Head title="用户设置" />
       <Formik<IValues>
         initialValues={pick(userInfo, [
           'name',

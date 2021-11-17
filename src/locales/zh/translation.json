@@ -136,5 +136,8 @@
         "updateSuccess": "修改成功！"
       }
     }
+  },
+  "title": {
+    "name": "肥皂"
   }
 }

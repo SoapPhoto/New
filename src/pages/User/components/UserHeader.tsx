@@ -1,8 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
+import Head from '@app/components/Head';
 import UserFollowModal from '@app/components/UserFollowModal';
 import { UserInfo } from '@app/graphql/query';
 import { useSearchParamModal } from '@app/utils/hooks';
+import useQueryUser from '@app/utils/hooks/useQueryUser';
+import useUserOnlineStatusSubscription from '@app/utils/hooks/useUserOnlineStatusSubscription';
 import React, { memo } from 'react';
 import UserSkeleton from '../Skeleton';
 import UserCover from './UserCover';
@@ -22,21 +25,23 @@ const UserHeader: React.FC<IProps> = memo(({ username }) => {
     'user-followed',
     'modal-child',
   );
-  const { loading, data } = useQuery<{
-    user: UserEntity;
-  }>(UserInfo, {
-    variables: {
-      username,
-    },
-  });
+  const [{ loading, data }, cacheData] = useQueryUser<{ user: UserEntity }>(username);
+  let user: UserEntity | undefined;
+  if (!data) {
+    user = cacheData;
+  } else {
+    user = data.user;
+  }
+  useUserOnlineStatusSubscription(user?.id);
   return (
     <>
-      {loading || !data ? (
+      {((loading && !user) || !user) ? (
         <UserSkeleton />
       ) : (
         <>
-          <UserCover cover={data.user.cover} avatar={data.user.avatar} />
-          <UserInfoHeader user={data.user} />
+          <Head title={`${user.fullName ?? ''} (@${data?.user.username})`} />
+          <UserCover cover={user.cover} avatar={user.avatar} />
+          <UserInfoHeader user={user} />
           <UserTab />
         </>
       )}
@@ -50,7 +55,7 @@ const UserHeader: React.FC<IProps> = memo(({ username }) => {
         visible={followedVisible && !loading}
         onClose={followedClose}
         type="followed"
-        userId={data?.user.id || 0}
+        userId={user?.id || 0}
       />
     </>
   );

@@ -14,9 +14,9 @@ const UserTab: React.FC<IProps> = memo(() => {
   return (
     <Wrapper>
       <Tab style={{ textAlign: 'center' }}>
-        <Tab.Item name={t('user.tab.new')} to="."></Tab.Item>
-        <Tab.Item name={t('user.tab.choice')} to="./choice"></Tab.Item>
-        <Tab.Item name={t('user.tab.likes')} to="./like"></Tab.Item>
+        <Tab.Item name={t('user.tab.new')} to="." />
+        <Tab.Item name={t('user.tab.choice')} to="./choice" />
+        <Tab.Item name={t('user.tab.likes')} to="./like" />
       </Tab>
     </Wrapper>
   );

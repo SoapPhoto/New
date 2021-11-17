@@ -10,9 +10,7 @@ const ScrollToTop: React.FC = ({ children }) => {
   useEffect(() => {
     if (oldLocation.current) {
       if (oldLocation.current.pathname !== location.pathname && navigationType !== 'POP') {
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-        }, 100);
+        window.scrollTo(0, 0);
       }
     }
     oldLocation.current = location;

@@ -1,3 +1,4 @@
+import Head from '@app/components/Head';
 import React, { memo, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import List from './components/PictureList';
@@ -15,6 +16,7 @@ const TagPage = memo(() => {
   // });
   return (
     <div>
+      <Head title={`# ${name}`} />
       <Title>{name}</Title>
       <List name={name} />
     </div>

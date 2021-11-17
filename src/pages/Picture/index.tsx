@@ -2,10 +2,13 @@ import { useQuery } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { EmojiText, Popover } from '@app/components';
 import Comment from '@app/components/Comment';
+import Head from '@app/components/Head';
 import { Hash, Lock } from '@app/components/Icons';
 import { Picture } from '@app/graphql/query';
+import { useAccount } from '@app/stores/hooks';
+import useQueryPicture from '@app/utils/hooks/useQueryPicture';
 import { observer } from 'mobx-react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { css } from 'styled-components/macro';
 import CollectionModal from './components/CollectionModal';
@@ -31,18 +34,19 @@ import PictureSkeleton from './Skeleton';
 
 const PicturePage = observer(() => {
   const { id } = useParams();
-  const { loading, data } = useQuery<{
-    picture: PictureEntity;
-  }>(Picture, {
-    variables: { id: Number(id) },
-    fetchPolicy: 'cache-and-network',
-    nextFetchPolicy: 'cache-first',
-  });
-  if ((loading && !data) || !data) return <PictureSkeleton />;
-  const { picture } = data;
-  const { user } = picture;
+  const { userInfo } = useAccount();
+  const [{ loading, data }, cacheData] = useQueryPicture<{ picture: PictureEntity; }>(Number(id));
+  const isMe = useMemo(() => data?.picture.user.id === userInfo?.id, [data?.picture.user.id, userInfo?.id]);
+  if ((loading && (!data && !cacheData)) || (!data && !cacheData)) return <PictureSkeleton />;
+  let picture: PictureEntity;
+  if (data) {
+    picture = data.picture;
+  } else {
+    picture = cacheData!;
+  }
   return (
     <Wrapper>
+      <Head title={`${picture.title} (@${picture.user?.name ?? ''})`} />
       {/* <NewContainer>
         <LeftBox>
           <PictureCenter picture={picture} />
@@ -53,7 +57,7 @@ const PicturePage = observer(() => {
           </Title>
         </RightBox>
       </NewContainer> */}
-      <HeaderUserInfo user={user} createTime={picture.createTime} />
+      <HeaderUserInfo isMe={isMe} user={picture.user} createTime={picture.createTime} />
       <PictureCenter picture={picture} />
       <Content>
         <PictureInfo picture={picture} />
@@ -99,9 +103,9 @@ const PicturePage = observer(() => {
             <EmojiText text={picture.bio} />
           </Bio>
         )}
-        {picture.tags.length > 0 && (
+        {picture.tags?.length > 0 && (
           <TagBox>
-            {picture.tags.map((tag) => (
+            {picture.tags?.map((tag) => (
               <Link to={`/tag/${tag.name}`} key={tag.id}>
                 <Tag key={tag.id}>
                   <Hash size={12} />
@@ -114,12 +118,24 @@ const PicturePage = observer(() => {
           </TagBox>
         )}
         <div css={css`height: 12px;`} />
-        <Comment id={picture.id} author={user} />
+        {
+          picture.user && (
+            <Comment id={picture.id} author={picture.user} />
+          )
+        }
         <div css={css`height: 48px;`} />
       </Content>
       <ExifModal picture={picture} />
-      <SettingModal picture={picture} />
-      <CollectionModal picture={picture} />
+      {
+        picture.user && (
+          <SettingModal picture={picture} />
+        )
+      }
+      {
+        picture.user && (
+          <CollectionModal picture={picture} />
+        )
+      }
     </Wrapper>
   );
 });

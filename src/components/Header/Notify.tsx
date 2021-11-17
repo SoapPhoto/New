@@ -1,12 +1,18 @@
+import { useQuery } from '@apollo/client';
+import { UnreadNotificationCount } from '@app/graphql/query';
+import { Badge } from '@arco-design/web-react';
 import { observer } from 'mobx-react';
 import React, { useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components/macro';
+
 import { Popover } from '..';
 import IconButton from '../Button/IconButton';
 import { Bell } from '../Icons';
 import { NotificationPopover } from '../Notification';
 import { PopoverRef } from '../Popover';
+
+import '@arco-design/web-react/es/Badge/style/index.js';
 
 const ButtonBox = styled.div`
   position: relative;
@@ -15,6 +21,7 @@ const ButtonBox = styled.div`
 `;
 
 export const Notify: React.FC = observer(() => {
+  const { data } = useQuery<{ unreadNotificationCount: { count: number } }>(UnreadNotificationCount);
   const pathname = useLocation();
   const popoverRef = useRef<PopoverRef>(null);
   useEffect(() => {
@@ -29,23 +36,16 @@ export const Notify: React.FC = observer(() => {
         trigger="click"
         placement="bottom"
         theme="light"
+        destroyOnClose
         content={<NotificationPopover />}
+        contentStyle={{ padding: 0 }}
       >
         <ButtonBox>
           <IconButton>
-            <Bell />
+            <Badge count={data?.unreadNotificationCount.count ?? 0} maxCount={9} dotStyle={{ fontSize: 10 }}>
+              <Bell />
+            </Badge>
           </IconButton>
-          <div
-            css={css`
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: ${({ theme }) => theme.colors.error};
-            border-radius: 50%;
-            right: -4px;
-            top: -4px;
-          `}
-          />
         </ButtonBox>
       </Popover>
     </div>

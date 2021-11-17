@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme } from 'styled-components/macro';
+import { css, useTheme } from 'styled-components/macro';
 
 import light from '@app/styles/theme/themes/light';
 import { getPictureUrl } from '@app/utils/image';
@@ -14,14 +14,18 @@ interface IAvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: ColorType;
   alt?: string;
   rainbow?: boolean;
+  online?: boolean;
+  borderSize?:number;
 }
 
 const Avatar: React.FC<IAvatarProps> = ({
   size = 42,
   color = 'gray2',
-  rainbow = false,
+  rainbow,
   src,
   text,
+  online,
+  borderSize = 2,
   children,
   alt,
   ...restProps
@@ -34,14 +38,33 @@ const Avatar: React.FC<IAvatarProps> = ({
   if (src) {
     content = <Img src={getPictureUrl(src, 'thumb')} />;
   }
+  const isBorder = !!(rainbow || online);
   return (
     <Wrapper
       {...restProps}
+      // eslint-disable-next-line no-nested-ternary
+      border={isBorder ? 1 : 0}
       rainbow={rainbow ? 1 : 0}
+      online={online ? 1 : 0}
       size={size}
       color={theme.colors[color]}
     >
-      {content}
+      {
+        isBorder ? (
+          <div
+            css={css`
+              border-radius: 100%;
+              position: relative;
+              width: calc(100% - ${(_) => `${borderSize}px`});
+              height: calc(100% - ${(_) => `${borderSize}px`});
+              padding: 2px;
+              background: ${(p) => p.theme.background};
+            `}
+          >
+            {content}
+          </div>
+        ) : content
+      }
     </Wrapper>
   );
 };

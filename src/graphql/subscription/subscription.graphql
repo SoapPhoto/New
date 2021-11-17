@@ -5,3 +5,9 @@ subscription NewNotification {
     ...NotificationFragment
   }
 }
+
+subscription UserOnlineStatus($id: Float!) {
+  userOnlineStatus(id: $id) {
+    online
+  }
+}

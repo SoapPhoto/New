@@ -1,12 +1,16 @@
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { EmojiText } from '@app/components';
+import { EmojiText, Popover } from '@app/components';
 import Avatar from '@app/components/Avatar';
+import Button from '@app/components/Button';
+import FollowButton from '@app/components/FollowButton';
+import { VipBadge } from '@app/components/Icons/VipBadge';
+import { useAccount } from '@app/stores/hooks';
 import { customMedia } from '@app/styles/mediaQuery';
-import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
+import { useFollower, useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { animated } from 'react-spring';
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 
 interface IProps {
   user: UserEntity;
@@ -40,17 +44,41 @@ const AvatarStyle = styled(Avatar)`
   `}
 `;
 
-const AvatarContent = styled.div``;
+const OnlineTag = styled.span`
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  transition: .3s transform cubic-bezier(0.075, 0.82, 0.165, 1);
+  &:after {
+    content: 'Online';
+    display: inline-block;
+    margin-top: 4px;
+    background-color: rgb(70,201,58);
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+  }
+`;
+const AvatarContent = styled.div`
+  position: relative;
+  text-align: center;
+  &:hover {
+    ${OnlineTag} {
+      transform: translate3d(0,48px, 0);
+    }
+  }
+`;
 
 const InfoContent = styled.div``;
 
-const UserName = styled.h2`
+const UserName = styled.div`
   position: relative;
-  font-size: 28px;
   margin-top: 12px;
   margin-bottom: 6px;
-  display: grid;
-  grid-template-columns: 1fr max-content;
+  display: flex;
   grid-gap: 12px;
   z-index: 1;
   color: #fff;
@@ -98,11 +126,39 @@ const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {
     <Wrapper>
       <Box>
         <AvatarContent>
-          <AvatarStyle src={user.avatar} />
+          <AvatarStyle borderSize={6} online={user.isOnline} src={user.avatar} />
+          {
+            user.isOnline && <OnlineTag />
+          }
         </AvatarContent>
         <InfoContent>
           <UserName>
-            <EmojiText text={user.fullName} />
+            <EmojiText
+              css={css`
+                font-weight: 700;
+                font-size: 28px;
+                max-width: 100%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-shadow: 0px 15px 5px rgba(0,0,0,0.1),
+                  10px 20px 5px rgba(0,0,0,0.05),
+                  -10px 20px 5px rgba(0,0,0,0.05);
+              `}
+              text={user.fullName}
+            />
+            <Popover
+              trigger="hover"
+              placement="top"
+              theme="dark"
+              openDelay={100}
+              content={<span>{t('label.vipppp')}</span>}
+            >
+              <div css={css`display: flex;align-items: center;font-size: 28px;`}>
+                <VipBadge size="1.2em" />
+              </div>
+            </Popover>
+            <FollowButton user={user} />
           </UserName>
           <UserTotalBox>
             <UserTotal>

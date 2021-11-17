@@ -31,12 +31,12 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
   const [spring, bind] = useTapButton(1.05, 0.92);
   const [like] = useLikePicture(picture.id);
   const isOwner = useMemo(
-    () => (userInfo && userInfo.id.toString() === picture.user.id.toString())
+    () => (userInfo && userInfo.id.toString() === picture.user?.id.toString())
       || false,
-    [picture.user.id, userInfo],
+    [picture.user?.id, userInfo],
   );
   const isCollected = useMemo(
-    () => !!(picture && picture.currentCollections.length > 0),
+    () => !!(picture && picture.currentCollections?.length > 0),
     [picture],
   );
   return (

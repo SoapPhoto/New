@@ -5,9 +5,12 @@ import { observer } from 'mobx-react';
 // import 'overlayscrollbars/css/OverlayScrollbars.css';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
-import { useLazyQuery } from '@apollo/client';
-import { UserNotification } from '@app/graphql/query';
+import {
+  useApolloClient, useLazyQuery, useMutation, useQuery,
+} from '@apollo/client';
+import { UnreadNotificationCount, UserNotification } from '@app/graphql/query';
 import { NotificationEntity } from '@app/common/types/modules/notification/notification.entity';
+import { MarkNotificationReadAll } from '@app/graphql/mutations';
 import { NotificationItem } from './NotificationItem';
 import { Empty } from '../Empty';
 import { Loading } from '..';
@@ -31,17 +34,38 @@ const ListBox = styled.div`
 `;
 
 export const NotificationPopover = observer(() => {
-  const [userNotification, userNotificationData] = useLazyQuery<{ userNotification: NotificationEntity[] }>(UserNotification);
-  const { data, loading } = userNotificationData;
+  const { cache } = useApolloClient();
+  const { data, loading } = useQuery<{ userNotification: NotificationEntity[] }>(UserNotification, { fetchPolicy: 'cache-and-network' });
+  const [markNotificationReadAll] = useMutation(MarkNotificationReadAll);
+  const mark = async () => {
+    await markNotificationReadAll();
+    const cacheData = cache.readQuery<any>({
+      query: UnreadNotificationCount,
+    });
+    if (cacheData?.unreadNotificationCount.count) {
+      cache.writeQuery({
+        query: UnreadNotificationCount,
+        data: {
+          unreadNotificationCount: {
+            ...cacheData?.unreadNotificationCount,
+            count: 0,
+          },
+        },
+      });
+    }
+  };
   useEffect(() => {
-    userNotification();
+    console.log();
+    return () => {
+      mark();
+    };
   }, []);
   return (
     <Wrapper>
       <List
         options={{ scrollbars: { autoHide: 'move' } }}
       >
-        {loading
+        {(!data && loading)
           ? (
             <div css={css`min-height: 140px;display: flex;justify-content: center;align-items: center;`}>
               <Loading />
@@ -50,7 +74,7 @@ export const NotificationPopover = observer(() => {
           : (
             <ListBox>
               {
-                userNotificationData.data?.userNotification.map((notify) => (
+                data?.userNotification.map((notify) => (
                   <NotificationItem key={notify.id} data={notify} />
                 ))
               }

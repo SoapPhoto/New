@@ -59,6 +59,6 @@ declare module '@app/graphql/mutations/mutations.graphql' {
 }
 
 declare module '@app/graphql/subscription/subscription.graphql' {
-
   export const NewNotification: DocumentNode;
+  export const UserOnlineStatus: DocumentNode;
 }

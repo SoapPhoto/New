@@ -24,11 +24,11 @@ const Cover = styled.div`
   ${customMedia.lessThan('medium')`
     max-width: ${customBreakpoints.mobile};
   `}
-  &:hover {
+  /* &:hover {
     &::after {
       opacity: 0;
     }
-  }
+  } */
   ::before {
     content: '';
     z-index: 1;
@@ -49,15 +49,14 @@ const Cover = styled.div`
     right: 0;
     top: 0;
     bottom: 0;
-    backdrop-filter: blur(6px);
     transition: 0.3s all ease;
-    /* background: linear-gradient(
+    background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0) 23.44%,
       rgba(0, 0, 0, 0) 53.9%,
       rgba(0, 0, 0, 0.06) 72.97%,
       rgba(0, 0, 0, 0.44) 100%
-    ); */
+    );
   }
 `;
 const CoverImage = styled(Image)``;

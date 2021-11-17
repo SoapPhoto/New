@@ -1,8 +1,14 @@
 import React from 'react';
 
 import SkeletonCompoent from '@app/components/Picture/Skeleton';
-const Skeleton = () => {
-  return <SkeletonCompoent />;
-};
+import { Helmet } from 'react-helmet-async';
+import Head from '@app/components/Head';
+
+const Skeleton = () => (
+  <>
+    <Head title="首页" />
+    <SkeletonCompoent />
+  </>
+);
 
 export default Skeleton;

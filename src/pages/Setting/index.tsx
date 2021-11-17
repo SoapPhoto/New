@@ -27,7 +27,6 @@ const SettingPage = () => {
       icon: Lock,
     },
   ];
-  console.log(menu);
   return (
     <div>
       <Menu data={menu}>

@@ -84,9 +84,12 @@ export function initClient() {
     httpLink,
   );
   const client = new ApolloClient({
-    connectToDevTools: false,
+    connectToDevTools: true,
     cache: new InMemoryCache({
       typePolicies: {
+        User: {
+          keyFields: ['username'],
+        },
         Query: {
           fields: {
             pictures: {

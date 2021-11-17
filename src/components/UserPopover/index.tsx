@@ -3,7 +3,11 @@ import { useLazyQuery } from '@apollo/client';
 
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { UserInfo } from '@app/graphql/query';
-import { EmojiText, Popover } from '..';
+import { Link } from 'react-router-dom';
+import { getPictureUrl } from '@app/utils/image';
+import { useTranslation } from 'react-i18next';
+import { QueryData } from '@app/graphql/interface';
+import Avatar from '../Avatar';
 import {
   Header,
   Wrapper,
@@ -25,11 +29,7 @@ import {
   SkeletonPreview,
   SkeletonCount,
 } from './elements';
-import Avatar from '../Avatar';
-import { Link } from 'react-router-dom';
-import { getPictureUrl } from '@app/utils/image';
-import { useTranslation } from 'react-i18next';
-import { QueryData } from '@app/graphql/interface';
+import { EmojiText, Popover } from '..';
 
 interface IUserPopover {
   username: string;
@@ -43,7 +43,7 @@ interface IUserCard {
 const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
   const { t } = useTranslation();
   const prestige = useMemo(
-    () => !!user?.badge.find(v => v.name === 'prestige'),
+    () => !!user?.badge.find((v) => v.name === 'prestige'),
     [user?.badge],
   );
   const isOk = useMemo(() => !loading && !!user, [loading, user]);
@@ -79,36 +79,36 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
         </Header>
         <PicturePreview>
           {!isOk
-            ? [0, 1, 3].map(key => (
-                <SkeletonPreview
-                  key={key}
-                  style={{
-                    borderTopLeftRadius: key === 0 ? 4 : 0,
-                    borderBottomLeftRadius: key === 0 ? 4 : 0,
-                    borderTopRightRadius: key === 2 ? 4 : 0,
-                    borderBottomRightRadius: key === 2 ? 4 : 0,
-                  }}
-                />
-              ))
+            ? [0, 1, 3].map((key) => (
+              <SkeletonPreview
+                key={key}
+                style={{
+                  borderTopLeftRadius: key === 0 ? 4 : 0,
+                  borderBottomLeftRadius: key === 0 ? 4 : 0,
+                  borderTopRightRadius: key === 2 ? 4 : 0,
+                  borderBottomRightRadius: key === 2 ? 4 : 0,
+                }}
+              />
+            ))
             : user?.pictures.map((picture, index) => (
-                <PreviewBox
-                  key={picture.id}
-                  style={{
-                    backgroundColor: picture.color,
-                    borderTopLeftRadius: index === 0 ? 4 : 0,
-                    borderBottomLeftRadius: index === 0 ? 4 : 0,
-                    borderTopRightRadius: index === 2 ? 4 : 0,
-                    borderBottomRightRadius: index === 2 ? 4 : 0,
-                  }}
-                >
-                  <Link to={`/picture/${picture.id}`}>
-                    <Img
-                      blurhash={picture.blurhash!}
-                      src={getPictureUrl(picture.key, 'thumb')}
-                    />
-                  </Link>
-                </PreviewBox>
-              ))}
+              <PreviewBox
+                key={picture.id}
+                style={{
+                  backgroundColor: picture.color,
+                  borderTopLeftRadius: index === 0 ? 4 : 0,
+                  borderBottomLeftRadius: index === 0 ? 4 : 0,
+                  borderTopRightRadius: index === 2 ? 4 : 0,
+                  borderBottomRightRadius: index === 2 ? 4 : 0,
+                }}
+              >
+                <Link to={`/picture/${picture.id}`}>
+                  <Img
+                    blurhash={picture.blurhash!}
+                    src={getPictureUrl(picture.key, 'thumb')}
+                  />
+                </Link>
+              </PreviewBox>
+            ))}
         </PicturePreview>
       </Wrapper>
       <UserInfoWrapper>
@@ -139,7 +139,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
 
 const UserPopover: React.FC<IUserPopover> = ({ children, username }) => {
   const [loadUser, { loading, data }] = useLazyQuery<
-    QueryData<'user', UserEntity>
+  QueryData<'user', UserEntity>
   >(UserInfo);
   const onOpen = useCallback(() => {
     loadUser({

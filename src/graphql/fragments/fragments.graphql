@@ -54,27 +54,31 @@ fragment PictureDetailFragment on Picture {
     }
 }
 
+fragment PictureListItemFragment on Picture {
+  ...PictureFragment
+  badge {
+    ...BadgeFragment
+  }
+  blurhash
+  isPrivate
+  user {
+    ...UserBaseFragment
+    badge {
+      ...BadgeFragment
+    }
+  }
+  exif {
+    ...EXIFFragment
+  }
+}
+
 fragment PictureListFragment on Pictures {
     count
     page
     pageSize
     timestamp
     data {
-      ...PictureFragment
-      badge {
-        ...BadgeFragment
-      }
-      blurhash
-      isPrivate
-      user {
-        ...UserBaseFragment
-        badge {
-          ...BadgeFragment
-        }
-      }
-      exif {
-        ...EXIFFragment
-      }
+      ...PictureListItemFragment
     }
 }
 
@@ -171,6 +175,7 @@ fragment UserBaseFragment on User {
 
 fragment UserDetailFragment on User {
   ...UserFragment
+  isOnline
   likedCount
   pictureCount
   isFollowing

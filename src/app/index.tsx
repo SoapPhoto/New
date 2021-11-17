@@ -106,11 +106,11 @@ export const App = observer(() => {
   return (
     <BrowserRouter>
       <Helmet
-        titleTemplate="%s - React Boilerplate"
-        defaultTitle="React Boilerplate"
+        titleTemplate="%s"
+        defaultTitle="Soap"
         htmlAttributes={{ lang: i18n.language }}
       >
-        <meta name="description" content="A React Boilerplate application" />
+        <meta name="description" content="有趣的方式来和小伙伴分享你生活的照片。" />
       </Helmet>
       <ScrollToTop>
         <Router />

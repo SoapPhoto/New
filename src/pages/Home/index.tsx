@@ -8,6 +8,8 @@ import PictureList from '@app/components/Picture/List';
 
 import { PicturesType } from '@app/common/enum/picture';
 import { usePicturesQuery } from '@app/graphql/hooks/query';
+import { Helmet } from 'react-helmet-async';
+import Head from '@app/components/Head';
 import Skeleton from './Skeleton';
 
 const Home = () => {
@@ -55,6 +57,7 @@ const Home = () => {
         minHeight: 'calc(100vh - 80px)',
       }}
     >
+      <Head title="首页" />
       {(loading && networkStatus === NetworkStatus.loading) || !data ? (
         <div>
           <Skeleton />

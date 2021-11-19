@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet-async';
 import Head from '@app/components/Head';
 import Skeleton from './Skeleton';
 
-const Home = () => {
+const HomePage = () => {
   const { t } = useTranslation();
   const {
     loading, data, fetchMore, networkStatus,
@@ -71,4 +71,4 @@ const Home = () => {
     </div>
   );
 };
-export default Home;
+export default HomePage;

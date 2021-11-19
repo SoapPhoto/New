@@ -49,8 +49,8 @@ export default defineConfig({
         ]
       },
       workbox: {
-        globDirectory: path.join('dist'),
-        globPatterns: [],
+        // globDirectory: path.join('dist'),
+        // globPatterns: [],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/cdn-oss\.soapphoto\.com\/.*/i,
@@ -105,16 +105,16 @@ export default defineConfig({
     port: 3002,
     proxy: {
       '/graphql': {
-        target: 'https://soapphoto.com',
+        target: 'https://api.soapphoto.com',
         changeOrigin: true,
         ws: true
       },
       '/oauth': {
-        target: 'https://soapphoto.com',
+        target: 'https://api.soapphoto.com',
         changeOrigin: true,
       },
       '/api': {
-        target: 'https://soapphoto.com',
+        target: 'https://api.soapphoto.com',
         changeOrigin: true,
       },
     },

@@ -4,6 +4,7 @@ import {
 } from 'react-feather';
 import styled from 'styled-components/macro';
 import { useLocation } from 'react-router-dom';
+import { animated } from 'react-spring';
 
 import {
   A, EmojiText, Popover,
@@ -130,7 +131,15 @@ export const Right = observer(() => {
               </Menu>
             )}
           >
-            <Avatar size={36} src={userInfo.avatar} />
+            <animated.button
+              {...bind()}
+              style={{
+                transform: spring.transform as any,
+                cursor: 'pointer',
+              }}
+            >
+              <Avatar size={36} src={userInfo.avatar} />
+            </animated.button>
           </Popover>
         </>
       ) : (

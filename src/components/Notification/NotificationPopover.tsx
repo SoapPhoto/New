@@ -12,7 +12,6 @@ import { UnreadNotificationCount, UserNotification } from '@app/graphql/query';
 import { NotificationEntity } from '@app/common/types/modules/notification/notification.entity';
 import { MarkNotificationReadAll } from '@app/graphql/mutations';
 import { NotificationItem } from './NotificationItem';
-import { Empty } from '../Empty';
 import { Loading } from '..';
 
 const Wrapper = styled.div`

@@ -4,7 +4,7 @@ import { useApolloClient } from '@apollo/client';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { UserIsFollowing } from '@app/graphql/query';
 import { useAccount } from '@app/stores/hooks';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import {
   FollowUser,
   UnFollowUser,

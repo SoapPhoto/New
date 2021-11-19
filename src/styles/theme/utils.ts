@@ -13,7 +13,7 @@ export function saveTheme(theme: ThemeKeyType) {
 /* istanbul ignore next line */
 export function getThemeFromStorage(): ThemeKeyType | null {
   const keys = Object.keys(themes);
-  if (keys.find(v => v === localStorage.getItem('selectedTheme'))) {
+  if (keys.find((v) => v === localStorage.getItem('selectedTheme'))) {
     return localStorage.getItem('selectedTheme') as ThemeKeyType;
   }
   return null;

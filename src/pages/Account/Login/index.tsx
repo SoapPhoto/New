@@ -2,13 +2,13 @@ import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { useSpring, animated } from 'react-spring';
 import { toast } from 'react-hot-toast';
 
 import FieldInput from '@app/components/Formik/FieldInput';
-import { GitHubLogo } from '@app/components/Icons';
+import { GitHubLogo, GoogleFill } from '@app/components/Icons';
 import { Weibo } from '@app/components/Icons/Weibo';
 import { useAccount } from '@app/stores/hooks';
 import Button from '@app/components/Button';
@@ -21,6 +21,7 @@ import { observer } from 'mobx-react';
 import {
   Des,
   GithubOauthBtn,
+  GoogleOauthBtn,
   OauthBox,
   Tips,
   Title,
@@ -36,6 +37,7 @@ interface IValues {
 const a = animated as any;
 
 const Login = () => {
+  const navigate = useNavigate();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const { login, codeLogin } = useAccount();
   const { t } = useTranslation();
@@ -78,15 +80,15 @@ const Login = () => {
     [login, t],
   );
   const getInfo = useCallback(async (data: IOauthSuccessData) => {
+    console.log(data);
     // 假如没有激活就跳转到激活界面
     if (data.action === OauthActionType.active) {
-      // console.log(123123);
-      // replaceRoute(`/auth/complete?code=${data.code}`);
+      navigate(`/auth/complete?code=${data.code}`, { replace: true });
     } else {
       await codeLogin(data.code!, data.type!);
       toast.success(t('auth.message.login_successful'));
     }
-  }, [codeLogin, t]);
+  }, [codeLogin, navigate, t]);
   const messageCb = useCallback((e: MessageEvent) => {
     oauthSuccess(e, getInfo, () => window.removeEventListener('message', messageCb));
   }, [getInfo]);
@@ -139,6 +141,11 @@ const Login = () => {
         >
           <Weibo color="#fff" />
         </WeiboOauthBtn>
+        <GoogleOauthBtn
+          onClick={() => oauth(OauthType.GOOGLE)}
+        >
+          <GoogleFill color="#4285f4" />
+        </GoogleOauthBtn>
       </OauthBox>
     </a.div>
   );

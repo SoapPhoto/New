@@ -1,8 +1,12 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, {
+  ReactNode, useEffect, useRef, useState,
+} from 'react';
 import { useTransition } from 'react-spring';
-import { reduce } from 'lodash';
+import reduce from 'lodash/reduce';
 
-import { Container, Toast, ToastBox, Content, ActionBox } from './elements';
+import {
+  Container, Toast, ToastBox, Content, ActionBox,
+} from './elements';
 
 export type ToastType = 'success' | 'warning' | 'error' | 'base';
 
@@ -31,8 +35,8 @@ const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
   const [refMap] = useState(() => new WeakMap());
   // 删除掉不存在消息的数据
   useEffect(() => {
-    [...(heights.current.keys() as any)].forEach(key => {
-      if (!toasts.find(v => v.key === key)) {
+    [...(heights.current.keys() as any)].forEach((key) => {
+      if (!toasts.find((v) => v.key === key)) {
         heights.current.delete(key);
       }
     });
@@ -46,7 +50,7 @@ const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
     }
   };
   const updateTransition = (item: ITotalConfig) => async (next: any) => {
-    let opacity = item.index >= 3 ? 0 : 1;
+    const opacity = item.index >= 3 ? 0 : 1;
     if (isOverviewing) {
       setTimeout(async () => {
         await next({
@@ -55,26 +59,24 @@ const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
       });
       const heightArr = toasts
         .slice(0, item.index)
-        .map(v => heights.current.get(v.key));
+        .map((v) => heights.current.get(v.key));
       await next({
         transform: `translate3d(0px, -${
           reduce(
             heightArr,
-            function (sum: number, n: number) {
-              return sum + n;
-            },
+            (sum: number, n: number) => sum + n,
             0,
-          ) +
-          SPACE * (item.index + 1)
+          )
+          + SPACE * (item.index + 1)
         }, 0px) scale(1)`,
         childOpacity: 1,
-        opacity: opacity,
+        opacity,
       });
     } else if (item.index === 0) {
       await next({
         childOpacity: 1,
-        opacity: opacity,
-        transform: `translate3d(0px, 0px, 0px)  scale(1)`,
+        opacity,
+        transform: 'translate3d(0px, 0px, 0px)  scale(1)',
       });
     } else {
       setTimeout(async () => {
@@ -86,31 +88,31 @@ const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
         });
       });
       await next({
-        opacity: opacity,
+        opacity,
         maxHeight: MIN_HEIGHT,
       });
     }
   };
 
   const transition = useTransition(toasts, {
-    key: v => v.key,
+    key: (v) => v.key,
     update: updateTransition,
     from: {
       opacity: 0,
       childOpacity: 0,
-      transform: `translate3d(0px, 100px, 0px)  scale(1)`,
+      transform: 'translate3d(0px, 100px, 0px)  scale(1)',
     },
     leave: {
       opacity: 0,
       childOpacity: 0,
-      transform: `translate3d(0px, 100px, 0px)  scale(1)`,
+      transform: 'translate3d(0px, 100px, 0px)  scale(1)',
     },
     enter: (item: ITotalConfig) => async (next: any) => {
       await next({
         opacity: 1,
         childOpacity: 1,
         maxHeight: refMap.get(item).offsetHeight,
-        transform: `translate3d(0px, 0px, 0px)  scale(1)`,
+        transform: 'translate3d(0px, 0px, 0px)  scale(1)',
       });
     },
   });
@@ -122,7 +124,7 @@ const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
         zIndex: 9900 - item.index,
         display: item.index > 3 ? 'none' : 'block',
       }}
-      ref={ref => setRef(ref, item)}
+      ref={(ref) => setRef(ref, item)}
       key={item.key}
       onMouseEnter={() => {
         clearTimeout(timer.current);

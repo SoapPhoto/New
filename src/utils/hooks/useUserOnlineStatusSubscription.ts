@@ -2,24 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { gql, useApolloClient, useSubscription } from '@apollo/client';
 import { UserOnlineStatus } from '@app/graphql/subscription/subscription.graphql';
 
-export default function useUserOnlineStatusSubscription(id?: number, subscribeToMore?: any) {
-  // useEffect(() => {
-  //   if (id) {
-  //     const unsubscribe = subscribeToMore({
-  //       document: UserOnlineStatus,
-  //       variables: { id },
-  //       updateQuery: (prev, { subscriptionData }) => {
-  //         if (!subscriptionData.data) return prev;
-  //         return {
-  //           ...prev,
-  //           isOnline: subscriptionData?.data?.userOnlineStatus.online,
-  //         };
-  //       },
-
-  //     });
-  //     if (unsubscribe) return () => unsubscribe();
-  //   }
-  // }, [id, subscribeToMore]);
+export default function useUserOnlineStatusSubscription(id?: number) {
   const { cache } = useApolloClient();
   const { data } = useSubscription<{ userOnlineStatus: { online: boolean } }>(
     UserOnlineStatus, {

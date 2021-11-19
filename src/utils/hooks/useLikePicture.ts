@@ -2,7 +2,7 @@ import { gql, useApolloClient } from '@apollo/client';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { LikePicture, UnLikePicture } from '@app/graphql/mutations';
 import { useAccount } from '@app/stores/hooks';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 import { useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 

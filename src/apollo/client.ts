@@ -6,7 +6,7 @@ import {
   split,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
-import { isString } from 'lodash';
+import isString from 'lodash/isString';
 import { BatchHttpLink } from '@apollo/client/link/batch-http';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';

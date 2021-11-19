@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import React from 'react';
 import styled from 'styled-components/macro';
 

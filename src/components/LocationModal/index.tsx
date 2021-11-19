@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useSearchParamModal } from '@app/utils/hooks';
 import { AutoComplete, Select } from '@arco-design/web-react';
 import { css } from 'styled-components/macro';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { useLazyQuery } from '@apollo/client';
 
 import { PlaceDetail, PlaceSuggestion } from '@app/graphql/query';

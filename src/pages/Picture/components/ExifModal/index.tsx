@@ -1,4 +1,3 @@
-import { isNull } from 'lodash';
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import bytes from 'bytes';

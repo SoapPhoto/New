@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import { rgba } from 'polished';
 import React, { memo, useCallback, useState } from 'react';
 import TextareaAutosize, { TextareaAutosizeProps } from 'react-textarea-autosize';

@@ -5,11 +5,79 @@ import graphql from '@rollup/plugin-graphql';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 import macrosPlugin from 'vite-plugin-babel-macros';
 import vitePluginImp from 'vite-plugin-imp';
+import visualizer from "rollup-plugin-visualizer";
+import { VitePWA } from 'vite-plugin-pwa'
 
-// https://vitejs.dev/config/
+var isDev = process.env.NODE_ENV !== 'production'
+
 export default defineConfig({
-  plugins: [reactRefresh(), graphql(), macrosPlugin(),
+  base: isDev ? '/' : 'https://cdn-oss.soapphoto.com',
+  plugins: [
+    reactRefresh(),
+    graphql(),
+    macrosPlugin(),
+    VitePWA({
+      base: '/',
+      manifest: {
+        "name": "Soap Photos",
+        "short_name": "Soap",
+        "background_color": "#FFFFFF",
+        "theme_color": "#ffffff",
+        "display": "standalone",
+        "start_url": "/",
+        "icons": [
+          {
+            "src": "icon/logo-72x72.png",
+            "type": "image/png",
+            "sizes": "72x72"
+          },
+          {
+            "src": "icon/logo-96x96.png",
+            "type": "image/png",
+            "sizes": "96x96"
+          },
+          {
+            "src": "icon/logo-192x192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+          },
+          {
+            "src": "icon/logo-512x512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+          }
+        ]
+      },
+      workbox: {
+        globDirectory: path.join('dist'),
+        globPatterns: [],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/cdn-oss\.soapphoto\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'soap-cdn',
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          }
+        ]
+      }
+    }),
     vitePluginImp([
+      {
+        libName: 'lodash',
+        libDirectory: '',
+        camel2DashComponentName: false,
+        style: () => {
+          return false;
+        },
+      },
       {
         libraryName: '@arco-design/web-react',
         libraryDirectory: 'es',
@@ -18,11 +86,13 @@ export default defineConfig({
           return `@arco-design/web-react/es/${name}/style/index.js`;
         },
       },
-    ])
+    ]),
+    // visualizer({
+    //   open: true,
+    //   gzipSize: true,
+    //   brotliSize: true,
+    // })
   ],
-  build: {
-    minify: false,
-  },
   resolve: {
     alias: [
       { find: '@app', replacement: path.resolve(__dirname, 'src') },
@@ -35,16 +105,16 @@ export default defineConfig({
     port: 3002,
     proxy: {
       '/graphql': {
-        target: 'http://localhost:3001',
+        target: 'https://soapphoto.com',
         changeOrigin: true,
         ws: true
       },
       '/oauth': {
-        target: 'http://localhost:3001',
+        target: 'https://soapphoto.com',
         changeOrigin: true,
       },
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'https://soapphoto.com',
         changeOrigin: true,
       },
     },

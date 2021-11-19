@@ -1,4 +1,6 @@
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+  action, computed, makeObservable, observable,
+} from 'mobx';
 import { themes } from '@app/styles/theme/themes';
 import { ThemeKeyType } from '@app/styles/theme/types';
 import {
@@ -26,6 +28,12 @@ class Theme {
   }
 
   public setTheme = (theme: ThemeKeyType) => {
+    if (theme === 'light') {
+      document.body.removeAttribute('arco-theme');
+    }
+    if (theme === 'dark') {
+      document.body.setAttribute('arco-theme', 'dark');
+    }
     saveTheme(theme);
     this.selected = theme;
   };

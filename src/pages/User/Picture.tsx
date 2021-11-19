@@ -41,7 +41,7 @@ const UserHome: React.FC<IProps> = memo(({ type }) => {
   }
   return (
     <Wrapper>
-      <PictureList noMore={false} list={data!.userPicturesByName.data} />
+      <PictureList noMore={false} list={data?.userPicturesByName.data ?? []} />
     </Wrapper>
   );
 });

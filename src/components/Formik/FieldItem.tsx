@@ -1,8 +1,10 @@
 import React from 'react';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 
-import { ItemBio, ItemBox, ItemContent, ItemLabel } from './elements';
 import { useTapButton } from '@app/utils/hooks';
+import {
+  ItemBio, ItemBox, ItemContent, ItemLabel,
+} from './elements';
 
 export interface IFieldItemProps extends React.HTMLAttributes<HTMLDivElement> {
   label: string;

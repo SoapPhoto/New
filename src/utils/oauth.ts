@@ -1,6 +1,6 @@
 import { OauthActionType, OauthStateType } from '@app/common/enum/oauthState';
 import { OauthType } from '@app/common/enum/router';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import qs from 'qs';
 
 let openWindow: Window | null = null;
@@ -25,7 +25,7 @@ export const getOauthUrl = (type: OauthType, state: OauthStateType) => {
       redirect_uri: cb,
     };
   } else if (type === OauthType.GOOGLE) {
-    const clientId = process.env.OAUTH_GOOGLE_CLIENT_ID;
+    const clientId = import.meta.env.VITE_OAUTH_GOOGLE_CLIENT_ID;
     url = 'https://accounts.google.com/o/oauth2/v2/auth';
     query = {
       state,
@@ -35,7 +35,7 @@ export const getOauthUrl = (type: OauthType, state: OauthStateType) => {
       redirect_uri: cb,
     };
   } else if (type === OauthType.WEIBO) {
-    const clientId = process.env.OAUTH_WEIBO_CLIENT_ID;
+    const clientId = import.meta.env.VITE_OAUTH_WEIBO_CLIENT_ID;
     url = 'https://api.weibo.com/oauth2/authorize';
     query = {
       state,

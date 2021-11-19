@@ -9,7 +9,17 @@ export const ListWrapper = styled.div`
   margin: 0 auto;
 `;
 
-export const ItemWrapper = styled.div<{ color: string }>`
+export const ImageWrapper = styled.div`
+  position: relative;
+  display: block;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  transition: 0.2s filter ease-in-out;
+  border-radius: inherit;
+  overflow: hidden;
+`;
+export const ItemWrapper = styled.div<{ color: string; isPrivate: number }>`
   position: absolute;
   will-change: transform, width, height, opacity;
   border-radius: 3px;
@@ -17,6 +27,7 @@ export const ItemWrapper = styled.div<{ color: string }>`
   height: 100%;
   box-shadow: 0px 0px 30px 0px ${(p) => darken(0.3, rgba(p.color, 0.3))};
   background-color: ${(p) => p.color};
+  overflow: hidden;
 `;
 
 const handleHover = css`
@@ -35,17 +46,6 @@ export const ItemBox = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 3px;
-`;
-
-export const ImageWrapper = styled.div`
-  position: relative;
-  display: block;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-  transition: 0.2s filter ease-in-out;
-  border-radius: inherit;
-  overflow: hidden;
 `;
 
 export const Img = styled.img`
@@ -87,7 +87,6 @@ export const A = styled(Link)`
     right: 0;
     height: 120px;
     pointer-events: none;
-    border-radius: 4px;
     background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0) 0,
@@ -189,4 +188,18 @@ export const SkeletonName = styled.div`
   bottom: 21px;
   left: 50px;
   ${skeletonCss}
+`;
+
+export const ChoiceBox = styled.div`
+  position: absolute;
+  z-index: 2;
+  margin-left: 12px;
+  margin-top: 12px;
+  width: 32px;
+  height: 32px;
+  /* background-image: linear-gradient(0deg, #FF9500, #F5C164); */
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

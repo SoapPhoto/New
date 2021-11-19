@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 
 import { btnMixin } from '@app/styles/mixins';
+import { customMedia } from '@app/styles/mediaQuery';
 
 export const Wrapper = styled.section`
   display: flex;
@@ -8,16 +9,19 @@ export const Wrapper = styled.section`
 
 export const BG = styled.div`
   flex: 1;
-  height: 100vh;
+  min-height: 100vh;
 `;
 export const RightBox = styled.div`
-  background-color: ${p => p.theme.colors.layout};
+  background-color: ${(p) => p.theme.colors.layout};
   max-width: 680px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 120px;
+  ${customMedia.lessThan('mobile')`
+    padding: 0 24px;
+  `}
 `;
 
 export const Content = styled.section`
@@ -65,6 +69,15 @@ export const WeiboOauthBtn = styled.button`
   height: 38px;
   width: 38px;
   background: rgb(255, 218, 93);
+  margin-left: 12px;
+  border-radius: 100%;
+`;
+
+export const GoogleOauthBtn = styled.button`
+  ${btnMixin}
+  height: 38px;
+  width: 38px;
+  background: #fff;
   margin-left: 12px;
   border-radius: 100%;
 `;

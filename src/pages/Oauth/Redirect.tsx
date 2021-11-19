@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 
 const Error = styled.div`
   --color: rgba(245,63,63);
-  --backgroud: rgba(255,236,232, 1);
+  --backgroud: rgba(245,63,63, .1);
   --content: 'Error';
   display: flex;
   align-items: center;
@@ -23,7 +23,7 @@ const Error = styled.div`
 `;
 const Success = styled.div`
   --color: rgba(0,180,42);
-  --backgroud: rgba(232,255,234, 1);
+  --backgroud: rgba(0,180,42, .1);
   --content: 'Success';
   display: flex;
   align-items: center;
@@ -76,7 +76,6 @@ const OauthRedirect = () => {
   const params = useParams();
   const query = useMemo(() => qs.parse(location.search, { ignoreQueryPrefix: true }), [location.search]);
   const isSuccess = useMemo(() => !!query.code, [query.code]);
-  console.log(query, params);
   return (
     <Wrapper>
       {

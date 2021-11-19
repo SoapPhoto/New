@@ -25,13 +25,14 @@ const Home = () => {
   });
   const currentPage = useRef(data?.pictures.page ?? 1);
   const maxPage = useMemo(() => (data?.pictures ? Math.ceil(data!.pictures.count / data!.pictures.pageSize) : 0), [data]);
+  const notData = useMemo(() => (loading && networkStatus === NetworkStatus.loading) || !data, [data, loading, networkStatus]);
   const noMore = useMemo(() => {
     if (!data?.pictures) {
       return true;
     }
     return data.pictures.page >= maxPage;
   }, [data?.pictures, maxPage]);
-  const more = useCallback(async () => {
+  const more = async () => {
     if (!data || networkStatus !== NetworkStatus.ready) {
       return;
     }
@@ -47,7 +48,7 @@ const Home = () => {
         },
       },
     });
-  }, [currentPage, data, fetchMore, networkStatus, noMore]);
+  };
   return (
     <div
       style={{
@@ -58,13 +59,13 @@ const Home = () => {
       }}
     >
       <Head title="首页" />
-      {(loading && networkStatus === NetworkStatus.loading) || !data ? (
+      { notData ? (
         <div>
           <Skeleton />
         </div>
       ) : (
         <div>
-          <PictureList onPage={more} noMore={false} list={data!.pictures.data} />
+          <PictureList onPage={more} noMore={noMore} list={data!.pictures.data} />
         </div>
       )}
     </div>

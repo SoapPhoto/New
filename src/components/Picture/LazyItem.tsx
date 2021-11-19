@@ -6,10 +6,10 @@ import PictureItem, { IPictureItemProps } from './Item';
 const PictureLayzItem: React.FC<IPictureItemProps> = (props) => {
   const transition = { duration: 0.2, ease: [0.43, 0.13, 0.23, 0.96] };
   const thumbnailVariants = {
-    hover: { scale: 0.98 },
+    hover: { scale: 1.05 },
   };
   return (
-    <LazyLoad unmountIfInvisible offset={500}>
+    <LazyLoad unmountIfInvisible offset={900}>
       <motion.div
         initial={{ opacity: 0, scale: 0.94 }}
         variants={thumbnailVariants}

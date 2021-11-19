@@ -11,7 +11,7 @@ import {
 } from '@app/utils/hooks';
 import { Form, Formik, FormikProps } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { pick } from 'lodash';
+import pick from 'lodash/pick';
 import { animated } from 'react-spring';
 import { uploadOSS } from '@app/services/file';
 import { observer } from 'mobx-react';

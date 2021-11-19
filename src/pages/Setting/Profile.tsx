@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 // import '@arco-design/web-react/es/Radio/style/index.js';
 import { css } from 'styled-components/macro';
-import { omit, pick } from 'lodash';
+import pick from 'lodash/pick';
 import { useApolloClient, useMutation } from '@apollo/client';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import { UpdateProfile } from '@app/graphql/mutations';

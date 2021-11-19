@@ -1,7 +1,9 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, {
+  memo, useEffect, useMemo, useRef,
+} from 'react';
 import { useMeasure } from 'react-use';
 import { observer } from 'mobx-react';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 import { useMedia } from '@app/utils/hooks';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
@@ -110,4 +112,4 @@ const PictureList: React.FC<IProps> = ({ list, onPage, noMore }) => {
   );
 };
 
-export default observer(PictureList);
+export default memo(PictureList);

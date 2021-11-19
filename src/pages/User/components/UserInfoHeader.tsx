@@ -147,17 +147,21 @@ const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {
               `}
               text={user.fullName}
             />
-            <Popover
-              trigger="hover"
-              placement="top"
-              theme="dark"
-              openDelay={100}
-              content={<span>{t('label.vipppp')}</span>}
-            >
-              <div css={css`display: flex;align-items: center;font-size: 28px;`}>
-                <VipBadge size="1.2em" />
-              </div>
-            </Popover>
+            {
+              user?.badge?.find((v) => v.name === 'prestige') && (
+              <Popover
+                trigger="hover"
+                placement="top"
+                theme="dark"
+                openDelay={100}
+                content={<span>{t('label.vipppp')}</span>}
+              >
+                <div css={css`display: flex;align-items: center;font-size: 28px;`}>
+                  <VipBadge size="1.2em" />
+                </div>
+              </Popover>
+              )
+            }
             <FollowButton user={user} />
           </UserName>
           <UserTotalBox>

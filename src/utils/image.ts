@@ -1,9 +1,9 @@
-import { getImageEXIF, IEXIF } from './exif';
 import FastAverageColor from 'fast-average-color';
+import isString from 'lodash/isString';
+import { encode } from 'blurhash';
 
 import { isWebp } from './mixed';
-import { isString } from 'lodash';
-import { encode } from 'blurhash';
+import { getImageEXIF, IEXIF } from './exif';
 
 export interface IImageInfo {
   exif: IEXIF;
@@ -74,7 +74,7 @@ export function getPictureUrl(
  */
 export function isImage(fileName: string) {
   const imgType = ['jpg', 'jpeg', 'png'];
-  const ext = fileName.split('.').pop()!
+  const ext = fileName.split('.').pop()!;
   console.log(ext);
   return imgType.indexOf(ext.toLocaleLowerCase()) >= 0;
 }
@@ -89,7 +89,7 @@ export function isImage(fileName: string) {
 export async function getImageInfo(
   image: File,
 ): Promise<[IImageInfo, string, string]> {
-  return new Promise(async res => {
+  return new Promise(async (res) => {
     const info: IImageInfo = {
       exif: {},
       color: '#fff',
@@ -178,7 +178,7 @@ export function previewImage(
   orientation?: number,
   isBase64 = false,
 ): Promise<string> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const [width, height] = getImageMinSize(
       img.naturalWidth,
       img.naturalHeight,
@@ -249,7 +249,7 @@ export function previewImage(
     if (isBase64) {
       resolve(canvas.toDataURL());
     } else {
-      canvas.toBlob(blob => {
+      canvas.toBlob((blob) => {
         resolve(window.URL.createObjectURL(blob));
       });
     }
@@ -265,7 +265,7 @@ export async function getImageColor(img: HTMLImageElement) {
 export function getImageBlurhash(
   data: string | HTMLImageElement,
 ): Promise<string> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d')!;
     let img: HTMLImageElement;

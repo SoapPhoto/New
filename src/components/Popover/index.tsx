@@ -9,7 +9,7 @@ import { usePopper } from 'react-popper';
 import { useSpring } from 'react-spring';
 import contains from 'rc-util/lib/Dom/contains';
 import PortalWrapper from 'rc-util/lib/PortalWrapper';
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import { Placement } from '@popperjs/core';
 import ResizeObserver from 'resize-observer-polyfill';
 import { useTheme } from 'styled-components/macro';

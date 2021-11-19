@@ -1,6 +1,6 @@
 import { client } from '@app/apollo/client';
 import { Whoami } from '@app/graphql/query';
-import { oauth, oauthToken } from '@app/services/oauth';
+import { activeUser, oauth, oauthToken } from '@app/services/oauth';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import {
   action,
@@ -11,6 +11,7 @@ import {
 } from 'mobx';
 import { OauthType } from '@app/common/enum/router';
 import { request } from '@app/utils/request';
+import { ActiveUserDto } from '@app/common/types/modules/oauth/dto/oauth.dto';
 
 class AccountStore {
   public init = false;
@@ -65,7 +66,6 @@ class AccountStore {
         },
         error: () => {
           this.init = true;
-          // localStorage.removeItem('token');
         },
       });
   };
@@ -97,6 +97,18 @@ class AccountStore {
     params.append('code', code);
     params.append('grant_type', 'authorization_code');
     const data = await oauthToken(type, params);
+    localStorage.setItem('token', JSON.stringify(data.data));
+    this.setUserInfo(data.data.user);
+  };
+
+  // eslint-disable-next-line class-methods-use-this
+  public activeUser = async ({ code, username, name }: ActiveUserDto) => {
+    const params = new URLSearchParams();
+    params.append('code', code as string);
+    params.append('username', username);
+    params.append('name', name);
+    params.append('grant_type', 'authorization_code');
+    const data = await activeUser(params);
     localStorage.setItem('token', JSON.stringify(data.data));
     this.setUserInfo(data.data.user);
   };

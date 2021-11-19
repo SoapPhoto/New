@@ -9,7 +9,7 @@ const ScrollToTop: React.FC = ({ children }) => {
   const navigationType = useNavigationType();
   useEffect(() => {
     if (oldLocation.current) {
-      if (oldLocation.current.pathname !== location.pathname && navigationType !== 'POP') {
+      if (oldLocation.current.pathname !== location.pathname && navigationType !== 'POP' && !location.state?.backgroundLocation) {
         window.scrollTo(0, 0);
       }
     }

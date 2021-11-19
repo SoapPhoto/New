@@ -16,7 +16,7 @@ import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import { divide } from 'lodash';
+import divide from 'lodash/divide';
 import Modal from '@app/components/Modal';
 import {
   CheckIcon,

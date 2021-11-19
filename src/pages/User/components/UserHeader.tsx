@@ -32,6 +32,7 @@ const UserHeader: React.FC<IProps> = memo(({ username }) => {
   } else {
     user = data.user;
   }
+  // ws 用户在线状态
   useUserOnlineStatusSubscription(user?.id);
   return (
     <>

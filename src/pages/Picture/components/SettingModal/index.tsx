@@ -6,7 +6,8 @@ import {
   Field,
   Form, Formik, FormikProps, setIn, useFormikContext,
 } from 'formik';
-import { omit, pick } from 'lodash';
+import omit from 'lodash/omit';
+import pick from 'lodash/pick';
 import { Trash2 } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from 'styled-components/macro';

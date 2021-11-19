@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import qs from 'qs';
-import { isBoolean } from 'lodash';
+import isBoolean from 'lodash/isBoolean';
 
 type Callback = (replace?: boolean) => void;
 
@@ -24,11 +24,12 @@ export default function useSearchParamModal(
       navigate(`${pathname}?${qs.stringify(query)}`, {
         state: {
           [label]: value,
+          ...(state ?? {}),
         },
         replace: isBoolean(replace) ? replace : false,
       });
     },
-    [label, navigate, pathname, search, value],
+    [label, navigate, pathname, search, state, value],
   );
   const close = useCallback(
     (replace?: boolean) => {

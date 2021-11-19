@@ -9,7 +9,7 @@ import FieldInput from '@app/components/Formik/FieldInput';
 import { useSpring, animated } from 'react-spring';
 import Button from '@app/components/Button';
 import { register } from '@app/services/account';
-import { isArray } from 'lodash';
+import isArray from 'lodash/isArray';
 import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
 import { toast } from 'react-hot-toast';

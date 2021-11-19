@@ -1,22 +1,27 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, {
+  useEffect, useLayoutEffect, useState, useRef, useMemo,
+} from 'react';
 import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
 import {
-  Route, BrowserRouter, Routes, Navigate,
+  Route, BrowserRouter, Routes, Navigate, useLocation, useNavigate,
 } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useTheme } from 'styled-components/macro';
 import dayjs from 'dayjs';
 import Loadable from '@loadable/component';
 
-import HomePage from '@app/pages/Home/Loadable';
 import { useTranslation } from 'react-i18next';
 import { DefaultLayout, SecurityLayout } from '@app/components/Layout';
-import Account from '@app/pages/Account';
-import Login from '@app/pages/Account/Login';
-import Register from '@app/pages/Account/Register';
 import { useAccount } from '@app/stores/hooks';
+import { UserPictureType } from '@app/common/enum/picture';
+import { OauthLayout } from '@app/components/Layout/OauthLayout';
+import ScrollToTop from '@app/components/ScrollToTop';
+
+import SettingPage from '@app/pages/Setting';
 import Test from '@app/pages/Test';
+import Account from '@app/pages/Account';
+import HomePage from '@app/pages/Home/Loadable';
 import PicturePage from '@app/pages/Picture/Loadable';
 import OauthRedirectPage from '@app/pages/Oauth/Redirect';
 import Upload from '@app/pages/Upload';
@@ -24,70 +29,97 @@ import UploadModal from '@app/components/UploadModal';
 import UserPage from '@app/pages/User/Loadable';
 import TagPage from '@app/pages/Tag';
 import UserHome from '@app/pages/User/Picture';
-import { UserPictureType } from '@app/common/enum/picture';
-import SettingPage from '@app/pages/Setting';
-import { OauthLayout } from '@app/components/Layout/OauthLayout';
-import ScrollToTop from '@app/components/ScrollToTop';
+import Login from '@app/pages/Account/Login';
+import Register from '@app/pages/Account/Register';
+import AuthCompletePage from '@app/pages/Account/Complete';
+
+import PictureModal from '@app/pages/Picture/Modal';
+import ReloadPrompt from '../ReloadPrompt';
+
 import { GlobalStyle } from '../styles/global-styles';
 
 const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
 
-const Router = () => (
-  <Routes>
-    <Route path="" element={<DefaultLayout />}>
-      <Route path="" element={<HomePage />} />
-      <Route path="picture/:id" element={<PicturePage />} />
-      <Route path="test" element={<Test />} />
-      <Route path="upload" element={<Upload />} />
-      <Route path="/user/:username" element={<UserPage />}>
-        <Route
-          path="like"
-          element={
-            <UserHome type={UserPictureType.LIKED} />
-          }
-        />
-        <Route
-          path="choice"
-          element={
-            <UserHome type={UserPictureType.CHOICE} />
-          }
-        />
-        <Route
-          path=""
-          element={<UserHome type={UserPictureType.MY} />}
-        />
-      </Route>
-      <Route path="/tag/:name" element={<TagPage />} />
-      <Route path="" element={<SecurityLayout />}>
-        <Route path="/setting" element={<SettingPage />}>
-          <Route
-            path="profile"
-            element={<SettingProfilePage />}
-          />
-          <Route
-            path="account"
-            element={<div>2</div>}
-          />
-          <Route
-            path="resetPassword"
-            element={<div>3</div>}
-          />
+const Router = () => {
+  const [init, setInit] = useState(false);
+  const initRef = useRef(false);
+  const location = useLocation();
+  const oldLocation = useRef(location.pathname);
+  const state = location.state as { backgroundLocation?: Location };
+  useEffect(() => {
+    if (location.pathname !== oldLocation.current) {
+      oldLocation.current = location.pathname;
+    }
+  }, [location.pathname]);
+  if (location.pathname !== oldLocation.current) {
+    initRef.current = true;
+  }
+  console.log();
+  return (
+    <>
+      <Routes location={!initRef.current ? location : state?.backgroundLocation ?? location}>
+        <Route path="" element={<DefaultLayout />}>
+          <Route path="" element={<HomePage />} />
+          <Route path="picture/:id" element={<PicturePage />} />
+          <Route path="test" element={<Test />} />
+          <Route path="upload" element={<Upload />} />
+          <Route path="/user/:username" element={<UserPage />}>
+            <Route
+              path="like"
+              element={
+                <UserHome type={UserPictureType.LIKED} />
+              }
+            />
+            <Route
+              path="choice"
+              element={
+                <UserHome type={UserPictureType.CHOICE} />
+              }
+            />
+            <Route
+              path=""
+              element={<UserHome type={UserPictureType.MY} />}
+            />
+          </Route>
+          <Route path="/tag/:name" element={<TagPage />} />
+          <Route path="" element={<SecurityLayout />}>
+            <Route path="/setting" element={<SettingPage />}>
+              <Route
+                path="profile"
+                element={<SettingProfilePage />}
+              />
+              <Route
+                path="account"
+                element={<div>2</div>}
+              />
+              <Route
+                path="resetPassword"
+                element={<div>3</div>}
+              />
+            </Route>
+            <Route path="/setting" element={<Navigate replace to="/setting/profile" />} />
+            <Route path="/setting/:type" element={<Navigate replace to="/setting/profile" />} />
+          </Route>
         </Route>
-        <Route path="/setting" element={<Navigate replace to="/setting/profile" />} />
-        <Route path="/setting/:type" element={<Navigate replace to="/setting/profile" />} />
-      </Route>
-    </Route>
-    <Route path="" element={<Account />}>
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
-    </Route>
-    <Route path="" element={<OauthLayout />}>
-      <Route path="redirect/oauth/:type" element={<OauthRedirectPage />} />
-    </Route>
-  </Routes>
-);
+        <Route path="" element={<Account />}>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="auth/complete" element={<AuthCompletePage />} />
+        </Route>
+        <Route path="" element={<OauthLayout />}>
+          <Route path="redirect/oauth/:type" element={<OauthRedirectPage />} />
+        </Route>
+      </Routes>
+      {initRef.current && state?.backgroundLocation && (
+        <Routes>
+          <Route path="/picture/:id" element={<PictureModal />} />
+        </Routes>
+      )}
+    </>
+  );
+};
 
-export const App = observer(() => {
+export const App = () => {
   const { widget } = useTheme();
   const { i18n } = useTranslation();
   const { initHandle } = useAccount();
@@ -102,7 +134,6 @@ export const App = observer(() => {
       dayjs.locale('zh-cn');
     }
   }, [i18n.language]);
-  console.log(i18n.language);
   return (
     <BrowserRouter>
       <Helmet
@@ -124,6 +155,7 @@ export const App = observer(() => {
           },
         }}
       />
+      <ReloadPrompt />
     </BrowserRouter>
   );
-});
+};

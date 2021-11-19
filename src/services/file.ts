@@ -37,8 +37,8 @@ export const uploadOSS = async (
     {
       progress,
       callback: {
-        // url: 'https://soapphoto.com/api/file/upload/oss/callback',
-        url: 'https://webhook.site/6d25c702-26c3-4d98-b270-06ea4055d14c',
+        url: import.meta.env.VITE_OSS_CALLBACK,
+        // url: 'https://webhook.site/6d25c702-26c3-4d98-b270-06ea4055d14c',
         /* eslint no-template-curly-in-string: [0] */
         body:
           '{"userId":${x:userId},"originalname":${x:originalname},"type":${x:type},"object":${object},"bucket":${bucket},"etag":${etag},"size":${size},"mimetype":${mimeType}}',

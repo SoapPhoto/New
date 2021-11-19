@@ -6,7 +6,7 @@ import PictureItem, { IPictureItemProps } from './Item';
 const PictureLayzItem: React.FC<IPictureItemProps> = (props) => {
   const transition = { duration: 0.2, ease: [0.43, 0.13, 0.23, 0.96] };
   const thumbnailVariants = {
-    hover: { scale: 1.05 },
+    hover: { scale: 1.04 },
   };
   return (
     <LazyLoad unmountIfInvisible offset={900}>
@@ -15,7 +15,9 @@ const PictureLayzItem: React.FC<IPictureItemProps> = (props) => {
         variants={thumbnailVariants}
         whileHover="hover"
         animate={{ opacity: 1, scale: 1, transition }}
-        style={{ width: '100%', height: '100%' }}
+        style={{
+          width: '100%', height: '100%', backfaceVisibility: 'hidden', transform: 'perspective(1px)',
+        }}
         // variants={thumbnailVariants}
         transition={transition}
       >

@@ -8,6 +8,7 @@ declare module 'styled-components/macro' {
     shadowColor: string;
     space: number;
     colors: {
+      pure: string;
       text: string;
       error: string;
       primary: string;

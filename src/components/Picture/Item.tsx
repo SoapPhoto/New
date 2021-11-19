@@ -4,14 +4,18 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTapButton } from '@app/utils/hooks';
+import { useTheme } from 'styled-components';
+import useLikePicture from '@app/utils/hooks/useLikePicture';
 import PictureImage from './Image';
 import {
   A,
   ChoiceBox,
   HandleBox,
+  HeartIcon,
   InfoBox,
   ItemBox,
   ItemWrapper,
+  LikeContent,
   UserBox,
   UserName,
 } from './elements';
@@ -28,7 +32,9 @@ export interface IPictureItemProps {
 const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
   const [spring, bind] = useTapButton();
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const location = useLocation();
+  const [like] = useLikePicture(picture.id);
   return (
     <ItemWrapper style={style} color={picture.color} isPrivate={picture.isPrivate ? 1 : 0}>
       {
@@ -74,6 +80,19 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
           )
         }
       </ItemBox>
+      <LikeContent
+        transformTemplate={({ scale }: any) => `translate(0, 0) scale(${scale})`}
+        whileHover={{ scale: 1 }}
+        whileTap={{ scale: 0.94 }}
+        onClick={() => like(picture.isLike)}
+      >
+        <HeartIcon
+          size={16}
+          color={colors.error}
+          islike={picture.isLike ? 1 : 0}
+        />
+        <p>{picture.likedCount}</p>
+      </LikeContent>
       <InfoBox>
         <UserBox>
           <UserPopover username={picture.user.username}>

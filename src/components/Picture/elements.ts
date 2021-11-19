@@ -1,8 +1,10 @@
 import { customMedia } from '@app/styles/mediaQuery';
-import { skeletonCss, skeletonCss2 } from '@app/styles/mixins';
+import { initButton, skeletonCss, skeletonCss2 } from '@app/styles/mixins';
+import { motion } from 'framer-motion';
 import { cover, darken, rgba } from 'polished';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components/macro';
+import { Heart } from '../Icons';
 
 export const ListWrapper = styled.div`
   max-width: 1500px;
@@ -137,6 +139,7 @@ export const UserName = styled(Link)`
   font-size: 14px;
   color: #fff;
   text-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  -webkit-font-smoothing: subpixel-antialiased;
 `;
 
 export const SkeletonContent = styled.div`
@@ -202,4 +205,34 @@ export const ChoiceBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const LikeContent = styled(motion.button)`
+  ${initButton}
+  z-index: 3;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${(_) => rgba(_.theme.colors.pure, 0.8)};
+  padding: 4px 14px;
+  font-family: Rubik;
+  font-size: 12px;
+  border: none;
+  border-radius: 20px;
+  line-height: 20px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.text};
+  backdrop-filter: saturate(180%) blur(20px);
+  ${handleHover}
+`;
+
+export const HeartIcon = styled(Heart)<{ islike: number }>`
+  stroke-width: 3px;
+  stroke: ${({ theme }) => theme.colors.error};
+  fill: ${(_) => (_.islike ? _.theme.colors.error : 'none')};
+  stroke: ${(_) => (_.islike ? _.theme.colors.error : _.color || '#fff')};
+  margin-right: 4px;
 `;

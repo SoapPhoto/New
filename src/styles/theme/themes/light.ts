@@ -11,6 +11,7 @@ const theme: DefaultTheme = {
   foreground: 'rgb(44, 62, 80)',
   shadowColor: 'rgba(0, 0, 0, 0.06)',
   colors: {
+    pure: '#fff',
     border: gray3,
     error: 'rgb(255,77,79)',
     text: 'rgba(58,52,51,1)',

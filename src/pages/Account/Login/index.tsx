@@ -144,7 +144,7 @@ const Login = () => {
         <GoogleOauthBtn
           onClick={() => oauth(OauthType.GOOGLE)}
         >
-          <GoogleFill color="#4285f4" />
+          <GoogleFill />
         </GoogleOauthBtn>
       </OauthBox>
     </a.div>

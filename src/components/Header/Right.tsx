@@ -13,7 +13,7 @@ import { observer } from 'mobx-react';
 import { useAccount, useThemeStore } from '@app/stores/hooks';
 import { skeletonCss } from '@app/styles/mixins';
 import { useTranslation } from 'react-i18next';
-import { useSearchParamModal } from '@app/utils/hooks';
+import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
 import {
   Menu, MenuItem, MenuItemLink, MenuProfile, UserName,
 } from './Menu';
@@ -58,6 +58,7 @@ export const Right = observer(() => {
   const { selected, setTheme } = useThemeStore();
   const { init, userInfo, logout } = useAccount();
   const { t } = useTranslation();
+  const [spring, bind] = useTapButton();
   const [, , openUpload] = useSearchParamModal('upload');
   const switchTheme = useCallback(() => {
     setTheme(selected === 'dark' ? 'light' : 'dark');
@@ -129,9 +130,7 @@ export const Right = observer(() => {
               </Menu>
             )}
           >
-            <div>
-              <Avatar size={36} src={userInfo.avatar} />
-            </div>
+            <Avatar size={36} src={userInfo.avatar} />
           </Popover>
         </>
       ) : (

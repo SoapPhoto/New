@@ -18,6 +18,10 @@ export default defineConfig({
     macrosPlugin(),
     VitePWA({
       base: '/',
+      includeAssets: [
+          "favicon.ico",
+          "robots.txt",
+      ],
       manifest: {
         "name": "Soap Photos",
         "short_name": "Soap",
@@ -49,16 +53,31 @@ export default defineConfig({
         ]
       },
       workbox: {
+        swDest: "./dist/sw.js",
+        navigateFallbackDenylist: [
+            /^\/api/,
+            /^\/assets/,
+            /^\/img/,
+            /^\/sitemap-.*/,
+            /^\/statics.*/,
+            /^.*\.js(\.map)?/,
+            /^.*\.css/,
+            /^.*\.webmanifest/,
+        ],
+      // injectManifest: {
+      //   globPatterns: [],
+      // }  
         // globDirectory: path.join('dist'),
-        // globPatterns: [],
+        // globPatterns: [
+        //   '**/*.{html,js,css,png,webp,jpg}',
+        // ],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/cdn-oss\.soapphoto\.com\/.*/i,
+            urlPattern: /^https:\/\/cdn-oss\.soapphoto\.com\/assets.*/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'soap-cdn',
+              cacheName: 'soap-cdn-assets',
               expiration: {
-                maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
               },
               cacheableResponse: {
@@ -87,11 +106,11 @@ export default defineConfig({
         },
       },
     ]),
-    // visualizer({
-    //   open: true,
-    //   gzipSize: true,
-    //   brotliSize: true,
-    // })
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+    })
   ],
   resolve: {
     alias: [

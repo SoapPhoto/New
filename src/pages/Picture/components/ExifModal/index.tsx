@@ -6,6 +6,7 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { getPictureUrl } from '@app/utils/image';
 import { useSearchParamModal } from '@app/utils/hooks';
 import Modal from '@app/components/Modal';
+import { GpsImage } from '@app/components/GpsImage';
 import {
   EXIFBox, EXIFInfo, EXIFTitle, Info,
 } from './elements';
@@ -18,7 +19,7 @@ const ExifModal: React.FC<IProps> = memo(({ picture }) => {
   const { t } = useTranslation();
   const [visible, close] = useSearchParamModal('exif');
   const {
-    make, model, exif, width, height, size, key,
+    make, model, exif, width, height, size, key, location,
   } = picture;
   const {
     focalLength, aperture, exposureTime, ISO,
@@ -79,6 +80,13 @@ const ExifModal: React.FC<IProps> = memo(({ picture }) => {
               <EXIFInfo>{bytes(size)}</EXIFInfo>
             </div>
           </EXIFBox>
+          {
+            (location && location.location) && (
+              <div style={{ borderRadius: '4px', marginTop: 32 }}>
+                <GpsImage zoom={14} size="500x300" gps={[location.location.lat, location.location.lng]} />
+              </div>
+            )
+          }
         </Info>
       </Modal.Content>
     </Modal>

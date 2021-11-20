@@ -44,20 +44,20 @@ const UserHeader: React.FC<IProps> = memo(({ username }) => {
           <UserCover cover={user.cover} avatar={user.avatar} />
           <UserInfoHeader user={user} />
           <UserTab />
+          <UserFollowModal
+            visible={followerVisible && !loading}
+            onClose={followerClose}
+            type="follower"
+            userId={data?.user.id || 0}
+          />
+          <UserFollowModal
+            visible={followedVisible && !loading}
+            onClose={followedClose}
+            type="followed"
+            userId={user?.id || 0}
+          />
         </>
       )}
-      <UserFollowModal
-        visible={followerVisible && !loading}
-        onClose={followerClose}
-        type="follower"
-        userId={data?.user.id || 0}
-      />
-      <UserFollowModal
-        visible={followedVisible && !loading}
-        onClose={followedClose}
-        type="followed"
-        userId={user?.id || 0}
-      />
     </>
   );
 });

@@ -25,19 +25,19 @@ export const uploadOSS = async (
   const { data: creds } = await getSts();
   const key = uuid();
   const client = new OSS({
-    region: import.meta.env.VITE_OSS_REGION,
-    bucket: import.meta.env.VITE_OSS_BUCKET,
+    region: process.env.REACT_APP_OSS_REGION,
+    bucket: process.env.REACT_APP_OSS_BUCKET,
     accessKeyId: creds.AccessKeyId,
     accessKeySecret: creds.AccessKeySecret,
     stsToken: creds.SecurityToken,
   });
   const { data } = await client.multipartUpload(
-    import.meta.env.VITE_OSS_PATH + key,
+    process.env.REACT_APP_OSS_PATH + key,
     file,
     {
       progress,
       callback: {
-        url: import.meta.env.VITE_OSS_CALLBACK,
+        url: process.env.REACT_APP_OSS_CALLBACK,
         // url: 'https://webhook.site/6d25c702-26c3-4d98-b270-06ea4055d14c',
         /* eslint no-template-curly-in-string: [0] */
         body:

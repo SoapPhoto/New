@@ -34,8 +34,8 @@ import Register from '@app/pages/Account/Register';
 import AuthCompletePage from '@app/pages/Account/Complete';
 
 import PictureModal from '@app/pages/Picture/Modal';
-import ReloadPrompt from '../ReloadPrompt';
 
+import NotPage from '@app/pages/404';
 import { GlobalStyle } from '../styles/global-styles';
 
 const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
@@ -109,6 +109,9 @@ const Router = () => {
         <Route path="" element={<OauthLayout />}>
           <Route path="redirect/oauth/:type" element={<OauthRedirectPage />} />
         </Route>
+        <Route path="*" element={<DefaultLayout />}>
+          <Route path="*" element={<NotPage />} />
+        </Route>
       </Routes>
       {initRef.current && state?.backgroundLocation && (
         <Routes>
@@ -155,7 +158,7 @@ export const App = () => {
           },
         }}
       />
-      <ReloadPrompt />
+      {/* <ReloadPrompt /> */}
     </BrowserRouter>
   );
 };

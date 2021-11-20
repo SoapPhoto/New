@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 import FastAverageColor from 'fast-average-color';
 import isString from 'lodash/isString';
 import { encode } from 'blurhash';
@@ -25,6 +26,7 @@ export const pictureStyle = {
   blur: '@!thumbnailBlur',
   itemprop: '@!itemprop',
   thumbSmall: '@!thumbnailSmall',
+  medium: '@!medium',
   ico: '@!ico',
 };
 
@@ -77,76 +79,6 @@ export function isImage(fileName: string) {
   const ext = fileName.split('.').pop()!;
   console.log(ext);
   return imgType.indexOf(ext.toLocaleLowerCase()) >= 0;
-}
-
-/**
- * 获取图片详细信息
- *
- * @export
- * @param {File} image
- * @returns {Promise<[IImageInfo, string, string]>}
- */
-export async function getImageInfo(
-  image: File,
-): Promise<[IImageInfo, string, string]> {
-  return new Promise(async (res) => {
-    const info: IImageInfo = {
-      exif: {},
-      color: '#fff',
-      isDark: false,
-      height: 0,
-      width: 0,
-      make: undefined,
-      model: undefined,
-    };
-    const imgSrc = window.URL.createObjectURL(image);
-    const imgHtml = document.createElement('img');
-    imgHtml.src = imgSrc;
-    const exif = await getImageEXIF(image);
-    if (exif) {
-      info.exif = exif;
-      info.make = exif.make;
-      info.model = exif.model;
-    }
-    let previewSrc: string;
-    let previewBase64: string;
-    const setPreviewImage = async () => {
-      info.height = imgHtml.naturalHeight;
-      info.width = imgHtml.naturalWidth;
-      if (info.exif && info.exif.orientation) {
-        // 有翻转的长宽对调
-        if (info.exif.orientation >= 5) {
-          info.height = imgHtml.naturalWidth;
-          info.width = imgHtml.naturalHeight;
-        }
-      }
-      [previewSrc, previewBase64] = await Promise.all([
-        previewImage(imgHtml, 800, info.exif.orientation),
-        previewImage(imgHtml, 300, info.exif.orientation, true),
-      ]);
-    };
-    const setColor = async () => {
-      const colorData = await getImageColor(imgHtml);
-      info.isDark = colorData.isDark;
-      info.color = colorData.hex;
-    };
-    const setBlurhash = async () => {
-      const blurhash = await getImageBlurhash(previewBase64);
-      info.blurhash = blurhash;
-    };
-    const setInfo = async () => {
-      await Promise.all([setPreviewImage(), setColor()]);
-      await setBlurhash();
-      res([info, previewSrc!, previewBase64!]);
-    };
-    if (imgHtml.complete) {
-      setInfo();
-    } else {
-      imgHtml.onload = async () => {
-        setInfo();
-      };
-    }
-  });
 }
 
 export function getImageMinSize(
@@ -291,6 +223,76 @@ export function getImageBlurhash(
     } else {
       img.onload = async () => {
         set();
+      };
+    }
+  });
+}
+
+/**
+ * 获取图片详细信息
+ *
+ * @export
+ * @param {File} image
+ * @returns {Promise<[IImageInfo, string, string]>}
+ */
+export async function getImageInfo(
+  image: File,
+): Promise<[IImageInfo, string, string]> {
+  return new Promise(async (res) => {
+    const info: IImageInfo = {
+      exif: {},
+      color: '#fff',
+      isDark: false,
+      height: 0,
+      width: 0,
+      make: undefined,
+      model: undefined,
+    };
+    const imgSrc = window.URL.createObjectURL(image);
+    const imgHtml = document.createElement('img');
+    imgHtml.src = imgSrc;
+    const exif = await getImageEXIF(image);
+    if (exif) {
+      info.exif = exif;
+      info.make = exif.make;
+      info.model = exif.model;
+    }
+    let previewSrc: string;
+    let previewBase64: string;
+    const setPreviewImage = async () => {
+      info.height = imgHtml.naturalHeight;
+      info.width = imgHtml.naturalWidth;
+      if (info.exif && info.exif.orientation) {
+        // 有翻转的长宽对调
+        if (info.exif.orientation >= 5) {
+          info.height = imgHtml.naturalWidth;
+          info.width = imgHtml.naturalHeight;
+        }
+      }
+      [previewSrc, previewBase64] = await Promise.all([
+        previewImage(imgHtml, 800, info.exif.orientation),
+        previewImage(imgHtml, 300, info.exif.orientation, true),
+      ]);
+    };
+    const setColor = async () => {
+      const colorData = await getImageColor(imgHtml);
+      info.isDark = colorData.isDark;
+      info.color = colorData.hex;
+    };
+    const setBlurhash = async () => {
+      const blurhash = await getImageBlurhash(previewBase64);
+      info.blurhash = blurhash;
+    };
+    const setInfo = async () => {
+      await Promise.all([setPreviewImage(), setColor()]);
+      await setBlurhash();
+      res([info, previewSrc!, previewBase64!]);
+    };
+    if (imgHtml.complete) {
+      setInfo();
+    } else {
+      imgHtml.onload = async () => {
+        setInfo();
       };
     }
   });

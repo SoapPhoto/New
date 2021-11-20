@@ -33,6 +33,9 @@ import { client } from '@app/apollo/client';
 import 'dayjs/locale/en';
 import 'dayjs/locale/zh-cn';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
+require('offline-plugin/runtime').install();
+
 // const openSansObserver = new FontFaceObserver('Rubik', {});
 
 // openSansObserver.load().then(() => {

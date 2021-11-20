@@ -41,7 +41,7 @@ const PictureCenter: React.FC<IProps> = ({ picture }) => {
           <PictureImageBox height={height} background={picture.color}>
             <PictureImage>
               <Image
-                src={getPictureUrl(picture.key, 'large')}
+                src={getPictureUrl(picture.key, 'medium')}
                 blurhash={picture.blurhash}
                 lazyload={false}
               />

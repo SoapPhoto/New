@@ -15,9 +15,9 @@ export interface IOauthSuccessData {
 export const getOauthUrl = (type: OauthType, state: OauthStateType) => {
   let url = '';
   let query: Record<string, any> = {};
-  const cb = `${import.meta.env.VITE_OAUTH_CB_URL}/oauth/${type.toLowerCase()}/redirect`;
+  const cb = `${process.env.REACT_APP_OAUTH_CB_URL}/oauth/${type.toLowerCase()}/redirect`;
   if (type === OauthType.GITHUB) {
-    const clientId = import.meta.env.VITE_OAUTH_GITHUB_CLIENT_ID;
+    const clientId = process.env.REACT_APP_OAUTH_GITHUB_CLIENT_ID;
     url = 'https://github.com/login/oauth/authorize';
     query = {
       state,
@@ -25,7 +25,7 @@ export const getOauthUrl = (type: OauthType, state: OauthStateType) => {
       redirect_uri: cb,
     };
   } else if (type === OauthType.GOOGLE) {
-    const clientId = import.meta.env.VITE_OAUTH_GOOGLE_CLIENT_ID;
+    const clientId = process.env.REACT_APP_OAUTH_GOOGLE_CLIENT_ID;
     url = 'https://accounts.google.com/o/oauth2/v2/auth';
     query = {
       state,
@@ -35,7 +35,7 @@ export const getOauthUrl = (type: OauthType, state: OauthStateType) => {
       redirect_uri: cb,
     };
   } else if (type === OauthType.WEIBO) {
-    const clientId = import.meta.env.VITE_OAUTH_WEIBO_CLIENT_ID;
+    const clientId = process.env.REACT_APP_OAUTH_WEIBO_CLIENT_ID;
     url = 'https://api.weibo.com/oauth2/authorize';
     query = {
       state,

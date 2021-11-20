@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "craco start",
     "build:vite": "tsc && vite build",
+    "build": "craco build",
     "serve": "vite preview",
     "storybook": "start-storybook -p 9009 -s public",
     "checkTs": "tsc --noEmit",
@@ -40,7 +41,7 @@
     "fast-average-color": "^6.4.2",
     "fontfaceobserver": "2.1.0",
     "formik": "^2.2.9",
-    "framer-motion": "^5.3.0",
+    "framer-motion": "^4.1.17",
     "gcoord": "^0.3.2",
     "graphql": "^16.0.1",
     "history": "5.1.0",
@@ -104,6 +105,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@craco/craco": "^6.4.0",
     "@graphql-codegen/cli": "^2.3.0",
     "@graphql-codegen/typescript-operations": "^2.2.0",
     "@graphql-codegen/typescript-react-apollo": "^3.2.1",
@@ -132,7 +134,10 @@
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "@vitejs/plugin-react-refresh": "1.3.6",
-    "eslint": "^8.1.0",
+    "babel-plugin-import": "^1.13.3",
+    "babel-plugin-styled-components": "^1.13.3",
+    "craco-graphql-loader": "^1.0.1",
+    "eslint": "^7.11.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^14.0.1",
     "eslint-config-prettier": "^8.3.0",
@@ -141,14 +146,18 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.1-alpha-fd5e01c2e-20210913",
+    "offline-plugin": "^5.0.7",
+    "react-scripts": "^4.0.3",
     "rollup-plugin-node-globals": "1.4.0",
     "rollup-plugin-node-polyfills": "0.2.1",
     "rollup-plugin-polyfill-node": "0.7.0",
     "rollup-plugin-visualizer": "^5.5.2",
+    "terser-webpack-plugin": "^4.2.3",
     "vite": "2.6.14",
     "vite-plugin-babel-macros": "^1.0.5",
     "vite-plugin-imp": "^2.0.9",
-    "vite-plugin-pwa": "^0.11.5"
+    "vite-plugin-pwa": "^0.11.5",
+    "webpack-bundle-analyzer": "^4.5.0"
   },
   "browserslist": {
     "production": [

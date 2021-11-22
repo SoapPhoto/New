@@ -34,7 +34,7 @@ export const GpsImage: React.FC<IProps> = ({
 }) => {
   // const { mapbox } = useTheme();
   const gpsString = useMemo(() => gcoord.transform([gps[1], gps[0]], gcoord.GCJ02, gcoord.WGS84), [gps]).toString();
-  const src = useMemo(() => `//api.mapbox.com/styles/v1/yiiu/ckw7m138o3p3514o5ey3k97qj/static/pin-s-attraction+285A98(${gpsString},${zoom})/${gpsString},${zoom},0,0/${size}@2x?access_token=${process.env.REACT_APP_MAPBOX_AK}&attribution=false&logo=false`, [gpsString, size, zoom]);
+  const src = useMemo(() => `//api.mapbox.com/styles/v1/yiiu/ckw7m138o3p3514o5ey3k97qj/static/pin-s-attraction+285A98(${gpsString},${zoom})/${gpsString},${zoom},0,0/${size}@2x?access_token=${import.meta.env.VITE_MAPBOX_AK}&attribution=false&logo=false`, [gpsString, size, zoom]);
   return (
     <Wrapper>
       <img src={src} alt={alt} />

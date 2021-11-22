@@ -13,11 +13,11 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
 export function initClient() {
   const batchLink = new BatchHttpLink({
-    uri: `${process.env.REACT_APP_API_URL}graphql`,
+    uri: `${import.meta.env.VITE_API_URL}graphql`,
     credentials: 'include',
   });
   const wsLink = new WebSocketLink({
-    uri: `${process.env.REACT_APP_WS_URL}/graphql`,
+    uri: `${import.meta.env.VITE_WS_URL}/graphql`,
     options: {
       lazy: true,
       reconnect: true,

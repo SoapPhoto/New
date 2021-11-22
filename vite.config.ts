@@ -9,15 +9,16 @@ import visualizer from "rollup-plugin-visualizer";
 import { VitePWA } from 'vite-plugin-pwa'
 
 var isDev = process.env.NODE_ENV !== 'production'
-
+console.log(isDev)
 export default defineConfig({
-  base: isDev ? '/' : 'https://cdn-oss.soapphoto.com',
+  base: isDev ? '/' : 'https://cdn-oss.soapphoto.com/',
   plugins: [
     reactRefresh(),
     graphql(),
     macrosPlugin(),
     VitePWA({
       base: '/',
+      // base: isDev ? '/' : 'https://cdn-oss.soapphoto.com/',
       includeAssets: [
           "favicon.ico",
           "robots.txt",
@@ -55,28 +56,16 @@ export default defineConfig({
       workbox: {
         swDest: "./dist/sw.js",
         navigateFallbackDenylist: [
-            /^\/api/,
-            /^\/assets/,
-            /^\/img/,
-            /^\/sitemap-.*/,
-            /^\/statics.*/,
-            /^.*\.js(\.map)?/,
-            /^.*\.css/,
-            /^.*\.webmanifest/,
+          /^\/api/,
+          /^\/graphql/,
+          /^\/oauth/,
         ],
-      // injectManifest: {
-      //   globPatterns: [],
-      // }  
-        // globDirectory: path.join('dist'),
-        // globPatterns: [
-        //   '**/*.{html,js,css,png,webp,jpg}',
-        // ],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/cdn-oss\.soapphoto\.com\/assets.*/i,
+            urlPattern: /^https:\/\/cdn-oss\.soapphoto\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'soap-cdn-assets',
+              cacheName: 'soap-cdn',
               expiration: {
                 maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
               },

@@ -34,7 +34,7 @@ import 'dayjs/locale/en';
 import 'dayjs/locale/zh-cn';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-require('offline-plugin/runtime').install();
+// require('offline-plugin/runtime').install();
 
 // const openSansObserver = new FontFaceObserver('Rubik', {});
 
@@ -42,6 +42,15 @@ require('offline-plugin/runtime').install();
 //   document.body.classList.add('fontLoaded');
 // });
 
+// if ('serviceWorker' in navigator) {
+//   window.addEventListener('load', () => {
+//     navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+//       console.log('SW registered: ', registration);
+//     }).catch((registrationError) => {
+//       console.log('SW registration failed: ', registrationError);
+//     });
+//   });
+// }
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
 dayjs.extend(relativeTime);

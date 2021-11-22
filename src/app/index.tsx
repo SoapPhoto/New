@@ -36,6 +36,7 @@ import AuthCompletePage from '@app/pages/Account/Complete';
 import PictureModal from '@app/pages/Picture/Modal';
 
 import NotPage from '@app/pages/404';
+import ReloadPrompt from '@app/ReloadPrompt';
 import { GlobalStyle } from '../styles/global-styles';
 
 const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
@@ -158,7 +159,7 @@ export const App = () => {
           },
         }}
       />
-      {/* <ReloadPrompt /> */}
+      <ReloadPrompt />
     </BrowserRouter>
   );
 };

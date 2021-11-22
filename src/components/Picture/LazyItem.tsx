@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import { motion } from 'framer-motion';
 import LazyLoad from 'react-lazyload';
+import { animated } from 'react-spring';
+
 import PictureItem, { IPictureItemProps } from './Item';
 
 const PictureLayzItem: React.FC<IPictureItemProps> = (props) => {
@@ -10,19 +11,13 @@ const PictureLayzItem: React.FC<IPictureItemProps> = (props) => {
   };
   return (
     <LazyLoad unmountIfInvisible offset={900}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0.94 }}
-        variants={thumbnailVariants}
-        whileHover="hover"
-        animate={{ opacity: 1, scale: 1, transition }}
+      <animated.div
         style={{
           width: '100%', height: '100%', backfaceVisibility: 'hidden', transform: 'perspective(1px)',
         }}
-        // variants={thumbnailVariants}
-        transition={transition}
       >
         <PictureItem {...props} />
-      </motion.div>
+      </animated.div>
     </LazyLoad>
   );
 };

@@ -42,6 +42,7 @@ import {
   FieldSwitch,
   FieldTag,
   FieldTextarea,
+  Loading,
 } from '..';
 import FieldLocation from '../Formik/FieldLocation';
 import LocationModal from '../LocationModal';
@@ -78,6 +79,7 @@ const UploadModal = observer(() => {
   const { t } = useTranslation();
   const { userInfo } = useAccount();
   const [writePictures] = useNewPictureCacheWrite();
+  const [loading, setLoading] = useState(true);
   const [, setPercentComplete] = useState(0);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [location, setLocation] = useState<LocationEntity>();
@@ -108,6 +110,24 @@ const UploadModal = observer(() => {
       closeEditExif(true);
     }
   }, [closeEditExif, editExifVisible, thumbnail, visible]);
+  useEffect(() => {
+    if (visible) {
+      if (!(window as any).OSS) {
+        setLoading(true);
+        const HEAD = document.getElementsByTagName('head')[0] || document.documentElement;
+        const script = document.createElement('script');
+        script.setAttribute('type', 'text/javascript');
+        script.onload = function () {
+          console.log('OSS 加载成功!');
+          setLoading(false);
+        };
+        script.setAttribute('src', 'https://cdn.jsdelivr.net/npm/ali-oss@6.16.0/dist/aliyun-oss-sdk.min.js');
+        HEAD.appendChild(script);
+      } else {
+        setLoading(false);
+      }
+    }
+  }, [visible]);
   const onUploadProgress = useCallback((percent: number) => {
     setPercentComplete(percent);
   }, []);
@@ -182,79 +202,91 @@ const UploadModal = observer(() => {
       maskClosable={false}
     >
       {thumbnail && <Modal.Background height={140} background={thumbnail!} />}
-      <Modal.Content>
-        {!thumbnail ? (
-          <UploadHeader onFileChange={handleChange}>
-            <Image size={32} />
-            <UploadTips>{t('picture.upload.selectImg')}</UploadTips>
-          </UploadHeader>
-        ) : (
-          <UploadImageHeader>
-            <Thumbnail onClick={() => openEditExif()}>
-              <img alt="" src={thumbnail} />
-              <ThumbnailHover color={info?.color}>
-                <Edit />
-              </ThumbnailHover>
-            </Thumbnail>
-            <DeleteImageBtnBox>
-              <DeleteImageBtn onClick={() => clearImage()} />
-            </DeleteImageBtnBox>
-          </UploadImageHeader>
-        )}
-        <UploadBox>
-          <Formik<IValues>
-            innerRef={formikRef}
-            initialValues={{
-              title: '',
-              isLocation: false,
-              bio: '',
-              isPrivate: false,
-              location: undefined,
-              tags: [],
-            }}
-            validationSchema={Yup.object().shape({
-              title: Yup.string().required(
-                t('picture.upload.yup_title_required'),
-              ),
-            })}
-            onSubmit={onSubmit}
+      {
+        loading ? (
+          <div style={{
+            display: 'flex', minHeight: '140px', alignItems: 'center', justifyContent: 'center', flexDirection: 'column',
+          }}
           >
-            {({ isValid }) => (
-              <Form>
-                <FieldInput
-                  required
-                  name="title"
-                  label={t('label.picture_title') as string}
-                />
-                <FieldTextarea
-                  name="bio"
-                  label={t('label.picture_bio') as string}
-                />
-                <FieldTag name="tags" />
-                {/* <div style={{ height: '24px' }} /> */}
-                <FieldLocation label="地点" bio="添加地点" name="location" />
-                <div style={{ height: '24px' }} />
-                <FieldSwitch
-                  name="isPrivate"
-                  label={t('label.private')}
-                  bio={t('picture.label.privateBio')}
-                />
-                <div style={{ height: '24px' }} />
-                <div style={{ height: '12px' }} />
-                <div>
-                  <Button
-                    loading={uploadLoading}
-                    htmlType="submit"
-                    disabled={!(isValid && thumbnail)}
-                  >
-                    {t('picture.upload.uploadBtn')}
-                  </Button>
-                </div>
-              </Form>
+            <Loading />
+            <div style={{ fontSize: 12, marginTop: 12 }}>加载中，请稍等！</div>
+          </div>
+        ) : (
+          <Modal.Content>
+            {!thumbnail ? (
+              <UploadHeader onFileChange={handleChange}>
+                <Image size={32} />
+                <UploadTips>{t('picture.upload.selectImg')}</UploadTips>
+              </UploadHeader>
+            ) : (
+              <UploadImageHeader>
+                <Thumbnail onClick={() => openEditExif()}>
+                  <img alt="" src={thumbnail} />
+                  <ThumbnailHover color={info?.color}>
+                    <Edit />
+                  </ThumbnailHover>
+                </Thumbnail>
+                <DeleteImageBtnBox>
+                  <DeleteImageBtn onClick={() => clearImage()} />
+                </DeleteImageBtnBox>
+              </UploadImageHeader>
             )}
-          </Formik>
-        </UploadBox>
-      </Modal.Content>
+            <UploadBox>
+              <Formik<IValues>
+                innerRef={formikRef}
+                initialValues={{
+                  title: '',
+                  isLocation: false,
+                  bio: '',
+                  isPrivate: false,
+                  location: undefined,
+                  tags: [],
+                }}
+                validationSchema={Yup.object().shape({
+                  title: Yup.string().required(
+                    t('picture.upload.yup_title_required'),
+                  ),
+                })}
+                onSubmit={onSubmit}
+              >
+                {({ isValid }) => (
+                  <Form>
+                    <FieldInput
+                      required
+                      name="title"
+                      label={t('label.picture_title') as string}
+                    />
+                    <FieldTextarea
+                      name="bio"
+                      label={t('label.picture_bio') as string}
+                    />
+                    <FieldTag name="tags" />
+                    {/* <div style={{ height: '24px' }} /> */}
+                    <FieldLocation label="地点" bio="添加地点" name="location" />
+                    <div style={{ height: '24px' }} />
+                    <FieldSwitch
+                      name="isPrivate"
+                      label={t('label.private')}
+                      bio={t('picture.label.privateBio')}
+                    />
+                    <div style={{ height: '24px' }} />
+                    <div style={{ height: '12px' }} />
+                    <div>
+                      <Button
+                        loading={uploadLoading}
+                        htmlType="submit"
+                        disabled={!(isValid && thumbnail)}
+                      >
+                        {t('picture.upload.uploadBtn')}
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </UploadBox>
+          </Modal.Content>
+        )
+      }
       {thumbnail && (
         <EditExifModal
           initialValues={{

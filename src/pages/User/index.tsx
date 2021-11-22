@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom';
 import UserHeader from './components/UserHeader';
 
-const User = memo(() => {
+const UserPage = memo(() => {
   const { username } = useParams();
   // return <UserSkeleton />;
   return (
@@ -14,4 +14,4 @@ const User = memo(() => {
     </div>
   );
 });
-export default User;
+export default UserPage;

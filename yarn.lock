@@ -15705,6 +15705,11 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+rollup-plugin-analyzer@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.nlark.com/rollup-plugin-analyzer/download/rollup-plugin-analyzer-4.0.0.tgz#96b757ed64a098b59d72f085319e68cdd86d5798"
+  integrity sha1-lrdX7WSgmLWdcvCFMZ5ozdhtV5g=
+
 rollup-plugin-babel@^4.3.3:
   version "4.4.0"
   resolved "https://registry.npmmirror.com/rollup-plugin-babel/download/rollup-plugin-babel-4.4.0.tgz#d15bd259466a9d1accbdb2fe2fff17c52d030acb"

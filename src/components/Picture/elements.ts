@@ -1,8 +1,8 @@
 import { customMedia } from '@app/styles/mediaQuery';
 import { initButton, skeletonCss, skeletonCss2 } from '@app/styles/mixins';
-import { motion } from 'framer-motion';
 import { cover, darken, rgba } from 'polished';
 import { Link } from 'react-router-dom';
+import { animated } from 'react-spring';
 import styled, { css } from 'styled-components/macro';
 import { Heart } from '../Icons';
 
@@ -207,7 +207,7 @@ export const ChoiceBox = styled.div`
   justify-content: center;
 `;
 
-export const LikeContent = styled(motion.button)`
+export const LikeContent = styled(animated.button)`
   ${initButton}
   z-index: 3;
   position: absolute;

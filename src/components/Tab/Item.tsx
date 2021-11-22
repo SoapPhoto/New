@@ -1,5 +1,7 @@
-import { motion } from 'framer-motion';
 import React from 'react';
+import { animated } from 'react-spring';
+
+import { useTapButton } from '@app/utils/hooks';
 import { ItemLink } from './elements';
 
 interface ITabItemProps {
@@ -8,22 +10,26 @@ interface ITabItemProps {
 }
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
 
-const TabItem: React.FC<ITabItemProps> = ({ name, to }) => (
-  <motion.span
-    key={name}
-    whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.9 }}
-    style={{ display: 'inline-block' }}
-    transition={transition}
-  >
-    <ItemLink
-      caseSensitive={false}
-      end
-      to={to}
+const TabItem: React.FC<ITabItemProps> = ({ name, to }) => {
+  const [spring, bind] = useTapButton(1.1, 0.90);
+  return (
+    <animated.div
+      key={name}
+      {...bind()}
+      style={{
+        transform: spring.transform,
+      }}
+      // transition={transition}
     >
-      {name}
-    </ItemLink>
-  </motion.span>
-);
+      <ItemLink
+        caseSensitive={false}
+        end
+        to={to}
+      >
+        {name}
+      </ItemLink>
+    </animated.div>
+  );
+};
 
 export default TabItem;

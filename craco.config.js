@@ -25,8 +25,8 @@ module.exports = {
         // 不允许遗留任何“旧的” ServiceWorkers
         clientsClaim: true,
         skipWaiting: true
-      })
-      // ...whenProd(() => [new WebpackBundleAnalyzer()], []),
+      }),
+      ...whenProd(() => [new WebpackBundleAnalyzer()], []),
     ],
     configure: {
       // devtool: 'eval-cheap-module-source-map',

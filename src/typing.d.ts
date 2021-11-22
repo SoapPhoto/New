@@ -62,3 +62,8 @@ declare module '@app/graphql/subscription/subscription.graphql' {
   export const NewNotification: DocumentNode;
   export const UserOnlineStatus: DocumentNode;
 }
+interface MyWindow extends Window {
+  OSS(): void;
+}
+
+declare let window: MyWindow;

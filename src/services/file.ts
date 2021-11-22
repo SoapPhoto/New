@@ -3,10 +3,6 @@ import { v4 as uuid } from 'uuid';
 import { UploadType } from '@app/common/enum/upload';
 import { request } from '@app/utils/request';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import OSS from 'ali-oss';
-// const OSS = require('ali-oss');
-
 interface ICreds {
   AccessKeyId: string;
   AccessKeySecret: string;
@@ -22,9 +18,13 @@ export const uploadOSS = async (
   type: UploadType = UploadType.PICTURE,
   progress?: (num: number) => void,
 ) => {
+  if (!(window as any).OSS) {
+    console.error('OSS 不存在');
+    return;
+  }
   const { data: creds } = await getSts();
   const key = uuid();
-  const client = new OSS({
+  const client = new (window as any).OSS({
     region: import.meta.env.VITE_OSS_REGION,
     bucket: import.meta.env.VITE_OSS_BUCKET,
     accessKeyId: creds.AccessKeyId,

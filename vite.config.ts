@@ -96,7 +96,6 @@ export default defineConfig({
       },
     ]),
     visualizer({
-      open: true,
       gzipSize: true,
       brotliSize: true,
     })

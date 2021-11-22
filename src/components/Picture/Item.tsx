@@ -30,7 +30,7 @@ export interface IPictureItemProps {
 }
 
 const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
-  const [spring, bind] = useTapButton();
+  const [spring, bind] = useTapButton(1.05, 0.92);
   const { t } = useTranslation();
   const { colors } = useTheme();
   const location = useLocation();
@@ -81,9 +81,13 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
         }
       </ItemBox>
       <LikeContent
-        transformTemplate={({ scale }: any) => `translate(0, 0) scale(${scale})`}
-        whileHover={{ scale: 1 }}
-        whileTap={{ scale: 0.94 }}
+        // transformTemplate={({ scale }: any) => `translate(0, 0) scale(${scale})`}
+        // whileHover={{ scale: 1 }}
+        // whileTap={{ scale: 0.94 }}
+        {...bind()}
+        style={{
+          transform: spring.transform,
+        }}
         onClick={() => like(picture.isLike)}
       >
         <HeartIcon

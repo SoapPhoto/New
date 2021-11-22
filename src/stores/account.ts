@@ -77,6 +77,7 @@ class AccountStore {
     params.append('grant_type', 'password');
     const data = await oauth(params);
     localStorage.setItem('token', JSON.stringify(data.data));
+    await client.clearStore();
     this.setUserInfo(data.data.user);
   };
 
@@ -98,6 +99,7 @@ class AccountStore {
     params.append('grant_type', 'authorization_code');
     const data = await oauthToken(type, params);
     localStorage.setItem('token', JSON.stringify(data.data));
+    await client.clearStore();
     this.setUserInfo(data.data.user);
   };
 

@@ -1,5 +1,6 @@
 import React, { memo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { css } from 'styled-components/macro';
 import IconButton from '../Button/IconButton';
 import { Hash, Trash2 } from '../Icons';
 import { TagInput, TagItem, Wrapper } from './elements';
@@ -29,13 +30,11 @@ const Tag: React.FC<ITag> = memo(({ value, onChange }) => {
     [onChange, value],
   );
   return (
-    <Wrapper>
+    <Wrapper
+      css={css`grid-gap: 12px;`}
+    >
       {value.map((e) => (
         <TagItem
-          style={{
-            marginRight: '12px',
-            marginBottom: '12px',
-          }}
           key={e}
         >
           <Hash size={13} />

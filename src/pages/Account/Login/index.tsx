@@ -80,7 +80,6 @@ const Login = () => {
     [login, t],
   );
   const getInfo = useCallback(async (data: IOauthSuccessData) => {
-    console.log(data);
     // 假如没有激活就跳转到激活界面
     if (data.action === OauthActionType.active) {
       navigate(`/auth/complete?code=${data.code}`, { replace: true });

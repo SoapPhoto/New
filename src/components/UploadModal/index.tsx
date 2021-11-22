@@ -2,6 +2,7 @@ import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import * as Yup from 'yup';
+import { css } from 'styled-components/macro';
 
 import {
   useImageInfo,
@@ -46,6 +47,7 @@ import {
 } from '..';
 import FieldLocation from '../Formik/FieldLocation';
 import LocationModal from '../LocationModal';
+import { TagItem } from '../Tag/elements';
 
 export interface IValues {
   isLocation: boolean;
@@ -94,7 +96,7 @@ const UploadModal = observer(() => {
   );
   const imageRef = useRef<File>();
   const formikRef = useRef<FormikProps<IValues>>(null);
-  const [info, thumbnail, setFile, clearImage] = useImageInfo(imageRef);
+  const [info, thumbnail, setFile, clearImage, classify] = useImageInfo(imageRef);
   const handleChange = async (files: Maybe<FileList>) => {
     if (files && files[0]) {
       setFile(files[0]);
@@ -160,7 +162,7 @@ const UploadModal = observer(() => {
         }
         if (key) {
           const { data } = await addPicture({
-            info,
+            info: { ...info, classify },
             key,
             ...values,
             tags: values.tags.map((v) => ({ name: v })),
@@ -183,7 +185,7 @@ const UploadModal = observer(() => {
         toast.error(t('picture.upload.noImgWarn'));
       }
     },
-    [client, close, info, onUploadProgress, t, userInfo, writePictures],
+    [classify, client, close, info, onUploadProgress, t, userInfo, writePictures],
   );
   const afterClose = useCallback(() => {
     clearImage();
@@ -260,6 +262,29 @@ const UploadModal = observer(() => {
                       name="bio"
                       label={t('label.picture_bio') as string}
                     />
+                    {
+                      classify && classify.length > 0 && (
+                        <div key="tagggg" css={css`padding-bottom: 16px;margin-bottom: 16px;border-bottom: 1px solid ${({ theme }) => theme.colors.border};`}>
+                          <div css={css`margin-bottom: 12px;`}>系统推荐标签：</div>
+                          <div css={css`display: flex;flex-wrap: wrap; grid-gap: 12px;`}>
+                            {
+                              classify.map((c) => (
+                                <TagItem
+                                  key={c.keyword}
+                                  css={css`cursor: pointer;`}
+                                  onClick={() => {
+                                    const now = formikRef.current!.values.tags;
+                                    formikRef.current?.setFieldValue('tags', [...new Set([...now, c.keyword])]);
+                                  }}
+                                >
+                                  {c.keyword}
+                                </TagItem>
+                              ))
+                            }
+                          </div>
+                        </div>
+                      )
+                    }
                     <FieldTag name="tags" />
                     {/* <div style={{ height: '24px' }} /> */}
                     <FieldLocation label="地点" bio="添加地点" name="location" />

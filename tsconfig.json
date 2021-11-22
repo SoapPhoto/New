@@ -20,6 +20,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
     "jsx": "react-jsx",

@@ -23,3 +23,5 @@ template
 lib/
 .eslintcache
 src/types.ts
+
+stats.html

@@ -59,21 +59,21 @@ export async function getImageEXIF(image: File): Promise<IEXIF | undefined> {
     exifr.orientation(image),
   ]);
   if (data) {
-    let exif: IEXIF = {};
+    const exif: IEXIF = {};
     $enum(ExifProperties).forEach((value, content) => {
       if (value === ExifProperties.ExposureTime) {
         if (data[content]) {
           if (data[content] >= 1) {
             exif[value] = data[content];
           } else {
-            exif[value] = '1/' + Math.round(1 / data[content]);
+            exif[value] = `1/${Math.round(1 / data[content])}`;
           }
         }
       } else if (data[content]) {
         exif[value] = data[content];
       }
     });
-    if (gps) {
+    if (gps && !Number.isNaN(gps.latitude)) {
       exif.location = [gps.longitude, gps.latitude];
     }
     if (orientation) {

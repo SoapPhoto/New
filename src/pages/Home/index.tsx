@@ -10,6 +10,7 @@ import { PicturesType } from '@app/common/enum/picture';
 import { usePicturesQuery } from '@app/graphql/hooks/query';
 import { Helmet } from 'react-helmet-async';
 import Head from '@app/components/Head';
+import Empty from '@app/components/Empty';
 import Skeleton from './Skeleton';
 
 const HomePage = () => {
@@ -20,7 +21,7 @@ const HomePage = () => {
     type: PicturesType.NEW,
     query: {
       page: 1,
-      pageSize: 50,
+      pageSize: 30,
     },
   });
   const currentPage = useRef(data?.pictures.page ?? 1);
@@ -44,7 +45,7 @@ const HomePage = () => {
       variables: {
         query: {
           page: currentPage.current,
-          pageSize: 50,
+          pageSize: 30,
         },
       },
     });
@@ -66,6 +67,7 @@ const HomePage = () => {
       ) : (
         <div>
           <PictureList onPage={more} noMore={noMore} list={data!.pictures.data} />
+          <Empty size="large" loading={!noMore} emptyText="我是有底线的！" />
         </div>
       )}
     </div>

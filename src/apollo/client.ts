@@ -98,7 +98,21 @@ export function initClient() {
                 if (!existing) {
                   return incoming;
                 }
-                console.log(existing.page, incoming.page);
+                if (existing.page === incoming.page) {
+                  return incoming;
+                }
+                return {
+                  ...incoming,
+                  data: [...existing.data, ...incoming.data],
+                };
+              },
+            },
+            userPicturesByName: {
+              keyArgs: ['username', 'type'],
+              merge(existing, incoming, options) {
+                if (!existing) {
+                  return incoming;
+                }
                 if (existing.page === incoming.page) {
                   return incoming;
                 }

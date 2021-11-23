@@ -3,7 +3,7 @@ import {
   Moon, Search, Sun, UploadCloud,
 } from 'react-feather';
 import styled from 'styled-components/macro';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { animated } from 'react-spring';
 
 import {
@@ -54,6 +54,7 @@ const SkeletonAvatar = styled.div`
 `;
 
 export const Right = observer(() => {
+  const navigate = useNavigate();
   const pathname = useLocation();
   const popoverRef = useRef<PopoverRef>(null);
   const { selected, setTheme } = useThemeStore();
@@ -81,6 +82,10 @@ export const Right = observer(() => {
     <Wrapper>
       {userInfo ? (
         <>
+          <IconButton onClick={() => navigate('/s')}>
+            <Search />
+          </IconButton>
+          <div style={{ width: '22px' }} />
           <IconButton onClick={() => openUpload()}>
             <UploadCloud />
           </IconButton>

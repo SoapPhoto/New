@@ -12,10 +12,7 @@ export type QueryData<V extends keyof any, T> = {
   [K in V]: T;
 };
 
-export type ListQueryData<V extends keyof any, T> = QueryData<
-  V,
-  IPaginationListData<T>
->;
+export type ListQueryData<V extends keyof any, T> = QueryData<V, IPaginationListData<T>>;
 
 export type PicturesQueryVariables = {
   query: BaseQueryInput;

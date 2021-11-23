@@ -8,6 +8,8 @@ import { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { UserPictures } from '@app/graphql/query';
 import PictureSkeleton from '@app/components/Picture/Skeleton';
 import PictureList from '@app/components/Picture/List';
+import usePicturePagination from '@app/utils/hooks/usePicturePagination';
+import Empty from '@app/components/Empty';
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -20,7 +22,10 @@ interface IProps {
 
 const UserHome: React.FC<IProps> = memo(({ type }) => {
   const { username } = useParams();
-  const { loading, data } = useQuery<{
+  console.log(username);
+  const {
+    loading, data, networkStatus, fetchMore,
+  } = useQuery<{
     userPicturesByName: IListQueryResult<PictureEntity>;
   }>(UserPictures, {
     variables: {
@@ -32,6 +37,19 @@ const UserHome: React.FC<IProps> = memo(({ type }) => {
       },
     },
   });
+  const handle = async (current: number) => {
+    await fetchMore({
+      variables: {
+        username,
+        type,
+        query: {
+          page: current,
+          pageSize: 30,
+        },
+      },
+    });
+  };
+  const [more, notData, noMore] = usePicturePagination(data?.userPicturesByName, handle, loading, networkStatus);
   if (loading && !data) {
     return (
       <Wrapper>
@@ -41,7 +59,8 @@ const UserHome: React.FC<IProps> = memo(({ type }) => {
   }
   return (
     <Wrapper>
-      <PictureList noMore={false} list={data?.userPicturesByName.data ?? []} />
+      <PictureList onPage={more} noMore={noMore} list={data?.userPicturesByName.data ?? []} />
+      <Empty size="large" loading={!noMore} emptyText="我是有底线的！" />
     </Wrapper>
   );
 });

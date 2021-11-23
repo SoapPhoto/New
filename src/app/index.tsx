@@ -37,6 +37,7 @@ import PictureModal from '@app/pages/Picture/Modal';
 
 import NotPage from '@app/pages/404';
 import ReloadPrompt from '@app/ReloadPrompt';
+import SearchPage from '@app/pages/Search';
 import { GlobalStyle } from '../styles/global-styles';
 
 const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
@@ -61,6 +62,8 @@ const Router = () => {
       <Routes location={!initRef.current ? location : state?.backgroundLocation ?? location}>
         <Route path="" element={<DefaultLayout />}>
           <Route path="" element={<HomePage />} />
+          <Route path="s/:search" element={<SearchPage />} />
+          <Route path="s" element={<SearchPage />} />
           <Route path="picture/:id" element={<PicturePage />} />
           <Route path="test" element={<Test />} />
           <Route path="upload" element={<Upload />} />

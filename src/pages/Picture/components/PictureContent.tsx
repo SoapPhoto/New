@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { observer } from 'mobx-react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { css } from 'styled-components/macro';
 
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { EmojiText, Popover } from '@app/components';
 import Head from '@app/components/Head';
-import { Lock, Link, Hash } from '@app/components/Icons';
+import { Lock, Hash } from '@app/components/Icons';
 import { useAccount } from '@app/stores/hooks';
 import useQueryPicture from '@app/utils/hooks/useQueryPicture';
 import Comment from '@app/components/Comment';

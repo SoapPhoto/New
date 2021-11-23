@@ -46,7 +46,7 @@ const UserFollowModal: React.FC<IProps> = memo(
               id: userId,
               query: {
                 page: 1,
-                pageSize: 50,
+                pageSize: 30,
               },
             },
           });
@@ -56,7 +56,7 @@ const UserFollowModal: React.FC<IProps> = memo(
               id: userId,
               query: {
                 page: 1,
-                pageSize: 50,
+                pageSize: 30,
               },
             },
           });

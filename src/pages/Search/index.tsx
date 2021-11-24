@@ -28,7 +28,8 @@ const SearchInput = styled.input`
   align-items: center;
   height: 64px;
   border-radius: 8px;
-  background: #fff;
+  background: ${(({ theme }) => theme.colors.pure)};
+  color: ${(({ theme }) => theme.colors.text)};
   box-shadow: 0px 8px 20px rgb(0 0 0 / 6%);
   width: 100%;
   padding: 24px 24px 24px 64px;

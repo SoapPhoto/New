@@ -227,14 +227,14 @@ const Popover: React.FC<IPopoverProps> = ({
     if (openDelay) {
       clearTimeout(openTimer.current!);
       openTimer.current = window.setTimeout(() => {
-        if (isFunction(onOpen)) {
-          onOpen();
-        }
+        // if (isFunction(onOpen)) {
+        //   onOpen();
+        // }
         setPopupVisible(true);
       }, openDelay);
     } else {
       if (isFunction(onOpen)) {
-        onOpen();
+        // onOpen();
       }
       setPopupVisible(true);
     }

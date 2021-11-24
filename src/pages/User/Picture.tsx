@@ -22,7 +22,6 @@ interface IProps {
 
 const UserHome: React.FC<IProps> = memo(({ type }) => {
   const { username } = useParams();
-  console.log(username);
   const {
     loading, data, networkStatus, fetchMore,
   } = useQuery<{

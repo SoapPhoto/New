@@ -6,11 +6,12 @@ import { css } from 'styled-components/macro';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { EmojiText, Popover } from '@app/components';
 import Head from '@app/components/Head';
-import { Lock, Hash } from '@app/components/Icons';
+import { Lock, Hash, Ordinary } from '@app/components/Icons';
 import { useAccount } from '@app/stores/hooks';
 import useQueryPicture from '@app/utils/hooks/useQueryPicture';
 import Comment from '@app/components/Comment';
 
+import { useTranslation } from 'react-i18next';
 import {
   Wrapper,
   Content,
@@ -28,6 +29,7 @@ import PictureInfo from './PictureInfo';
 import SettingModal from './SettingModal';
 
 const PictureContent = observer(() => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { userInfo } = useAccount();
   const [{ loading, data }, cacheData] = useQueryPicture<{ picture: PictureEntity; }>(Number(id));
@@ -88,6 +90,21 @@ const PictureContent = observer(() => {
                 content={<span>私人</span>}
               >
                 <Lock style={{ marginRight: '6px', strokeWidth: '3px' }} size={26} />
+              </Popover>
+            )
+          }
+          {
+            picture.badge?.findIndex((v) => v.name === 'choice') >= 0 && (
+              <Popover
+                openDelay={100}
+                trigger="hover"
+                placement="top"
+                theme="dark"
+                content={<span>{t('label.choice')}</span>}
+              >
+                <div style={{ marginRight: 8 }}>
+                  <Ordinary size={36} />
+                </div>
               </Popover>
             )
           }

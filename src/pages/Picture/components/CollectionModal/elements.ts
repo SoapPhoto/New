@@ -1,7 +1,9 @@
-import Image from '@app/components/Image';
-import { Check, Minus } from '@app/components/Icons';
 import { rgba } from 'polished';
 import styled, { css } from 'styled-components/macro';
+import { animated } from 'react-spring';
+
+import Image from '@app/components/Image';
+import { Check, Minus } from '@app/components/Icons';
 
 export const CollectionBox = styled.div`
   padding: 24px;
@@ -10,7 +12,7 @@ export const CollectionBox = styled.div`
   grid-gap: 14px;
 `;
 
-export const CollectionItemBox = styled.button`
+export const CollectionItemBox = styled(animated.button)`
   cursor: pointer;
   outline: none;
   display: block;
@@ -49,7 +51,7 @@ export const ItemInfoBox = styled.div<{
   transition: all 0.15s ease-in-out;
   padding: 17px 20px;
   border-radius: 5px;
-  backdrop-filter: saturate(180%) blur(5px);
+  /* backdrop-filter: saturate(180%); */
   color: ${(_) => _.theme.widget.collection.addPicture.color};
   & ${CheckIcon} {
     opacity: 0;
@@ -64,7 +66,7 @@ export const ItemInfoBox = styled.div<{
   }
   background: ${(_) => rgba(
     _.theme.widget.collection.addPicture.background,
-    _.isPreview ? 0.2 : 1,
+    _.isPreview ? 0.4 : 1,
   )};
   ${(_) => (_.isCollected
     ? css`
@@ -95,15 +97,15 @@ export const ItemInfoTitle = styled.p`
   margin-bottom: 6px;
   display: flex;
   align-items: center;
+  text-shadow: 0 1px 1px rgba(0,0,0, 0.15);
 `;
 
 export const ItemInfoCount = styled.p`
   font-size: 13px;
+  text-shadow: 0 1px 1px rgba(0,0,0, 0.15);
 `;
 
 export const CollectionItemCover = styled(Image)`
-  font-family: 'object-fit:cover';
-  -o-object-fit: cover;
   object-fit: cover;
   width: 100%;
   height: 100%;

@@ -67,7 +67,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
   const [location, setLocation] = useState<LocationEntity>();
   const { t } = useTranslation();
   const [del, loading] = useDeletePicture();
-  const [update, updateProp] = useMutation(UpdatePicture);
+  const [update] = useMutation(UpdatePicture);
   const handleOk = useCallback(
     async (values: IValues) => {
       const updateData: any = { ...values };
@@ -122,7 +122,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
     }
   }, [visible]);
   return (
-    <Modal afterClose={() => setInit(false)} maxWidth={560} centered visible={visible} onClose={() => close()}>
+    <Modal destroyOnClose afterClose={() => setInit(false)} maxWidth={560} centered visible={visible} onClose={() => close()}>
       <Modal.Background background={getPictureUrl(key, 'blur')} />
       <Modal.Content>
         <Modal.Title>{t('picture.edit.title')}</Modal.Title>
@@ -133,45 +133,44 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
               ...pick(picture, ['title', 'bio', 'isPrivate', 'location']),
               tags: picture.tags.map((tag) => tag.name),
             }}
-            onSubmit={handleOk}
             validationSchema={EditPictureSchema(t)}
+            onSubmit={handleOk}
           >
-            <Form>
-              <FieldInput
-                required
-                name="title"
-                label={t('label.picture_title') as string}
-              />
-              <FieldTextarea
-                name="bio"
-                label={t('label.picture_bio') as string}
-              />
-              <FieldTag name="tags" />
-              <FieldLocation label="地点" bio="添加地点" name="location" />
-              <div style={{ height: '24px' }} />
-              <FieldSwitch
-                name="isPrivate"
-                label={t('label.private')}
-                bio={t('picture.label.privateBio')}
-              />
-              <div style={{ height: '12px' }} />
-              <Footer>
-                <div>
-                  <IconButton onClick={() => setConfirmVisible(true)}>
-                    <Trash2 color={colors.error} />
-                  </IconButton>
-                </div>
-                <div>
-                  <Button
-                    htmlType="submit"
-                    loading={updateProp.loading}
-                  >
-                    {t('picture.edit.confirm')}
-                  </Button>
-                </div>
-              </Footer>
-              <Location onOk={onSetLocation} />
-            </Form>
+            {({ isSubmitting }) => (
+              <Form>
+                <FieldInput
+                  required
+                  name="title"
+                  label={t('label.picture_title') as string}
+                />
+                <FieldTextarea
+                  name="bio"
+                  label={t('label.picture_bio') as string}
+                />
+                <FieldTag name="tags" />
+                <FieldLocation label="地点" bio="添加地点" name="location" />
+                <div style={{ height: '24px' }} />
+                <FieldSwitch
+                  name="isPrivate"
+                  label={t('label.private')}
+                  bio={t('picture.label.privateBio')}
+                />
+                <div style={{ height: '12px' }} />
+                <Footer>
+                  <div>
+                    <IconButton type="button" onClick={() => setConfirmVisible(true)}>
+                      <Trash2 color={colors.error} />
+                    </IconButton>
+                  </div>
+                  <div>
+                    <Button htmlType="submit">
+                      {t('picture.edit.confirm')}
+                    </Button>
+                  </div>
+                </Footer>
+                <Location onOk={onSetLocation} />
+              </Form>
+            )}
           </Formik>
         </Content>
         <Modal.Confirm

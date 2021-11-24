@@ -46,12 +46,12 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
     () => !!user?.badge.find((v) => v.name === 'prestige'),
     [user?.badge],
   );
-  const isOk = useMemo(() => !loading && !!user, [loading, user]);
+  const isLoading = !!(loading && !user);
   return (
     <div>
       <Wrapper>
         <Header>
-          {!isOk ? (
+          {isLoading ? (
             <SkeletonAvatar />
           ) : (
             <Link to={`/user/${user?.username}`}>
@@ -60,7 +60,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
           )}
           <UserBox>
             <UserNameBox>
-              {!isOk ? (
+              {isLoading ? (
                 <SkeletonName />
               ) : (
                 <UserName>
@@ -68,7 +68,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
                 </UserName>
               )}
             </UserNameBox>
-            {!isOk ? (
+            {isLoading ? (
               <SkeletonBio />
             ) : (
               <Bio>
@@ -78,7 +78,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
           </UserBox>
         </Header>
         <PicturePreview>
-          {!isOk
+          {isLoading
             ? [0, 1, 3].map((key) => (
               <SkeletonPreview
                 key={key}
@@ -115,19 +115,19 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
         <Info>
           <InfoItem>
             <InfoItemCount>
-              {!isOk ? <SkeletonCount /> : user?.followerCount}
+              {isLoading ? <SkeletonCount /> : user?.followerCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.followers')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
             <InfoItemCount>
-              {!isOk ? <SkeletonCount /> : user?.followedCount}
+              {isLoading ? <SkeletonCount /> : user?.followedCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.followed')}</InfoItemLabel>
           </InfoItem>
           <InfoItem>
             <InfoItemCount>
-              {!isOk ? <SkeletonCount /> : user?.likesCount}
+              {isLoading ? <SkeletonCount /> : user?.likesCount}
             </InfoItemCount>
             <InfoItemLabel>{t('user.label.likes')}</InfoItemLabel>
           </InfoItem>
@@ -141,13 +141,15 @@ const UserPopover: React.FC<IUserPopover> = ({ children, username }) => {
   const [loadUser, { loading, data }] = useLazyQuery<
   QueryData<'user', UserEntity>
   >(UserInfo);
-  const onOpen = useCallback(() => {
-    loadUser({
-      variables: {
-        username,
-      },
-    });
-  }, [loadUser, username]);
+  const onOpen = () => {
+    if (!data?.user) {
+      loadUser({
+        variables: {
+          username,
+        },
+      });
+    }
+  };
   return (
     <Popover
       onOpen={onOpen}

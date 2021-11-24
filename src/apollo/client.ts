@@ -12,7 +12,7 @@ import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
 export function initClient() {
-  const batchLink = new BatchHttpLink({
+  const batchLink = new HttpLink({
     uri: `${import.meta.env.VITE_API_URL}graphql`,
     credentials: 'include',
   });
@@ -93,7 +93,6 @@ export function initClient() {
         Query: {
           fields: {
             pictures: {
-              keyArgs: [],
               merge(existing, incoming, options) {
                 if (!existing) {
                   return incoming;
@@ -108,7 +107,6 @@ export function initClient() {
               },
             },
             userPicturesByName: {
-              keyArgs: ['username', 'type'],
               merge(existing, incoming, options) {
                 if (!existing) {
                   return incoming;

@@ -25,7 +25,7 @@
     "login": "登录",
     "followed": "已关注",
     "follow": "关注",
-    "img_count": "{{total}}个图片"
+    "img_count": "{{total}} 个图片"
   },
   "validation": {
     "yup_required": "请输入{{name}}！",

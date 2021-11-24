@@ -1,5 +1,11 @@
 #import "../fragments/fragments.graphql"
 
+mutation AddCollection($data: AddCollectionInput!) {
+  addCollection(data: $data) {
+    ...CollectionFragment
+  }
+}
+
 mutation UpdatePicture($data: UpdatePictureInput!, $id: Float!) {
   updatePicture(data: $data, id: $id) {
     ...UpdatePictureFragment

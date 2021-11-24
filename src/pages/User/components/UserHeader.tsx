@@ -1,8 +1,6 @@
-import { useQuery } from '@apollo/client';
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
 import Head from '@app/components/Head';
 import UserFollowModal from '@app/components/UserFollowModal';
-import { UserInfo } from '@app/graphql/query';
 import { useSearchParamModal } from '@app/utils/hooks';
 import useQueryUser from '@app/utils/hooks/useQueryUser';
 import useUserOnlineStatusSubscription from '@app/utils/hooks/useUserOnlineStatusSubscription';
@@ -40,7 +38,7 @@ const UserHeader: React.FC<IProps> = memo(({ username }) => {
         <UserSkeleton />
       ) : (
         <>
-          <Head title={`${user.fullName ?? ''} (@${data?.user.username})`} />
+          <Head title={`${user.fullName ?? ''} (@${user?.username})`} />
           <UserCover cover={user.cover} avatar={user.avatar} />
           <UserInfoHeader user={user} />
           <UserTab />
@@ -48,7 +46,7 @@ const UserHeader: React.FC<IProps> = memo(({ username }) => {
             visible={followerVisible && !loading}
             onClose={followerClose}
             type="follower"
-            userId={data?.user.id || 0}
+            userId={user?.id || 0}
           />
           <UserFollowModal
             visible={followedVisible && !loading}

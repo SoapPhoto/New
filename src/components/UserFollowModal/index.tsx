@@ -31,12 +31,12 @@ const UserFollowModal: React.FC<IProps> = memo(
     const [followedQuery, followedData] = useLazyQuery<{
       followedUsers: UserEntity[];
     }>(FollowedUsers, {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-first',
     });
     const [followerQuery, followerData] = useLazyQuery<{
       followerUsers: UserEntity[];
     }>(FollowerUsers, {
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'cache-first',
     });
     useEffect(() => {
       if (visible) {
@@ -51,6 +51,7 @@ const UserFollowModal: React.FC<IProps> = memo(
             },
           });
         } else {
+          console.log(userId);
           followedQuery({
             variables: {
               id: userId,

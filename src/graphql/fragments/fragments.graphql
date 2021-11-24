@@ -107,7 +107,6 @@ fragment CollectionFragment on Collection {
   isPrivate
   createTime
   updateTime
-  pictureCount
 }
 
 fragment RelatedCollectionFragment on PictureRelatedCollectionReq {

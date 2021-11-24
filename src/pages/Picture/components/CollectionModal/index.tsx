@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import { useSearchParamModal } from '@app/utils/hooks';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import {
-  EmojiText, Loading, Popover,
-} from '@app/components';
 import { getPictureUrl } from '@app/utils/image';
-import { Lock, PlusCircle } from '@app/components/Icons';
-import { useLazyQuery } from '@apollo/client';
+import { PlusCircle } from '@app/components/Icons';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import { UserCollectionsByName } from '@app/graphql/query';
 import { IPaginationListData } from '@app/graphql/interface';
 import { CollectionEntity } from '@app/common/types/modules/collection/collection.entity';
@@ -16,19 +13,19 @@ import { observer } from 'mobx-react';
 import { useAccount } from '@app/stores/hooks';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/macro';
-import divide from 'lodash/divide';
 import Modal from '@app/components/Modal';
+import Empty from '@app/components/Empty';
+import { AddPictureCollection, RemovePictureCollection } from '@app/graphql/mutations';
+import Fragments from '@app/graphql/fragments';
+import AddCollectionModal from '@app/components/AddCollectionModal';
 import {
-  CheckIcon,
   CollectionBox,
   CollectionItemBox,
-  CollectionItemCover,
-  ItemHandleIcon,
   ItemInfoBox,
-  ItemInfoCount,
   ItemInfoTitle,
-  MinusIcon,
 } from './elements';
+import CollectionModalItem from './components/Item';
+import CollectionModalAdd from './components/Add';
 
 interface IProps {
   picture: PictureEntity;
@@ -39,18 +36,75 @@ const Content = styled(OverlayScrollbarsComponent)`
   /* max-height: 80vh;
   height: 100px; */
 `;
-
 const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
   const { t } = useTranslation();
   const [visible, close] = useSearchParamModal('collection');
   const { isLogin, userInfo } = useAccount();
+  const [addCollectionInit, setAddCollectionInit] = useState(false);
+  const [addCollectionVisible, closeAddCollection] = useSearchParamModal(
+    'addCollection',
+    'modal-child',
+  );
+  const [collectionsQuery, { loading, data, refetch }] = useLazyQuery<{
+    userCollectionsByName: IPaginationListData<CollectionEntity>;
+  }>(UserCollectionsByName);
+  const [removePictureCollection] = useMutation(RemovePictureCollection, {
+    update(cache, data, options) {
+      const { variables } = options;
+      const cacheData = cache.readFragment<PictureEntity>({
+        id: `Picture:${variables!.pictureId}`,
+        fragment: Fragments,
+        fragmentName: 'PictureDetailFragment',
+      });
+      cache.writeFragment({
+        id: `Picture:${variables!.pictureId}`,
+        fragment: gql`
+          fragment PictureDetailFragment on Picture {
+            currentCollections
+          }
+        `,
+        data: {
+          currentCollections: cacheData?.currentCollections.filter((collection) => collection.id !== variables!.id),
+        },
+      });
+      refetch();
+    },
+  });
+  const [addPictureCollection] = useMutation<{ addPictureCollection: CollectionEntity }>(AddPictureCollection, {
+    update(cache, data, options) {
+      const { variables } = options;
+      const cacheData = cache.readFragment<PictureEntity>({
+        id: `Picture:${variables!.pictureId}`,
+        fragment: Fragments,
+        fragmentName: 'PictureDetailFragment',
+      });
+      cache.writeFragment({
+        id: `Picture:${variables!.pictureId}`,
+        fragment: gql`
+          fragment PictureDetailFragment on Picture {
+            currentCollections
+          }
+        `,
+        data: {
+          currentCollections: [...(cacheData?.currentCollections ?? []), data.data?.addPictureCollection],
+        },
+      });
+      refetch();
+    },
+  });
   const [current, setCurrent] = useState<Map<number, CollectionEntity>>(
     new Map(),
   );
-  const [collectionsQuery, { loading, data }] = useLazyQuery<{
-    userCollectionsByName: IPaginationListData<CollectionEntity>;
-  }>(UserCollectionsByName);
+  const [loadingObj, setLoading] = useState<Record<string, boolean>>({});
   const { key, currentCollections } = picture;
+  useEffect(() => {
+    if (addCollectionVisible) {
+      closeAddCollection();
+    }
+    setTimeout(() => {
+      setAddCollectionInit(true);
+    }, [100]);
+  }, []);
   useEffect(() => {
     if (visible && isLogin) {
       setCurrent(
@@ -73,60 +127,53 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
       ),
     );
   }, [currentCollections]);
-  let content: JSX.Element[] = [];
+  const onCollected = useCallback(async (collection: CollectionEntity, isCollected: boolean) => {
+    if (loadingObj[collection.id]) {
+      return;
+    }
+    setLoading((ld) => ({
+      ...ld,
+      [collection.id]: true,
+    }));
+    try {
+      if (isCollected) {
+        removePictureCollection({
+          variables: {
+            id: collection.id,
+            pictureId: picture.id,
+          },
+        });
+        current.delete(collection.id);
+        setCurrent(current);
+      } else {
+        const addData = await addPictureCollection({
+          variables: {
+            id: collection.id,
+            pictureId: picture.id,
+          },
+        });
+        console.log(addData);
+      }
+    } finally {
+      setLoading((ld) => ({
+        ...ld,
+        [collection.id]: false,
+      }));
+    }
+  }, [addPictureCollection, current, loadingObj, picture.id, removePictureCollection]);
+  const onAddCollectionOk = (collection: CollectionEntity) => {
+    refetch();
+  };
+  let content: JSX.Element[] = [<Empty key="loading" loading />];
   if (data?.userCollectionsByName) {
-    content = data.userCollectionsByName.data.map((collection) => {
-      const isCollected = current.has(collection.id) ? 1 : 0;
-      // const isLoading = loadingObj[collection.id] ? 1 : 0;
-      const preview = collection.preview.slice();
-      return (
-        <CollectionItemBox key={collection.id}>
-          {preview[0] && (
-            <CollectionItemCover
-              src={getPictureUrl(preview[0].key, 'thumbSmall')}
-            />
-          )}
-          <ItemInfoBox isCollected={isCollected} isPreview={preview[0] ? 1 : 0}>
-            <div>
-              <ItemInfoTitle>
-                {collection.isPrivate && (
-                  <Popover
-                    trigger="hover"
-                    placement="top"
-                    theme="dark"
-                    openDelay={100}
-                    content={<span>{t('label.private')}</span>}
-                  >
-                    <Lock
-                      style={{ marginRight: '6px', strokeWidth: '3px' }}
-                      size={16}
-                    />
-                  </Popover>
-                )}
-                <EmojiText text={collection.name} />
-              </ItemInfoTitle>
-              <ItemInfoCount>
-                <span>
-                  {t('label.img_count', {
-                    total: collection.pictureCount.toString(),
-                  })}
-                </span>
-              </ItemInfoCount>
-            </div>
-            <ItemHandleIcon>
-              {false ? (
-                <Loading size={6} color="#fff" />
-              ) : (
-                <>
-                  <CheckIcon />
-                  <MinusIcon />
-                </>
-              )}
-            </ItemHandleIcon>
-          </ItemInfoBox>
-        </CollectionItemBox>
-      );
-    });
+    content = data.userCollectionsByName.data.map((collection) => (
+      <CollectionModalItem
+        key={collection.id}
+        collection={collection}
+        onCollected={onCollected}
+        isCollected={current.has(collection.id)}
+      />
+    ));
   }
   return (
     <Modal
@@ -141,6 +188,10 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
         display: flex;
         flex-direction: column;
       `}
+      contentStyle={{
+        width: 'calc(100vw - 24px)',
+        // marginRight: '24px',
+      }}
     >
       <Modal.Background background={getPictureUrl(key, 'blur')} />
       <Modal.Content
@@ -158,19 +209,15 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
           }}
         >
           <CollectionBox>
-            <CollectionItemBox>
-              <ItemInfoBox isCollected={0} isPreview={0}>
-                <div>
-                  <ItemInfoTitle style={{ marginBottom: 0 }}>
-                    <PlusCircle style={{ marginRight: '12px' }} />
-                    <span>添加</span>
-                  </ItemInfoTitle>
-                </div>
-              </ItemInfoBox>
-            </CollectionItemBox>
+            <CollectionModalAdd />
             {content}
           </CollectionBox>
         </Content>
+        {
+          addCollectionInit && (
+            <AddCollectionModal onOk={onAddCollectionOk} />
+          )
+        }
       </Modal.Content>
     </Modal>
   );

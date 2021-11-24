@@ -17,9 +17,9 @@
     leven "^3.1.0"
 
 "@apollo/client@^3.4.17":
-  version "3.4.17"
-  resolved "https://registry.npmmirror.com/@apollo/client/download/@apollo/client-3.4.17.tgz#4972e19a49809e16d17c5adc67f45623a6dac135"
-  integrity sha512-MDt2rwMX1GqodiVEKJqmDmAz8xr0qJmq5PdWeIt0yDaT4GOkKYWZiWkyfhfv3raTk8PyJvbsNG9q2CqmUrlGfg==
+  version "3.5.5"
+  resolved "https://registry.npmmirror.com/@apollo/client/download/@apollo/client-3.5.5.tgz#ce331403ee5f099e595430890f9b510c8435c932"
+  integrity sha512-EiQstc8VjeqosS2h21bwY9fhL3MCRRmACtRrRh2KYpp9vkDyx5pUfMnN3swgiBVYw1twdXg9jHmyZa1gZlvlog==
   dependencies:
     "@graphql-typed-document-node/core" "^3.0.0"
     "@wry/context" "^0.6.0"
@@ -32,7 +32,7 @@
     symbol-observable "^4.0.0"
     ts-invariant "^0.9.0"
     tslib "^2.3.0"
-    zen-observable-ts "~1.1.0"
+    zen-observable-ts "^1.2.0"
 
 "@arco-design/color@^0.4.0":
   version "0.4.0"
@@ -3628,13 +3628,8 @@
 
 "@types/yup@^0.29.13":
   version "0.29.13"
-  resolved "https://registry.nlark.com/@types/yup/download/@types/yup-0.29.13.tgz?cache=0&sync_timestamp=1629710082446&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fyup%2Fdownload%2F%40types%2Fyup-0.29.13.tgz#21b137ba60841307a3c8a1050d3bf4e63ad561e9"
+  resolved "https://registry.npmmirror.com/@types/yup/download/@types/yup-0.29.13.tgz#21b137ba60841307a3c8a1050d3bf4e63ad561e9"
   integrity sha1-IbE3umCEEwejyKEFDTv05jrVYek=
-
-"@types/zen-observable@0.8.3":
-  version "0.8.3"
-  resolved "https://registry.nlark.com/@types/zen-observable/download/@types/zen-observable-0.8.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fzen-observable%2Fdownload%2F%40types%2Fzen-observable-0.8.3.tgz#781d360c282436494b32fe7d9f7f8e64b3118aa3"
-  integrity sha1-eB02DCgkNklLMv59n3+OZLMRiqM=
 
 "@typescript-eslint/eslint-plugin@^4.5.0":
   version "4.33.0"
@@ -15071,10 +15066,10 @@ react-side-effect@^2.1.0:
   resolved "https://registry.npm.taobao.org/react-side-effect/download/react-side-effect-2.1.1.tgz#66c5701c3e7560ab4822a4ee2742dee215d72eb3"
   integrity sha1-ZsVwHD51YKtIIqTuJ0Le4hXXLrM=
 
-react-spring@^9.3.1:
-  version "9.3.1"
-  resolved "https://registry.npmmirror.com/react-spring/download/react-spring-9.3.1.tgz#5f9587d42a524c8bfeb870458d32755ceee9801a"
-  integrity sha512-YbWcG+LiiyMi4RnBrMudVj2Rqnt2yEozeISkW5Hm2SOss+uDS4CpVjLuwdFAwczw99FSPrRfyAlGjEx3HvOWiw==
+react-spring@^9.3.2:
+  version "9.3.2"
+  resolved "https://registry.npmmirror.com/react-spring/download/react-spring-9.3.2.tgz#1456ef1ab1a3997c6c39693a9fd18cfd46c92930"
+  integrity sha512-LMFgjvTJVg2ltthzgJcZ7siOdRig7L8wJZIHrc7p6ss4AaJ446xHzm9L2ZQha1ZC9QVY8/e6XfLhMTFAG6dtjw==
   dependencies:
     "@react-spring/core" "~9.3.0"
     "@react-spring/konva" "~9.3.0"
@@ -19502,7 +19497,7 @@ yocto-queue@^0.1.0:
 
 yup@^0.32.11:
   version "0.32.11"
-  resolved "https://registry.npmmirror.com/yup/download/yup-0.32.11.tgz?cache=0&sync_timestamp=1634059600011&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fyup%2Fdownload%2Fyup-0.32.11.tgz#d67fb83eefa4698607982e63f7ca4c5ed3cf18c5"
+  resolved "https://registry.npmmirror.com/yup/download/yup-0.32.11.tgz#d67fb83eefa4698607982e63f7ca4c5ed3cf18c5"
   integrity sha1-1n+4Pu+kaYYHmC5j98pMXtPPGMU=
   dependencies:
     "@babel/runtime" "^7.15.4"
@@ -19521,12 +19516,11 @@ zen-observable-ts@^0.8.21:
     tslib "^1.9.3"
     zen-observable "^0.8.0"
 
-zen-observable-ts@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.nlark.com/zen-observable-ts/download/zen-observable-ts-1.1.0.tgz#2d1aa9d79b87058e9b75698b92791c1838551f83"
-  integrity sha1-LRqp15uHBY6bdWmLknkcGDhVH4M=
+zen-observable-ts@^1.2.0:
+  version "1.2.3"
+  resolved "https://registry.npmmirror.com/zen-observable-ts/download/zen-observable-ts-1.2.3.tgz?cache=0&sync_timestamp=1637188139472&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fzen-observable-ts%2Fdownload%2Fzen-observable-ts-1.2.3.tgz#c2f5ccebe812faf0cfcde547e6004f65b1a6d769"
+  integrity sha512-hc/TGiPkAWpByykMwDcem3SdUgA4We+0Qb36bItSuJC9xD0XVBZoFHYoadAomDSNf64CG8Ydj0Qb8Od8BUWz5g==
   dependencies:
-    "@types/zen-observable" "0.8.3"
     zen-observable "0.8.15"
 
 zen-observable@0.8.15, zen-observable@^0.8.0:

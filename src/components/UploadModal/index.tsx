@@ -26,7 +26,7 @@ import { toast } from 'react-hot-toast';
 import Modal from '@app/components/Modal';
 import Button from '@app/components/Button';
 import { LocationEntity } from '@app/common/types/modules/location/location.entity';
-import EditExifModal from '../EditExifModal.tsx';
+import EditExifModal from '../EditExifModal';
 import {
   DeleteBtn,
   DeleteImageBtnBox,

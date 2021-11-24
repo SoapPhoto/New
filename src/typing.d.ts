@@ -56,6 +56,7 @@ declare module '@app/graphql/mutations/mutations.graphql' {
   export const AddComment: DocumentNode;
   export const FollowUser: DocumentNode;
   export const UnFollowUser: DocumentNode;
+  export const AddCollection: DocumentNode;
 }
 
 declare module '@app/graphql/subscription/subscription.graphql' {

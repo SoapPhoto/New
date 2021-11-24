@@ -93,6 +93,7 @@ export function initClient() {
         Query: {
           fields: {
             pictures: {
+              keyArgs: [],
               merge(existing, incoming, options) {
                 if (!existing) {
                   return incoming;
@@ -107,6 +108,7 @@ export function initClient() {
               },
             },
             userPicturesByName: {
+              keyArgs: ['username', 'type'],
               merge(existing, incoming, options) {
                 if (!existing) {
                   return incoming;

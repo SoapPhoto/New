@@ -103,7 +103,8 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
     }
     setTimeout(() => {
       setAddCollectionInit(true);
-    }, [100]);
+    }, 100);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (visible && isLogin) {

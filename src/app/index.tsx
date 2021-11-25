@@ -41,6 +41,7 @@ import SearchPage from '@app/pages/Search';
 import { GlobalStyle } from '../styles/global-styles';
 
 const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
+const SettingAccountPage = Loadable(() => import('@app/pages/Setting/Account'));
 
 const Router = () => {
   const [init, setInit] = useState(false);
@@ -94,7 +95,7 @@ const Router = () => {
               />
               <Route
                 path="account"
-                element={<div>2</div>}
+                element={<SettingAccountPage />}
               />
               <Route
                 path="resetPassword"

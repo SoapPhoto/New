@@ -135,6 +135,26 @@
       "message": {
         "updateSuccess": "修改成功！"
       }
+    },
+    "account": {
+      "label": {
+        "signup_type": "注册方式",
+        "no_verify": "未验证",
+        "revoke": "解绑"
+      },
+      "btn": {
+        "authorize": "绑定",
+        "modify": "修改"
+      },
+      "revoke_confirm": {
+        "title": "确定解绑？"
+      },
+      "message": {
+        "revoke_success": "解绑成功！",
+        "require_one_login_type": "必须预留一种登录方式，请绑定其他账号或者设置密码后重试！",
+        "revoke_error": "解绑失败，请重试",
+        "authorize_success": "绑定成功！"
+      }
     }
   },
   "title": {
@@ -150,18 +170,19 @@
     "no_exist_comment": "评论失败",
     "collected": "已收藏",
     "no_collect": "为收藏",
-
     "code_credentials_invalid": "代码凭证无效",
     "client_credentials_invalid": "客户凭证无效",
     "user_credentials_invalid": "用户凭证无效",
     "Invalid grant: user credentials are invalid": "用户名或密码错误",
-
     "authorized": "已授权其他账号",
     "reserved_login": "必须留有一个登录信息",
     "activation_email_failed": "激活邮件发送失败",
     "validation": {
       "username_exists": "用户名已存在",
       "email_exists": "邮箱已被注册"
+    },
+    "authorize": {
+      "authorized user": "绑定失败，该账户已绑定其他账号"
     }
   }
 }

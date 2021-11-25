@@ -84,6 +84,7 @@ const SettingProfilePage = () => {
             <FieldTextarea
               name="bio"
               label={t('setting.profile.label.bio') as string}
+              minRows={3}
             />
             <div css={css`display: flex;justify-content: flex-end;`}>
               <Button

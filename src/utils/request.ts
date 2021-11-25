@@ -9,17 +9,17 @@ const instance = axios.create({
 });
 
 // 请求前预先判断token是否失效
-// instance.interceptors.request.use(async (config) => {
-//   if (server) {
-//     return config;
-//   }
-//   const { refreshToken, isAccessTokenOk } = store.accountStore;
-//   if (!isAccessTokenOk()) {
-//     await refreshToken();
-//     return config;
-//   }
-//   return config;
-// });
+instance.interceptors.request.use(async (config) => {
+  let Authorization = '';
+  const token = localStorage.getItem('token');
+  if (token && JSON.parse(token) && !config.headers!.Authorization) {
+    const { accessToken } = JSON.parse(token);
+    Authorization = `Bearer ${accessToken || ''}`;
+    // eslint-disable-next-line no-param-reassign
+    config.headers!.Authorization = Authorization;
+  }
+  return config;
+});
 
 instance.interceptors.response.use(
   async (response: AxiosResponse<any>) => {

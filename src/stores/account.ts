@@ -12,11 +12,15 @@ import {
 import { OauthType } from '@app/common/enum/router';
 import { request } from '@app/utils/request';
 import { ActiveUserDto } from '@app/common/types/modules/oauth/dto/oauth.dto';
+import { getUserCredentialList } from '@app/services/account';
+import { CredentialsEntity } from '@app/common/types/modules/credentials/credentials.entity';
 
 class AccountStore {
   public init = false;
 
   public userInfo?: UserEntity;
+
+  public userCredentials: CredentialsEntity[] = [];
 
   get isLogin() {
     return !!this.userInfo;
@@ -24,10 +28,12 @@ class AccountStore {
 
   constructor() {
     makeObservable(this, {
+      userCredentials: observable,
       init: observable,
-      isLogin: computed,
       userInfo: observable,
+      isLogin: computed,
       setUserInfo: action,
+      setCredentials: action,
     });
   }
 
@@ -121,6 +127,14 @@ class AccountStore {
     await request.post('/api/auth/logout');
     window.location.href = '/';
   };
+
+  public getCredentialList = async () => {
+    const { data } = await getUserCredentialList();
+    this.setCredentials(data);
+  };
+
+  // eslint-disable-next-line no-return-assign
+  public setCredentials = (data: CredentialsEntity[]) => this.userCredentials = data;
 }
 
 export default new AccountStore();

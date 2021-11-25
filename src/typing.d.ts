@@ -8,6 +8,10 @@ type IListQueryResult<T> = {
   timestamp: number;
 };
 
+type RecordPartial<K extends keyof any, T> = {
+  [P in K]?: T;
+};
+
 declare module '*/fragments.graphql';
 declare module '*/mutations.graphql';
 declare module '*/subscription.graphql';

@@ -132,7 +132,7 @@ export const oauthOpen = (url: string) => {
   });
 };
 
-export const oauthSuccess = (e: MessageEvent, cb: (data: IOauthSuccessData) => void, ok?: () => void) => {
+export const oauthSuccess = (e: MessageEvent, cb: (data: IOauthSuccessData) => void, ok?: () => void, error?: (data: any) => void) => {
   if (e.origin === window.location.origin) {
     if (e.data && e.data.fromOauthWindow) {
       const data = (qs.parse(e.data.fromOauthWindow.substr(1)) as any) as IOauthSuccessData;
@@ -141,6 +141,7 @@ export const oauthSuccess = (e: MessageEvent, cb: (data: IOauthSuccessData) => v
         window.postMessage({ fromParent: true }, window.location.href);
         if (isFunction(ok)) ok();
       } else {
+        if (isFunction(error)) error(data);
         setTimeout(() => window.postMessage({ fromParent: true }, window.location.href), 10000);
       }
     }

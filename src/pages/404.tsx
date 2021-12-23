@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 const Layout = styled.div`
   min-height: calc(100vh - 84px);
@@ -41,12 +41,16 @@ const Message = styled.div`
   }
 `;
 
-const NotPage = () => (
+interface IProps {
+  title?: string
+}
+
+const NotPage: React.FC<IProps> = ({ title }) => (
   <Layout>
     <MessageBox>
       <Message>
         <span>
-          走错路了
+          {title ?? '走错路了'}
         </span>
       </Message>
     </MessageBox>

@@ -6,7 +6,7 @@ const PicturePage = () => {
   const { state, pathname, search } = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    if (state?.backgroundLocation) {
+    if ((state as any)?.backgroundLocation) {
       navigate(`${pathname}${search}`, { replace: true, state: null });
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps

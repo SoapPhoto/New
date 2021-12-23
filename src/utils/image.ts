@@ -182,7 +182,7 @@ export function previewImage(
       resolve(canvas.toDataURL());
     } else {
       canvas.toBlob((blob) => {
-        resolve(window.URL.createObjectURL(blob));
+        resolve(window.URL.createObjectURL(blob!));
       });
     }
   });

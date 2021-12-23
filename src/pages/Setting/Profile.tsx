@@ -1,9 +1,7 @@
 import {
   FieldInput, FieldTextarea,
 } from '@app/components';
-import { Radio } from '@arco-design/web-react';
 import { useAccount } from '@app/stores/hooks';
-import { thumbnail } from 'exifr';
 import { Form, Formik } from 'formik';
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,14 +9,11 @@ import { useTranslation } from 'react-i18next';
 // import '@arco-design/web-react/es/Radio/style/index.js';
 import { css } from 'styled-components/macro';
 import pick from 'lodash/pick';
-import { useApolloClient, useMutation } from '@apollo/client';
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
+import { useMutation } from '@apollo/client';
 import { UpdateProfile } from '@app/graphql/mutations';
 import toast from 'react-hot-toast';
 import Button from '@app/components/Button';
 import Head from '@app/components/Head';
-
-const RadioGroup = Radio.Group;
 
 interface IValues {
   name: string
@@ -33,7 +28,6 @@ interface IValues {
 
 const SettingProfilePage = () => {
   const [updateProfile, { loading }] = useMutation(UpdateProfile);
-  const { mutate } = useApolloClient();
   const { t } = useTranslation();
   const { init, userInfo } = useAccount();
   const onSubmit = useCallback(
@@ -65,7 +59,7 @@ const SettingProfilePage = () => {
         ]) as IValues}
         onSubmit={onSubmit}
       >
-        {({ isValid }) => (
+        {() => (
           <Form>
             <FieldInput
               name="username"

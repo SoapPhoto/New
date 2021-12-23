@@ -4,13 +4,12 @@
  * This is the entry file for the application, only setup and boilerplate
  * code.
  */
-import 'react-app-polyfill/ie11';
+// import 'react-app-polyfill/ie11';
 import 'react-app-polyfill/stable';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
-// import FontFaceObserver from 'fontfaceobserver';
 import { ApolloProvider } from '@apollo/client';
 
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -33,24 +32,6 @@ import { client } from '@app/apollo/client';
 import 'dayjs/locale/en';
 import 'dayjs/locale/zh-cn';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-// require('offline-plugin/runtime').install();
-
-// const openSansObserver = new FontFaceObserver('Rubik', {});
-
-// openSansObserver.load().then(() => {
-//   document.body.classList.add('fontLoaded');
-// });
-
-// if ('serviceWorker' in navigator) {
-//   window.addEventListener('load', () => {
-//     navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-//       console.log('SW registered: ', registration);
-//     }).catch((registrationError) => {
-//       console.log('SW registration failed: ', registrationError);
-//     });
-//   });
-// }
 const MOUNT_NODE = document.getElementById('root') as HTMLElement;
 
 dayjs.extend(relativeTime);

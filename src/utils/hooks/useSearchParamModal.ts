@@ -24,7 +24,7 @@ export default function useSearchParamModal(
       navigate(`${pathname}?${qs.stringify(query)}`, {
         state: {
           [label]: value,
-          ...(state ?? {}),
+          ...((state as any) ?? {}),
         },
         replace: isBoolean(replace) ? replace : false,
       });

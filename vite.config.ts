@@ -9,7 +9,7 @@ import visualizer from "rollup-plugin-visualizer";
 import { VitePWA } from 'vite-plugin-pwa'
 
 var isDev = process.env.NODE_ENV !== 'production'
-console.log(isDev)
+
 export default defineConfig({
   base: isDev ? '/' : 'https://cdn-oss.soapphoto.com/',
   plugins: [
@@ -77,28 +77,30 @@ export default defineConfig({
         ]
       }
     }),
-    vitePluginImp([
-      {
-        libName: 'lodash',
-        libDirectory: '',
-        camel2DashComponentName: false,
-        style: () => {
-          return false;
+    vitePluginImp({
+      libList: [
+        {
+          libName: 'lodash',
+          libDirectory: '',
+          camel2DashComponentName: false,
+          style: () => {
+            return false;
+          },
         },
-      },
-      {
-        libraryName: '@arco-design/web-react',
-        libraryDirectory: 'es',
-        camel2DashComponentName: false,
-        style: (name) => {
-          return `@arco-design/web-react/es/${name}/style/index.js`;
+        {
+          libName: '@arco-design/web-react',
+          libDirectory: 'es',
+          camel2DashComponentName: false,
+          style: (name) => {
+            return `@arco-design/web-react/es/${name}/style/index.js`;
+          },
         },
-      },
-    ]),
-    visualizer({
-      gzipSize: true,
-      brotliSize: true,
-    })
+      ]
+    }),
+    // visualizer({
+    //   gzipSize: true,
+    //   brotliSize: true,
+    // })
   ],
   resolve: {
     alias: [

@@ -169,7 +169,7 @@
     "no_exist_collection": "收藏夹不存在",
     "no_exist_comment": "评论失败",
     "collected": "已收藏",
-    "no_collect": "为收藏",
+    "no_collect": "未收藏",
     "code_credentials_invalid": "代码凭证无效",
     "client_credentials_invalid": "客户凭证无效",
     "user_credentials_invalid": "用户凭证无效",
@@ -181,6 +181,13 @@
       "username_exists": "用户名已存在",
       "email_exists": "邮箱已被注册"
     },
+    "username_exists": "用户名已存在",
+    "email_exists": "邮箱已被注册",
+    "oauth": {
+      "user_credentials_invalid": "用户名或密码错误",
+      "login_error": "登录失败"
+    },
+    "login": "请登录!",
     "authorize": {
       "authorized user": "绑定失败，该账户已绑定其他账号"
     }

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { observer } from 'mobx-react';
 import { useParams, Link } from 'react-router-dom';
 import { css } from 'styled-components/macro';
@@ -12,6 +12,7 @@ import useQueryPicture from '@app/utils/hooks/useQueryPicture';
 import Comment from '@app/components/Comment';
 
 import { useTranslation } from 'react-i18next';
+import NotPage from '@app/pages/404';
 import {
   Wrapper,
   Content,
@@ -32,8 +33,13 @@ const PictureContent = observer(() => {
   const { t } = useTranslation();
   const { id } = useParams();
   const { userInfo } = useAccount();
-  const [{ loading, data }, cacheData] = useQueryPicture<{ picture: PictureEntity; }>(Number(id));
+  const [{ loading, data, error }, cacheData] = useQueryPicture<{ picture: PictureEntity; }>(Number(id));
   const isMe = useMemo(() => data?.picture.user.id === userInfo?.id, [data?.picture.user.id, userInfo?.id]);
+  if (error?.message) {
+    if (error.message === 'Not Found') {
+      return <NotPage title="Opoooos...!" />;
+    }
+  }
   if ((loading && (!data && !cacheData)) || (!data && !cacheData)) return <PictureSkeleton />;
   let picture: PictureEntity;
   if (data) {

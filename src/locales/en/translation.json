@@ -36,16 +36,23 @@
   },
   "auth": {
     "message": {
-      "register_success": "Sign Up Success!"
+      "register_success": "Sign Up Success!",
+      "login_successful": "login successful!"
     }
   },
   "comment": {
-    "empty": "No comment"
+    "empty": "No comment",
+    "author": "author",
+    "close_reply": "Collapse reply",
+    "open_all_comment": "View all replies",
+    "open_reply": "Expand {{total}} replies",
+    "reply": "reply"
   },
   "error": {
     "email_exists": "Email has been registered",
     "oauth": {
-      "user_credentials_invalid": "wrong user name or password"
+      "user_credentials_invalid": "wrong user name or password",
+      "login_error": "login error"
     },
     "username_exists": "Username already exists",
     "login": "please sign in!"
@@ -53,7 +60,8 @@
   "menu": {
     "dark": "Dark mode",
     "light": "Light mode",
-    "setting": "Setting"
+    "setting": "Setting",
+    "signout": "Sign Out"
   },
   "picture": {
     "edit": {
@@ -109,6 +117,72 @@
       "choice": "Choice",
       "likes": "Likes",
       "new": "Pictures"
+    }
+  },
+  "backend_error": {
+    "Invalid grant: user credentials are invalid": "wrong user name or password",
+    "activation_email_failed": "Failed to send activation email",
+    "authorize": {
+      "authorized user": "Failed to bind, the account has been bound to another account"
+    },
+    "authorized": "Authorized another account",
+    "client_credentials_invalid": "Invalid client credentials",
+    "code_credentials_invalid": "Invalid code certificate",
+    "collected": "collected",
+    "no_collect": "Not Collect",
+    "no_exist_collection": "Collection does not exist",
+    "no_exist_comment": "Comment failed",
+    "no_exist_picture": "Picture does not exist",
+    "no_user": "User does not exist",
+    "password_error": "wrong password",
+    "reserved_login": "A login information must be left",
+    "user_credentials_invalid": "Invalid user credentials",
+    "validation": {
+      "email_exists": "Email has been registered",
+      "username_exists": "Username already exists"
+    },
+    "verified": "The account has been verified",
+    "verified_error": "Verification information is invalid"
+  },
+  "title": {
+    "name": "Soap"
+  },
+  "setting": {
+    "profile": {
+      "message": {
+        "updateSuccess": "Successfully modified!"
+      },
+      "label": {
+        "website": "Personal website",
+        "username": "Username (login name)",
+        "name": "Nick name",
+        "bio": "Bio"
+      }
+    },
+    "menu": {
+      "resetPassword": "reset Password",
+      "profile": "user settings",
+      "account": "Account Settings"
+    },
+    "account": {
+      "revoke_confirm": {
+        "title": "Are you sure to unbind?"
+      },
+      "message": {
+        "revoke_success": "Unbind successfully!",
+        "revoke_error": "Unbinding failed, please try again",
+        "require_one_login_type": "A login method must be reserved, please bind another account or set a password and try again!",
+        "authorize_success": "The binding is successful!"
+      },
+      "btn": {
+        "authorize": "Bind",
+        "modify": "Modify"
+      },
+      "label": {
+        "no_verify": "Unverified",
+        "revoke": "Untie",
+        "signup_type": "register"
+      }
     }
   }
 }

@@ -38,6 +38,7 @@ import PictureModal from '@app/pages/Picture/Modal';
 import NotPage from '@app/pages/404';
 import ReloadPrompt from '@app/ReloadPrompt';
 import SearchPage from '@app/pages/Search';
+import ValidatorEmailPage from '@app/pages/ValidatorEmail';
 import { GlobalStyle } from '../styles/global-styles';
 
 const SettingProfilePage = Loadable(() => import('@app/pages/Setting/Profile'));
@@ -112,6 +113,7 @@ const Router = () => {
           <Route path="register" element={<Register />} />
           <Route path="auth/complete" element={<AuthCompletePage />} />
         </Route>
+        <Route path="validatoremail" element={<ValidatorEmailPage />} />
         <Route path="" element={<OauthLayout />}>
           <Route path="redirect/oauth/:type" element={<OauthRedirectPage />} />
         </Route>

@@ -14,6 +14,11 @@ import { request } from '@app/utils/request';
 import { ActiveUserDto } from '@app/common/types/modules/oauth/dto/oauth.dto';
 import { getUserCredentialList } from '@app/services/account';
 import { CredentialsEntity } from '@app/common/types/modules/credentials/credentials.entity';
+import dayjs, { Dayjs } from 'dayjs';
+import { resetVerifyMail } from '@app/services/auth';
+import toast from 'react-hot-toast';
+
+let resetDate: undefined | Dayjs;
 
 class AccountStore {
   public init = false;
@@ -135,6 +140,15 @@ class AccountStore {
 
   // eslint-disable-next-line no-return-assign
   public setCredentials = (data: CredentialsEntity[]) => this.userCredentials = data;
+
+  public resetVerifyEmail = async () => {
+    if (resetDate && dayjs().isBefore(resetDate)) {
+      toast.error('操作太频繁，请1分钟后重试！');
+      return null;
+    }
+    resetDate = dayjs().add(1, 'M');
+    return resetVerifyMail();
+  };
 }
 
 export default new AccountStore();

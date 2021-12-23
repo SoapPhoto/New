@@ -2,7 +2,7 @@ import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, FormikHelpers } from 'formik';
 
 import FieldInput from '@app/components/Formik/FieldInput';
@@ -23,6 +23,7 @@ interface IValues {
   password: string;
 }
 const Register = observer(() => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { registerLogin } = useAccount();
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -48,6 +49,7 @@ const Register = observer(() => {
         const data = await register(values);
         registerLogin(data);
         toast.success(t('auth.message.register_success') as string);
+        navigate('/login', { replace: true });
       } catch (error) {
         const { message } = error as any;
         if (isArray(message)) {

@@ -19,7 +19,7 @@ export default function useDeletePicture(
         client.refetchQueries({
           include: [UserPictures],
         });
-        // await deleteItem({ variables: { id } });
+        await deleteItem({ variables: { id } });
         toast.success('删除成功');
         navigate(cbUrl, { replace: true });
       } catch (error) {
@@ -27,7 +27,7 @@ export default function useDeletePicture(
         toast.error(message);
       }
     },
-    [cbUrl, deleteItem, navigate],
+    [cbUrl, client, deleteItem, navigate],
   );
   return [del, loading];
 }

@@ -1,6 +1,7 @@
 import { useAccount } from '@app/stores/hooks';
 import { observer } from 'mobx-react';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import toast from 'react-hot-toast';
 import styled from 'styled-components/macro';
 import IconButton from '../Button/IconButton';
 import { X } from '../Icons';
@@ -44,13 +45,26 @@ const Close = styled(IconButton)`
 `;
 
 const VerifyMessage = observer(() => {
+  const [sendLoading, setSendLoading] = useState(false);
   const [verifyMessage, setVerifyMessage] = useState(true);
-  const { userInfo } = useAccount();
+  const { userInfo, resetVerifyEmail } = useAccount();
   const unVerified = useMemo(() => userInfo?.status === 'UNVERIFIED', [
     userInfo?.status,
   ]);
-  const reset = () => {};
   if (!unVerified || (!unVerified && !verifyMessage)) return null;
+  const reset = useCallback(async () => {
+    try {
+      if (sendLoading) return;
+      setSendLoading(true);
+      const data = await resetVerifyEmail();
+      if (data) toast.success('邮件已发送，请查收！');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setSendLoading(false);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sendLoading]);
   return (
     <Container>
       <span>邮箱未激活，请检查您的电子邮箱，激活邮箱。</span>

@@ -5,6 +5,7 @@ import {
 import styled from 'styled-components/macro';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { animated } from 'react-spring';
+import toast from 'react-hot-toast';
 
 import {
   A, EmojiText, Popover,
@@ -86,7 +87,15 @@ export const Right = observer(() => {
             <Search />
           </IconButton>
           <div style={{ width: '22px' }} />
-          <IconButton onClick={() => openUpload()}>
+          <IconButton
+            onClick={() => {
+              if (userInfo?.status === 'UNVERIFIED') {
+                toast.error('请先验证邮箱后操作');
+              } else {
+                openUpload();
+              }
+            }}
+          >
             <UploadCloud />
           </IconButton>
           <div style={{ width: '22px' }} />

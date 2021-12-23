@@ -53,12 +53,13 @@ export const NotificationPopover = observer(() => {
       });
     }
   };
-  useEffect(() => {
-    console.log();
-    return () => {
+  useEffect(
+    () => () => {
       mark();
-    };
-  }, []);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
   return (
     <Wrapper>
       <List
@@ -76,6 +77,11 @@ export const NotificationPopover = observer(() => {
                 data?.userNotification.map((notify) => (
                   <NotificationItem key={notify.id} data={notify} />
                 ))
+              }
+              {
+                data?.userNotification.length === 0 && (
+                  <div css={css`font-size: 18px;text-align: center;padding: 42px 24px;color: ${({ theme }) => theme.colors.secondary};`}>暂无数据！</div>
+                )
               }
             </ListBox>
           )}

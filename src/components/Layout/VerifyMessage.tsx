@@ -51,7 +51,6 @@ const VerifyMessage = observer(() => {
   const unVerified = useMemo(() => userInfo?.status === 'UNVERIFIED', [
     userInfo?.status,
   ]);
-  if (!unVerified || (!unVerified && !verifyMessage)) return null;
   const reset = useCallback(async () => {
     try {
       if (sendLoading) return;
@@ -65,6 +64,7 @@ const VerifyMessage = observer(() => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sendLoading]);
+  if (!unVerified || (!unVerified && !verifyMessage)) return null;
   return (
     <Container>
       <span>邮箱未激活，请检查您的电子邮箱，激活邮箱。</span>

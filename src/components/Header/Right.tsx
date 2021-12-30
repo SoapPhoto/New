@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import {
-  Moon, Search, Sun, UploadCloud,
+  Moon, Search, Sun, UploadCloud, User,
 } from 'react-feather';
 import styled from 'styled-components/macro';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { animated } from 'react-spring';
 import toast from 'react-hot-toast';
 
 import {
-  A, EmojiText, Popover,
+  EmojiText, Popover,
 } from '@app/components';
 import { space } from '@app/utils/theme';
 import { observer } from 'mobx-react';
@@ -158,10 +158,21 @@ export const Right = observer(() => {
         </>
       ) : (
         <>
-          <A style={{ marginRight: 16 }} to="/search">
+          <IconButton onClick={() => navigate('/s')}>
             <Search />
-          </A>
-          <A to="/login">{t('label.login')}</A>
+          </IconButton>
+          <div style={{ width: '22px' }} />
+          <IconButton onClick={switchTheme}>
+            {selected === 'dark' ? (
+              <Sun />
+            ) : (
+              <Moon />
+            )}
+          </IconButton>
+          <div style={{ width: '22px' }} />
+          <IconButton onClick={() => navigate('/login')}>
+            <User />
+          </IconButton>
         </>
       )}
     </Wrapper>

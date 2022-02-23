@@ -40,7 +40,7 @@ const Content = styled.div`
   background: ${(p) => p.theme.widget.modal.background};
   border-radius: 6px;
   width: 100%;
-  max-width: 940px;
+  max-width: 1080px;
   overflow: hidden;
   ${customMedia.lessThan('mobile')`
     top: 0px;

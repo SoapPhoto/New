@@ -146,13 +146,11 @@ export const CommentItem: React.FC<ICommentItem> = observer(({
           }
           {
             isLogin && (
-              <>
-                <ConfirmText
-                  onClick={openComment}
-                >
-                  {t('comment.reply')}
-                </ConfirmText>
-              </>
+            <ConfirmText
+              onClick={openComment}
+            >
+              {t('comment.reply')}
+            </ConfirmText>
             )
           }
         </InfoBox>

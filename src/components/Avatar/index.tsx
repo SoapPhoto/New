@@ -55,11 +55,13 @@ const Avatar: React.FC<IAvatarProps> = ({
             css={css`
               border-radius: 100%;
               position: relative;
-              width: calc(100% - ${(_) => `${borderSize}px`});
-              height: calc(100% - ${(_) => `${borderSize}px`});
               padding: 2px;
               background: ${(p) => p.theme.background};
             `}
+            style={{
+              width: `calc(100% - ${borderSize}px)`,
+              height: `calc(100% - ${borderSize}px)`,
+            }}
           >
             {content}
           </div>

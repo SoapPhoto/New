@@ -84,6 +84,18 @@ const UserName = styled.div`
   color: #fff;
 `;
 
+const UserNameSpan = styled.span`
+  font-weight: 700;
+  font-size: 28px;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-shadow: 0px 15px 5px rgba(0,0,0,0.1),
+    10px 20px 5px rgba(0,0,0,0.05),
+    -10px 20px 5px rgba(0,0,0,0.05);
+`;
+
 const UserTotalBox = styled.div`
   margin-top: 6px;
 `;
@@ -133,20 +145,11 @@ const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {
         </AvatarContent>
         <InfoContent>
           <UserName>
-            <EmojiText
-              css={css`
-                font-weight: 700;
-                font-size: 28px;
-                max-width: 100%;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                text-shadow: 0px 15px 5px rgba(0,0,0,0.1),
-                  10px 20px 5px rgba(0,0,0,0.05),
-                  -10px 20px 5px rgba(0,0,0,0.05);
-              `}
-              text={user.fullName}
-            />
+            <UserNameSpan>
+              <EmojiText
+                text={user.fullName}
+              />
+            </UserNameSpan>
             {
               user?.badge?.find((v) => v.name === 'prestige') && (
               <Popover

@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import path from 'path';
 import reactRefresh from '@vitejs/plugin-react-refresh';
+import react from '@vitejs/plugin-react';
 import graphql from '@rollup/plugin-graphql';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 import macrosPlugin from 'vite-plugin-babel-macros';
@@ -13,7 +14,19 @@ var isDev = process.env.NODE_ENV !== 'production'
 export default defineConfig({
   base: isDev ? '/' : 'https://cdn-oss.soapphoto.com/',
   plugins: [
-    reactRefresh(),
+    react({
+      babel: {
+        plugins: [
+          [
+            'babel-plugin-styled-components',
+            {
+              displayName: true,
+              fileName: false
+            }
+          ]
+        ]
+      }
+    }),
     graphql(),
     macrosPlugin(),
     VitePWA({

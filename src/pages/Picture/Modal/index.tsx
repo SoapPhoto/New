@@ -4,9 +4,8 @@ import { customMedia } from '@app/styles/mediaQuery';
 import ScrollLocker from 'rc-util/lib/Dom/scrollLocker';
 import PortalWrapper from 'rc-util/lib/PortalWrapper';
 import React, { useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import PictureSkeleton from '../Skeleton';
 import PictureModalContent from './Content';
 
 const Wrapper = styled.div`
@@ -61,8 +60,8 @@ const CloseBox = styled(IconButton)`
 `;
 
 const scrollLocker = new ScrollLocker();
+
 const PictureModal: React.FC = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const contentClickRef = useRef(false);
   const contentTimeoutRef = useRef<number>();
@@ -87,6 +86,7 @@ const PictureModal: React.FC = () => {
     } else if (wrapperRef.current === e.target) {
       navigate(-1);
     }
+    scrollLocker.unLock();
     return null;
   };
   return (

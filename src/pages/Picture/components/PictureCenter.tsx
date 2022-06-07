@@ -14,6 +14,7 @@ import {
 } from '../elements';
 
 import 'react-photo-view/dist/react-photo-view.css';
+import { Loading } from '@app/components';
 
 interface IProps {
   picture: PictureEntity;
@@ -25,8 +26,16 @@ const PictureCenter: React.FC<IProps> = ({ picture }) => {
   return (
     <PictureWrapper>
       <PictureContent>
-        <PhotoProvider bannerVisible={false}>
-          <PhotoView key={picture.key} src={getPictureUrl(picture.key, 'full')}>
+        <PhotoProvider
+          loadingElement={<Loading />}
+          maskOpacity={0.5}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          bannerVisible={false}
+        >
+          <PhotoView
+            key={picture.key}
+            src={getPictureUrl(picture.key, 'full')}
+          >
             <PictureBox num={num}>
               <PictureImageBox height={height} background={picture.color}>
                 <PictureImage>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { stringify } from 'qs';
@@ -13,6 +13,7 @@ export const SecurityLayout = observer(() => {
     redirect: location.pathname,
   });
   if (!init) {
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <></>;
   }
   if (!userInfo) {

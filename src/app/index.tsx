@@ -1,10 +1,9 @@
 import React, {
-  useEffect, useLayoutEffect, useState, useRef, useMemo,
+  useEffect, useLayoutEffect, useRef,
 } from 'react';
-import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
 import {
-  Route, BrowserRouter, Routes, Navigate, useLocation, useNavigate,
+  Route, BrowserRouter, Routes, Navigate, useLocation,
 } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { useTheme } from 'styled-components/macro';
@@ -46,7 +45,6 @@ const SettingAccountPage = Loadable(() => import('@app/pages/Setting/Account'));
 const ResetPasswordPage = Loadable(() => import('@app/pages/Setting/ResetPassword'));
 
 const Router = () => {
-  const [init, setInit] = useState(false);
   const initRef = useRef(false);
   const location = useLocation();
   const oldLocation = useRef(location.pathname);
@@ -59,7 +57,6 @@ const Router = () => {
   if (location.pathname !== oldLocation.current) {
     initRef.current = true;
   }
-  console.log();
   return (
     <>
       <Routes location={!initRef.current ? location : state?.backgroundLocation ?? location}>

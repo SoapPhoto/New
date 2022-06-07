@@ -4,8 +4,10 @@ import { Badge } from '@arco-design/web-react';
 import { observer } from 'mobx-react';
 import React, { useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled, { css } from 'styled-components/macro';
+import styled, { useTheme } from 'styled-components/macro';
 
+import { isSystemDark } from '@app/styles/theme/utils';
+import { useThemeStore } from '@app/stores/hooks';
 import { Popover } from '..';
 import IconButton from '../Button/IconButton';
 import { Bell } from '../Icons';
@@ -24,18 +26,20 @@ export const Notify: React.FC = observer(() => {
   const { data } = useQuery<{ unreadNotificationCount: { count: number } }>(UnreadNotificationCount);
   const pathname = useLocation();
   const popoverRef = useRef<PopoverRef>(null);
+  const { theme } = useThemeStore();
   useEffect(() => {
     if (popoverRef.current) {
       popoverRef.current?.close();
     }
   }, [pathname]);
+  console.log(theme.state);
   return (
     <div>
       <Popover
         popoverRef={popoverRef}
         trigger="click"
         placement="bottom"
-        theme="light"
+        theme={theme.state}
         destroyOnClose
         content={<NotificationPopover />}
         contentStyle={{ padding: 0 }}

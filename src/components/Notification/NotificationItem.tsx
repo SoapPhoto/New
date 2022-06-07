@@ -1,13 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components/macro';
-import { rem } from 'polished';
 import dayjs from 'dayjs';
 import { observer } from 'mobx-react';
 
 import { NotificationEntity } from '@app/common/types/modules/notification/notification.entity';
 import { NotificationCategory } from '@app/common/enum/notification';
 import Image from '@app/components/Image';
-import { useFollower } from '@app/utils/hooks';
 import { getPictureUrl } from '@app/utils/image';
 import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
 import { A, EmojiText, Popover } from '..';
@@ -71,7 +69,6 @@ const Date = styled.span`
 `;
 
 export const NotificationItem: React.FC<IProps> = observer(({ data }) => {
-  const [follow, followLoading] = useFollower();
   const content = useCallback(() => {
     switch (data.category) {
       case NotificationCategory.LIKED:
@@ -146,7 +143,7 @@ export const NotificationItem: React.FC<IProps> = observer(({ data }) => {
             <A
               to={`/user/${data.publisher.username}`}
               style={{ textDecoration: 'none' }}
-              css={css`margin-right: 12px;`}
+              css={css`margin-right: 12px;font-weight: 600;`}
             >
               <UserName text={data.publisher.fullName} />
             </A>

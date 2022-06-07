@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { rem } from 'polished';
 import { observer } from 'mobx-react';
@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 import {
-  useApolloClient, useLazyQuery, useMutation, useQuery,
+  useApolloClient, useMutation, useQuery,
 } from '@apollo/client';
 import { UnreadNotificationCount, UserNotification } from '@app/graphql/query';
 import { NotificationEntity } from '@app/common/types/modules/notification/notification.entity';
@@ -16,6 +16,7 @@ import { Loading } from '..';
 
 const Wrapper = styled.div`
   width: 380px;
+  /* background: ${(p) => p.theme.widget.modal.background}; */
   /* height: 200px;
   overflow: auto; */
   /* display: grid;

@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
   min-height: 100vh;
 `;
 
-export const OauthLayout: React.FC<IProps> = ({ }) => (
+export const OauthLayout: React.FC<IProps> = () => (
   <Wrapper>
     <Header right={false} />
     <Outlet />

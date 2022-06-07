@@ -6,6 +6,7 @@ const gray3 = 'rgba(240,243,244,1)';
 const gray4 = 'rgba(230,233,234,1)';
 
 const theme: DefaultTheme = {
+  state: 'light',
   space: 4,
   background: '#fff',
   foreground: 'rgb(44, 62, 80)',

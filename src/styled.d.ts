@@ -3,6 +3,7 @@ import 'styled-components/macro';
 /* This is the suggested way of declaring theme types */
 declare module 'styled-components/macro' {
   export interface DefaultTheme {
+    state: string;
     foreground: string;
     background: string;
     shadowColor: string;

@@ -6,6 +6,7 @@ const gray3 = 'rgba(15,16,19,1)';
 const gray4 = 'rgba(10,11,14,1)';
 
 const theme: DefaultTheme = {
+  state: 'dark',
   space: 4,
   background: 'rgba(0,0,0,1)',
   foreground: '#fff',

@@ -123,7 +123,7 @@ const UploadModal = observer(() => {
           console.log('OSS 加载成功!');
           setLoading(false);
         };
-        script.setAttribute('src', 'https://cdn.jsdelivr.net/npm/ali-oss@6.16.0/dist/aliyun-oss-sdk.min.js');
+        script.setAttribute('src', 'https://cdn-oss.soapphoto.com/npm/ali-oss-6.17.0/dist/aliyun-oss-sdk.min.js');
         HEAD.appendChild(script);
       } else {
         setLoading(false);

@@ -9,7 +9,7 @@ export const Wrapper = styled.section`
 
 export const BG = styled.div`
   flex: 1;
-  min-height: 100vh;
+  height: 100vh;
 `;
 export const RightBox = styled.div`
   background-color: ${(p) => p.theme.colors.layout};

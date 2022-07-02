@@ -24,6 +24,8 @@ import { PopoverRef } from '../Popover';
 import IconButton from '../Button/IconButton';
 import { Notify } from './Notify';
 
+const { button: AButton } = animated as any;
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -145,7 +147,7 @@ export const Right = observer(() => {
               </Menu>
             )}
           >
-            <animated.button
+            <AButton
               {...bind()}
               style={{
                 transform: spring.transform as any,
@@ -153,7 +155,7 @@ export const Right = observer(() => {
               }}
             >
               <Avatar size={36} src={userInfo.avatar} />
-            </animated.button>
+            </AButton>
           </Popover>
         </>
       ) : (

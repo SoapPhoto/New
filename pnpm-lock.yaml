@@ -17,6 +17,7 @@ specifiers:
   '@types/fontfaceobserver': 2.1.0
   '@types/jest': 28.1.1
   '@types/loadable__component': 5.13.4
+  '@types/lodash': ^4.14.182
   '@types/mapbox-gl': ^2.7.2
   '@types/node': 17.0.40
   '@types/qs': ^6.9.7
@@ -134,6 +135,7 @@ specifiers:
   vite-plugin-babel-macros: ^1.0.6
   vite-plugin-imp: ^2.1.8
   vite-plugin-pwa: ^0.12.0
+  workbox-window: ^6.5.3
   yup: ^0.32.11
 
 dependencies:
@@ -227,6 +229,7 @@ devDependencies:
   '@types/fontfaceobserver': 2.1.0
   '@types/jest': 28.1.1
   '@types/loadable__component': 5.13.4
+  '@types/lodash': 4.14.182
   '@types/mapbox-gl': 2.7.2
   '@types/node': 17.0.40
   '@types/qs': 6.9.7
@@ -273,6 +276,7 @@ devDependencies:
   vite-plugin-babel-macros: 1.0.6_vite@2.9.10
   vite-plugin-imp: 2.1.8_vite@2.9.10
   vite-plugin-pwa: 0.12.0_vite@2.9.10
+  workbox-window: 6.5.3
 
 packages:
 
@@ -3624,7 +3628,6 @@ packages:
 
   /@types/lodash/4.14.182:
     resolution: {integrity: sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==}
-    dev: false
 
   /@types/mapbox-gl/2.7.2:
     resolution: {integrity: sha512-2/qyLtiQxiTYEQuOxaqiNiZPvjND35rde/ZQpxx8D5bEcYK4PDXWv/DIxPsfxqyhiP1E6Wbni0SfjkbqcqOfCQ==}

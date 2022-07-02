@@ -207,7 +207,7 @@ export const ChoiceBox = styled.div`
   justify-content: center;
 `;
 
-export const LikeContent = styled(animated.button)`
+export const LikeContent = styled(animated.button as any)`
   ${initButton}
   z-index: 3;
   position: absolute;

@@ -39,7 +39,7 @@ export const Notify: React.FC = observer(() => {
         popoverRef={popoverRef}
         trigger="click"
         placement="bottom"
-        theme={theme.state}
+        theme={theme.state as any}
         destroyOnClose
         content={<NotificationPopover />}
         contentStyle={{ padding: 0 }}

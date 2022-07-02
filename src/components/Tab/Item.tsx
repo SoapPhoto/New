@@ -9,11 +9,11 @@ interface ITabItemProps {
   to: string;
 }
 const transition = { duration: 0.5, ease: [0.43, 0.13, 0.23, 0.96] };
-
+const { div: Div } = animated as any;
 const TabItem: React.FC<ITabItemProps> = ({ name, to }) => {
   const [spring, bind] = useTapButton(1.1, 0.90);
   return (
-    <animated.div
+    <Div
       key={name}
       {...bind()}
       style={{
@@ -28,7 +28,7 @@ const TabItem: React.FC<ITabItemProps> = ({ name, to }) => {
       >
         {name}
       </ItemLink>
-    </animated.div>
+    </Div>
   );
 };
 

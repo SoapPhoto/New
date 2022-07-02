@@ -56,7 +56,7 @@ const Upload: React.FC<IUploadProps> = ({
   const uploadImage = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     inputRef.current!.click();
     if (isFunction(onClick)) {
-      onClick(e);
+      onClick?.(e);
     }
   };
   const onFileDrop = (e: React.DragEvent<HTMLButtonElement>) => {
@@ -84,6 +84,7 @@ const Upload: React.FC<IUploadProps> = ({
     onDragEnter: onFileEnter,
   };
   return (
+    // eslint-disable-next-line react/button-has-type
     <button onClick={uploadImage} ref={wrapperRef} {...event} {...restProps}>
       <Input
         accept={accept}

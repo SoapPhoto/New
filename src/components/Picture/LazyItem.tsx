@@ -4,6 +4,8 @@ import { animated } from 'react-spring';
 
 import PictureItem, { IPictureItemProps } from './Item';
 
+const { div: Div } = animated as any;
+
 const PictureLayzItem: React.FC<IPictureItemProps> = (props) => {
   const transition = { duration: 0.2, ease: [0.43, 0.13, 0.23, 0.96] };
   const thumbnailVariants = {
@@ -11,13 +13,13 @@ const PictureLayzItem: React.FC<IPictureItemProps> = (props) => {
   };
   return (
     <LazyLoad unmountIfInvisible offset={900}>
-      <animated.div
+      <Div
         style={{
           width: '100%', height: '100%', backfaceVisibility: 'hidden', transform: 'perspective(1px)',
         }}
       >
         <PictureItem {...props} />
-      </animated.div>
+      </Div>
     </LazyLoad>
   );
 };

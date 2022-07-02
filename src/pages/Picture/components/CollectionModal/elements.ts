@@ -12,7 +12,7 @@ export const CollectionBox = styled.div`
   grid-gap: 14px;
 `;
 
-export const CollectionItemBox = styled(animated.button)`
+export const CollectionItemBox = styled(animated.button as any)`
   cursor: pointer;
   outline: none;
   display: block;

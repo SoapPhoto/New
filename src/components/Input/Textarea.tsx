@@ -65,13 +65,13 @@ const Textarea: React.FC<ITextareaProps> = memo(({
   const onBaseFocus = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
     setFocus(true);
     if (isFunction(onFocus)) {
-      onFocus(e);
+      onFocus?.(e);
     }
   }, [onFocus]);
   const onBaseBlur = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
     setFocus(false);
     if (isFunction(onBlur)) {
-      onBlur(e);
+      onBlur?.(e);
     }
   }, [onBlur]);
   return (

@@ -2,9 +2,7 @@ import React, {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import {
-  FastField,
-  Field,
-  Form, Formik, FormikProps, setIn, useFormikContext,
+  Form, Formik, FormikProps, useFormikContext,
 } from 'formik';
 import omit from 'lodash/omit';
 import pick from 'lodash/pick';
@@ -30,6 +28,7 @@ import Button from '@app/components/Button';
 import FieldLocation from '@app/components/Formik/FieldLocation';
 import LocationModal from '@app/components/LocationModal';
 import { LocationEntity } from '@app/common/types/modules/location/location.entity';
+import { Confirm } from '@app/components/Modal/Confirm';
 import { Content } from '../../elements';
 import { Footer } from './elements';
 

@@ -12,13 +12,13 @@ import { Unlock, X } from '@app/components/Icons';
 import { SignupType } from '@app/common/enum/signupType';
 import { CredentialsEntity } from '@app/common/types/modules/credentials/credentials.entity';
 import { observer } from 'mobx-react';
-import Modal from '@app/components/Modal';
 import { accountAuthorize, accountRevoke } from '@app/services/account';
 import toast from 'react-hot-toast';
 import {
   getOauthUrl, IOauthSuccessData, oauthOpen, oauthSuccess,
 } from '@app/utils/oauth';
 import { OauthStateType } from '@app/common/enum/oauthState';
+import { Confirm } from '@app/components/Modal/Confirm';
 
 interface IInfo {
   title: string;
@@ -290,11 +290,11 @@ const SettingAccountPage = () => {
           </div>
         </Item>
       </List>
-      <Modal.Confirm
+      <Confirm
         visible={confirmVisible}
         onClose={() => setConfirmVisible(false)}
         onConfirm={revoke}
-        confirmText={t('setting.account.label.revoke')}
+        confirmText={t('setting.account.label.revoke') as string}
         confirmButtonProps={{
           danger: true,
           disabled: confirmDisabled,

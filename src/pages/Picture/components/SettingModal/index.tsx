@@ -173,7 +173,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
             )}
           </Formik>
         </Content>
-        <Modal.Confirm
+        <Confirm
           visible={confirmVisible}
           onClose={() => setConfirmVisible(false)}
           onConfirm={deletePicture}

@@ -1,5 +1,5 @@
 /* eslint-disable no-async-promise-executor */
-import FastAverageColor from 'fast-average-color';
+import { FastAverageColor } from 'fast-average-color';
 import isString from 'lodash/isString';
 import { encode } from 'blurhash';
 

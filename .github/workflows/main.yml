@@ -5,7 +5,35 @@ jobs:
     runs-on: ubuntu-latest # 运行系统环境
     steps: # 步骤
       - uses: actions/checkout@v3.4.0 # 使用公共的 action
+        with:
+          submodules: recursive
       - uses: actions/setup-node@v3.6.0
         with:
-          node-version: '16'
-      - run: echo '发布' # shell 脚本
+          node-version: "16"
+      - name: 安装 pnpm
+        run: npm install -g pnpm
+      - name: 安装依赖
+        run: pnpm install
+      - name: 构建
+        run: pnpm build
+      - name: 上传到阿里云 OSS
+        uses: Menci/upload-to-oss@beta-v1
+        with:
+          access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
+
+          bucket: ${{ secrets.bucket }}
+          endpoint: oss-cn-shanghai.aliyuncs.com
+
+          local-path: dist/assets
+          remote-path: assets
+      - name: 上传到服务器上
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.host }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          port: ${{ secrets.port }}
+          source: "dist"
+          target: "/www/wwwroot/soap/New"
+        

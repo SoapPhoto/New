@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 import path from 'path';
-import reactRefresh from '@vitejs/plugin-react-refresh';
 import react from '@vitejs/plugin-react';
 import graphql from '@rollup/plugin-graphql';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 import macrosPlugin from 'vite-plugin-babel-macros';
 import vitePluginImp from 'vite-plugin-imp';
-import visualizer from "rollup-plugin-visualizer";
 import { VitePWA } from 'vite-plugin-pwa'
+
+const cdnUrl = 'https://cdn-oss.soapphoto.com';
 
 var isDev = process.env.NODE_ENV !== 'production'
 
@@ -67,26 +67,49 @@ export default defineConfig({
         ]
       },
       workbox: {
-        swDest: "./dist/sw.js",
+        // 不缓存api路径
+
         navigateFallbackDenylist: [
           /^\/api/,
           /^\/graphql/,
           /^\/oauth/,
         ],
-        runtimeCaching: [
+        // 缓存策略
+        runtimeCaching:[
+          // 缓存https://cdn-oss.soapphoto.com/下的图片
           {
-            urlPattern: /^https:\/\/cdn-oss\.soapphoto\.com\/.*/i,
+            urlPattern: /^https:\/\/cdn-oss.soapphoto.com\/photo\/.*/,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'soap-cdn',
+              cacheName: 'image-cache',
               expiration: {
-                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 30,
               },
             },
-          }
+          },
+          // 缓存https://cdn-oss.soapphoto.com/fonts下的字体
+          {
+            urlPattern: /^https:\/\/cdn-oss.soapphoto.com\/fonts\/.*/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'font-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 * 365,
+              },
+            },
+          },
+        ],
+        manifestTransforms: [
+          (manifest) => 
+            ({
+              manifest: manifest.map(entry => !entry.url.indexOf("assets/") ? ({
+                ...entry,
+                url: cdnUrl + "/" + entry.url,
+              }) : entry),
+              warnings: []
+            })
         ]
       }
     }),
@@ -110,10 +133,6 @@ export default defineConfig({
         },
       ]
     }),
-    // visualizer({
-    //   gzipSize: true,
-    //   brotliSize: true,
-    // })
   ],
   resolve: {
     alias: [
@@ -140,9 +159,6 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
-  },
-  rollupInputOptions: {
-    plugins: [nodePolyfills()],
   },
   define: {
     'process.env': {},

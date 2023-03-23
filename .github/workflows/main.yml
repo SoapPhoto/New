@@ -1,5 +1,10 @@
 name: release
+
 on: [push] # 仓库提交时触发
+
+env:
+  VITE_MAPBOX_AK: ${{ secrets.VITE_MAPBOX_AK }}
+
 jobs:
   release-job:
     runs-on: ubuntu-latest # 运行系统环境

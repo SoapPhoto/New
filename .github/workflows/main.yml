@@ -1,0 +1,11 @@
+name: release
+on: [push] # 仓库提交时触发
+jobs:
+  release-job:
+    runs-on: ubuntu-latest # 运行系统环境
+    steps: # 步骤
+      - uses: actions/checkout@v3.4.0 # 使用公共的 action
+      - uses: actions/setup-node@v3.6.0
+        with:
+          node-version: '16'
+      - run: echo '发布' # shell 脚本

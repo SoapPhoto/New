@@ -1,4 +1,5 @@
 import React, {
+  PropsWithChildren,
   useCallback,
   useEffect,
   useMemo,
@@ -33,7 +34,7 @@ interface IPopoverProps {
 
 export type PopoverTheme = 'dark' | 'light';
 
-const Popover: React.FC<IPopoverProps> = ({
+const Popover: React.FC<PropsWithChildren<IPopoverProps>> = ({
   popoverRef,
   content,
   children,
@@ -54,9 +55,11 @@ const Popover: React.FC<IPopoverProps> = ({
   const referenceElementRef = useRef<HTMLButtonElement>();
   const [
     referenceElement,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     _setReferenceElement,
   ] = useState<HTMLButtonElement | null>(null);
   const popperElementRef = useRef<HTMLDivElement>();
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const [popperElement, _setPopperElement] = useState<HTMLDivElement | null>(null);
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
   const themeState = useMemo(
@@ -169,6 +172,7 @@ const Popover: React.FC<IPopoverProps> = ({
       }
       return () => document.removeEventListener('mousedown', onDocumentClick);
     }
+    return undefined;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trigger, popupVisible]);
   // content变化的话强制更新
@@ -178,11 +182,9 @@ const Popover: React.FC<IPopoverProps> = ({
     }
   }, [popperSize, update]);
   useEffect(() => {
-    if (!popperElement) return;
+    if (!popperElement) return () => {};
     observer.observe(popperElement);
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [popperElement]);
   useEffect(() => {

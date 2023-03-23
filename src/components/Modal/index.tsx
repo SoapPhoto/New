@@ -1,11 +1,10 @@
 import React, {
+  PropsWithChildren,
   SyntheticEvent, useEffect, useRef, useState,
 } from 'react';
 import PortalWrapper from 'rc-util/lib/PortalWrapper';
 import ScrollLocker from 'rc-util/lib/Dom/scrollLocker';
 import { useSpring } from 'react-spring';
-
-import Confirm from './Confirm';
 
 import {
   Mask,
@@ -43,7 +42,7 @@ const springConfig = {
 
 let openTotal = 0;
 
-const InternalModal: React.FC<IModalProps> = ({
+const InternalModal: React.FC<PropsWithChildren<IModalProps>> = ({
   visible,
   onClose,
   afterClose,
@@ -70,6 +69,15 @@ const InternalModal: React.FC<IModalProps> = ({
     opacity: animatedVisible ? 1 : 0,
     config: springConfig,
   });
+  const destroy = () => {
+    setClosed(true);
+    openTotal--;
+    if (openTotal <= 0) {
+      openTotal = 0;
+      scrollLocker.unLock();
+    }
+    afterClose?.();
+  };
   const contentSpringProps = useSpring({
     opacity: animatedVisible ? 1 : 0,
     transform: animatedVisible
@@ -82,9 +90,19 @@ const InternalModal: React.FC<IModalProps> = ({
       }
     },
   });
+  const open = () => {
+    setAnimatedVisible(true);
+    setClosed(false);
+    openTotal++;
+    scrollLocker.lock();
+  };
+  const close = () => {
+    setAnimatedVisible(false);
+  };
   useEffect(() => {
     isInit.current = true;
     return () => destroy();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (visible !== animatedVisible) {
@@ -105,24 +123,6 @@ const InternalModal: React.FC<IModalProps> = ({
   //     }
   //   }
   // }, [animatedVisible]);
-  const open = () => {
-    setAnimatedVisible(true);
-    setClosed(false);
-    openTotal++;
-    scrollLocker.lock();
-  };
-  const close = () => {
-    setAnimatedVisible(false);
-  };
-  const destroy = () => {
-    setClosed(true);
-    openTotal--;
-    if (openTotal <= 0) {
-      openTotal = 0;
-      scrollLocker.unLock();
-    }
-    afterClose?.();
-  };
   const onContentMouseDown: React.MouseEventHandler = () => {
     clearTimeout(contentTimeoutRef.current);
     contentClickRef.current = true;
@@ -157,35 +157,33 @@ const InternalModal: React.FC<IModalProps> = ({
     return null;
   }
   return (
-    <>
-      <PortalWrapper visible={!closed} getContainer={document.body as any}>
-        {() => (
-          <div style={{ display: closed ? 'none' : 'block' }}>
-            <Mask style={{ ...maskSpringProps }} />
-            <Wrapper
-              fullscreen={!!fullscreen}
-              centered={!!centered}
-              autoMobile={!!autoMobile}
-              ref={wrapperRef}
-              onClick={onWrapperClick}
+    <PortalWrapper visible={!closed} getContainer={document.body as any}>
+      {() => (
+        <div style={{ display: closed ? 'none' : 'block' }}>
+          <Mask style={{ ...maskSpringProps }} />
+          <Wrapper
+            fullscreen={!!fullscreen}
+            centered={!!centered}
+            autoMobile={!!autoMobile}
+            ref={wrapperRef}
+            onClick={onWrapperClick}
+          >
+            <Content
+              style={{
+                ...contentSpringProps,
+                ...(maxWidth ? { maxWidth } : {}),
+                ...contentStyle,
+              }}
+              onMouseDown={onContentMouseDown}
+              onMouseUp={onContentMouseUp}
             >
-              <Content
-                style={{
-                  ...contentSpringProps,
-                  ...(maxWidth ? { maxWidth } : {}),
-                  ...contentStyle,
-                }}
-                onMouseDown={onContentMouseDown}
-                onMouseUp={onContentMouseUp}
-              >
-                {closable && closeIconToRender}
-                {children}
-              </Content>
-            </Wrapper>
-          </div>
-        )}
-      </PortalWrapper>
-    </>
+              {closable && closeIconToRender}
+              {children}
+            </Content>
+          </Wrapper>
+        </div>
+      )}
+    </PortalWrapper>
   );
 };
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -196,7 +194,6 @@ interface IModal extends InternalModal {
   Background: typeof ModalBackground;
   Header: typeof ModalHeader;
   Title: typeof ModalTitle;
-  Confirm: typeof Confirm;
 }
 
 const Modal: IModal = InternalModal as IModal;
@@ -204,6 +201,5 @@ Modal.Content = ModalContent;
 Modal.Background = ModalBackground;
 Modal.Header = ModalHeader;
 Modal.Title = ModalTitle;
-Modal.Confirm = Confirm;
 
 export default Modal;

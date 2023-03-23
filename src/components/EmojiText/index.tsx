@@ -1,6 +1,9 @@
 import React from 'react';
-import { Props, Twemoji } from 'react-emoji-render';
+import { SvgProps, Twemoji } from 'react-emoji-render';
 import styled from 'styled-components/macro';
+
+type RequireProperty<T, Prop extends keyof T> = T & { [key in Prop]-?:T[key] };
+type PropsRequireTextOrChildren<T extends SvgProps> = RequireProperty<T, 'text'> | RequireProperty<T, 'children'>;
 
 const StyledEmoji = styled(Twemoji)`
   word-wrap: break-word;
@@ -12,7 +15,7 @@ const StyledEmoji = styled(Twemoji)`
   }
 `;
 
-const EmojiText: React.FC<Props> = ({ svg = true, ...props }) => (
+const EmojiText: React.FC<PropsRequireTextOrChildren<SvgProps>> = ({ svg = true, ...props }) => (
   <StyledEmoji svg={svg} onlyEmojiClassName="emoji-text" {...props} />
 );
 export default EmojiText;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/macro';
-import { AlertCircle, Trash2 } from 'react-feather';
+import { AlertCircle } from 'react-feather';
 import Modal, { IModalProps } from '.';
 import Button, { IButtonProps } from '../Button';
 
@@ -34,7 +34,7 @@ const Handle = styled.div`
   align-content: center;
 `;
 
-const Confirm: React.FC<IConfirmProps> = ({
+export const Confirm: React.FC<IConfirmProps> = ({
   visible,
   onClose,
   onConfirm,

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { PropsWithChildren, useCallback, useMemo } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
 import { UserEntity } from '@app/common/types/modules/user/user.entity';
@@ -64,7 +64,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
                 <SkeletonName />
               ) : (
                 <UserName>
-                  <EmojiText text={user?.fullName || ''} />
+                  <EmojiText text={user?.fullName ?? ''} />
                 </UserName>
               )}
             </UserNameBox>
@@ -72,7 +72,9 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
               <SkeletonBio />
             ) : (
               <Bio>
-                <EmojiText text={user?.bio || ''} />
+                {
+                  user?.bio && <EmojiText text={user.bio} />
+                }
               </Bio>
             )}
           </UserBox>
@@ -137,7 +139,7 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
   );
 };
 
-const UserPopover: React.FC<IUserPopover> = ({ children, username }) => {
+const UserPopover: React.FC<PropsWithChildren<IUserPopover>> = ({ children, username }) => {
   const [loadUser, { loading, data }] = useLazyQuery<
   QueryData<'user', UserEntity>
   >(UserInfo);

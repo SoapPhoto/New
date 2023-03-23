@@ -86,7 +86,6 @@ const PictureModal: React.FC = () => {
     } else if (wrapperRef.current === e.target) {
       navigate(-1);
     }
-    scrollLocker.unLock();
     return null;
   };
   return (

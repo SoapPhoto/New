@@ -1,7 +1,8 @@
 name: release
 
-on: [push] # 仓库提交时触发
-
+on:
+  push:
+    branches: [ master ]
 env:
   VITE_MAPBOX_AK: ${{ secrets.VITE_MAPBOX_AK }}
 

@@ -1,14 +1,21 @@
-import React from 'react';
-import { t } from 'i18next';
+import type { CollectionEntity } from '@app/common/types/modules/collection/collection.entity'
+import { EmojiText, Loading, Popover } from '@app/components'
 
-import { CollectionEntity } from '@app/common/types/modules/collection/collection.entity';
-import { Popover, EmojiText, Loading } from '@app/components';
-import { Lock } from '@app/components/Icons';
-import { getPictureUrl } from '@app/utils/image';
-import { useTapButton } from '@app/utils/hooks';
+import { Lock } from '@app/components/Icons'
+import { useTapButton } from '@app/utils/hooks'
+import { getPictureUrl } from '@app/utils/image'
+import { t } from 'i18next'
+import React from 'react'
 import {
-  CollectionItemBox, CollectionItemCover, ItemInfoBox, ItemInfoTitle, ItemInfoCount, ItemHandleIcon, CheckIcon, MinusIcon,
-} from '../elements';
+  CheckIcon,
+  CollectionItemBox,
+  CollectionItemCover,
+  ItemHandleIcon,
+  ItemInfoBox,
+  ItemInfoCount,
+  ItemInfoTitle,
+  MinusIcon,
+} from '../elements'
 
 interface IProps {
   collection: CollectionEntity
@@ -17,8 +24,8 @@ interface IProps {
 }
 
 const CollectionModalItem: React.FC<IProps> = ({ collection, isCollected, onCollected }) => {
-  const [spring, bind] = useTapButton(1, 0.96);
-  const preview = collection.preview.slice();
+  const [spring, bind] = useTapButton(1, 0.96)
+  const preview = collection.preview.slice()
   return (
     <CollectionItemBox
       key={collection.id}
@@ -27,7 +34,7 @@ const CollectionModalItem: React.FC<IProps> = ({ collection, isCollected, onColl
         transform: spring.transform,
       }}
       onClick={() => {
-        onCollected(collection, isCollected);
+        onCollected(collection, isCollected)
       }}
     >
       {preview[0] && (
@@ -63,18 +70,20 @@ const CollectionModalItem: React.FC<IProps> = ({ collection, isCollected, onColl
           </ItemInfoCount>
         </div>
         <ItemHandleIcon>
-          {false ? (
-            <Loading size={6} color="#fff" />
-          ) : (
-            <>
-              <CheckIcon />
-              <MinusIcon />
-            </>
-          )}
+          {false
+            ? (
+                <Loading size={6} color="#fff" />
+              )
+            : (
+                <>
+                  <CheckIcon />
+                  <MinusIcon />
+                </>
+              )}
         </ItemHandleIcon>
       </ItemInfoBox>
     </CollectionItemBox>
-  );
-};
+  )
+}
 
-export default CollectionModalItem;
+export default CollectionModalItem

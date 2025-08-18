@@ -1,18 +1,18 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import BlurhashCanvas from './canvas';
+import BlurhashCanvas from './canvas'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {
-  hash: string;
+  hash: string
   /** CSS height, default: 128 */
-  height?: number | string | 'auto';
-  punch?: number;
-  resolutionX?: number;
-  resolutionY?: number;
-  style?: React.CSSProperties;
+  height?: number | string | 'auto'
+  punch?: number
+  resolutionX?: number
+  resolutionY?: number
+  style?: React.CSSProperties
   /** CSS width, default: 128 */
-  width?: number | string | 'auto';
-};
+  width?: number | string | 'auto'
+}
 
 const canvasStyle: React.CSSProperties = {
   position: 'absolute',
@@ -22,7 +22,7 @@ const canvasStyle: React.CSSProperties = {
   right: 0,
   width: '100%',
   height: '100%',
-};
+}
 
 const Blurhash: React.FC<Props> = ({
   style,
@@ -52,6 +52,6 @@ const Blurhash: React.FC<Props> = ({
       style={canvasStyle}
     />
   </div>
-);
+)
 
-export default Blurhash;
+export default Blurhash

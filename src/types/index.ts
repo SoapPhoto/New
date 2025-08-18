@@ -1,3 +1,3 @@
-import { RootState } from './RootState';
+import type { RootState } from './RootState'
 
-export type { RootState };
+export type { RootState }

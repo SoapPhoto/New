@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import { decode } from 'blurhash';
+import { decode } from 'blurhash'
+import React, { useEffect, useRef } from 'react'
 
 export type Props = React.CanvasHTMLAttributes<HTMLCanvasElement> & {
-  hash: string;
-  height: number;
-  punch?: number;
-  width: number;
-};
+  hash: string
+  height: number
+  punch?: number
+  width: number
+}
 
 const BlurhashCanvas: React.FC<Props> = ({
   hash,
@@ -15,22 +15,22 @@ const BlurhashCanvas: React.FC<Props> = ({
   width,
   ...rest
 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   useEffect(() => {
-    draw();
+    draw()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hash, width, height, punch]);
+  }, [hash, width, height, punch])
   const draw = () => {
     if (canvasRef.current) {
-      const pixels = decode(hash, width, height, punch);
+      const pixels = decode(hash, width, height, punch)
 
-      const ctx = canvasRef.current.getContext('2d');
-      const imageData = ctx!.createImageData(width, height);
-      imageData.data.set(pixels);
-      ctx!.putImageData(imageData, 0, 0);
+      const ctx = canvasRef.current.getContext('2d')
+      const imageData = ctx!.createImageData(width, height)
+      imageData.data.set(pixels)
+      ctx!.putImageData(imageData, 0, 0)
     }
-  };
-  return <canvas {...rest} height={height} width={width} ref={canvasRef} />;
-};
+  }
+  return <canvas {...rest} height={height} width={width} ref={canvasRef} />
+}
 
-export default BlurhashCanvas;
+export default BlurhashCanvas

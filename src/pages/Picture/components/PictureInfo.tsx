@@ -1,44 +1,44 @@
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { Star1, Info, Settings } from '@app/components/Icons';
-import { useAccount } from '@app/stores/hooks';
-import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
-import useLikePicture from '@app/utils/hooks/useLikePicture';
-import { observer } from 'mobx-react';
-import React, { useMemo } from 'react';
-import { toast } from 'react-hot-toast';
-import { useTranslation } from 'react-i18next';
-import { css, useTheme } from 'styled-components/macro';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import { Info, Settings, Star1 } from '@app/components/Icons'
+import { useAccount } from '@app/stores/hooks'
+import { useSearchParamModal, useTapButton } from '@app/utils/hooks'
+import useLikePicture from '@app/utils/hooks/useLikePicture'
+import { observer } from 'mobx-react'
+import React, { useMemo } from 'react'
+import { toast } from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
+import { useTheme } from 'styled-components'
 import {
   HeartIcon,
   IconButton,
   LikeContent,
   PictureBaseInfo,
   PictureInfoBtnsBox,
-} from '../elements';
+} from '../elements'
 
 interface IProps {
-  picture: PictureEntity;
+  picture: PictureEntity
 }
 
 const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
-  const { colors } = useTheme();
-  const { t } = useTranslation();
-  const { isLogin } = useAccount();
-  const [, , collectionOpen] = useSearchParamModal('collection');
-  const [, , exifOpen] = useSearchParamModal('exif');
-  const [, , settingOpen] = useSearchParamModal('setting');
-  const { userInfo } = useAccount();
-  const [spring, bind] = useTapButton(1.05, 0.92);
-  const [like] = useLikePicture(picture.id);
+  const { colors } = useTheme()
+  const { t } = useTranslation()
+  const { isLogin } = useAccount()
+  const [, , collectionOpen] = useSearchParamModal('collection')
+  const [, , exifOpen] = useSearchParamModal('exif')
+  const [, , settingOpen] = useSearchParamModal('setting')
+  const { userInfo } = useAccount()
+  const [spring, bind] = useTapButton(1.05, 0.92)
+  const [like] = useLikePicture(picture.id)
   const isOwner = useMemo(
     () => (userInfo && userInfo.id.toString() === picture.user?.id.toString())
       || false,
     [picture.user?.id, userInfo],
-  );
+  )
   const isCollected = useMemo(
     () => !!(picture && picture.currentCollections?.length > 0),
     [picture],
-  );
+  )
   return (
     <PictureBaseInfo>
       <div>
@@ -57,9 +57,9 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
         <IconButton
           onClick={() => {
             if (!isLogin) {
-              return toast.error(t('error.login'));
+              return toast.error(t('error.login'))
             }
-            collectionOpen();
+            collectionOpen()
           }}
           popover={t('picture.label.collection')}
         >
@@ -86,7 +86,7 @@ const PictureInfo: React.FC<IProps> = observer(({ picture }) => {
         )}
       </PictureInfoBtnsBox>
     </PictureBaseInfo>
-  );
-});
+  )
+})
 
-export default PictureInfo;
+export default PictureInfo

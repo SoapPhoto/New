@@ -1,5 +1,5 @@
-import { ThemeState } from '@app/styles/theme/types';
+import type { ThemeState } from '@app/styles/theme/types'
 
 export interface RootState {
-  theme?: ThemeState;
+  theme?: ThemeState
 }

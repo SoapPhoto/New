@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   PictureBox,
   PictureContent,
@@ -12,30 +12,32 @@ import {
   UserInfo,
   UserInfoRight,
   Wrapper,
-} from './elements';
+} from './elements'
 
-const PictureSkeleton = () => (
-  <Wrapper>
-    <UserHeaderWrapper>
-      <UserHeader>
-        <UserInfo>
-          <SkeletonAvatar />
-          <UserInfoRight>
-            <SkeletonUserName />
-          </UserInfoRight>
-        </UserInfo>
-      </UserHeader>
-    </UserHeaderWrapper>
-    <PictureWrapper>
-      <PictureContent>
-        <PictureBox num={1}>
-          <PictureImageBox height={100} background="transparent">
-            <SkeletonPicture />
-          </PictureImageBox>
-        </PictureBox>
-      </PictureContent>
-    </PictureWrapper>
-  </Wrapper>
-);
+function PictureSkeleton() {
+  return (
+    <Wrapper>
+      <UserHeaderWrapper>
+        <UserHeader>
+          <UserInfo>
+            <SkeletonAvatar />
+            <UserInfoRight>
+              <SkeletonUserName />
+            </UserInfoRight>
+          </UserInfo>
+        </UserHeader>
+      </UserHeaderWrapper>
+      <PictureWrapper>
+        <PictureContent>
+          <PictureBox num={1}>
+            <PictureImageBox height={100} background="transparent">
+              <SkeletonPicture />
+            </PictureImageBox>
+          </PictureBox>
+        </PictureContent>
+      </PictureWrapper>
+    </Wrapper>
+  )
+}
 
-export default PictureSkeleton;
+export default PictureSkeleton

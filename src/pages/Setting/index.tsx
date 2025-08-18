@@ -1,12 +1,10 @@
-import { AtSign, Lock, User } from '@app/components/Icons';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { Outlet, useLocation, Navigate } from 'react-router-dom';
-import { Menu } from './components/Menu';
+import { AtSign, Lock, User } from '@app/components/Icons'
+import { useTranslation } from 'react-i18next'
+import { Outlet } from 'react-router-dom'
+import { Menu } from './components/Menu'
 
-const SettingPage = () => {
-  const { t } = useTranslation();
-  const { pathname } = useLocation();
+function SettingPage() {
+  const { t } = useTranslation()
   const menu = [
     {
       value: 'profile',
@@ -26,14 +24,14 @@ const SettingPage = () => {
       path: '/setting/resetPassword',
       icon: Lock,
     },
-  ];
+  ]
   return (
     <div>
       <Menu data={menu}>
         <Outlet />
       </Menu>
     </div>
-  );
-};
+  )
+}
 
-export default SettingPage;
+export default SettingPage

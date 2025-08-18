@@ -1,38 +1,40 @@
-import React from 'react';
-import styled from 'styled-components/macro';
-import { AlertCircle } from 'react-feather';
-import Modal, { IModalProps } from '.';
-import Button, { IButtonProps } from '../Button';
+import type { IModalProps } from '.'
+import type { IButtonProps } from '../Button'
+import React from 'react'
+import { AlertCircle } from 'react-feather'
+import styled from 'styled-components'
+import Modal from '.'
+import Button from '../Button'
 
 interface IConfirmProps extends Pick<IModalProps, 'visible' | 'onClose'> {
-  icon?: React.ReactNode;
-  onConfirm?: React.MouseEventHandler<HTMLButtonElement>;
-  confirmText?: string;
-  cancelText?: string;
-  confirmButtonProps?: IButtonProps;
-  cancelButtonProps?: IButtonProps;
-  title: string;
+  icon?: React.ReactNode
+  onConfirm?: React.MouseEventHandler<HTMLButtonElement>
+  confirmText?: string
+  cancelText?: string
+  confirmButtonProps?: IButtonProps
+  cancelButtonProps?: IButtonProps
+  title: string
 }
 
 const Content = styled.div`
   text-align: center;
   padding: 24px 16px;
-`;
+`
 
 const Icon = styled.div`
   padding: 24px 0;
   padding-top: 0px;
-`;
+`
 
 const Title = styled.h3`
   margin-bottom: 20px;
-`;
+`
 
 const Handle = styled.div`
   display: flex;
   justify-content: center;
   align-content: center;
-`;
+`
 
 export const Confirm: React.FC<IConfirmProps> = ({
   visible,
@@ -55,7 +57,7 @@ export const Confirm: React.FC<IConfirmProps> = ({
     <Content>
       <Icon>
         {icon || (
-        <AlertCircle color="rgba(255, 130, 0, .8)" size={48} />
+          <AlertCircle color="rgba(255, 130, 0, .8)" size={48} />
         )}
       </Icon>
       <Title>{title}</Title>
@@ -73,6 +75,6 @@ export const Confirm: React.FC<IConfirmProps> = ({
       </Handle>
     </Content>
   </Modal>
-);
+)
 
-export default Confirm;
+export default Confirm

@@ -1,14 +1,15 @@
-import React from 'react';
+import Head from '@app/components/Head'
 
-import SkeletonCompoent from '@app/components/Picture/Skeleton';
-import { Helmet } from 'react-helmet-async';
-import Head from '@app/components/Head';
+import SkeletonCompoent from '@app/components/Picture/Skeleton'
+import React from 'react'
 
-const Skeleton = () => (
-  <>
-    <Head title="首页" />
-    <SkeletonCompoent />
-  </>
-);
+function Skeleton() {
+  return (
+    <>
+      <Head title="首页" />
+      <SkeletonCompoent />
+    </>
+  )
+}
 
-export default Skeleton;
+export default Skeleton

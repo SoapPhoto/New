@@ -1,7 +1,7 @@
-/* eslint-disable max-len */
-import { css } from 'styled-components/macro';
+import { css } from 'styled-components'
 
-const scroll = () => css`
+function scroll() {
+  return css`
   html.os-html,
   html.os-html > .os-host {
     display: block;
@@ -605,5 +605,6 @@ const scroll = () => css`
     right: -6px;
     left: -2px;
   }
-`;
-export default scroll;
+`
+}
+export default scroll

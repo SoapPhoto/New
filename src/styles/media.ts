@@ -2,15 +2,17 @@
  * Media queries utility
  */
 
-import {
-  css,
-  DefaultTheme,
+import type {
   CSSObject,
+  DefaultTheme,
+  FlattenInterpolation,
+  Interpolation,
   InterpolationFunction,
   ThemedStyledProps,
-  Interpolation,
-  FlattenInterpolation,
-} from 'styled-components/macro';
+} from 'styled-components'
+import {
+  css,
+} from 'styled-components'
 
 /*
  * Taken from https://github.com/DefinitelyTyped/DefinitelyTyped/issues/32914
@@ -22,7 +24,7 @@ export const sizes = {
   medium: 1024,
   large: 1440,
   xlarge: 1920,
-};
+}
 
 // Iterate through the sizes and create a media template
 export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce(
@@ -31,12 +33,12 @@ export const media = (Object.keys(sizes) as Array<keyof typeof sizes>).reduce(
       @media (min-width: ${sizes[label]}px) {
         ${css(first, ...interpolations)}
       }
-    `;
+    `
 
-    return acc;
+    return acc
   },
   {} as { [key in keyof typeof sizes]: MediaFunction },
-);
+)
 
 /*
  * @types/styled-component is not working properly as explained in the github issue referenced above.
@@ -49,7 +51,7 @@ type MediaFunction = <P extends object>(
     | CSSObject
     | InterpolationFunction<ThemedStyledProps<P, DefaultTheme>>,
   ...interpolations: Array<Interpolation<ThemedStyledProps<P, DefaultTheme>>>
-) => FlattenInterpolation<ThemedStyledProps<P, DefaultTheme>>;
+) => FlattenInterpolation<ThemedStyledProps<P, DefaultTheme>>
 
 /* Example
 const SomeDiv = styled.div`

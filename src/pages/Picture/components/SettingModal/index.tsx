@@ -1,83 +1,91 @@
-import React, {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
-import {
-  Form, Formik, FormikProps, useFormikContext,
-} from 'formik';
-import omit from 'lodash/omit';
-import pick from 'lodash/pick';
-import { Trash2 } from 'react-feather';
-import { useTranslation } from 'react-i18next';
-import { useTheme } from 'styled-components/macro';
-import { gql, useApolloClient, useMutation } from '@apollo/client';
-import toast from 'react-hot-toast';
-
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import type { LocationEntity } from '@app/common/types/modules/location/location.entity'
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import type {
+  FormikProps,
+} from 'formik'
+import { gql, useApolloClient, useMutation } from '@apollo/client'
 import {
   FieldInput,
   FieldSwitch,
   FieldTag,
   FieldTextarea,
-} from '@app/components';
-import { useDeletePicture, useSearchParamModal } from '@app/utils/hooks';
-import { getPictureUrl } from '@app/utils/image';
-import { UpdatePicture } from '@app/graphql/mutations';
-import Modal from '@app/components/Modal';
-import IconButton from '@app/components/Button/IconButton';
-import Button from '@app/components/Button';
-import FieldLocation from '@app/components/Formik/FieldLocation';
-import LocationModal from '@app/components/LocationModal';
-import { LocationEntity } from '@app/common/types/modules/location/location.entity';
-import { Confirm } from '@app/components/Modal/Confirm';
-import { Content } from '../../elements';
-import { Footer } from './elements';
+} from '@app/components'
+import Button from '@app/components/Button'
+import IconButton from '@app/components/Button/IconButton'
+import FieldLocation from '@app/components/Formik/FieldLocation'
+import LocationModal from '@app/components/LocationModal'
 
-import { EditPictureSchema } from './dto';
+import Modal from '@app/components/Modal'
+import { Confirm } from '@app/components/Modal/Confirm'
+import { UpdatePicture } from '@app/graphql/mutations'
+import { useDeletePicture, useSearchParamModal } from '@app/utils/hooks'
+import { getPictureUrl } from '@app/utils/image'
+import {
+  Form,
+  Formik,
+  useFormikContext,
+} from 'formik'
+import omit from 'lodash/omit'
+import pick from 'lodash/pick'
+import React, {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import { Trash2 } from 'react-feather'
+import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
+import { useTheme } from 'styled-components'
+import { Content } from '../../elements'
+import { EditPictureSchema } from './dto'
+
+import { Footer } from './elements'
 
 interface IProps {
-  picture: PictureEntity;
+  picture: PictureEntity
 }
 interface IValues {
-  title: string;
-  bio: string;
-  isPrivate: boolean;
-  location?: LocationEntity;
-  tags: string[];
+  title: string
+  bio: string
+  isPrivate: boolean
+  location?: LocationEntity
+  tags: string[]
 }
-const Location = ({ onOk }) => {
-  const { values, submitForm } = useFormikContext<IValues>();
+function Location({ onOk }) {
+  const { values } = useFormikContext<IValues>()
   return (
     <LocationModal city={values.location?.city} onOk={onOk} />
-  );
-};
+  )
+}
 
 const SettingModal: React.FC<IProps> = ({ picture }) => {
-  const [init, setInit] = useState(false);
-  const formikRef = useRef<FormikProps<IValues>>(null);
-  const client = useApolloClient();
-  const { colors } = useTheme();
-  const [confirmVisible, setConfirmVisible] = useState(false);
-  const { key, id } = picture;
-  const [visible, close] = useSearchParamModal('setting');
-  const [editLocationVisible, closeEditLocation, openEditLocation] = useSearchParamModal(
+  const [_init, setInit] = useState(false)
+  const formikRef = useRef<FormikProps<IValues>>(null)
+  const client = useApolloClient()
+  const { colors } = useTheme()
+  const [confirmVisible, setConfirmVisible] = useState(false)
+  const { key, id } = picture
+  const [visible, close] = useSearchParamModal('setting')
+  const [_editLocationVisible, closeEditLocation, _openEditLocation] = useSearchParamModal(
     'editLocation',
     'modal-child',
-  );
-  const [location, setLocation] = useState<LocationEntity>();
-  const { t } = useTranslation();
-  const [del, loading] = useDeletePicture();
-  const [update] = useMutation(UpdatePicture);
+  )
+  const [_location, setLocation] = useState<LocationEntity>()
+  const { t } = useTranslation()
+  const [del, loading] = useDeletePicture()
+  const [update] = useMutation(UpdatePicture)
   const handleOk = useCallback(
     async (values: IValues) => {
-      const updateData: any = { ...values };
-      updateData.locationUid = values.location?.uid;
-      delete updateData.location;
+      const updateData: any = { ...values }
+      updateData.locationUid = values.location?.uid
+      delete updateData.location
       const { data } = await update({
         variables: {
           id,
           data: updateData,
         },
-      });
+      })
       client.writeFragment({
         id: `Picture:${id}`,
         fragment: gql`
@@ -91,7 +99,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
         data: {
           ...omit(data.updatePicture, 'tags'),
         },
-      });
+      })
       client.writeFragment({
         id: `Picture:${id}`,
         fragment: gql`
@@ -102,24 +110,24 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
         data: {
           tags: data.updatePicture.tags,
         },
-      });
-      toast.success(t('picture.edit.success'));
-      close();
+      })
+      toast.success(t('picture.edit.success'))
+      close()
     },
     [client, close, id, t, update],
-  );
-  const deletePicture = useCallback(() => del(id), [del, id]);
+  )
+  const deletePicture = useCallback(() => del(id), [del, id])
 
   const onSetLocation = (poi: LocationEntity) => {
-    setLocation(poi);
-    formikRef.current?.setFieldValue('location', poi);
-    closeEditLocation();
-  };
+    setLocation(poi)
+    formikRef.current?.setFieldValue('location', poi)
+    closeEditLocation()
+  }
   useEffect(() => {
     if (visible) {
-      setTimeout(() => setInit(true), 300);
+      setTimeout(() => setInit(true), 300)
     }
-  }, [visible]);
+  }, [visible])
   return (
     <Modal destroyOnClose afterClose={() => setInit(false)} maxWidth={560} centered visible={visible} onClose={() => close()}>
       <Modal.Background background={getPictureUrl(key, 'blur')} />
@@ -130,12 +138,12 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
             innerRef={formikRef}
             initialValues={{
               ...pick(picture, ['title', 'bio', 'isPrivate', 'location']),
-              tags: picture.tags.map((tag) => tag.name),
+              tags: picture.tags.map(tag => tag.name),
             }}
             validationSchema={EditPictureSchema(t)}
             onSubmit={handleOk}
           >
-            {({ isSubmitting }) => (
+            {() => (
               <Form>
                 <FieldInput
                   required
@@ -192,7 +200,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
         </FastField> */}
       </Modal.Content>
     </Modal>
-  );
-};
+  )
+}
 
-export default SettingModal;
+export default SettingModal

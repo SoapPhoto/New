@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import PictureContent from './components/PictureContent';
+import React, { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import PictureContent from './components/PictureContent'
 
-const PicturePage = () => {
-  const { state, pathname, search } = useLocation();
-  const navigate = useNavigate();
+function PicturePage() {
+  const { state, pathname, search } = useLocation()
+  const navigate = useNavigate()
   useEffect(() => {
     if ((state as any)?.backgroundLocation) {
-      navigate(`${pathname}${search}`, { replace: true, state: null });
+      navigate(`${pathname}${search}`, { replace: true, state: null })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return <PictureContent />;
-};
-export default PicturePage;
+  }, [])
+  return <PictureContent />
+}
+export default PicturePage

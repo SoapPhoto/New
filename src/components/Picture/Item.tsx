@@ -1,12 +1,17 @@
-import React, { CSSProperties, memo } from 'react';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import type { CSSProperties } from 'react'
 
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { Link, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useTapButton } from '@app/utils/hooks';
-import { useTheme } from 'styled-components';
-import useLikePicture from '@app/utils/hooks/useLikePicture';
-import PictureImage from './Image';
+import { useTapButton } from '@app/utils/hooks'
+import useLikePicture from '@app/utils/hooks/useLikePicture'
+import { Spring } from '@app/utils/spring'
+import React, { memo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link, useLocation } from 'react-router-dom'
+import { useTheme } from 'styled-components'
+import { Blurhash, EmojiText, Popover } from '..'
+import Avatar from '../Avatar'
+import { Ordinary } from '../Icons'
+import UserPopover from '../UserPopover'
 import {
   A,
   ChoiceBox,
@@ -18,27 +23,46 @@ import {
   LikeContent,
   UserBox,
   UserName,
-} from './elements';
-import Avatar from '../Avatar';
-import UserPopover from '../UserPopover';
-import { Blurhash, EmojiText, Popover } from '..';
-import { Ordinary } from '../Icons';
+} from './elements'
+import PictureImage from './Image'
 
 export interface IPictureItemProps {
-  picture: PictureEntity;
-  style?: CSSProperties;
+  index: number
+  picture: PictureEntity
+  style?: CSSProperties
 }
 
-const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
-  const [spring, bind] = useTapButton(1.05, 0.92);
-  const { t } = useTranslation();
-  const { colors } = useTheme();
-  const location = useLocation();
-  const [like] = useLikePicture(picture.id);
+const PictureItem: React.FC<IPictureItemProps> = ({ style, picture, index }) => {
+  const [spring, bind] = useTapButton(1.05, 0.92)
+  const { t } = useTranslation()
+  const { colors } = useTheme()
+  const location = useLocation()
+  const [like] = useLikePicture(picture.id)
+
+  // Framer Motion 动画变体
+  const itemVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30,
+      scale: 0.95,
+      filter: 'blur(4px)',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: {
+        ...Spring.presets.smooth,
+        delay: Math.min(index * 0.05, 0.3),
+      },
+    },
+  }
+
   return (
-    <ItemWrapper style={style} color={picture.color} isPrivate={picture.isPrivate ? 1 : 0}>
+    <ItemWrapper variants={itemVariants} animate="visible" initial="hidden" style={style} color={picture.color} isPrivate={picture.isPrivate ? 1 : 0}>
       {
-        picture.badge?.findIndex((v) => v.name === 'choice') >= 0 && (
+        picture.badge?.findIndex(v => v.name === 'choice') >= 0 && (
           <Popover
             openDelay={100}
             trigger="hover"
@@ -63,21 +87,23 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
       />
       <ItemBox>
         {
-          picture.isPrivate ? (
-            <Blurhash
-              hash={picture.blurhash!}
-              width="100%"
-              height="100%"
-              resolutionX={32}
-              resolutionY={32}
-              punch={1}
-            />
-          ) : (
-            <PictureImage
-              blurhash={picture.blurhash}
-              imgkey={picture.key}
-            />
-          )
+          picture.isPrivate
+            ? (
+                <Blurhash
+                  hash={picture.blurhash!}
+                  width="100%"
+                  height="100%"
+                  resolutionX={32}
+                  resolutionY={32}
+                  punch={1}
+                />
+              )
+            : (
+                <PictureImage
+                  blurhash={picture.blurhash}
+                  imgkey={picture.key}
+                />
+              )
         }
       </ItemBox>
       <LikeContent
@@ -107,7 +133,7 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
               }}
             >
               <Avatar
-                    // badge={detail.user.badge}
+                // badge={detail.user.badge}
                 src={picture.user.avatar}
                 size={32}
               />
@@ -120,6 +146,6 @@ const PictureItem: React.FC<IPictureItemProps> = ({ style, picture }) => {
         <HandleBox />
       </InfoBox>
     </ItemWrapper>
-  );
-};
-export default memo(PictureItem);
+  )
+}
+export default memo(PictureItem)

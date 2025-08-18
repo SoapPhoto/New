@@ -2,8 +2,7 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import react from '@vitejs/plugin-react';
 import graphql from '@rollup/plugin-graphql';
-import nodePolyfills from 'rollup-plugin-node-polyfills';
-import macrosPlugin from 'vite-plugin-babel-macros';
+// import macrosPlugin from 'vite-plugin-babel-macros';
 import vitePluginImp from 'vite-plugin-imp';
 import { VitePWA } from 'vite-plugin-pwa'
 
@@ -28,7 +27,7 @@ export default defineConfig({
       }
     }),
     graphql(),
-    macrosPlugin(),
+    // macrosPlugin(),
     VitePWA({
       base: '/',
       // base: isDev ? '/' : 'https://cdn-oss.soapphoto.com/',

@@ -1,23 +1,24 @@
-import { css } from 'styled-components/macro';
-import { timingFunctions } from 'polished';
+import { timingFunctions } from 'polished'
+import { css } from 'styled-components'
 
 interface IAnimateInput {
-  name: string;
-  inStyle: string;
-  outStyle: string;
-  inTiming?: string;
-  outTiming?: string;
-  duration?: number;
+  name: string
+  inStyle: string
+  outStyle: string
+  inTiming?: string
+  outTiming?: string
+  duration?: number
 }
 
-const animateFunc = ({
+function animateFunc({
   name,
   inStyle,
   outStyle,
   duration = 0.23,
   inTiming = 'ease-in',
   outTiming = 'ease-in',
-}: IAnimateInput) => css`
+}: IAnimateInput) {
+  return css`
   .${name}-enter {
     opacity: 0;
     animation-duration: ${duration}s;
@@ -56,7 +57,8 @@ const animateFunc = ({
   @keyframes ${name}Out {
     ${outStyle}
   }
-`;
+`
+}
 
 export const animate = css`
   ${animateFunc({
@@ -157,4 +159,4 @@ export const animate = css`
     outTiming: 'cubic-bezier(0.6, 0.04, 0.98, 0.34)',
     duration: 0.3,
   })}
-`;
+`

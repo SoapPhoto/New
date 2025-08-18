@@ -1,8 +1,8 @@
-import { AlertCircle, CheckCircle, XCircle } from '@app/components/Icons';
-import qs from 'qs';
-import React, { useMemo } from 'react';
-import { useSearchParams, useLocation, useParams } from 'react-router-dom';
-import styled from 'styled-components';
+import { AlertCircle, CheckCircle } from '@app/components/Icons'
+import qs from 'qs'
+import React, { useMemo } from 'react'
+import { useLocation, useParams } from 'react-router-dom'
+import styled from 'styled-components'
 
 const Wrapper = styled.div`
   height: calc(100vh - 84px);
@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   padding-top: 120px;
-`;
+`
 
 const Error = styled.div`
   --color: rgba(245,63,63);
@@ -20,7 +20,7 @@ const Error = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`;
+`
 const Success = styled.div`
   --color: rgba(0,180,42);
   --backgroud: rgba(0,180,42, .1);
@@ -29,7 +29,7 @@ const Success = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`;
+`
 const Icon = styled.div`
   svg {
     color: var(--color);
@@ -40,9 +40,9 @@ const Icon = styled.div`
     height: 60px;
     margin-bottom: 60px;
   }
-`;
+`
 
-const MessageBox = styled.div``;
+const MessageBox = styled.div``
 
 const Message = styled.div`
   text-align: center;
@@ -69,46 +69,48 @@ const Message = styled.div`
     margin: 0;
     padding:0;
   }
-`;
+`
 
-const OauthRedirect = () => {
-  const location = useLocation();
-  const params = useParams();
-  const query = useMemo(() => qs.parse(location.search, { ignoreQueryPrefix: true }), [location.search]);
-  const isSuccess = useMemo(() => !!query.code, [query.code]);
+function OauthRedirect() {
+  const location = useLocation()
+  const params = useParams()
+  const query = useMemo(() => qs.parse(location.search, { ignoreQueryPrefix: true }), [location.search])
+  const isSuccess = useMemo(() => !!query.code, [query.code])
   return (
     <Wrapper>
       {
-        isSuccess ? (
-          <Success>
-            <Icon>
-              <CheckCircle />
-            </Icon>
-            <MessageBox>
-              <Message>
-                <span>
-                  跳转中，请稍等
-                </span>
-              </Message>
-            </MessageBox>
-          </Success>
-        ) : (
-          <Error>
-            <Icon>
-              <AlertCircle />
-            </Icon>
-            <MessageBox>
-              <Message>
-                <span>
-                  {query.message || '失败了，请重试'}
-                </span>
-              </Message>
-            </MessageBox>
-          </Error>
-        )
+        isSuccess
+          ? (
+              <Success>
+                <Icon>
+                  <CheckCircle />
+                </Icon>
+                <MessageBox>
+                  <Message>
+                    <span>
+                      跳转中，请稍等
+                    </span>
+                  </Message>
+                </MessageBox>
+              </Success>
+            )
+          : (
+              <Error>
+                <Icon>
+                  <AlertCircle />
+                </Icon>
+                <MessageBox>
+                  <Message>
+                    <span>
+                      {query.message || '失败了，请重试'}
+                    </span>
+                  </Message>
+                </MessageBox>
+              </Error>
+            )
       }
     </Wrapper>
-  );
-};
+  )
+}
 
-export default OauthRedirect;
+export default OauthRedirect

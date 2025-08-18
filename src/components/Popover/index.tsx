@@ -1,38 +1,40 @@
-import React, {
+import type { Placement } from '@popperjs/core'
+import type {
   PropsWithChildren,
+} from 'react'
+import isFunction from 'lodash/isFunction'
+import contains from 'rc-util/lib/Dom/contains'
+import PortalWrapper from 'rc-util/lib/PortalWrapper'
+import React, {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { usePopper } from 'react-popper';
-import { useSpring } from 'react-spring';
-import contains from 'rc-util/lib/Dom/contains';
-import PortalWrapper from 'rc-util/lib/PortalWrapper';
-import isFunction from 'lodash/isFunction';
-import { Placement } from '@popperjs/core';
-import ResizeObserver from 'resize-observer-polyfill';
-import { useTheme } from 'styled-components/macro';
-import { Arrow, Content, Tooltip } from './elements';
+} from 'react'
+import { usePopper } from 'react-popper'
+import { useSpring } from 'react-spring'
+import ResizeObserver from 'resize-observer-polyfill'
+import { useTheme } from 'styled-components'
+import { Arrow, Content, Tooltip } from './elements'
 
 export interface PopoverRef {
-  close: Function;
+  close: Function
 }
 
 interface IPopoverProps {
-  popoverRef?: React.RefObject<PopoverRef>;
-  onOpen?: () => void;
-  content: React.ReactElement;
-  trigger?: 'hover' | 'click';
-  placement?: Placement;
-  destroyOnClose?: boolean;
-  theme?: PopoverTheme;
-  openDelay?: number;
-  contentStyle?: React.CSSProperties | undefined;
+  popoverRef?: React.RefObject<PopoverRef>
+  onOpen?: () => void
+  content: React.ReactElement
+  trigger?: 'hover' | 'click'
+  placement?: Placement
+  destroyOnClose?: boolean
+  theme?: PopoverTheme
+  openDelay?: number
+  contentStyle?: React.CSSProperties | undefined
 }
 
-export type PopoverTheme = 'dark' | 'light';
+export type PopoverTheme = 'dark' | 'light'
 
 const Popover: React.FC<PropsWithChildren<IPopoverProps>> = ({
   popoverRef,
@@ -46,26 +48,26 @@ const Popover: React.FC<PropsWithChildren<IPopoverProps>> = ({
   openDelay,
   onOpen,
 }) => {
-  const themeContext = useTheme();
-  const [popperSize, setPopperSize] = useState({ width: 0, height: 0 });
-  const [popupVisible, setPopupVisible] = useState(false);
-  const [closed, setClosed] = useState(true);
-  const openTimer = useRef<number>();
-  const closeTimer = useRef<number>();
-  const referenceElementRef = useRef<HTMLButtonElement>();
+  const themeContext = useTheme()
+  const [popperSize, setPopperSize] = useState({ width: 0, height: 0 })
+  const [popupVisible, setPopupVisible] = useState(false)
+  const [closed, setClosed] = useState(true)
+  const openTimer = useRef<number>()
+  const closeTimer = useRef<number>()
+  const referenceElementRef = useRef<HTMLButtonElement>()
   const [
     referenceElement,
     // eslint-disable-next-line @typescript-eslint/naming-convention
     _setReferenceElement,
-  ] = useState<HTMLButtonElement | null>(null);
-  const popperElementRef = useRef<HTMLDivElement>();
+  ] = useState<HTMLButtonElement | null>(null)
+  const popperElementRef = useRef<HTMLDivElement>()
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  const [popperElement, _setPopperElement] = useState<HTMLDivElement | null>(null);
-  const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
+  const [popperElement, _setPopperElement] = useState<HTMLDivElement | null>(null)
+  const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null)
   const themeState = useMemo(
     () => (theme || themeContext.widget.popover.theme),
     [theme, themeContext.widget.popover.theme],
-  );
+  )
   const { styles, attributes, update } = usePopper(
     referenceElement,
     popperElement,
@@ -102,7 +104,7 @@ const Popover: React.FC<PropsWithChildren<IPopoverProps>> = ({
         // }
       ],
     },
-  );
+  )
   const props = useSpring({
     opacity: popupVisible ? 1 : 0,
     transform: popupVisible ? 'scale3d(1, 1, 1)' : 'scale3d(0.88, 0.88, 0.88)',
@@ -113,188 +115,191 @@ const Popover: React.FC<PropsWithChildren<IPopoverProps>> = ({
     },
     onRest: () => {
       if (!popupVisible) {
-        setClosed(true);
+        setClosed(true)
       }
     },
-  });
+  })
   const observer = useMemo(
     () => new ResizeObserver((entries) => {
       if (entries[0]) {
-        const { width, height } = entries[0].contentRect;
-        setPopperSize({ width, height });
+        const { width, height } = entries[0].contentRect
+        setPopperSize({ width, height })
       }
     }),
     [],
-  );
+  )
 
   const setReferenceElement = (state: HTMLButtonElement) => {
-    _setReferenceElement(state);
-    referenceElementRef.current = state;
-  };
+    _setReferenceElement(state)
+    referenceElementRef.current = state
+  }
 
   const setPopperElement = (state: HTMLDivElement) => {
-    _setPopperElement(state);
-    popperElementRef.current = state;
-  };
+    _setPopperElement(state)
+    popperElementRef.current = state
+  }
 
   const onDocumentClick = useCallback((e) => {
-    const { target } = e;
-    const root = referenceElementRef.current;
-    const popupNode = popperElementRef.current;
+    const { target } = e
+    const root = referenceElementRef.current
+    const popupNode = popperElementRef.current
     if (!contains(root, target) && !contains(popupNode, target)) {
-      setPopupVisible(false);
+      setPopupVisible(false)
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (popupVisible) {
-      onOpen?.();
+      onOpen?.()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [popupVisible]);
+  }, [popupVisible])
   useEffect(() => {
     if (popoverRef) {
-      // eslint-disable-next-line no-param-reassign
       ((popoverRef as any).current as any) = {
         close: () => {
-          setPopupVisible(false);
+          setPopupVisible(false)
         },
-      };
+      }
     }
-  }, [popoverRef]);
+  }, [popoverRef])
 
   useEffect(() => {
     if (trigger === 'click') {
       if (popupVisible) {
-        document.addEventListener('mousedown', onDocumentClick);
-      } else {
-        document.removeEventListener('mousedown', onDocumentClick);
+        document.addEventListener('mousedown', onDocumentClick)
       }
-      return () => document.removeEventListener('mousedown', onDocumentClick);
+      else {
+        document.removeEventListener('mousedown', onDocumentClick)
+      }
+      return () => document.removeEventListener('mousedown', onDocumentClick)
     }
-    return undefined;
+    return undefined
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [trigger, popupVisible]);
+  }, [trigger, popupVisible])
   // content变化的话强制更新
   useEffect(() => {
     if (update) {
-      update();
+      update()
     }
-  }, [popperSize, update]);
+  }, [popperSize, update])
   useEffect(() => {
-    if (!popperElement) return () => {};
-    observer.observe(popperElement);
-    return () => observer.disconnect();
+    if (!popperElement)
+      return () => {}
+    observer.observe(popperElement)
+    return () => observer.disconnect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [popperElement]);
+  }, [popperElement])
   useEffect(() => {
     if (popperElement) {
       if (popupVisible && trigger === 'hover') {
         popperElement.addEventListener('mouseover', (e) => {
-          e.stopPropagation();
-          clearTimeout(closeTimer.current);
-        });
+          e.stopPropagation()
+          clearTimeout(closeTimer.current)
+        })
         popperElement.addEventListener('mouseout', (e) => {
-          const { relatedTarget } = e;
-          const root = referenceElementRef.current;
-          const popupNode = popperElementRef.current;
+          const { relatedTarget } = e
+          const root = referenceElementRef.current
+          const popupNode = popperElementRef.current
           if (
             !contains(root, relatedTarget as HTMLDivElement)
             && !contains(popupNode, relatedTarget as HTMLDivElement)
           ) {
-            setPopupVisible(false);
+            setPopupVisible(false)
           }
-        });
+        })
       }
     }
-  }, [popperElement, popupVisible, trigger]);
+  }, [popperElement, popupVisible, trigger])
   useEffect(() => {
     if (popupVisible) {
-      setClosed(!popupVisible);
+      setClosed(!popupVisible)
     }
-  }, [popupVisible]);
+  }, [popupVisible])
 
-  const child = React.Children.only(children) as React.ReactElement;
+  const child = React.Children.only(children) as React.ReactElement
 
   const selfEvents = useCallback(
     (type: string, e: any) => {
       if (child && child.props && isFunction(child.props[type])) {
-        child.props[type](e);
+        child.props[type](e)
       }
     },
     [child],
-  );
+  )
 
   const open = useCallback(() => {
     if (openDelay) {
-      clearTimeout(openTimer.current!);
+      clearTimeout(openTimer.current!)
       openTimer.current = window.setTimeout(() => {
         // if (isFunction(onOpen)) {
         //   onOpen();
         // }
-        setPopupVisible(true);
-      }, openDelay);
-    } else {
+        setPopupVisible(true)
+      }, openDelay)
+    }
+    else {
       if (isFunction(onOpen)) {
         // onOpen();
       }
-      setPopupVisible(true);
+      setPopupVisible(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const onChildClick = useCallback(
     (e) => {
       if (!popupVisible) {
-        open();
-      } else {
-        setPopupVisible(false);
+        open()
       }
-      selfEvents('onClick', e);
+      else {
+        setPopupVisible(false)
+      }
+      selfEvents('onClick', e)
     },
     [open, popupVisible, selfEvents],
-  );
+  )
 
   const onMouseEnter = useCallback(
     (e) => {
       if (!popupVisible) {
-        open();
+        open()
       }
-      selfEvents('onMouseEnter', e);
+      selfEvents('onMouseEnter', e)
     },
     [open, popupVisible, selfEvents],
-  );
+  )
 
   const onMouseLeave = useCallback(
     (e) => {
       if (popupVisible) {
-        clearTimeout(closeTimer.current);
+        clearTimeout(closeTimer.current)
         closeTimer.current = window.setTimeout(() => {
-          setPopupVisible(false);
-        }, 150);
+          setPopupVisible(false)
+        }, 150)
       }
-      clearTimeout(openTimer.current);
-      selfEvents('onMouseLeave', e);
+      clearTimeout(openTimer.current)
+      selfEvents('onMouseLeave', e)
     },
     [popupVisible, selfEvents],
-  );
+  )
 
   const newChildProps: any = {
     ref: setReferenceElement,
-  };
+  }
   // click
   if (trigger === 'click') {
-    newChildProps.onClick = onChildClick;
+    newChildProps.onClick = onChildClick
   }
 
   // hover
   if (trigger === 'hover') {
-    newChildProps.onMouseEnter = onMouseEnter;
-    newChildProps.onMouseLeave = onMouseLeave;
+    newChildProps.onMouseEnter = onMouseEnter
+    newChildProps.onMouseLeave = onMouseLeave
   }
-  const childRender = React.cloneElement(child, newChildProps);
+  const childRender = React.cloneElement(child, newChildProps)
   if (destroyOnClose && closed) {
-    return childRender;
+    return childRender
   }
 
   return (
@@ -327,6 +332,6 @@ const Popover: React.FC<PropsWithChildren<IPopoverProps>> = ({
         )}
       </PortalWrapper>
     </>
-  );
-};
-export default Popover;
+  )
+}
+export default Popover

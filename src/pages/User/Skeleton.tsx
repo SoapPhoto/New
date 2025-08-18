@@ -1,15 +1,14 @@
-import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
-import { skeletonCss } from '@app/styles/mixins';
-import React from 'react';
-import styled from 'styled-components/macro';
-import UserCover from './components/UserCover';
+import { customBreakpoints, customMedia } from '@app/styles/mediaQuery'
+import { skeletonCss } from '@app/styles/mixins'
+import React from 'react'
+import styled from 'styled-components'
 
 const Wrapper = styled.div`
   max-width: 600px;
   width: 100%;
   margin: -58px auto 0px;
   padding: 0px 24px;
-`;
+`
 
 const SkeletonCover = styled.div`
   height: 240px;
@@ -27,7 +26,7 @@ const SkeletonCover = styled.div`
   ${customMedia.lessThan('medium')`
     max-width: ${customBreakpoints.mobile};
   `}
-`;
+`
 
 const Box = styled.div`
   display: grid;
@@ -39,9 +38,9 @@ const Box = styled.div`
   ${customMedia.lessThan('mobile')`
     grid-template-columns: 110px auto;
   `}
-`;
+`
 
-const InfoContent = styled.div``;
+const InfoContent = styled.div``
 
 export const SkeletonAvatar = styled.div`
   width: 140px;
@@ -54,7 +53,7 @@ export const SkeletonAvatar = styled.div`
     height: 110px;
   `}
   ${skeletonCss}
-`;
+`
 
 export const SkeletonUserName = styled.div`
   width: 120px;
@@ -63,9 +62,9 @@ export const SkeletonUserName = styled.div`
   margin-top: 12px;
   margin-bottom: 6px;
   ${skeletonCss}
-`;
+`
 
-const UserSkeleton = () => {
+function UserSkeleton() {
   return (
     <div>
       <SkeletonCover />
@@ -78,7 +77,7 @@ const UserSkeleton = () => {
         </Box>
       </Wrapper>
     </div>
-  );
-};
+  )
+}
 
-export default UserSkeleton;
+export default UserSkeleton

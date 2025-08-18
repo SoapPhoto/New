@@ -1,29 +1,29 @@
-import { PicturesType } from '@app/common/enum/picture';
+import type { PicturesType } from '@app/common/enum/picture'
 
 export interface IPaginationListData<T> {
-  count: number;
-  data: T[];
-  page: number;
-  pageSize: number;
-  timestamp: number;
+  count: number
+  data: T[]
+  page: number
+  pageSize: number
+  timestamp: number
 }
 
 export type QueryData<V extends keyof any, T> = {
   [K in V]: T;
-};
+}
 
-export type ListQueryData<V extends keyof any, T> = QueryData<V, IPaginationListData<T>>;
+export type ListQueryData<V extends keyof any, T> = QueryData<V, IPaginationListData<T>>
 
-export type PicturesQueryVariables = {
-  query: BaseQueryInput;
-  type: PicturesType;
-};
+export interface PicturesQueryVariables {
+  query: BaseQueryInput
+  type: PicturesType
+}
 
-export type BaseQueryInput = {
+export interface BaseQueryInput {
   /** 分页 */
-  page: number;
+  page: number
   /** 分页 */
-  pageSize: number;
+  pageSize: number
   /** 时间戳 */
-  timestamp?: number;
-};
+  timestamp?: number
+}

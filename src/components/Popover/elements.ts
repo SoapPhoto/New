@@ -1,5 +1,5 @@
-import { animated } from 'react-spring';
-import styled from 'styled-components/macro';
+import { animated } from 'react-spring'
+import styled from 'styled-components'
 
 export const Tooltip = styled.div`
   position: absolute;
@@ -25,7 +25,7 @@ export const Tooltip = styled.div`
   [data-small] ~ *:not([data-small]) {
     display: none;
   }
-`;
+`
 
 export const Content = styled(animated.div as any)`
   ${Tooltip}[data-popper-placement^="top"] & {
@@ -52,13 +52,13 @@ export const Content = styled(animated.div as any)`
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
       0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
   }
-  /* background: ${(p) => p.theme.widget.popover.background}; */
+  /* background: ${p => p.theme.widget.popover.background}; */
   padding: 5px 10px;
-  border-radius: ${(p) => p.theme.widget.popover.radius}px;
+  border-radius: ${p => p.theme.widget.popover.radius}px;
   font-size: 14px;
   text-align: left;
   z-index: 1;
-`;
+`
 
 export const Arrow = styled.div`
   &,
@@ -80,4 +80,4 @@ export const Arrow = styled.div`
       background-color: #fff;
     }
   }
-`;
+`

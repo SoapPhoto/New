@@ -1,49 +1,50 @@
-import { useMutation } from '@apollo/client';
-import { CreateCollectionDot } from '@app/common/types/modules/collection/dto/collection.dto';
-import { AddCollection } from '@app/graphql/mutations';
-import { useSearchParamModal } from '@app/utils/hooks';
-import { Form, Formik, FormikHelpers } from 'formik';
-import * as Yup from 'yup';
-import React, { useEffect, useState } from 'react';
-import { css } from 'styled-components/macro';
-import { CollectionEntity } from '@app/common/types/modules/collection/collection.entity';
-import { FieldInput, FieldSwitch, FieldTextarea } from '..';
-import Button from '../Button';
-import Modal from '../Modal';
+import type { CollectionEntity } from '@app/common/types/modules/collection/collection.entity'
+import type { CreateCollectionDot } from '@app/common/types/modules/collection/dto/collection.dto'
+import type { FormikHelpers } from 'formik'
+import { useMutation } from '@apollo/client'
+import { AddCollection } from '@app/graphql/mutations'
+import { useSearchParamModal } from '@app/utils/hooks'
+import { Form, Formik } from 'formik'
+import React, { useEffect, useState } from 'react'
+import { css } from 'styled-components'
+import * as Yup from 'yup'
+import { FieldInput, FieldSwitch, FieldTextarea } from '..'
+import Button from '../Button'
+import Modal from '../Modal'
 
-type IValues = CreateCollectionDot;
+type IValues = CreateCollectionDot
 
 interface IProps {
   onOk?: (collection: CollectionEntity) => void
 }
 
 const AddCollectionModal: React.FC<IProps> = ({ onOk }) => {
-  const [addCollection] = useMutation<{ addCollection: CollectionEntity }>(AddCollection);
-  const [okLoading, setOkLoading] = useState(false);
-  const [visible, close] = useSearchParamModal('addCollection', 'modal-child');
+  const [addCollection] = useMutation<{ addCollection: CollectionEntity }>(AddCollection)
+  const [okLoading, setOkLoading] = useState(false)
+  const [visible, close] = useSearchParamModal('addCollection', 'modal-child')
   useEffect(() => {
-    setOkLoading(false);
-  }, []);
+    setOkLoading(false)
+  }, [])
   const onSubmit = async (values: IValues, { setSubmitting }: FormikHelpers<IValues>) => {
-    setOkLoading(true);
-    setSubmitting(true);
+    setOkLoading(true)
+    setSubmitting(true)
     const { data } = await addCollection({
       variables: {
         data: values,
       },
-    });
-    close();
+    })
+    close()
     if (onOk) {
-      onOk(data!.addCollection);
+      onOk(data!.addCollection)
     }
-  };
+  }
   return (
     <Modal
       maxWidth={400}
       visible={visible}
       centered
       onClose={() => {
-        close();
+        close()
       }}
     >
       <Modal.Title>新增收藏夹</Modal.Title>
@@ -101,7 +102,7 @@ const AddCollectionModal: React.FC<IProps> = ({ onOk }) => {
         </div>
       </Modal.Content>
     </Modal>
-  );
-};
+  )
+}
 
-export default AddCollectionModal;
+export default AddCollectionModal

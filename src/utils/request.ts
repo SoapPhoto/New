@@ -1,25 +1,26 @@
-import axios, { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios'
+import axios from 'axios'
 
 const instance = axios.create({
   withCredentials: true,
   baseURL: import.meta.env.VITE_API_URL,
   validateStatus(status: number) {
-    return status < 500 && status !== 404;
+    return status < 500 && status !== 404
   },
-});
+})
 
 // 请求前预先判断token是否失效
 instance.interceptors.request.use(async (config) => {
-  let Authorization = '';
-  const token = localStorage.getItem('token');
+  let Authorization = ''
+  const token = localStorage.getItem('token')
   if (token && JSON.parse(token) && !config.headers!.Authorization) {
-    const { accessToken } = JSON.parse(token);
-    Authorization = `Bearer ${accessToken || ''}`;
-    // eslint-disable-next-line no-param-reassign
-    config.headers!.Authorization = Authorization;
+    const { accessToken } = JSON.parse(token)
+    Authorization = `Bearer ${accessToken || ''}`
+
+    config.headers!.Authorization = Authorization
   }
-  return config;
-});
+  return config
+})
 
 instance.interceptors.response.use(
   async (response: AxiosResponse<any>) => {
@@ -54,11 +55,11 @@ instance.interceptors.response.use(
       //       break;
       //   }
       // }
-      return Promise.reject(response.data);
+      return Promise.reject(response.data)
     }
-    return Promise.resolve(response);
+    return Promise.resolve(response)
   },
   (error: any) => Promise.reject(error.response.data),
-);
+)
 
-export const request = instance;
+export const request = instance

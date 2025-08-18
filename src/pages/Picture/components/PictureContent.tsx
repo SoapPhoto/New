@@ -1,51 +1,53 @@
-import React, { useEffect, useMemo } from 'react';
-import { observer } from 'mobx-react';
-import { useParams, Link } from 'react-router-dom';
-import { css } from 'styled-components/macro';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import { EmojiText, Popover } from '@app/components'
+import Comment from '@app/components/Comment'
+import Head from '@app/components/Head'
 
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { EmojiText, Popover } from '@app/components';
-import Head from '@app/components/Head';
-import { Lock, Hash, Ordinary } from '@app/components/Icons';
-import { useAccount } from '@app/stores/hooks';
-import useQueryPicture from '@app/utils/hooks/useQueryPicture';
-import Comment from '@app/components/Comment';
+import { Hash, Lock, Ordinary } from '@app/components/Icons'
+import NotPage from '@app/pages/404'
+import { useAccount } from '@app/stores/hooks'
+import useQueryPicture from '@app/utils/hooks/useQueryPicture'
+import { observer } from 'mobx-react'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { useTranslation } from 'react-i18next';
-import NotPage from '@app/pages/404';
+import { Link, useParams } from 'react-router-dom'
+import { css } from 'styled-components'
 import {
-  Wrapper,
-  Content,
-  Title,
   Bio,
-  TagBox,
+  Content,
   Tag,
-} from '../elements';
-import PictureSkeleton from '../Skeleton';
-import CollectionModal from './CollectionModal';
-import ExifModal from './ExifModal';
-import HeaderUserInfo from './HeaderUserInfo';
-import PictureCenter from './PictureCenter';
-import PictureInfo from './PictureInfo';
-import SettingModal from './SettingModal';
+  TagBox,
+  Title,
+  Wrapper,
+} from '../elements'
+import PictureSkeleton from '../Skeleton'
+import CollectionModal from './CollectionModal'
+import ExifModal from './ExifModal'
+import HeaderUserInfo from './HeaderUserInfo'
+import PictureCenter from './PictureCenter'
+import PictureInfo from './PictureInfo'
+import SettingModal from './SettingModal'
 
 const PictureContent = observer(() => {
-  const { t } = useTranslation();
-  const { id } = useParams();
-  const { userInfo } = useAccount();
-  const [{ loading, data, error }, cacheData] = useQueryPicture<{ picture: PictureEntity; }>(Number(id));
-  const isMe = useMemo(() => data?.picture.user.id === userInfo?.id, [data?.picture.user.id, userInfo?.id]);
+  const { t } = useTranslation()
+  const { id } = useParams()
+  const { userInfo } = useAccount()
+  const [{ loading, data, error }, cacheData] = useQueryPicture<{ picture: PictureEntity }>(Number(id))
+  const isMe = useMemo(() => data?.picture.user.id === userInfo?.id, [data?.picture.user.id, userInfo?.id])
   if (error?.message) {
     if (error.message === 'Not Found') {
-      return <NotPage title="Opoooos...!" />;
+      return <NotPage title="Opoooos...!" />
     }
   }
-  if ((loading && (!data && !cacheData)) || (!data && !cacheData)) return <PictureSkeleton />;
-  let picture: PictureEntity;
+  if ((loading && (!data && !cacheData)) || (!data && !cacheData))
+    return <PictureSkeleton />
+  let picture: PictureEntity
   if (data) {
-    picture = data.picture;
-  } else {
-    picture = cacheData!;
+    picture = data.picture
+  }
+  else {
+    picture = cacheData!
   }
   return (
     <Wrapper>
@@ -65,25 +67,27 @@ const PictureContent = observer(() => {
       <Content>
         <PictureInfo picture={picture} />
         {
-          picture.location ? (
-            <div
-              css={css`
+          picture.location
+            ? (
+                <div
+                  css={css`
                 display: flex;
                 align-items: center;
-                box-shadow: inset 0px -1px 0px ${(p) => p.theme.colors.border};
+                box-shadow: inset 0px -1px 0px ${p => p.theme.colors.border};
                 padding: 12px 0;
                 margin-bottom: 12px;
               `}
-            >
-              <EmojiText css={css`display: flex;align-items: center; margin-right: 6px;`} text="🏞️" />
-              <div css={css`width: 6px;`} />
-              {picture.location.city}
-              <span css={css`margin: 0 4px;font-size: 14px;font-family: 700;`}>·</span>
-              {picture.location.name}
-            </div>
-          ) : (
-            <div css={css`height: 18px;`} />
-          )
+                >
+                  <EmojiText css={css`display: flex;align-items: center; margin-right: 6px;`} text="🏞️" />
+                  <div css={css`width: 6px;`} />
+                  {picture.location.city}
+                  <span css={css`margin: 0 4px;font-size: 14px;font-family: 700;`}>·</span>
+                  {picture.location.name}
+                </div>
+              )
+            : (
+                <div css={css`height: 18px;`} />
+              )
         }
         <Title>
           {
@@ -100,7 +104,7 @@ const PictureContent = observer(() => {
             )
           }
           {
-            picture.badge?.findIndex((v) => v.name === 'choice') >= 0 && (
+            picture.badge?.findIndex(v => v.name === 'choice') >= 0 && (
               <Popover
                 openDelay={100}
                 trigger="hover"
@@ -123,7 +127,7 @@ const PictureContent = observer(() => {
         )}
         {picture.tags?.length > 0 && (
           <TagBox>
-            {picture.tags?.map((tag) => (
+            {picture.tags?.map(tag => (
               <Link to={`/tag/${tag.name}`} key={tag.id}>
                 <Tag key={tag.id}>
                   <Hash size={12} />
@@ -155,7 +159,7 @@ const PictureContent = observer(() => {
         )
       }
     </Wrapper>
-  );
-});
+  )
+})
 
-export default PictureContent;
+export default PictureContent

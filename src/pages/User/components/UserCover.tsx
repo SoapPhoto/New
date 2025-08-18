@@ -1,11 +1,11 @@
-import Image from '@app/components/Image';
-import { customBreakpoints, customMedia } from '@app/styles/mediaQuery';
-import { getPictureUrl } from '@app/utils/image';
-import React, { memo } from 'react';
-import styled from 'styled-components/macro';
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
+import type { UserEntity } from '@app/common/types/modules/user/user.entity'
+import Image from '@app/components/Image'
+import { customBreakpoints, customMedia } from '@app/styles/mediaQuery'
+import { getPictureUrl } from '@app/utils/image'
+import React, { memo } from 'react'
+import styled from 'styled-components'
 
-type IProps = Pick<UserEntity, 'cover' | 'avatar'>;
+type IProps = Pick<UserEntity, 'cover' | 'avatar'>
 
 const Cover = styled.div`
   position: relative;
@@ -16,7 +16,7 @@ const Cover = styled.div`
   border-radius: 16px;
   overflow: hidden;
   z-index: 0;
-  background-color: ${(_) => _.theme.colors.gray3};
+  background-color: ${_ => _.theme.colors.gray3};
   ${customMedia.lessThan('mobile')`
     border-radius: 0px;
     margin-top: 0px;
@@ -58,13 +58,13 @@ const Cover = styled.div`
       rgba(0, 0, 0, 0.44) 100%
     );
   }
-`;
-const CoverImage = styled(Image)``;
+`
+const CoverImage = styled(Image)``
 
 const UserCover: React.FC<IProps> = memo(({ cover, avatar }) => (
   <Cover>
     <CoverImage src={getPictureUrl(cover || avatar!, 'regular')} />
   </Cover>
-));
+))
 
-export default UserCover;
+export default UserCover

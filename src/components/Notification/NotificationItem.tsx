@@ -1,18 +1,18 @@
-import React, { useCallback } from 'react';
-import styled, { css } from 'styled-components/macro';
-import dayjs from 'dayjs';
-import { observer } from 'mobx-react';
+import type { NotificationEntity } from '@app/common/types/modules/notification/notification.entity'
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import { NotificationCategory } from '@app/common/enum/notification'
+import Image from '@app/components/Image'
 
-import { NotificationEntity } from '@app/common/types/modules/notification/notification.entity';
-import { NotificationCategory } from '@app/common/enum/notification';
-import Image from '@app/components/Image';
-import { getPictureUrl } from '@app/utils/image';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { A, EmojiText, Popover } from '..';
-import Avatar from '../Avatar';
+import { getPictureUrl } from '@app/utils/image'
+import dayjs from 'dayjs'
+import { observer } from 'mobx-react'
+import React, { useCallback } from 'react'
+import styled, { css } from 'styled-components'
+import { A, EmojiText, Popover } from '..'
+import Avatar from '../Avatar'
 
 interface IProps {
-  data: NotificationEntity;
+  data: NotificationEntity
 }
 
 const Item = styled.div<{ read: number }>`
@@ -22,31 +22,33 @@ const Item = styled.div<{ read: number }>`
   grid-gap: 12px;
   padding: 14px 18px;
   border-bottom: 1px solid ${({ theme }) => theme.widget.box.borderColor};
-  ${(_) => (!_.read ? css`
+  ${_ => (!_.read
+    ? css`
     background: ${({ theme }) => theme.colors.gray1};
-    ` as any : undefined)}
-`;
+    ` as any
+    : undefined)}
+`
 
 const User = styled.div`
   display: grid;
   grid-template-columns: max-content auto;
   grid-gap: 8px;
   align-items: center;
-`;
+`
 
 const UserName = styled(EmojiText)`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.text};
-`;
+`
 
 const Content = styled.div`
-`;
+`
 
 const ContentHeader = styled.div`
   margin-bottom: 4px;
-`;
+`
 
-const Handle = styled.div``;
+const Handle = styled.div``
 
 const Picture = styled(A)`
   display: block;
@@ -60,58 +62,59 @@ const Picture = styled(A)`
     font-family: "object-fit:cover";
     object-fit: cover;
   }
-`;
+`
 
 const Date = styled.span`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: 12px;
   margin-left: 8px;
-`;
+`
 
 export const NotificationItem: React.FC<IProps> = observer(({ data }) => {
   const content = useCallback(() => {
     switch (data.category) {
       case NotificationCategory.LIKED:
-        return '喜欢了你的照片';
+        return '喜欢了你的照片'
       case NotificationCategory.COMMENT:
         if (data.comment) {
-          return `评论了：${data.comment.content}`;
+          return `评论了：${data.comment.content}`
         }
-        return '';
+        return ''
       case NotificationCategory.REPLY:
         if (data.comment) {
-          return `回复了：${data.comment.content}`;
+          return `回复了：${data.comment.content}`
         }
-        return '';
+        return ''
       case NotificationCategory.FOLLOW:
-        return '关注了你';
+        return '关注了你'
       default:
-        return '';
+        return ''
     }
-  }, [data.category, data.comment]);
+  }, [data.category, data.comment])
   const handle = useCallback(() => {
     if (
       data.category === NotificationCategory.LIKED
       || data.category === NotificationCategory.COMMENT
       || data.category === NotificationCategory.REPLY
     ) {
-      let picture: PictureEntity | undefined;
+      let picture: PictureEntity | undefined
       if (data.category === NotificationCategory.LIKED) {
-        picture = data.picture;
-      } else {
-        picture = data.comment?.picture;
+        picture = data.picture
+      }
+      else {
+        picture = data.comment?.picture
       }
       if (picture) {
-        const { key, id } = picture;
+        const { key, id } = picture
         return (
           <Picture to={`/picture/${id}`}>
             <Image src={getPictureUrl(key, 'itemprop')} />
           </Picture>
-        );
+        )
       }
       return (
         <div>此图片已删除</div>
-      );
+      )
     }
     if (data.category === NotificationCategory.FOLLOW) {
       if (data.user) {
@@ -124,11 +127,11 @@ export const NotificationItem: React.FC<IProps> = observer(({ data }) => {
           //   isFollowing={isFollowing}
           //   onClick={() => follow(data.user!)}
           // />
-        );
+        )
       }
     }
-    return null;
-  }, [data]);
+    return null
+  }, [data])
   return (
     <Item read={data.read ? 1 : 0}>
       <User>
@@ -165,5 +168,5 @@ export const NotificationItem: React.FC<IProps> = observer(({ data }) => {
       </User>
       <Handle>{handle()}</Handle>
     </Item>
-  );
-});
+  )
+})

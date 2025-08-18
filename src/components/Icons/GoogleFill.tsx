@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
-import React from 'react';
+import type { IIconProps } from './type'
 
-import { IIconProps } from './type';
+import React from 'react'
 
 export const GoogleFill: React.FC<IIconProps> = ({
   size = 24,
@@ -14,4 +13,4 @@ export const GoogleFill: React.FC<IIconProps> = ({
     <path d="M8.16007 18.7688C7.85848 17.8977 7.68395 16.9643 7.68395 15.9999C7.68395 15.0354 7.85849 14.1021 8.1442 13.231L8.13621 13.0455L3.67126 9.64734L3.52518 9.71544C2.55696 11.6132 2.0014 13.7444 2.0014 15.9999C2.0014 18.2555 2.55696 20.3865 3.52518 22.2843L8.16007 18.7688Z" fill="#FBBC05" />
     <path d="M16.2863 7.4133C18.9688 7.4133 20.7783 8.54885 21.8101 9.4978L25.8418 5.64C23.3657 3.38445 20.1434 2 16.2863 2C10.699 2 5.87354 5.1422 3.52435 9.71549L8.14339 13.2311C9.30223 9.85555 12.5086 7.4133 16.2863 7.4133Z" fill="#EB4335" />
   </svg>
-);
+)

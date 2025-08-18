@@ -1,23 +1,23 @@
-import { Icon } from '@app/components/Icons';
-import { customMedia } from '@app/styles/mediaQuery';
-import { boxMixin } from '@app/styles/mixins';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components/macro';
+import type { Icon } from '@app/components/Icons'
+import { customMedia } from '@app/styles/mediaQuery'
+import { boxMixin } from '@app/styles/mixins'
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
 
 interface IData {
-  value: string;
-  name: string;
-  path: string;
-  icon: Icon;
+  value: string
+  name: string
+  path: string
+  icon: Icon
 }
 
 export interface IUserProps {
-  data: IData[];
+  data: IData[]
 }
 
 const Box = styled.div`
-${(props) => boxMixin(props.theme, '800px', true)}
+${props => boxMixin(props.theme, '800px', true)}
   display: flex;
   flex-direction: row;
   padding: 0;
@@ -26,7 +26,7 @@ ${(props) => boxMixin(props.theme, '800px', true)}
   ${customMedia.lessThan('medium')`
     flex-direction: column;
   `}
-`;
+`
 
 const MenuBox = styled.ul`
   display: flex;
@@ -42,7 +42,7 @@ const MenuBox = styled.ul`
     border-right: none;
     border-bottom: 1px solid ${({ theme }) => theme.widget.box.borderColor};
   `}
-`;
+`
 
 const Item = styled.ul`
   display: flex;
@@ -51,27 +51,27 @@ const Item = styled.ul`
   & > svg {
     margin-right: 16px;
   }
-`;
+`
 
 const Content = styled.div`
   flex: 1;
   padding: 32px;
-`;
+`
 
 export const ItemLink = styled(NavLink)`
-  color: ${(p) => p.theme.colors.secondary};
+  color: ${p => p.theme.colors.secondary};
   transition: .2s all ease-in;
   svg {
     transition: .2s color ease-in;
   }
   &.active {
     font-weight: 600;
-    color: ${(p) => p.theme.colors.text};
+    color: ${p => p.theme.colors.text};
     svg {
-      color: ${(p) => p.theme.colors.primary};
+      color: ${p => p.theme.colors.primary};
     }
   }
-`;
+`
 
 export const Menu: React.FC<IUserProps> = ({
   data,
@@ -80,7 +80,7 @@ export const Menu: React.FC<IUserProps> = ({
   <Box>
     <MenuBox>
       {
-        data.map((menu) => (
+        data.map(menu => (
           <ItemLink
             key={menu.name}
             caseSensitive={false}
@@ -99,4 +99,4 @@ export const Menu: React.FC<IUserProps> = ({
       {children}
     </Content>
   </Box>
-);
+)

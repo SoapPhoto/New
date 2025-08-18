@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
-import React from 'react';
+import type { IIconProps } from './type'
 
-import { IIconProps } from './type';
+import React from 'react'
 
 export const Star1: React.FC<IIconProps> = ({
   size = 24,
@@ -22,4 +21,4 @@ export const Star1: React.FC<IIconProps> = ({
       strokeWidth="2"
     />
   </svg>
-);
+)

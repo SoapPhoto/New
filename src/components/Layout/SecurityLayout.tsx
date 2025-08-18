@@ -1,23 +1,23 @@
-import React from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { observer } from 'mobx-react';
-import { stringify } from 'qs';
-import { useAccount } from '@app/stores/hooks';
+import { useAccount } from '@app/stores/hooks'
+import { observer } from 'mobx-react'
+import { stringify } from 'qs'
+import React from 'react'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export const SecurityLayout = observer(() => {
   const {
-    init, userInfo,
-  } = useAccount();
-  const location = useLocation();
+    init,
+    userInfo,
+  } = useAccount()
+  const location = useLocation()
   const queryString = stringify({
     redirect: location.pathname,
-  });
+  })
   if (!init) {
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    return <></>;
+    return <></>
   }
   if (!userInfo) {
-    return <Navigate to={`/login?${queryString}`} replace />;
+    return <Navigate to={`/login?${queryString}`} replace />
   }
-  return <Outlet />;
-});
+  return <Outlet />
+})

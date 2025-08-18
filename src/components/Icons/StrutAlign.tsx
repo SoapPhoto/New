@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 export const StrutAlign: React.FC = ({ children }) => (
   <span
@@ -7,7 +7,7 @@ export const StrutAlign: React.FC = ({ children }) => (
       alignItems: 'center',
     }}
   >
-    {'\u200b' /* ZWSP(zero-width space) */}
+    {'\u200B' /* ZWSP(zero-width space) */}
     {children}
   </span>
-);
+)

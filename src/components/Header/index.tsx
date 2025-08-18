@@ -1,11 +1,11 @@
-import React from 'react';
-import styled, { useTheme } from 'styled-components/macro';
-import { rem } from 'polished';
+import { A } from '@app/components'
+import { space } from '@app/utils/theme'
+import { rem } from 'polished'
 
-import { A } from '@app/components';
-import { space } from '@app/utils/theme';
-import { Icon } from './Icon';
-import { Right } from './Right';
+import React from 'react'
+import styled, { useTheme } from 'styled-components'
+import { Icon } from './Icon'
+import { Right } from './Right'
 
 interface IProps {
   right?: boolean
@@ -17,17 +17,17 @@ const Wrapper = styled.header`
   width: 100%;
   height: ${() => rem(84)};
   transition: 0.2s all ease;
-`;
+`
 
 export const Logo = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   margin-left: ${space(8)}px;
-`;
+`
 
 const Header: React.FC<IProps> = ({ right = true }) => {
-  const theme = useTheme();
+  const theme = useTheme()
   return (
     <Wrapper>
       <Logo>
@@ -39,7 +39,7 @@ const Header: React.FC<IProps> = ({ right = true }) => {
         right && <Right />
       }
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

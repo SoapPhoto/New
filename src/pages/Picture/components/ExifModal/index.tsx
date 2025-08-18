@@ -1,35 +1,48 @@
-import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import bytes from 'bytes';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import { GpsImage } from '@app/components/GpsImage'
+import Modal from '@app/components/Modal'
 
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { getPictureUrl } from '@app/utils/image';
-import { useSearchParamModal } from '@app/utils/hooks';
-import Modal from '@app/components/Modal';
-import { GpsImage } from '@app/components/GpsImage';
+import { useSearchParamModal } from '@app/utils/hooks'
+import { getPictureUrl } from '@app/utils/image'
+import bytes from 'bytes'
+import React, { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
-  EXIFBox, EXIFInfo, EXIFTitle, Info,
-} from './elements';
+  EXIFBox,
+  EXIFInfo,
+  EXIFTitle,
+  Info,
+} from './elements'
 
 interface IProps {
-  picture: PictureEntity;
+  picture: PictureEntity
 }
 
 const ExifModal: React.FC<IProps> = memo(({ picture }) => {
-  const { t } = useTranslation();
-  const [visible, close] = useSearchParamModal('exif');
+  const { t } = useTranslation()
+  const [visible, close] = useSearchParamModal('exif')
   const {
-    make, model, exif, width, height, size, key, location,
-  } = picture;
+    make,
+    model,
+    exif,
+    width,
+    height,
+    size,
+    key,
+    location,
+  } = picture
   const {
-    focalLength, aperture, exposureTime, ISO,
-  } = exif ?? {};
+    focalLength,
+    aperture,
+    exposureTime,
+    ISO,
+  } = exif ?? {}
   const maybe = (value: any) => {
     if (value === null || value === undefined) {
-      return true;
+      return true
     }
-    return false;
-  };
+    return false
+  }
   return (
     <Modal
       autoMobile={false}
@@ -90,7 +103,7 @@ const ExifModal: React.FC<IProps> = memo(({ picture }) => {
         </Info>
       </Modal.Content>
     </Modal>
-  );
-});
+  )
+})
 
-export default ExifModal;
+export default ExifModal

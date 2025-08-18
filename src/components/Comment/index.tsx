@@ -1,18 +1,18 @@
-import React from 'react';
-import { useMutation, useQuery } from '@apollo/client';
-import { useTranslation } from 'react-i18next';
+import type { CommentEntity } from '@app/common/types/modules/comment/comment.entity'
+import type { UserEntity } from '@app/common/types/modules/user/user.entity'
+import type { ListQueryData } from '@app/graphql/interface'
 
-import { AddComment } from '@app/graphql/mutations';
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { Comments } from '@app/graphql/query';
-import { CommentEntity } from '@app/common/types/modules/comment/comment.entity';
-import { ListQueryData } from '@app/graphql/interface';
-import { useAccount } from '@app/stores/hooks';
-import { observer } from 'mobx-react';
-import Empty from '../Empty';
-import CommentEditor from './Editor';
-import { Wrapper } from './elements';
-import { CommentList } from './List';
+import { useMutation, useQuery } from '@apollo/client'
+import { AddComment } from '@app/graphql/mutations'
+import { Comments } from '@app/graphql/query'
+import { useAccount } from '@app/stores/hooks'
+import { observer } from 'mobx-react'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import Empty from '../Empty'
+import CommentEditor from './Editor'
+import { Wrapper } from './elements'
+import { CommentList } from './List'
 
 interface IProps {
   id: number
@@ -20,8 +20,8 @@ interface IProps {
 }
 
 const Comment: React.FC<IProps> = ({ id, author }) => {
-  const { t } = useTranslation();
-  const { isLogin } = useAccount();
+  const { t } = useTranslation()
+  const { isLogin } = useAccount()
   const commentsData = useQuery<ListQueryData<'comments', CommentEntity>>(Comments, {
     variables: {
       id,
@@ -31,8 +31,8 @@ const Comment: React.FC<IProps> = ({ id, author }) => {
         pageSize: 10,
       },
     },
-  });
-  const [addComment, { data }] = useMutation(AddComment);
+  })
+  const [addComment, { data }] = useMutation(AddComment)
   const add = async (value: string, commentId?: number) => {
     await addComment({
       variables: {
@@ -42,9 +42,9 @@ const Comment: React.FC<IProps> = ({ id, author }) => {
           content: value,
         },
       },
-    });
-    commentsData.refetch();
-  };
+    })
+    commentsData.refetch()
+  }
   return (
     <Wrapper>
       {
@@ -64,7 +64,7 @@ const Comment: React.FC<IProps> = ({ id, author }) => {
         )
       }
     </Wrapper>
-  );
-};
+  )
+}
 
-export default observer(Comment);
+export default observer(Comment)

@@ -1,7 +1,7 @@
-import { themes } from './themes';
+import type { themes } from './themes'
 
-export type ThemeKeyType = keyof typeof themes | 'system';
+export type ThemeKeyType = keyof typeof themes | 'system'
 
 export interface ThemeState {
-  selected: ThemeKeyType;
+  selected: ThemeKeyType
 }

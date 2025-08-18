@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components/macro';
-import { animated } from 'react-spring';
-import { useTapButton } from '@app/utils/hooks';
-import { Popover } from '..';
+import { useTapButton } from '@app/utils/hooks'
+import React from 'react'
+import { animated } from 'react-spring'
+import styled from 'styled-components'
+import { Popover } from '..'
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  popover?: string;
-  disabled?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  popover?: string
+  disabled?: boolean
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export const IconButtonStyled = styled(animated.button as any)`
@@ -21,7 +21,7 @@ export const IconButtonStyled = styled(animated.button as any)`
     opacity: 0.7;
     cursor: not-allowed;
   }
-`;
+`
 
 // const template = ({ scale }: any) => `translate(0, 0) scale(${scale})`;
 
@@ -31,7 +31,7 @@ const IconButton: React.FC<IProps> = ({
   children,
   ...props
 }) => {
-  const [spring, bind] = useTapButton();
+  const [spring, bind] = useTapButton()
   const content = (
     <IconButtonStyled
       {...bind()}
@@ -43,7 +43,7 @@ const IconButton: React.FC<IProps> = ({
     >
       {children}
     </IconButtonStyled>
-  );
+  )
   if (popover) {
     return (
       <Popover
@@ -55,9 +55,9 @@ const IconButton: React.FC<IProps> = ({
       >
         {content}
       </Popover>
-    );
+    )
   }
-  return content;
-};
+  return content
+}
 
-export default IconButton;
+export default IconButton

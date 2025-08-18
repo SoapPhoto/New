@@ -1,8 +1,8 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components'
 
 export const Content = styled.div`
   padding: 24px;
-`;
+`
 
 export const Footer = styled.div`
   display: flex;
@@ -10,4 +10,4 @@ export const Footer = styled.div`
   align-items: center;
   margin-top: 8px;
   margin-bottom: 18px;
-`;
+`

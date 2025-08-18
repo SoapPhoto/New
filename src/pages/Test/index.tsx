@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import Button from '@app/components/Button'
 
-import Tag from '@app/components/Tag';
-import Button from '@app/components/Button';
+import Tag from '@app/components/Tag'
+import React, { useState } from 'react'
 
-const Test = () => {
-  const [value, setValue] = useState<string[]>(['还行']);
-  const [loading, setLoading] = useState(false);
+function Test() {
+  const [value, setValue] = useState<string[]>(['还行'])
+  const [loading, setLoading] = useState(false)
   return (
     <div>
       <div style={{ marginLeft: 200, marginTop: 200 }}>
@@ -13,8 +13,8 @@ const Test = () => {
           <span>12312313</span>
         </UserPopover> */}
         <div style={{ width: '320px' }}>
-          <Tag value={value} onChange={(v) => setValue(v)} />
-          <Button loading={loading} onClick={() => setLoading((v) => !v)}>
+          <Tag value={value} onChange={v => setValue(v)} />
+          <Button loading={loading} onClick={() => setLoading(v => !v)}>
             哈哈哈哈哈哈
           </Button>
           {/* <FieldItem
@@ -27,7 +27,7 @@ const Test = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Test;
+export default Test

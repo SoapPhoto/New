@@ -1,16 +1,19 @@
 import React, {
-  useCallback, useEffect, useRef, useState,
-} from 'react';
-import styled from 'styled-components/macro';
-import LazyLoad from 'react-lazyload';
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import LazyLoad from 'react-lazyload'
+import styled from 'styled-components'
 
-import { Blurhash } from '..';
+import { Blurhash } from '..'
 
 interface IImageProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
-  src?: string;
-  blurhash?: string;
-  color?: string;
-  lazyload?: boolean;
+  src?: string
+  blurhash?: string
+  color?: string
+  lazyload?: boolean
 }
 
 const Box = styled.div`
@@ -18,7 +21,7 @@ const Box = styled.div`
   height: 100%;
   overflow: hidden;
   position: relative;
-`;
+`
 
 const BlurHashBox = styled.div`
   position: absolute;
@@ -26,20 +29,20 @@ const BlurHashBox = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-`;
+`
 
-const Img = styled.img<{ loaded: number; complete: number }>`
+const Img = styled.img<{ loaded: number, complete: number }>`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: ${(p) => (p.loaded || p.complete ? 1 : 0)};
-  filter: brightness(${(p) => (p.loaded || p.complete ? '100%' : '100%')})
-    saturate(${(p) => (p.loaded || p.complete ? '100%' : '20%')});
-  transition: ${(p) => (p.complete
+  opacity: ${p => (p.loaded || p.complete ? 1 : 0)};
+  filter: brightness(${p => (p.loaded || p.complete ? '100%' : '100%')})
+    saturate(${p => (p.loaded || p.complete ? '100%' : '20%')});
+  transition: ${p => (p.complete
     ? 'none'
     : `filter 700ms cubic-bezier(0.4, 0, 0.2, 1),
     opacity 500ms cubic-bezier(0.4, 0, 0.2, 1)`)};
-`;
+`
 
 const ImageComponents: React.FC<IImageProps> = ({
   src,
@@ -48,34 +51,34 @@ const ImageComponents: React.FC<IImageProps> = ({
   lazyload = true,
   ...props
 }) => {
-  const [loaded, setLoaded] = useState(false);
-  const [complete, setComplete] = useState(false);
-  const [blurhashVisible, setBlurhashVisible] = useState(true);
-  const imageRef = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(false)
+  const [complete, setComplete] = useState(false)
+  const [blurhashVisible, setBlurhashVisible] = useState(true)
+  const imageRef = useRef<HTMLImageElement>(null)
   const removeBlurHash = () => {
-    setBlurhashVisible(false);
-  };
+    setBlurhashVisible(false)
+  }
   useEffect(() => {
-    const img = imageRef.current;
+    const img = imageRef.current
     if (img && img.complete) {
       if (img.naturalWidth !== 0) {
-        setBlurhashVisible(false);
-        setComplete(true);
+        setBlurhashVisible(false)
+        setComplete(true)
         // handleLoadImage();
       }
     }
     if (img) {
-      img.addEventListener('transitionend', removeBlurHash);
+      img.addEventListener('transitionend', removeBlurHash)
     }
     return () => {
       if (img) {
-        img.removeEventListener('transitionend', removeBlurHash);
+        img.removeEventListener('transitionend', removeBlurHash)
       }
-    };
-  }, []);
+    }
+  }, [])
   const handleLoadImage = useCallback(() => {
-    setLoaded(true);
-  }, []);
+    setLoaded(true)
+  }, [])
   return (
     <Box {...props}>
       {blurhash && blurhashVisible && (
@@ -99,8 +102,8 @@ const ImageComponents: React.FC<IImageProps> = ({
         src={src}
       />
     </Box>
-  );
-};
+  )
+}
 
 const Image: React.FC<IImageProps> = ({ lazyload, ...props }) => {
   if (lazyload) {
@@ -108,8 +111,8 @@ const Image: React.FC<IImageProps> = ({ lazyload, ...props }) => {
       <LazyLoad once resize height="100%" offset={100}>
         <ImageComponents {...props} />
       </LazyLoad>
-    );
+    )
   }
-  return <ImageComponents {...props} />;
-};
-export default Image;
+  return <ImageComponents {...props} />
+}
+export default Image

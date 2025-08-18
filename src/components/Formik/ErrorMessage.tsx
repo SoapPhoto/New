@@ -1,37 +1,37 @@
-import { FieldInputProps, FormikErrors, FormikTouched } from 'formik';
-import React, { useEffect, useMemo, useState } from 'react';
-import { config, useSpring } from 'react-spring';
-import { ErrorBox, Error } from './elements';
+import type { FieldInputProps, FormikErrors, FormikTouched } from 'formik'
+import React, { useEffect, useMemo, useState } from 'react'
+import { config, useSpring } from 'react-spring'
+import { Error, ErrorBox } from './elements'
 
 interface IProps {
-  field: FieldInputProps<any>;
-  touched: FormikTouched<any>;
-  errors: FormikErrors<any>;
+  field: FieldInputProps<any>
+  touched: FormikTouched<any>
+  errors: FormikErrors<any>
 }
 
 const ErrorMessage: React.FC<IProps> = ({ field, touched, errors }) => {
-  const [err, setErr] = useState<string>('');
+  const [err, setErr] = useState<string>('')
   useEffect(() => {
     if (touched[field.name] && errors[field.name]) {
-      setErr(errors[field.name] as string);
+      setErr(errors[field.name] as string)
     }
-  }, [errors, field.name, touched]);
+  }, [errors, field.name, touched])
   const error = useMemo(
     () => (touched[field.name] ? (errors[field.name] as string) : undefined),
     [errors, field.name, touched],
-  );
+  )
   const props = useSpring({
     opacity: error ? 1 : 0,
     transform: error ? 'translateY(0%)' : 'translateY(-100%)',
     config: { ...config.stiff, friction: 18, mass: 0.8 },
-  });
+  })
   return (
     <ErrorBox>
       <div>
         <Error style={props}>{err}</Error>
       </div>
     </ErrorBox>
-  );
-};
+  )
+}
 
-export default ErrorMessage;
+export default ErrorMessage

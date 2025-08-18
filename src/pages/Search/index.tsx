@@ -1,17 +1,16 @@
-import React, { useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { SearchPictures } from '@app/graphql/query';
-import { NetworkStatus, useQuery } from '@apollo/client';
-import { ListQueryData } from '@app/graphql/interface';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import usePicturePagination from '@app/utils/hooks/usePicturePagination';
-import PictureList from '@app/components/Picture/List';
-import Skeleton from '@app/components/Picture/Skeleton';
-import Input from '@app/components/Input';
-import styled, { css } from 'styled-components/macro';
-import { Search, X } from '@app/components/Icons';
-import IconButton from '@app/components/Button/IconButton';
-import Empty from '@app/components/Empty';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import type { ListQueryData } from '@app/graphql/interface'
+import { useQuery } from '@apollo/client'
+import IconButton from '@app/components/Button/IconButton'
+import Empty from '@app/components/Empty'
+import { Search, X } from '@app/components/Icons'
+import PictureList from '@app/components/Picture/List'
+import Skeleton from '@app/components/Picture/Skeleton'
+import { SearchPictures } from '@app/graphql/query'
+import usePicturePagination from '@app/utils/hooks/usePicturePagination'
+import React, { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import styled, { css } from 'styled-components'
 
 const SerachBox = styled.div`
   width: 100%;
@@ -19,7 +18,7 @@ const SerachBox = styled.div`
   margin: 0 auto;
   transform: translateY(-50%);
   position: relative;
-`;
+`
 
 const SearchInput = styled.input`
   display: flex;
@@ -28,14 +27,14 @@ const SearchInput = styled.input`
   align-items: center;
   height: 64px;
   border-radius: 8px;
-  background: ${(({ theme }) => theme.colors.pure)};
-  color: ${(({ theme }) => theme.colors.text)};
+  background: ${({ theme }) => theme.colors.pure};
+  color: ${({ theme }) => theme.colors.text};
   box-shadow: 0px 8px 20px rgb(0 0 0 / 6%);
   width: 100%;
   padding: 24px 24px 24px 64px;
   font-size: 24px;
   font-weight: 400;
-`;
+`
 
 const SearchIcon = styled(Search)`
   position: absolute;
@@ -43,33 +42,35 @@ const SearchIcon = styled(Search)`
   top: 50%;
   margin-top: -10px;
   color: ${({ theme }) => theme.colors.secondary};
-`;
+`
 
 const XIcon = styled(X)`
   color: ${({ theme }) => theme.colors.secondary};
-`;
+`
 
-const SearchPage = () => {
-  const navigate = useNavigate();
-  const { search } = useParams();
-  const [words, setWords] = useState(search);
+function SearchPage() {
+  const navigate = useNavigate()
+  const { search } = useParams()
+  const [words, setWords] = useState(search)
   const {
-    loading, data, fetchMore, networkStatus,
+    loading,
+    data,
+    networkStatus,
   } = useQuery<ListQueryData<'searchPictures', PictureEntity>>(SearchPictures, {
     variables: {
       query: { page: 1, pageSize: 30 },
       words: search,
     },
-  });
-  const handle = async (current) => {
-    console.log(current);
-  };
-  const [more, notData, noMore] = usePicturePagination(data?.searchPictures, handle, loading, networkStatus);
+  })
+  const handle = async () => {
+    // console.log(current)
+  }
+  const [more, notData, noMore] = usePicturePagination(data?.searchPictures, handle, loading, networkStatus)
   const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      navigate(`/s/${words?.trim()}`);
+      navigate(`/s/${words?.trim()}`)
     }
-  };
+  }
   return (
     <div
       style={{
@@ -82,15 +83,14 @@ const SearchPage = () => {
         css={css`
           width: 100%;
           height: 80px;
-          background: ${(({ theme }) => theme.colors.gray2)};
+          background: ${({ theme }) => theme.colors.gray2};
         `}
       />
       <SerachBox>
         <SearchInput
           value={words}
-          onChange={(e) => setWords(e.target.value)}
+          onChange={e => setWords(e.target.value)}
           type="search"
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           onKeyPress={onKeyPress}
           placeholder="关键词"
         >
@@ -114,32 +114,38 @@ const SearchPage = () => {
         }
       </SerachBox>
       {
-        search ? (
-          <div
-            css={css`padding: 28px;`}
-          >
-            { notData ? (
-              <div>
-                <Skeleton />
+        search
+          ? (
+              <div
+                css={css`padding: 28px;`}
+              >
+                { notData
+                  ? (
+                      <div>
+                        <Skeleton />
+                      </div>
+                    )
+                  : (
+                      <div>
+                        {
+                          data!.searchPictures.data.length === 0
+                            ? (
+                                <Empty emptyText="无无无无无无无无" />
+                              )
+                            : (
+                                <PictureList onPage={more} noMore={noMore} list={data!.searchPictures.data} />
+                              )
+                        }
+                      </div>
+                    )}
               </div>
-            ) : (
-              <div>
-                {
-                  data!.searchPictures.data.length === 0 ? (
-                    <Empty emptyText="无无无无无无无无" />
-                  ) : (
-                    <PictureList onPage={more} noMore={noMore} list={data!.searchPictures.data} />
-                  )
-                }
-              </div>
-            )}
-          </div>
-        ) : (
-          <Empty emptyText="搜一搜" />
-        )
+            )
+          : (
+              <Empty emptyText="搜一搜" />
+            )
       }
     </div>
-  );
-};
+  )
+}
 
-export default SearchPage;
+export default SearchPage

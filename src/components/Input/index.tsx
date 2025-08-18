@@ -1,5 +1,5 @@
-import React from 'react';
-import styled, { css } from 'styled-components/macro';
+import React from 'react'
+import styled, { css } from 'styled-components'
 
 export interface IInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -17,23 +17,23 @@ export const inputCss = css`
   transition: border 0.2s, background-color 0.2s, color 0.2s ease-out,
     box-shadow 0.2s ease;
   font-size: 14px;
-  background-color: ${(p) => p.theme.widget.input.bg};
-  color: ${(p) => p.theme.colors.text};
-  border-color: ${(p) => p.theme.widget.input.bg};
+  background-color: ${p => p.theme.widget.input.bg};
+  color: ${p => p.theme.colors.text};
+  border-color: ${p => p.theme.widget.input.bg};
   &:focus,
   &:hover {
-    border-color: ${(p) => p.theme.colors.primary};
-    box-shadow: 0 1px 4px -1px ${(p) => p.theme.colors.primary};
+    border-color: ${p => p.theme.colors.primary};
+    box-shadow: 0 1px 4px -1px ${p => p.theme.colors.primary};
   }
   &:focus {
-    background-color: ${(p) => p.theme.widget.input.hoverBg};
+    background-color: ${p => p.theme.widget.input.hoverBg};
   }
-`;
+`
 
 const StyleInput = styled.input`
   ${inputCss}
-`;
+`
 
-const Input: React.FC<IInputProps> = ({ ...restProps }) => <StyleInput {...restProps} />;
+const Input: React.FC<IInputProps> = ({ ...restProps }) => <StyleInput {...restProps} />
 
-export default Input;
+export default Input

@@ -1,9 +1,10 @@
-import isFunction from 'lodash/isFunction';
-import { rgba } from 'polished';
-import React, { memo, useCallback, useState } from 'react';
-import TextareaAutosize, { TextareaAutosizeProps } from 'react-textarea-autosize';
-import styled from 'styled-components';
-import { inputCss } from '.';
+import type { TextareaAutosizeProps } from 'react-textarea-autosize'
+import isFunction from 'lodash/isFunction'
+import { rgba } from 'polished'
+import React, { memo, useCallback, useState } from 'react'
+import TextareaAutosize from 'react-textarea-autosize'
+import styled from 'styled-components'
+import { inputCss } from '.'
 
 export interface ITextareaProps extends TextareaAutosizeProps {
   /**
@@ -12,23 +13,23 @@ export interface ITextareaProps extends TextareaAutosizeProps {
    * @type {string}
    * @memberof IInputProps
    */
-  label?: string;
+  label?: string
   /**
    * 错误
    *
    * @type {string}
    * @memberof IInputProps
    */
-  error?: string;
+  error?: string
   textareaStyle?: Omit<NonNullable<React.TextareaHTMLAttributes<HTMLTextAreaElement>['style']>, 'maxHeight' | 'minHeight'> & {
-    height?: number;
-  };
-  inputRef?: React.Ref<HTMLTextAreaElement>;
-  boxStyle?: React.CSSProperties;
-  focus?: boolean;
+    height?: number
+  }
+  inputRef?: React.Ref<HTMLTextAreaElement>
+  boxStyle?: React.CSSProperties
+  focus?: boolean
 }
 
-const TextareaBox = styled.div<{ error?: boolean; focus?: boolean }>`
+const TextareaBox = styled.div<{ error?: boolean, focus?: boolean }>`
   ${inputCss}
   line-height: 24px;
   & textarea {
@@ -40,12 +41,12 @@ const TextareaBox = styled.div<{ error?: boolean; focus?: boolean }>`
     overflow: hidden;
     transition: .1s height ease;
     display: block;
-    color: ${(props) => rgba(props.theme.colors.text, 0.9)};
+    color: ${props => rgba(props.theme.colors.text, 0.9)};
     &::placeholder {
-      color: ${(_) => rgba(_.theme.colors.text, 0.7)};
+      color: ${_ => rgba(_.theme.colors.text, 0.7)};
     }
   }
-`;
+`
 
 const Textarea: React.FC<ITextareaProps> = memo(({
   label,
@@ -61,19 +62,19 @@ const Textarea: React.FC<ITextareaProps> = memo(({
   minRows = 2,
   ...restProps
 }) => {
-  const [focus, setFocus] = useState(false);
+  const [focus, setFocus] = useState(false)
   const onBaseFocus = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
-    setFocus(true);
+    setFocus(true)
     if (isFunction(onFocus)) {
-      onFocus?.(e);
+      onFocus?.(e)
     }
-  }, [onFocus]);
+  }, [onFocus])
   const onBaseBlur = useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
-    setFocus(false);
+    setFocus(false)
     if (isFunction(onBlur)) {
-      onBlur?.(e);
+      onBlur?.(e)
     }
-  }, [onBlur]);
+  }, [onBlur])
   return (
     <TextareaBox
       className={className}
@@ -90,7 +91,7 @@ const Textarea: React.FC<ITextareaProps> = memo(({
         {...restProps}
       />
     </TextareaBox>
-  );
-});
+  )
+})
 
-export default Textarea;
+export default Textarea

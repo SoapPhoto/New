@@ -1,13 +1,14 @@
-import React, { memo } from 'react';
-import { Field, FieldProps } from 'formik';
+import type { FieldProps } from 'formik'
+import { Field } from 'formik'
+import React, { memo } from 'react'
 
-import { LabelBox } from './elements';
-import ErrorMessage from './ErrorMessage';
-import Tag from '../Tag';
+import Tag from '../Tag'
+import { LabelBox } from './elements'
+import ErrorMessage from './ErrorMessage'
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
-  name: string;
-  required?: boolean;
+  name: string
+  required?: boolean
 }
 
 const Component: React.FC<FieldProps<string[]> & IProps> = memo(
@@ -20,13 +21,13 @@ const Component: React.FC<FieldProps<string[]> & IProps> = memo(
     ...restFieldProps
   }) => (
     <LabelBox className={className} style={style}>
-      <Tag value={field.value} onChange={(v) => setFieldValue(field.name, v)} />
+      <Tag value={field.value} onChange={v => setFieldValue(field.name, v)} />
       <ErrorMessage field={field} touched={touched} errors={errors} />
     </LabelBox>
   ),
-);
+)
 
 const FieldTag: React.FC<IProps> = ({ name, ...restProps }) => (
   <Field name={name} component={Component} {...restProps} />
-);
-export default FieldTag;
+)
+export default FieldTag

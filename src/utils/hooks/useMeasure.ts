@@ -1,23 +1,24 @@
-import { useRef, useState, useEffect, MutableRefObject } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
+import { useEffect, useRef, useState } from 'react'
+import ResizeObserver from 'resize-observer-polyfill'
+
 interface DOMRectReadOnly {
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly height: number;
-  readonly top: number;
-  readonly right: number;
-  readonly bottom: number;
-  readonly left: number;
+  readonly x: number
+  readonly y: number
+  readonly width: number
+  readonly height: number
+  readonly top: number
+  readonly right: number
+  readonly bottom: number
+  readonly left: number
 }
 
 export default function useMeasure(): [
   {
-    ref: React.Ref<any>;
+    ref: React.Ref<any>
   },
   DOMRectReadOnly,
 ] {
-  const ref = useRef<Element>();
+  const ref = useRef<Element>()
   const [bounds, set] = useState<DOMRectReadOnly>({
     bottom: 0,
     left: 0,
@@ -27,17 +28,17 @@ export default function useMeasure(): [
     x: 0,
     y: 0,
     right: 0,
-  });
+  })
   const [ro] = useState(
     (): ResizeObserver =>
       new ResizeObserver((entries: ResizeObserverEntry[]) => {
-        set(entries[0].contentRect);
+        set(entries[0].contentRect)
       }),
-  );
+  )
   useEffect(() => {
-    ro.observe(ref.current as any);
-    return ro.disconnect;
+    ro.observe(ref.current as any)
+    return ro.disconnect
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return [{ ref }, bounds];
+  }, [])
+  return [{ ref }, bounds]
 }

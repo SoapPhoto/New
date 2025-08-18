@@ -1,68 +1,68 @@
-import 'styled-components/macro';
+import 'styled-components'
 
 /* This is the suggested way of declaring theme types */
-declare module 'styled-components/macro' {
+declare module 'styled-components' {
   export interface DefaultTheme {
-    state: string;
-    foreground: string;
-    background: string;
-    shadowColor: string;
-    space: number;
+    state: string
+    foreground: string
+    background: string
+    shadowColor: string
+    space: number
     colors: {
-      pure: string;
-      text: string;
-      error: string;
-      primary: string;
-      gray1: string;
-      gray2: string;
-      gray3: string;
-      gray4: string;
-      layout: string;
-      secondary: string;
-      border: string;
-      green: string;
-    };
-    dashboard: {};
+      pure: string
+      text: string
+      error: string
+      primary: string
+      gray1: string
+      gray2: string
+      gray3: string
+      gray4: string
+      layout: string
+      secondary: string
+      border: string
+      green: string
+    }
+    dashboard: {}
     widget: {
       box: {
-        borderColor: string;
+        borderColor: string
       }
       scrollbar: {
-        graidient: string;
-        background: string;
-        hover: string;
-        active: string;
-      };
+        graidient: string
+        background: string
+        hover: string
+        active: string
+      }
       input: {
-        bg: string;
-        hoverBg: string;
-      };
+        bg: string
+        hoverBg: string
+      }
       skeleton: {
-        accents1: string;
-        accents2: string;
-        background: string;
-        shadow: string;
-      };
+        accents1: string
+        accents2: string
+        background: string
+        shadow: string
+      }
       collection: {
-        background: string;
+        background: string
         addPicture: {
-          background: string;
-          color: string;
-        };
-      };
+          background: string
+          color: string
+        }
+      }
       popover: {
-        theme: string;
-        radius: number;
-        background: string;
-      };
+        theme: string
+        radius: number
+        background: string
+      }
       modal: {
-        background: string;
-      };
+        background: string
+      }
       toaster: {
-        background: string;
-        color: string;
-      };
-    };
+        background: string
+        color: string
+      }
+    }
   }
 }
 
@@ -75,10 +75,10 @@ declare module 'react' {
     // If you are writing this inline you already have access to all the attributes anyway,
     // no need for the extra indirection.
     /**
-       * If present, this React element will be converted by
-       * `babel-plugin-styled-components` into a styled component
-       * with the given css as its styles.
-       */
-    css?: CSSProp | undefined;
+     * If present, this React element will be converted by
+     * `babel-plugin-styled-components` into a styled component
+     * with the given css as its styles.
+     */
+    css?: CSSProp | undefined
   }
 }

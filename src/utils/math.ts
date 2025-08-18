@@ -1,5 +1,5 @@
-export const round = (value: number, decimalDigits = 0) => {
-  const multiplier = 10 ** decimalDigits;
+export function round(value: number, decimalDigits = 0) {
+  const multiplier = 10 ** decimalDigits
 
-  return Math.round(value * multiplier) / multiplier;
-};
+  return Math.round(value * multiplier) / multiplier
+}

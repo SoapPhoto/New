@@ -1,25 +1,25 @@
-import styled, { css } from 'styled-components/macro';
-import Image from '../Image';
+import styled, { css } from 'styled-components'
+import Image from '../Image'
 
 export const Wrapper = styled.div<{
-  size: number;
-  color: string;
-  border: number;
-  rainbow: number;
-  online: number;
+  size: number
+  color: string
+  border: number
+  rainbow: number
+  online: number
 }>`
-  --soap-color: ${(p) => p.color};
+  --soap-color: ${p => p.color};
   position: relative;
-  width: ${(p) => p.size}px;
-  height: ${(p) => p.size}px;
-  min-width: ${(p) => p.size}px;
-  min-height: ${(p) => p.size}px;
+  width: ${p => p.size}px;
+  height: ${p => p.size}px;
+  min-width: ${p => p.size}px;
+  min-height: ${p => p.size}px;
   ${({ border }) => (border ? css`` : css`background: var(--soap-color);`)}
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${(p) => p.theme.colors.text};
+  color: ${p => p.theme.colors.text};
   border-radius: 100%;
   transition: all 0.25s ease;
   box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.05);
@@ -35,9 +35,11 @@ export const Wrapper = styled.div<{
             height: 100%;
             border-radius: inherit;
             z-index: 0;
-            background: ${online ? css`
+            background: ${online
+      ? css`
               rgb(70,201,58)
-            ` : css`
+            `
+      : css`
               linear-gradient(
                 40deg,
                 #f99b4a,
@@ -56,11 +58,11 @@ export const Wrapper = styled.div<{
           }
         `
     : '')}
-`;
+`
 
 export const Text = styled.div<{ total: number }>`
-  font-size: ${(p) => (p.total > 1 ? (p.total > 6 ? 0.5 : (10 - p.total + 2) / 10) : 1)}rem;
-`;
+  font-size: ${p => (p.total > 1 ? (p.total > 6 ? 0.5 : (10 - p.total + 2) / 10) : 1)}rem;
+`
 
 export const Img = styled(Image)`
   width: 100%;
@@ -75,4 +77,4 @@ export const Img = styled(Image)`
     border-radius: inherit;
     overflow: hidden;
   }
-`;
+`

@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import styled, { useTheme } from 'styled-components/macro';
+import gcoord from 'gcoord'
+import React, { useMemo } from 'react'
 
-import gcoord from 'gcoord';
+import styled from 'styled-components'
 
 // const getUrl = (gps: number[]) => `https://restapi.amap.com/v3/staticmap?location=${
 //   gps[1]
@@ -10,10 +10,10 @@ import gcoord from 'gcoord';
 // },${gps[0]}&key=e55a0b1eb15adb1ff24cec5a7aacd637`;
 
 interface IProps {
-  gps: number[];
-  alt?: string;
-  size?: string;
-  zoom?: number;
+  gps: number[]
+  alt?: string
+  size?: string
+  zoom?: number
 }
 
 const Wrapper = styled.div`
@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     display: block;
     width: 100%;
   }
-`;
+`
 
 export const GpsImage: React.FC<IProps> = ({
   gps,
@@ -33,11 +33,11 @@ export const GpsImage: React.FC<IProps> = ({
   size = '600x300',
 }) => {
   // const { mapbox } = useTheme();
-  const gpsString = useMemo(() => gcoord.transform([gps[1], gps[0]], gcoord.GCJ02, gcoord.WGS84), [gps]).toString();
-  const src = useMemo(() => `//api.mapbox.com/styles/v1/yiiu/ckw7m138o3p3514o5ey3k97qj/static/pin-s-attraction+285A98(${gpsString},${zoom})/${gpsString},${zoom},0,0/${size}@2x?access_token=${import.meta.env.VITE_MAPBOX_AK}&attribution=false&logo=false`, [gpsString, size, zoom]);
+  const gpsString = useMemo(() => gcoord.transform([gps[1], gps[0]], gcoord.GCJ02, gcoord.WGS84), [gps]).toString()
+  const src = useMemo(() => `//api.mapbox.com/styles/v1/yiiu/ckw7m138o3p3514o5ey3k97qj/static/pin-s-attraction+285A98(${gpsString},${zoom})/${gpsString},${zoom},0,0/${size}@2x?access_token=${import.meta.env.VITE_MAPBOX_AK}&attribution=false&logo=false`, [gpsString, size, zoom])
   return (
     <Wrapper>
       <img src={src} alt={alt} />
     </Wrapper>
-  );
-};
+  )
+}

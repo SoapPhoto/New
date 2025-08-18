@@ -1,15 +1,18 @@
-import React from 'react';
-import isFunction from 'lodash/isFunction';
+import { useTapButton } from '@app/utils/hooks'
+import isFunction from 'lodash/isFunction'
 
-import { useTapButton } from '@app/utils/hooks';
+import React from 'react'
 import {
-  ItemBio, ItemBox, ItemContent, ItemLabel,
-} from './elements';
+  ItemBio,
+  ItemBox,
+  ItemContent,
+  ItemLabel,
+} from './elements'
 
 export interface IFieldItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  label: string;
-  bio?: string;
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  label: string
+  bio?: string
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
 }
 
 const FieldItem: React.FC<IFieldItemProps> = ({
@@ -20,8 +23,8 @@ const FieldItem: React.FC<IFieldItemProps> = ({
   style,
   ...props
 }) => {
-  const isClicked = isFunction(onClick);
-  const [spring, bind] = useTapButton(1, 0.96);
+  const isClicked = isFunction(onClick)
+  const [spring, bind] = useTapButton(1, 0.96)
   return (
     <ItemContent
       style={{ ...style, ...spring }}
@@ -35,7 +38,7 @@ const FieldItem: React.FC<IFieldItemProps> = ({
       </ItemBox>
       {children}
     </ItemContent>
-  );
-};
+  )
+}
 
-export default FieldItem;
+export default FieldItem

@@ -1,4 +1,4 @@
-import { generateMedia } from 'styled-media-query';
+import { generateMedia } from 'styled-media-query'
 
 export const customBreakpoints = {
   huge: '1440px',
@@ -6,6 +6,6 @@ export const customBreakpoints = {
   medium: '868px',
   mobile: '604px',
   small: '450px',
-};
+}
 
-export const customMedia = generateMedia(customBreakpoints);
+export const customMedia = generateMedia(customBreakpoints)

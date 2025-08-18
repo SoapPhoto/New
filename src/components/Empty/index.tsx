@@ -1,11 +1,11 @@
-import React from 'react';
-import styled, { useTheme } from 'styled-components/macro';
-import { Loading } from '..';
+import React from 'react'
+import styled, { useTheme } from 'styled-components'
+import { Loading } from '..'
 
 interface IEmptyProps {
-  loading?: boolean;
-  emptyText?: string;
-  size?: 'small' | 'large';
+  loading?: boolean
+  emptyText?: string
+  size?: 'small' | 'large'
 }
 
 const Wrapper = styled.div<{ size?: 'small' | 'large' }>`
@@ -15,27 +15,29 @@ const Wrapper = styled.div<{ size?: 'small' | 'large' }>`
   align-items: center;
   justify-content: center;
   font-size: 18px;
-  color: ${(_) => _.theme.colors.secondary};
+  color: ${_ => _.theme.colors.secondary};
   font-weight: 400;
-  ${(_) => _.size === 'small'
+  ${_ => _.size === 'small'
     && `
     height: 80px;
     font-size: 14px;
   `}
-`;
+`
 
 const Empty: React.FC<IEmptyProps> = ({ loading = false, emptyText, size }) => {
-  const { colors } = useTheme();
-  const loadingSize = size === 'small' ? 16 : 36;
+  const { colors } = useTheme()
+  const loadingSize = size === 'small' ? 16 : 36
   return (
     <Wrapper size={size}>
-      {loading ? (
-        <Loading size={loadingSize} color={colors.secondary} />
-      ) : (
-        <span>{emptyText}</span>
-      )}
+      {loading
+        ? (
+            <Loading size={loadingSize} color={colors.secondary} />
+          )
+        : (
+            <span>{emptyText}</span>
+          )}
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Empty;
+export default Empty

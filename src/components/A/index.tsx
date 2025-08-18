@@ -1,8 +1,8 @@
-import styled from 'styled-components/macro';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom'
+import styled from 'styled-components'
 
 const A = styled(RouterLink)`
-  color: ${(p) => p.theme.colors.primary};
+  color: ${p => p.theme.colors.primary};
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -11,6 +11,6 @@ const A = styled(RouterLink)`
   &:active {
     opacity: 0.4;
   }
-`;
+`
 
-export default A;
+export default A

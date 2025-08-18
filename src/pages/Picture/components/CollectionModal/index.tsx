@@ -1,61 +1,57 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
+import type { CollectionEntity } from '@app/common/types/modules/collection/collection.entity'
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 
-import { useSearchParamModal } from '@app/utils/hooks';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { getPictureUrl } from '@app/utils/image';
-import { PlusCircle } from '@app/components/Icons';
-import { gql, useLazyQuery, useMutation } from '@apollo/client';
-import { UserCollectionsByName } from '@app/graphql/query';
-import { IPaginationListData } from '@app/graphql/interface';
-import { CollectionEntity } from '@app/common/types/modules/collection/collection.entity';
-import { observer } from 'mobx-react';
-import { useAccount } from '@app/stores/hooks';
-import { useTranslation } from 'react-i18next';
-import styled from 'styled-components/macro';
-import Modal from '@app/components/Modal';
-import Empty from '@app/components/Empty';
-import { AddPictureCollection, RemovePictureCollection } from '@app/graphql/mutations';
-import Fragments from '@app/graphql/fragments';
-import AddCollectionModal from '@app/components/AddCollectionModal';
+import type { IPaginationListData } from '@app/graphql/interface'
+import { gql, useLazyQuery, useMutation } from '@apollo/client'
+import AddCollectionModal from '@app/components/AddCollectionModal'
+import Empty from '@app/components/Empty'
+import Modal from '@app/components/Modal'
+import Fragments from '@app/graphql/fragments'
+import { AddPictureCollection, RemovePictureCollection } from '@app/graphql/mutations'
+import { UserCollectionsByName } from '@app/graphql/query'
+import { useAccount } from '@app/stores/hooks'
+import { useSearchParamModal } from '@app/utils/hooks'
+import { getPictureUrl } from '@app/utils/image'
+import { observer } from 'mobx-react'
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
+import CollectionModalAdd from './components/Add'
+import CollectionModalItem from './components/Item'
 import {
   CollectionBox,
-  CollectionItemBox,
-  ItemInfoBox,
-  ItemInfoTitle,
-} from './elements';
-import CollectionModalItem from './components/Item';
-import CollectionModalAdd from './components/Add';
+} from './elements'
 
 interface IProps {
-  picture: PictureEntity;
+  picture: PictureEntity
 }
 
 const Content = styled(OverlayScrollbarsComponent)`
   flex: 1;
   /* max-height: 80vh;
   height: 100px; */
-`;
+`
 const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
-  const { t } = useTranslation();
-  const [visible, close] = useSearchParamModal('collection');
-  const { isLogin, userInfo } = useAccount();
-  const [addCollectionInit, setAddCollectionInit] = useState(false);
+  const { t } = useTranslation()
+  const [visible, close] = useSearchParamModal('collection')
+  const { isLogin, userInfo } = useAccount()
+  const [addCollectionInit, setAddCollectionInit] = useState(false)
   const [addCollectionVisible, closeAddCollection] = useSearchParamModal(
     'addCollection',
     'modal-child',
-  );
+  )
   const [collectionsQuery, { loading, data, refetch }] = useLazyQuery<{
-    userCollectionsByName: IPaginationListData<CollectionEntity>;
-  }>(UserCollectionsByName);
+    userCollectionsByName: IPaginationListData<CollectionEntity>
+  }>(UserCollectionsByName)
   const [removePictureCollection] = useMutation(RemovePictureCollection, {
     update(cache, data, options) {
-      const { variables } = options;
+      const { variables } = options
       const cacheData = cache.readFragment<PictureEntity>({
         id: `Picture:${variables!.pictureId}`,
         fragment: Fragments,
         fragmentName: 'PictureDetailFragment',
-      });
+      })
       cache.writeFragment({
         id: `Picture:${variables!.pictureId}`,
         fragment: gql`
@@ -64,20 +60,20 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
           }
         `,
         data: {
-          currentCollections: cacheData?.currentCollections.filter((collection) => collection.id !== variables!.id),
+          currentCollections: cacheData?.currentCollections.filter(collection => collection.id !== variables!.id),
         },
-      });
-      refetch();
+      })
+      refetch()
     },
-  });
+  })
   const [addPictureCollection] = useMutation<{ addPictureCollection: CollectionEntity }>(AddPictureCollection, {
     update(cache, data, options) {
-      const { variables } = options;
+      const { variables } = options
       const cacheData = cache.readFragment<PictureEntity>({
         id: `Picture:${variables!.pictureId}`,
         fragment: Fragments,
         fragmentName: 'PictureDetailFragment',
-      });
+      })
       cache.writeFragment({
         id: `Picture:${variables!.pictureId}`,
         fragment: gql`
@@ -88,54 +84,54 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
         data: {
           currentCollections: [...(cacheData?.currentCollections ?? []), data.data?.addPictureCollection],
         },
-      });
-      refetch();
+      })
+      refetch()
     },
-  });
+  })
   const [current, setCurrent] = useState<Map<number, CollectionEntity>>(
     new Map(),
-  );
-  const [loadingObj, setLoading] = useState<Record<string, boolean>>({});
-  const { key, currentCollections } = picture;
+  )
+  const [loadingObj, setLoading] = useState<Record<string, boolean>>({})
+  const { key, currentCollections } = picture
   useEffect(() => {
     if (addCollectionVisible) {
-      closeAddCollection();
+      closeAddCollection()
     }
     setTimeout(() => {
-      setAddCollectionInit(true);
-    }, 100);
+      setAddCollectionInit(true)
+    }, 100)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
   useEffect(() => {
     if (visible && isLogin) {
       setCurrent(
         new Map(
-          currentCollections.map((collection) => [collection.id, collection]),
+          currentCollections.map(collection => [collection.id, collection]),
         ),
-      );
+      )
       collectionsQuery({
         variables: {
           username: userInfo!.username,
         },
-      });
+      })
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible, isLogin]);
+  }, [visible, isLogin])
   useEffect(() => {
     setCurrent(
       new Map(
-        currentCollections.map((collection) => [collection.id, collection]),
+        currentCollections.map(collection => [collection.id, collection]),
       ),
-    );
-  }, [currentCollections]);
+    )
+  }, [currentCollections])
   const onCollected = useCallback(async (collection: CollectionEntity, isCollected: boolean) => {
     if (loadingObj[collection.id]) {
-      return;
+      return
     }
-    setLoading((ld) => ({
+    setLoading(ld => ({
       ...ld,
       [collection.id]: true,
-    }));
+    }))
     try {
       if (isCollected) {
         removePictureCollection({
@@ -143,38 +139,40 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
             id: collection.id,
             pictureId: picture.id,
           },
-        });
-        current.delete(collection.id);
-        setCurrent(current);
-      } else {
+        })
+        current.delete(collection.id)
+        setCurrent(current)
+      }
+      else {
         const addData = await addPictureCollection({
           variables: {
             id: collection.id,
             pictureId: picture.id,
           },
-        });
-        console.log(addData);
+        })
+        console.log(addData)
       }
-    } finally {
-      setLoading((ld) => ({
+    }
+    finally {
+      setLoading(ld => ({
         ...ld,
         [collection.id]: false,
-      }));
+      }))
     }
-  }, [addPictureCollection, current, loadingObj, picture.id, removePictureCollection]);
+  }, [addPictureCollection, current, loadingObj, picture.id, removePictureCollection])
   const onAddCollectionOk = (collection: CollectionEntity) => {
-    refetch();
-  };
-  let content: JSX.Element[] = [<Empty key="loading" loading />];
+    refetch()
+  }
+  let content: JSX.Element[] = [<Empty key="loading" loading />]
   if (data?.userCollectionsByName) {
-    content = data.userCollectionsByName.data.map((collection) => (
+    content = data.userCollectionsByName.data.map(collection => (
       <CollectionModalItem
         key={collection.id}
         collection={collection}
         onCollected={onCollected}
         isCollected={current.has(collection.id)}
       />
-    ));
+    ))
   }
   return (
     <Modal
@@ -221,7 +219,7 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
         }
       </Modal.Content>
     </Modal>
-  );
-});
+  )
+})
 
-export default CollectionModal;
+export default CollectionModal

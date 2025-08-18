@@ -1,7 +1,9 @@
-import { css, DefaultTheme, keyframes } from 'styled-components/macro';
-import { rgba } from 'polished';
+import type { DefaultTheme } from 'styled-components'
+import { rgba } from 'polished'
+import { css, keyframes } from 'styled-components'
 
-export const boxMixin = (theme: DefaultTheme, width: string, wrapper = false) => `
+export function boxMixin(theme: DefaultTheme, width: string, wrapper = false) {
+  return `
   width: 100%;
   max-width: ${width};
   border-radius: 4px;
@@ -11,7 +13,8 @@ export const boxMixin = (theme: DefaultTheme, width: string, wrapper = false) =>
   ${wrapper ? 'margin: 0 auto;' : ''}
   padding: 32px;
   overflow: hidden;
-`;
+`
+}
 
 export const btnMixin = css`
   align-items: center;
@@ -33,7 +36,7 @@ export const btnMixin = css`
   vertical-align: middle;
   white-space: nowrap;
   cursor: pointer;
-`;
+`
 
 export const skeletonKeyframes = keyframes`
   0% {
@@ -43,34 +46,34 @@ export const skeletonKeyframes = keyframes`
   100% {
     background-position: -200% 50%;
   }
-`;
+`
 
 export const skeletonCss = css`
   background: linear-gradient(
     270deg,
-    ${(p) => rgba(p.theme.widget.skeleton.accents1, 1)},
-    ${(p) => rgba(p.theme.widget.skeleton.accents2, 1)},
-    ${(p) => rgba(p.theme.widget.skeleton.accents2, 1)},
-    ${(p) => rgba(p.theme.widget.skeleton.accents1, 1)}
+    ${p => rgba(p.theme.widget.skeleton.accents1, 1)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 1)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 1)},
+    ${p => rgba(p.theme.widget.skeleton.accents1, 1)}
   );
   background-size: 400% 400%;
   animation: ${skeletonKeyframes} 8s ease-in-out infinite;
-`;
+`
 
 export const skeletonCss2 = css`
   background: linear-gradient(
     270deg,
-    ${(p) => rgba(p.theme.widget.skeleton.accents2, 0.4)},
-    ${(p) => rgba(p.theme.widget.skeleton.accents2, 0.6)},
-    ${(p) => rgba(p.theme.widget.skeleton.accents2, 0.6)},
-    ${(p) => rgba(p.theme.widget.skeleton.accents2, 0.4)}
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.4)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.6)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.6)},
+    ${p => rgba(p.theme.widget.skeleton.accents2, 0.4)}
   );
   background-size: 400% 400%;
   animation: ${skeletonKeyframes} 8s ease-in-out infinite;
-`;
+`
 
 export const initButton = css`
   cursor: pointer;
   outline: none;
   border: none;
-`;
+`

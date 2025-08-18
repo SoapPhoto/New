@@ -1,9 +1,9 @@
-import React from 'react';
-import styled, { keyframes, useTheme } from 'styled-components/macro';
+import React from 'react'
+import styled, { keyframes, useTheme } from 'styled-components'
 
 interface ILoadingProps {
-  size?: number;
-  color?: string;
+  size?: number
+  color?: string
 }
 
 const animate = keyframes`
@@ -13,7 +13,7 @@ const animate = keyframes`
   100%{
     transform: rotate(360deg)
   }
-`;
+`
 
 export const Box = styled.div<{ size: number }>`
   border-radius: 50%;
@@ -23,7 +23,7 @@ export const Box = styled.div<{ size: number }>`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
 export const Percent = styled.div<{ color: string }>`
   position: relative;
@@ -32,7 +32,7 @@ export const Percent = styled.div<{ color: string }>`
   color: ${p => p.color};
   margin-top: 1px;
   z-index: 200;
-`;
+`
 
 const Animation1 = styled.div<{ color: string }>`
   position: absolute;
@@ -45,7 +45,7 @@ const Animation1 = styled.div<{ color: string }>`
   border-right: 3px solid transparent;
   animation: ${animate} 0.8s ease infinite;
   top: 0;
-`;
+`
 
 const Animation2 = styled.div<{ color: string }>`
   top: 0;
@@ -59,18 +59,18 @@ const Animation2 = styled.div<{ color: string }>`
   border-right: 3px solid transparent;
   animation: ${animate} 0.8s linear infinite;
   opacity: 0.2;
-`;
+`
 
 const Loading: React.FC<ILoadingProps> = ({ size = 32, color }) => {
-  const theme = useTheme();
-  let defaultColor = color || theme.colors.primary;
+  const theme = useTheme()
+  const defaultColor = color || theme.colors.primary
   return (
     <Box size={size}>
       <Percent color={defaultColor} />
       <Animation1 color={defaultColor} />
       <Animation2 color={defaultColor} />
     </Box>
-  );
-};
+  )
+}
 
-export default Loading;
+export default Loading

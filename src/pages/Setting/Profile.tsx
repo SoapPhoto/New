@@ -1,19 +1,20 @@
+import { useMutation } from '@apollo/client'
 import {
-  FieldInput, FieldTextarea,
-} from '@app/components';
-import { useAccount } from '@app/stores/hooks';
-import { Form, Formik } from 'formik';
-import React, { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
+  FieldInput,
+  FieldTextarea,
+} from '@app/components'
+import Button from '@app/components/Button'
+import Head from '@app/components/Head'
+import { UpdateProfile } from '@app/graphql/mutations'
 
+import { useAccount } from '@app/stores/hooks'
+import { Form, Formik } from 'formik'
+import pick from 'lodash/pick'
+import React, { useCallback } from 'react'
+import toast from 'react-hot-toast'
+import { useTranslation } from 'react-i18next'
 // import '@arco-design/web-react/es/Radio/style/index.js';
-import { css } from 'styled-components/macro';
-import pick from 'lodash/pick';
-import { useMutation } from '@apollo/client';
-import { UpdateProfile } from '@app/graphql/mutations';
-import toast from 'react-hot-toast';
-import Button from '@app/components/Button';
-import Head from '@app/components/Head';
+import { css } from 'styled-components'
 
 interface IValues {
   name: string
@@ -26,10 +27,10 @@ interface IValues {
   birthdayShow: number
 }
 
-const SettingProfilePage = () => {
-  const [updateProfile, { loading }] = useMutation(UpdateProfile);
-  const { t } = useTranslation();
-  const { init, userInfo } = useAccount();
+function SettingProfilePage() {
+  const [updateProfile, { loading }] = useMutation(UpdateProfile)
+  const { t } = useTranslation()
+  const { userInfo } = useAccount()
   const onSubmit = useCallback(
     async (values: IValues) => {
       await updateProfile({
@@ -38,11 +39,11 @@ const SettingProfilePage = () => {
             ...values,
           },
         },
-      });
-      toast.success(t('setting.profile.message.updateSuccess'));
+      })
+      toast.success(t('setting.profile.message.updateSuccess'))
     },
     [t, updateProfile],
-  );
+  )
   return (
     <div>
       <Head title="用户设置" />
@@ -94,6 +95,6 @@ const SettingProfilePage = () => {
         )}
       </Formik>
     </div>
-  );
-};
-export default SettingProfilePage;
+  )
+}
+export default SettingProfilePage

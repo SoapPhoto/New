@@ -1,35 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { v4 as uuidv4 } from 'uuid';
-import ToastComponent, { ITotalConfig, ToastAction, ToastType } from './Toast';
+import type { ITotalConfig, ToastAction, ToastType } from './Toast'
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { v4 as uuidv4 } from 'uuid'
+import ToastComponent from './Toast'
 
 interface IState {
-  toasts: ITotalConfig[];
+  toasts: ITotalConfig[]
 }
 
 interface IToastArg {
-  title: string;
-  duration?: number;
-  type?: ToastType;
-  action?: ToastAction;
+  title: string
+  duration?: number
+  type?: ToastType
+  action?: ToastAction
 }
 
-const timerCache: Record<string, number> = {};
+const timerCache: Record<string, number> = {}
 
 class ToastInstance extends React.PureComponent<{}, IState> {
   state = {
     toasts: [],
-  };
+  }
 
   add = (config: IToastArg) => {
-    const key = uuidv4();
+    const key = uuidv4()
     if (config.duration && config.duration > 0) {
       timerCache[key] = window.setTimeout(() => {
-        delete timerCache[key];
-        this.delete(key);
-      }, config.duration);
+        delete timerCache[key]
+        this.delete(key)
+      }, config.duration)
     }
-    this.setState(state => {
+    this.setState((state) => {
       const array = [
         {
           key,
@@ -38,57 +39,57 @@ class ToastInstance extends React.PureComponent<{}, IState> {
           action: config.action,
         },
         ...state.toasts,
-      ];
+      ]
       return {
         toasts: array.map((v, index) => ({
           ...v,
           index,
         })),
-      };
-    });
-  };
+      }
+    })
+  }
 
-  getKey = () => {};
+  getKey = () => {}
 
   delete = (key: string) => {
     if (timerCache[key]) {
-      clearTimeout(timerCache[key]);
-      delete timerCache[key];
+      clearTimeout(timerCache[key])
+      delete timerCache[key]
     }
-    this.setState(state => {
-      const array = state.toasts.filter(v => v.key !== key);
+    this.setState((state) => {
+      const array = state.toasts.filter(v => v.key !== key)
       return {
         toasts: array.map((v, index) => ({
           ...v,
           index,
         })),
-      };
-    });
-  };
+      }
+    })
+  }
 
   render() {
-    return <ToastComponent onDelete={this.delete} toasts={this.state.toasts} />;
+    return <ToastComponent onDelete={this.delete} toasts={this.state.toasts} />
   }
 }
 
 class Toast {
-  public ref!: ToastInstance;
+  public ref!: ToastInstance
 
   constructor() {
     if (!(typeof window === 'undefined')) {
-      const div = document.createElement('div');
-      document.body.appendChild(div);
-      let called = false;
+      const div = document.createElement('div')
+      document.body.appendChild(div)
+      let called = false
       const refFunc = (ref: ToastInstance | null) => {
         if (called) {
-          return;
+          return
         }
         if (ref) {
-          called = true;
-          this.ref = ref;
+          called = true
+          this.ref = ref
         }
-      };
-      ReactDOM.render(<ToastInstance ref={refFunc} />, div);
+      }
+      createRoot(div).render(<ToastInstance ref={refFunc} />)
     }
   }
 
@@ -102,8 +103,8 @@ class Toast {
       duration,
       type: 'base',
       action,
-    });
-  };
+    })
+  }
 
   public success = (
     title: string,
@@ -115,8 +116,8 @@ class Toast {
       duration,
       type: 'success',
       action,
-    });
-  };
+    })
+  }
 
   public warning = (
     title: string,
@@ -128,8 +129,8 @@ class Toast {
       duration,
       type: 'warning',
       action,
-    });
-  };
+    })
+  }
 
   public error = (
     title: string,
@@ -141,8 +142,8 @@ class Toast {
       duration,
       type: 'error',
       action,
-    });
-  };
+    })
+  }
 }
 
-export default new Toast();
+export default new Toast()

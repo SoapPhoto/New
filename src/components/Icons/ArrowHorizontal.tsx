@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
-import React from 'react';
+import type { IIconProps } from './type'
 
-import { IIconProps } from './type';
+import React from 'react'
 
 export const ArrowHorizontal: React.FC<IIconProps> = ({
   size = 24,
@@ -25,4 +24,4 @@ export const ArrowHorizontal: React.FC<IIconProps> = ({
       strokeLinejoin="round"
     />
   </svg>
-);
+)

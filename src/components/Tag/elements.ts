@@ -1,9 +1,9 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-`;
+`
 
 export const TagItem = styled.span`
   position: relative;
@@ -24,7 +24,7 @@ export const TagItem = styled.span`
   svg:last-child {
     color: ${p => p.theme.colors.error};
   }
-`;
+`
 
 export const TagInput = styled.span`
   width: 110px;
@@ -48,4 +48,4 @@ export const TagInput = styled.span`
       color: ${p => p.theme.colors.text};
     }
   }
-`;
+`

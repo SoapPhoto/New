@@ -1,10 +1,8 @@
-import { parseToRgb, rgbToColorString } from 'polished';
-import React from 'react';
-import SwitchCom, { ReactSwitchProps } from 'react-switch';
-import { useTheme } from 'styled-components/macro';
-import {
-  IosSwitch,
-} from 'react-styled-switch'
+import type { ReactSwitchProps } from 'react-switch'
+import { parseToRgb, rgbToColorString } from 'polished'
+import React from 'react'
+import SwitchCom from 'react-switch'
+import { useTheme } from 'styled-components'
 
 // export interface ISwitchProps {
 //   checked: boolean;
@@ -18,7 +16,7 @@ import {
 // }
 
 const Switch: React.FC<ReactSwitchProps> = ({ ...props }) => {
-  const theme = useTheme();
+  const theme = useTheme()
   return (
     // <div>1</div>
     // <IosSwitch />
@@ -33,7 +31,7 @@ const Switch: React.FC<ReactSwitchProps> = ({ ...props }) => {
       width={48}
       {...props}
     />
-  );
-};
+  )
+}
 
-export default Switch;
+export default Switch

@@ -1,28 +1,27 @@
-import { useSearchParamModal } from '@app/utils/hooks';
-import { Form, Formik } from 'formik';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { css } from 'styled-components/macro';
-import * as Yup from 'yup';
+import { useSearchParamModal } from '@app/utils/hooks'
+import { Form, Formik } from 'formik'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import * as Yup from 'yup'
 
-import { FieldInput } from '..';
-import Button from '../Button';
-import Modal from '../Modal';
-import { EditBtnBox, FormBox } from './elements';
+import { FieldInput } from '..'
+import Button from '../Button'
+import Modal from '../Modal'
+import { EditBtnBox, FormBox } from './elements'
 
-type ValueType = string | number | undefined;
+type ValueType = string | number | undefined
 
 export interface IEXIFEditValues {
-  make: ValueType;
-  model: ValueType;
-  focalLength: ValueType;
-  aperture: ValueType;
-  exposureTime: ValueType;
-  ISO: ValueType;
+  make: ValueType
+  model: ValueType
+  focalLength: ValueType
+  aperture: ValueType
+  exposureTime: ValueType
+  ISO: ValueType
 }
 
 interface IProps {
-  initialValues: Partial<IEXIFEditValues>;
+  initialValues: Partial<IEXIFEditValues>
 }
 
 const initValue = {
@@ -32,10 +31,10 @@ const initValue = {
   aperture: undefined,
   exposureTime: '',
   ISO: undefined,
-};
+}
 const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
-  const [visible, close] = useSearchParamModal('editExif', 'modal-child');
-  const { t } = useTranslation();
+  const [visible, close] = useSearchParamModal('editExif', 'modal-child')
+  const { t } = useTranslation()
   return (
     <Modal
       destroyOnClose
@@ -57,7 +56,7 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
             ...initValue,
             ...initialValues,
           }}
-          onSubmit={(value) => console.log(value)}
+          onSubmit={value => console.log(value)}
         >
           <Form>
             <FormBox>
@@ -79,7 +78,7 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
         </Formik>
       </Modal.Content>
     </Modal>
-  );
-};
+  )
+}
 
-export default EditExifModal;
+export default EditExifModal

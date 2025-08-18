@@ -1,9 +1,9 @@
-import { DefaultTheme } from 'styled-components/macro';
+import type { DefaultTheme } from 'styled-components'
 
-const gray1 = 'rgba(249,252,253,1)';
-const gray2 = 'rgba(244,247,248,1)';
-const gray3 = 'rgba(240,243,244,1)';
-const gray4 = 'rgba(230,233,234,1)';
+const gray1 = 'rgba(249,252,253,1)'
+const gray2 = 'rgba(244,247,248,1)'
+const gray3 = 'rgba(240,243,244,1)'
+const gray4 = 'rgba(230,233,234,1)'
 
 const theme: DefaultTheme = {
   state: 'light',
@@ -66,6 +66,6 @@ const theme: DefaultTheme = {
       color: 'rgba(58,52,51,1)',
     },
   },
-};
+}
 
-export default theme;
+export default theme

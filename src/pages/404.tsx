@@ -1,18 +1,18 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from 'react'
+import styled from 'styled-components'
 
 const Layout = styled.div`
   min-height: calc(100vh - 84px);
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const MessageBox = styled.div`
   --content: '404';
   --color: rgba(0,180,42);
   --backgroud: rgba(0,180,42, .1);
-`;
+`
 
 const Message = styled.div`
   text-align: center;
@@ -39,7 +39,7 @@ const Message = styled.div`
     margin: 0;
     padding:0;
   }
-`;
+`
 
 interface IProps {
   title?: string
@@ -55,6 +55,6 @@ const NotPage: React.FC<IProps> = ({ title }) => (
       </Message>
     </MessageBox>
   </Layout>
-);
+)
 
-export default NotPage;
+export default NotPage

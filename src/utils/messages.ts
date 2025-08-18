@@ -5,9 +5,9 @@
  * `internals/extractMessages/stringfyTranslations.js` script converts this to `t('a.b.c')` style before `i18next-scanner` scans the file contents
  * so that our json objects can also be recognized by the scanner.
  */
-export const _t = (id: string, ...rest: any[]): [string, ...any[]] => {
+export function _t(id: string, ...rest: any[]): [string, ...any[]] {
   if (!id) {
-    id = '_NOT_TRANSLATED_';
+    id = '_NOT_TRANSLATED_'
   }
-  return [id, ...rest];
-};
+  return [id, ...rest]
+}

@@ -1,3 +1,21 @@
+import { ApolloProvider } from '@apollo/client'
+
+import { client } from '@app/apollo/client'
+import { App } from '@app/app'
+import { stores } from '@app/stores'
+import { ThemeProvider } from '@app/styles/theme/ThemeProvider'
+
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+
+import { Provider } from 'mobx-react'
+
+import * as React from 'react'
+
+import { createRoot } from 'react-dom/client'
+
+import { HelmetProvider } from 'react-helmet-async'
+
 /**
  * index.tsx
  *
@@ -5,39 +23,22 @@
  * code.
  */
 // import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
-
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from 'mobx-react';
-import { ApolloProvider } from '@apollo/client';
-
-import relativeTime from 'dayjs/plugin/relativeTime';
-import dayjs from 'dayjs';
-
+import 'react-app-polyfill/stable'
 // Use consistent styling
-import 'sanitize.css/sanitize.css';
-
-import { App } from '@app/app';
-
-import { HelmetProvider } from 'react-helmet-async';
-
-import { ThemeProvider } from '@app/styles/theme/ThemeProvider';
-
+import 'sanitize.css/sanitize.css'
 // Initialize languages
-import './locales/i18n';
-import { stores } from '@app/stores';
-import { client } from '@app/apollo/client';
+import './locales/i18n'
 
-import 'dayjs/locale/en';
-import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en'
+import 'dayjs/locale/zh-cn'
 
-const MOUNT_NODE = document.getElementById('root') as HTMLElement;
+const MOUNT_NODE = document.getElementById('root') as HTMLElement
 
-dayjs.extend(relativeTime);
+dayjs.extend(relativeTime)
 // dayjs.locale('zh-cn');
+const root = createRoot(MOUNT_NODE)
 
-ReactDOM.render(
+root.render(
   <ApolloProvider client={client}>
     <Provider {...stores}>
       <ThemeProvider>
@@ -49,5 +50,4 @@ ReactDOM.render(
       </ThemeProvider>
     </Provider>
   </ApolloProvider>,
-  MOUNT_NODE,
-);
+)

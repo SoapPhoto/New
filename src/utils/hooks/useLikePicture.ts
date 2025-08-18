@@ -1,36 +1,36 @@
-import { gql, useApolloClient } from '@apollo/client';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { LikePicture, UnLikePicture } from '@app/graphql/mutations';
-import { useAccount } from '@app/stores/hooks';
-import throttle from 'lodash/throttle';
-import { useCallback } from 'react';
-import { toast } from 'react-hot-toast';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import { gql, useApolloClient } from '@apollo/client'
+import { LikePicture, UnLikePicture } from '@app/graphql/mutations'
+import { useAccount } from '@app/stores/hooks'
+import { useCallback } from 'react'
+import { toast } from 'react-hot-toast'
 
 export default function useLikePicture(id: number) {
-  const { isLogin } = useAccount();
-  const { mutate, writeFragment, cache } = useApolloClient();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const { isLogin } = useAccount()
+  const { mutate, cache } = useApolloClient()
+
   const like = useCallback(async (isLike: boolean) => {
     if (!isLogin) {
-      toast.error('请登录！');
+      toast.error('请登录！')
     }
-    let req: PictureEntity;
+    let req: PictureEntity
     if (!isLike) {
       const { data } = await mutate<{ likePicture: PictureEntity }>({
         mutation: LikePicture,
         variables: {
           id,
         },
-      });
-      req = data!.likePicture;
-    } else {
+      })
+      req = data!.likePicture
+    }
+    else {
       const { data } = await mutate<{ unlikePicture: PictureEntity }>({
         mutation: UnLikePicture,
         variables: {
           id,
         },
-      });
-      req = data!.unlikePicture;
+      })
+      req = data!.unlikePicture
     }
     cache.writeFragment({
       id: `Picture:${id}`,
@@ -44,7 +44,7 @@ export default function useLikePicture(id: number) {
         isLike: req.isLike,
         likedCount: req.likedCount,
       },
-    });
-  }, [cache, id, isLogin, mutate]);
-  return [like];
+    })
+  }, [cache, id, isLogin, mutate])
+  return [like]
 }

@@ -1,16 +1,16 @@
-import { Tab } from '@app/components';
-import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import styled, { css } from 'styled-components/macro';
+import { Tab } from '@app/components'
+import React, { memo } from 'react'
+import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
 
 interface IProps {}
 
 const Wrapper = styled.div`
   padding: 0 24px;
   padding-top: 24px;
-`;
+`
 const UserTab: React.FC<IProps> = memo(() => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Wrapper>
       <Tab style={{ textAlign: 'center' }}>
@@ -19,7 +19,7 @@ const UserTab: React.FC<IProps> = memo(() => {
         <Tab.Item name={t('user.tab.likes')} to="./like" />
       </Tab>
     </Wrapper>
-  );
-});
+  )
+})
 
-export default UserTab;
+export default UserTab

@@ -1,17 +1,17 @@
-import { useApolloClient } from '@apollo/client';
-import { PicturesType } from '@app/common/enum/picture';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
-import { IPaginationListData } from '@app/graphql/interface';
-import { Pictures } from '@app/graphql/query';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import type { IPaginationListData } from '@app/graphql/interface'
+import { useApolloClient } from '@apollo/client'
+import { PicturesType } from '@app/common/enum/picture'
+import { Pictures } from '@app/graphql/query'
 
-type ReturnType = [(newPicture: PictureEntity) => void];
+type ReturnType = [(newPicture: PictureEntity) => void]
 
 export default function useNewPictureCacheWrite(): ReturnType {
-  const client = useApolloClient();
+  const client = useApolloClient()
   const write = (newPicture: PictureEntity) => {
-    type DataType = {
-      pictures: IPaginationListData<PictureEntity>;
-    };
+    interface DataType {
+      pictures: IPaginationListData<PictureEntity>
+    }
     const cacheData = client.readQuery<DataType>({
       query: Pictures,
       variables: {
@@ -21,7 +21,7 @@ export default function useNewPictureCacheWrite(): ReturnType {
           pageSize: 20,
         },
       },
-    });
+    })
     if (cacheData?.pictures?.data) {
       client.writeQuery<DataType>({
         query: Pictures,
@@ -38,8 +38,8 @@ export default function useNewPictureCacheWrite(): ReturnType {
             data: [newPicture, ...cacheData.pictures.data],
           },
         },
-      });
+      })
     }
-  };
-  return [write];
+  }
+  return [write]
 }

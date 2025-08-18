@@ -1,30 +1,42 @@
-import React, { useState, useCallback } from 'react';
-import { observer } from 'mobx-react';
-import { rem } from 'polished';
-import { css } from 'styled-components/macro';
-import day from 'dayjs';
+import type { CommentEntity } from '@app/common/types/modules/comment/comment.entity'
+import type { UserEntity } from '@app/common/types/modules/user/user.entity'
+import { useAccount } from '@app/stores/hooks'
+import day from 'dayjs'
+import { observer } from 'mobx-react'
 
-import { CommentEntity } from '@app/common/types/modules/comment/comment.entity';
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { useTranslation } from 'react-i18next';
-import { useAccount } from '@app/stores/hooks';
-import UserPopover from '../UserPopover';
+import { rem } from 'polished'
+import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { css } from 'styled-components'
+import { A, EmojiText, Popover } from '..'
+import Avatar from '../Avatar'
+import { ChevronsRight, StrutAlign } from '../Icons'
+import UserPopover from '../UserPopover'
+import CommentEditor from './Editor'
 import {
-  ChildComment, ConfirmText, ContentBox, ContentItem, Dot, InfoBox, ItemBox, MainBox, MoreChildComment, MoreChildCommentBtn, ReplyLabel, UserLabel, UserName,
-} from './elements/list';
-import { A, EmojiText, Popover } from '..';
-import { ChevronsRight, StrutAlign } from '../Icons';
-import CommentEditor from './Editor';
-import { CommentList } from './List';
-import Avatar from '../Avatar';
+  ChildComment,
+  ConfirmText,
+  ContentBox,
+  ContentItem,
+  Dot,
+  InfoBox,
+  ItemBox,
+  MainBox,
+  MoreChildComment,
+  MoreChildCommentBtn,
+  ReplyLabel,
+  UserLabel,
+  UserName,
+} from './elements/list'
+import { CommentList } from './List'
 
 interface ICommentItem {
-  visibleChild?: boolean;
-  parent?: CommentEntity;
-  author: UserEntity;
-  comment: CommentEntity;
-  onConfirm: (value: string, commentId?: number) => Promise<void>;
-  openModal?: (data: CommentEntity) => void;
+  visibleChild?: boolean
+  parent?: CommentEntity
+  author: UserEntity
+  comment: CommentEntity
+  onConfirm: (value: string, commentId?: number) => Promise<void>
+  openModal?: (data: CommentEntity) => void
 }
 
 export const CommentItem: React.FC<ICommentItem> = observer(({
@@ -35,28 +47,34 @@ export const CommentItem: React.FC<ICommentItem> = observer(({
   onConfirm,
   openModal,
 }) => {
-  const { t } = useTranslation();
-  const { isLogin } = useAccount();
-  const [isComment, setComment] = useState(false);
-  const [visibleComment, setVisibleComment] = useState(true);
+  const { t } = useTranslation()
+  const { isLogin } = useAccount()
+  const [isComment, setComment] = useState(false)
+  const [visibleComment, setVisibleComment] = useState(true)
   const {
-    user, id, content, createTime, childComments, replyUser, replyComment,
-  } = comment;
+    user,
+    id,
+    content,
+    createTime,
+    childComments,
+    replyUser,
+    replyComment,
+  } = comment
   const openComment = useCallback(() => {
-    setComment(!isComment);
-  }, [isComment]);
+    setComment(!isComment)
+  }, [isComment])
   const handleChildComment = useCallback(() => {
-    setVisibleComment(!visibleComment);
-  }, [visibleComment]);
+    setVisibleComment(!visibleComment)
+  }, [visibleComment])
   const addComment = useCallback(async (commentContent: string) => {
-    await onConfirm(commentContent, comment.id);
-    setComment(false);
-  }, [comment.id, onConfirm]);
+    await onConfirm(commentContent, comment.id)
+    setComment(false)
+  }, [comment.id, onConfirm])
   const openItemModal = useCallback(() => {
     if (openModal) {
-      openModal(comment);
+      openModal(comment)
     }
-  }, [comment, openModal]);
+  }, [comment, openModal])
   return (
     <ItemBox id={`comment-${id}`}>
       <UserPopover username={user.username}>
@@ -146,11 +164,11 @@ export const CommentItem: React.FC<ICommentItem> = observer(({
           }
           {
             isLogin && (
-            <ConfirmText
-              onClick={openComment}
-            >
-              {t('comment.reply')}
-            </ConfirmText>
+              <ConfirmText
+                onClick={openComment}
+              >
+                {t('comment.reply')}
+              </ConfirmText>
             )
           }
         </InfoBox>
@@ -188,5 +206,5 @@ export const CommentItem: React.FC<ICommentItem> = observer(({
         }
       </MainBox>
     </ItemBox>
-  );
-});
+  )
+})

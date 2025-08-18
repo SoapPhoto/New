@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-const Upload = () => {
+function Upload() {
   return (
     <div>
       <div></div>
     </div>
-  );
-};
+  )
+}
 
-export default Upload;
+export default Upload

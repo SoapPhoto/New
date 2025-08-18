@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
-import React from 'react';
+import type { IIconProps } from './type'
 
-import { IIconProps } from './type';
+import React from 'react'
 
 export const Bell1: React.FC<IIconProps> = ({
   size = 24,
@@ -24,4 +23,4 @@ export const Bell1: React.FC<IIconProps> = ({
       fill="currentcolor"
     />
   </svg>
-);
+)

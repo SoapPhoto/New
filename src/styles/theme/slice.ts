@@ -1,12 +1,11 @@
 // import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
-import { ThemeState, ThemeKeyType } from './types';
-import { themes } from './themes';
-import { getThemeFromStorage, isSystemDark } from './utils';
+import type { ThemeState } from './types'
+import { getThemeFromStorage } from './utils'
 // import { RootState } from '@app/types';
 
 export const initialState: ThemeState = {
   selected: getThemeFromStorage() || 'system',
-};
+}
 
 // const themeSlice = createSlice({
 //   name: 'theme',

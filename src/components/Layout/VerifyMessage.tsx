@@ -1,10 +1,10 @@
-import { useAccount } from '@app/stores/hooks';
-import { observer } from 'mobx-react';
-import React, { useCallback, useMemo, useState } from 'react';
-import toast from 'react-hot-toast';
-import styled from 'styled-components/macro';
-import IconButton from '../Button/IconButton';
-import { X } from '../Icons';
+import { useAccount } from '@app/stores/hooks'
+import { observer } from 'mobx-react'
+import React, { useCallback, useMemo, useState } from 'react'
+import toast from 'react-hot-toast'
+import styled from 'styled-components'
+import IconButton from '../Button/IconButton'
+import { X } from '../Icons'
 
 const Container = styled.div`
   overflow: hidden;
@@ -18,7 +18,7 @@ const Container = styled.div`
   line-height: 35px;
   text-align: center;
   font-size: 14px;
-`;
+`
 
 const Again = styled.button`
   margin: 0;
@@ -26,9 +26,9 @@ const Again = styled.button`
   outline: 0;
   border: none;
   background: none;
-  color: ${(p) => p.theme.colors.primary};
+  color: ${p => p.theme.colors.primary};
   cursor: pointer;
-`;
+`
 
 const Close = styled(IconButton)`
   position: absolute;
@@ -42,29 +42,34 @@ const Close = styled(IconButton)`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
 const VerifyMessage = observer(() => {
-  const [sendLoading, setSendLoading] = useState(false);
-  const [verifyMessage, setVerifyMessage] = useState(true);
-  const { userInfo, resetVerifyEmail } = useAccount();
+  const [sendLoading, setSendLoading] = useState(false)
+  const [verifyMessage, setVerifyMessage] = useState(true)
+  const { userInfo, resetVerifyEmail } = useAccount()
   const unVerified = useMemo(() => userInfo?.status === 'UNVERIFIED', [
     userInfo?.status,
-  ]);
+  ])
   const reset = useCallback(async () => {
     try {
-      if (sendLoading) return;
-      setSendLoading(true);
-      const data = await resetVerifyEmail();
-      if (data) toast.success('邮件已发送，请查收！');
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setSendLoading(false);
+      if (sendLoading)
+        return
+      setSendLoading(true)
+      const data = await resetVerifyEmail()
+      if (data)
+        toast.success('邮件已发送，请查收！')
+    }
+    catch {
+      toast.error('发送失败，请稍后重试')
+    }
+    finally {
+      setSendLoading(false)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sendLoading]);
-  if (!unVerified || (!unVerified && !verifyMessage)) return null;
+  }, [sendLoading])
+  if (!unVerified || (!unVerified && !verifyMessage))
+    return null
   return (
     <Container>
       <span>邮箱未激活，请检查您的电子邮箱，激活邮箱。</span>
@@ -73,7 +78,7 @@ const VerifyMessage = observer(() => {
         <X size={13} />
       </Close>
     </Container>
-  );
-});
+  )
+})
 
-export default VerifyMessage;
+export default VerifyMessage

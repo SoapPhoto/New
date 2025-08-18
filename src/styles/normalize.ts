@@ -1,14 +1,14 @@
-/* eslint-disable max-len */
-import { css } from 'styled-components/macro';
+import { css } from 'styled-components'
 
 const font = `
   Rubik, OPPOSans, "Noto Sans SC", PingFang SC, PingFang TC, Microsoft YaHei,
   -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", "Helvetica", Hiragino Sans GB, STHeiti, "WenQuanYi Micro Hei", sans-serif
-`;
+`
 
 // _: ThemedStyledProps<{}, DefaultTheme>
 
-const normalize = () => css`
+function normalize() {
+  return css`
   html {
     -ms-text-size-adjust: 100%; /* 2 */
     -webkit-text-size-adjust: 100%; /* 2 */
@@ -26,7 +26,7 @@ const normalize = () => css`
   html,
   body {
     width: 100%;
-    background-color: ${(p) => p.theme.colors.layout};
+    background-color: ${p => p.theme.colors.layout};
     overscroll-behavior-y: contain;
   }
   ol,
@@ -210,6 +210,7 @@ const normalize = () => css`
   .autocomplete-diy {
     line-height: normal !important;
   }
-`;
+`
+}
 
-export default normalize;
+export default normalize

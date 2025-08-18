@@ -1,116 +1,123 @@
-import React, { PropsWithChildren, useCallback, useMemo } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import type { UserEntity } from '@app/common/types/modules/user/user.entity'
+import type { QueryData } from '@app/graphql/interface'
+import type { PropsWithChildren } from 'react'
 
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { UserInfo } from '@app/graphql/query';
-import { Link } from 'react-router-dom';
-import { getPictureUrl } from '@app/utils/image';
-import { useTranslation } from 'react-i18next';
-import { QueryData } from '@app/graphql/interface';
-import Avatar from '../Avatar';
+import { useLazyQuery } from '@apollo/client'
+import { UserInfo } from '@app/graphql/query'
+import { getPictureUrl } from '@app/utils/image'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { EmojiText, Popover } from '..'
+import Avatar from '../Avatar'
 import {
-  Header,
-  Wrapper,
-  UserBox,
-  UserNameBox,
-  UserName,
   Bio,
-  PicturePreview,
-  PreviewBox,
+  Header,
   Img,
-  UserInfoWrapper,
   Info,
   InfoItem,
   InfoItemCount,
   InfoItemLabel,
+  PicturePreview,
+  PreviewBox,
   SkeletonAvatar,
-  SkeletonName,
   SkeletonBio,
-  SkeletonPreview,
   SkeletonCount,
-} from './elements';
-import { EmojiText, Popover } from '..';
+  SkeletonName,
+  SkeletonPreview,
+  UserBox,
+  UserInfoWrapper,
+  UserName,
+  UserNameBox,
+  Wrapper,
+} from './elements'
 
 interface IUserPopover {
-  username: string;
+  username: string
 }
 
 interface IUserCard {
-  loading: boolean;
-  user?: UserEntity;
+  loading: boolean
+  user?: UserEntity
 }
 
 const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   const prestige = useMemo(
-    () => !!user?.badge.find((v) => v.name === 'prestige'),
+    () => !!user?.badge.find(v => v.name === 'prestige'),
     [user?.badge],
-  );
-  const isLoading = !!(loading && !user);
+  )
+  const isLoading = !!(loading && !user)
   return (
     <div>
       <Wrapper>
         <Header>
-          {isLoading ? (
-            <SkeletonAvatar />
-          ) : (
-            <Link to={`/user/${user?.username}`}>
-              <Avatar rainbow={prestige} src={user?.avatar} size={48} />
-            </Link>
-          )}
+          {isLoading
+            ? (
+                <SkeletonAvatar />
+              )
+            : (
+                <Link to={`/user/${user?.username}`}>
+                  <Avatar rainbow={prestige} src={user?.avatar} size={48} />
+                </Link>
+              )}
           <UserBox>
             <UserNameBox>
-              {isLoading ? (
-                <SkeletonName />
-              ) : (
-                <UserName>
-                  <EmojiText text={user?.fullName ?? ''} />
-                </UserName>
-              )}
+              {isLoading
+                ? (
+                    <SkeletonName />
+                  )
+                : (
+                    <UserName>
+                      <EmojiText text={user?.fullName ?? ''} />
+                    </UserName>
+                  )}
             </UserNameBox>
-            {isLoading ? (
-              <SkeletonBio />
-            ) : (
-              <Bio>
-                {
-                  user?.bio && <EmojiText text={user.bio} />
-                }
-              </Bio>
-            )}
+            {isLoading
+              ? (
+                  <SkeletonBio />
+                )
+              : (
+                  <Bio>
+                    {
+                      user?.bio && <EmojiText text={user.bio} />
+                    }
+                  </Bio>
+                )}
           </UserBox>
         </Header>
         <PicturePreview>
           {isLoading
-            ? [0, 1, 3].map((key) => (
-              <SkeletonPreview
-                key={key}
-                style={{
-                  borderTopLeftRadius: key === 0 ? 4 : 0,
-                  borderBottomLeftRadius: key === 0 ? 4 : 0,
-                  borderTopRightRadius: key === 2 ? 4 : 0,
-                  borderBottomRightRadius: key === 2 ? 4 : 0,
-                }}
-              />
-            ))
+            ? [0, 1, 3].map(key => (
+                <SkeletonPreview
+                  key={key}
+                  style={{
+                    borderTopLeftRadius: key === 0 ? 4 : 0,
+                    borderBottomLeftRadius: key === 0 ? 4 : 0,
+                    borderTopRightRadius: key === 2 ? 4 : 0,
+                    borderBottomRightRadius: key === 2 ? 4 : 0,
+                  }}
+                />
+              ))
             : user?.pictures.map((picture, index) => (
-              <PreviewBox
-                key={picture.id}
-                style={{
-                  backgroundColor: picture.color,
-                  borderTopLeftRadius: index === 0 ? 4 : 0,
-                  borderBottomLeftRadius: index === 0 ? 4 : 0,
-                  borderTopRightRadius: index === 2 ? 4 : 0,
-                  borderBottomRightRadius: index === 2 ? 4 : 0,
-                }}
-              >
-                <Link to={`/picture/${picture.id}`}>
-                  <Img
-                    blurhash={picture.blurhash!}
-                    src={getPictureUrl(picture.key, 'thumb')}
-                  />
-                </Link>
-              </PreviewBox>
-            ))}
+                <PreviewBox
+                  key={picture.id}
+                  style={{
+                    backgroundColor: picture.color,
+                    borderTopLeftRadius: index === 0 ? 4 : 0,
+                    borderBottomLeftRadius: index === 0 ? 4 : 0,
+                    borderTopRightRadius: index === 2 ? 4 : 0,
+                    borderBottomRightRadius: index === 2 ? 4 : 0,
+                  }}
+                >
+                  <Link to={`/picture/${picture.id}`}>
+                    <Img
+                      blurhash={picture.blurhash!}
+                      src={getPictureUrl(picture.key, 'thumb')}
+                    />
+                  </Link>
+                </PreviewBox>
+              ))}
         </PicturePreview>
       </Wrapper>
       <UserInfoWrapper>
@@ -136,22 +143,22 @@ const UserCard: React.FC<IUserCard> = ({ user, loading }) => {
         </Info>
       </UserInfoWrapper>
     </div>
-  );
-};
+  )
+}
 
 const UserPopover: React.FC<PropsWithChildren<IUserPopover>> = ({ children, username }) => {
   const [loadUser, { loading, data }] = useLazyQuery<
   QueryData<'user', UserEntity>
-  >(UserInfo);
+  >(UserInfo)
   const onOpen = () => {
     if (!data?.user) {
       loadUser({
         variables: {
           username,
         },
-      });
+      })
     }
-  };
+  }
   return (
     <Popover
       onOpen={onOpen}
@@ -164,7 +171,7 @@ const UserPopover: React.FC<PropsWithChildren<IUserPopover>> = ({ children, user
     >
       {children}
     </Popover>
-  );
-};
+  )
+}
 
-export default UserPopover;
+export default UserPopover

@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
-import { PhotoProvider, PhotoView } from 'react-photo-view';
-import ScrollLocker from 'rc-util/lib/Dom/scrollLocker';
+import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
+import { Loading } from '@app/components'
+import Image from '@app/components/Image'
 
-import Image from '@app/components/Image';
-import { getPictureUrl } from '@app/utils/image';
-import { PictureEntity } from '@app/common/types/modules/picture/picture.entity';
+import { getPictureUrl } from '@app/utils/image'
+import React from 'react'
+import { PhotoProvider, PhotoView } from 'react-photo-view'
+
 import {
   PictureBox,
   PictureContent,
   PictureImage,
   PictureImageBox,
   PictureWrapper,
-} from '../elements';
-
-import 'react-photo-view/dist/react-photo-view.css';
-import { Loading } from '@app/components';
+} from '../elements'
+import 'react-photo-view/dist/react-photo-view.css'
 
 interface IProps {
-  picture: PictureEntity;
+  picture: PictureEntity
 }
 
 const PictureCenter: React.FC<IProps> = ({ picture }) => {
-  const num = picture.width / picture.height;
-  const height = (1 - (picture.width - picture.height) / picture.width) * 100 || 100;
+  const num = picture.width / picture.height
+  const height = (1 - (picture.width - picture.height) / picture.width) * 100 || 100
   return (
     <PictureWrapper>
       <PictureContent>
@@ -51,7 +50,7 @@ const PictureCenter: React.FC<IProps> = ({ picture }) => {
         </PhotoProvider>
       </PictureContent>
     </PictureWrapper>
-  );
-};
+  )
+}
 
-export default PictureCenter;
+export default PictureCenter

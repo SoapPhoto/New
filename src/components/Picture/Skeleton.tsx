@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 import {
+  SkeletonAvatar,
   SkeletonContent,
   SkeletonItem,
-  SkeletonAvatar,
   SkeletonName,
-} from './elements';
+} from './elements'
 
-const Skeleton = () => {
+function Skeleton() {
   return (
     <SkeletonContent>
       {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i => (
@@ -16,7 +16,7 @@ const Skeleton = () => {
         </SkeletonItem>
       ))}
     </SkeletonContent>
-  );
-};
+  )
+}
 
-export default Skeleton;
+export default Skeleton

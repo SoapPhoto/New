@@ -1,62 +1,62 @@
-import styled, { css } from 'styled-components/macro';
-import { position, rgba } from 'polished';
-import { animated } from 'react-spring';
+import type { ButtonType } from './type'
+import { btnMixin } from '@app/styles/mixins'
+import { position, rgba } from 'polished'
 
-import { btnMixin } from '@app/styles/mixins';
-import { ButtonType } from './type';
+import { animated } from 'react-spring'
+import styled, { css } from 'styled-components'
 
 interface IStyle {
-  loading?: number;
-  size?: string;
-  danger?: number;
-  btnType: ButtonType;
+  loading?: number
+  size?: string
+  danger?: number
+  btnType: ButtonType
 }
 
-const btnText = ({ btnType, danger }: IStyle) => {
+function btnText({ btnType, danger }: IStyle) {
   if (btnType === 'text') {
     if (danger) {
       return css`
-        ${(_) => _.theme.colors.error}
-      `;
+        ${_ => _.theme.colors.error}
+      `
     }
     return css`
-      ${(_) => _.theme.colors.primary}
-    `;
+      ${_ => _.theme.colors.primary}
+    `
   }
-  return '#fff';
-};
+  return '#fff'
+}
 
-const btnBg = ({ btnType, danger }: IStyle) => {
+function btnBg({ btnType, danger }: IStyle) {
   if (btnType === 'text') {
-    return 'transparent';
+    return 'transparent'
   }
   if (danger) {
     return css`
-      ${(_) => _.theme.colors.error}
-    `;
+      ${_ => _.theme.colors.error}
+    `
   }
   if (btnType === 'secondary') {
     return css`
-      ${(_) => _.theme.colors.secondary}
-    `;
+      ${_ => _.theme.colors.secondary}
+    `
   }
   return css`
-    ${(_) => _.theme.colors.primary}
-  `;
-};
-const btnShadow = ({ btnType, danger }: IStyle) => {
+    ${_ => _.theme.colors.primary}
+  `
+}
+function btnShadow({ btnType, danger }: IStyle) {
   if (btnType === 'text') {
-    return 'transparent';
+    return 'transparent'
   }
   if (danger) {
     return css`
-      ${(_) => rgba(_.theme.colors.error, 0.5)}
-    `;
+      ${_ => rgba(_.theme.colors.error, 0.5)}
+    `
   }
   return css`
-    ${(_) => rgba(_.theme.colors.primary, 0.5)}
-  `;
-};
+    ${_ => rgba(_.theme.colors.primary, 0.5)}
+  `
+}
 
 export const StyleButton = styled.button<IStyle>(
   ({ loading, btnType, danger }) => css`
@@ -80,19 +80,19 @@ export const StyleButton = styled.button<IStyle>(
     ${danger
     && css`
       ${LoadingBox} {
-        background-color: ${(p) => rgba(p.theme.colors.error, 0.8)};
+        background-color: ${p => rgba(p.theme.colors.error, 0.8)};
       }
     `}
     ${loading
-    ? css`
+      ? css`
           pointer-events: none;
           &:disabled {
             opacity: 1 !important;
           }
         `
-    : null}
+      : null}
   `,
-);
+)
 
 export const Content = styled.div`
   width: 100%;
@@ -103,7 +103,7 @@ export const Content = styled.div`
     margin-top: -2px;
     margin-right: 4px;
   }
-`;
+`
 
 export const LoadingBox = styled(animated.div as any)`
   position: absolute;
@@ -111,7 +111,7 @@ export const LoadingBox = styled(animated.div as any)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: ${(p) => rgba(p.theme.colors.primary, 0.8)};
-  /* background: ${(p) => rgba('#000', 0.2)}; */
+  background-color: ${p => rgba(p.theme.colors.primary, 0.8)};
+  /* background: ${p => rgba('#000', 0.2)}; */
   border-radius: inherit;
-`;
+`

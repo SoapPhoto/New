@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
-import React from 'react';
+import type { IIconProps } from './type'
 
-import { IIconProps } from './type';
+import React from 'react'
 
 export const Ordinary: React.FC<IIconProps> = ({
   size = 24,
@@ -49,4 +48,4 @@ export const Ordinary: React.FC<IIconProps> = ({
       </g>
     </g>
   </svg>
-);
+)

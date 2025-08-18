@@ -1,15 +1,14 @@
-import AddCollectionModal from '@app/components/AddCollectionModal';
-import { PlusCircle } from '@app/components/Icons';
-import { useSearchParamModal, useTapButton } from '@app/utils/hooks';
-import React from 'react';
-import { CollectionItemBox, ItemInfoBox, ItemInfoTitle } from '../elements';
+import { PlusCircle } from '@app/components/Icons'
+import { useSearchParamModal, useTapButton } from '@app/utils/hooks'
+import React from 'react'
+import { CollectionItemBox, ItemInfoBox, ItemInfoTitle } from '../elements'
 
-const CollectionModalAdd = () => {
-  const [spring, bind] = useTapButton(1, 0.96);
+function CollectionModalAdd() {
+  const [spring, bind] = useTapButton(1, 0.96)
   const [addCollectionVisibiel, closeAddCollection, openAddCollection] = useSearchParamModal(
     'addCollection',
     'modal-child',
-  );
+  )
   return (
     <CollectionItemBox
       {...bind()}
@@ -18,8 +17,8 @@ const CollectionModalAdd = () => {
       }}
       onClick={(e) => {
         // e.defaultPrevented();
-        e.stopPropagation();
-        openAddCollection();
+        e.stopPropagation()
+        openAddCollection()
       }}
     >
       <ItemInfoBox isCollected={0} isPreview={0}>
@@ -31,7 +30,7 @@ const CollectionModalAdd = () => {
         </div>
       </ItemInfoBox>
     </CollectionItemBox>
-  );
-};
+  )
+}
 
-export default CollectionModalAdd;
+export default CollectionModalAdd

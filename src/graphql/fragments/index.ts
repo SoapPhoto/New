@@ -1,7 +1,7 @@
-import { disableFragmentWarnings } from 'graphql-tag';
+import { disableFragmentWarnings } from 'graphql-tag'
 
-import Fragments from './fragments.graphql';
+import Fragments from './fragments.graphql'
 
-disableFragmentWarnings();
+disableFragmentWarnings()
 
-export default Fragments;
+export default Fragments

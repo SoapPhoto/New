@@ -1,15 +1,16 @@
-import { customMedia } from '@app/styles/mediaQuery';
-import { initButton, skeletonCss, skeletonCss2 } from '@app/styles/mixins';
-import { cover, darken, rgba } from 'polished';
-import { Link } from 'react-router-dom';
-import { animated } from 'react-spring';
-import styled, { css } from 'styled-components/macro';
-import { Heart } from '../Icons';
+import { customMedia } from '@app/styles/mediaQuery'
+import { initButton, skeletonCss, skeletonCss2 } from '@app/styles/mixins'
+import * as m from 'motion/react-client'
+import { cover, darken, rgba } from 'polished'
+import { Link } from 'react-router-dom'
+import { animated } from 'react-spring'
+import styled, { css } from 'styled-components'
+import { Heart } from '../Icons'
 
 export const ListWrapper = styled.div`
   max-width: 1500px;
   margin: 0 auto;
-`;
+`
 
 export const ImageWrapper = styled.div`
   position: relative;
@@ -20,17 +21,17 @@ export const ImageWrapper = styled.div`
   transition: 0.2s filter ease-in-out;
   border-radius: inherit;
   overflow: hidden;
-`;
-export const ItemWrapper = styled.div<{ color: string; isPrivate: number }>`
+`
+export const ItemWrapper = styled(m.div)<{ color: string, isPrivate: number }>`
   position: absolute;
   will-change: transform, width, height, opacity;
-  border-radius: 3px;
+  border-radius: 0px;
   width: 100%;
   height: 100%;
-  box-shadow: 0px 0px 30px 0px ${(p) => darken(0.3, rgba(p.color, 0.3))};
-  background-color: ${(p) => p.color};
+  box-shadow: 0px 0px 30px 0px ${p => darken(0.3, rgba(p.color, 0.3))};
+  background-color: ${p => p.color};
   overflow: hidden;
-`;
+`
 
 const handleHover = css`
   opacity: 0;
@@ -41,28 +42,28 @@ const handleHover = css`
   ${ItemWrapper}:hover & {
     opacity: 1;
   }
-`;
+`
 
 export const ItemBox = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 3px;
-`;
+  border-radius: 0px;
+`
 
 export const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
-`;
+`
 
 export const LazyImg = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: inherit;
-`;
+`
 
 export const Shadow = styled.img`
   position: absolute;
@@ -75,7 +76,7 @@ export const Shadow = styled.img`
   filter: blur(10px);
   z-index: -1;
   opacity: 1;
-`;
+`
 
 export const A = styled(Link)`
   ${cover()}
@@ -101,7 +102,7 @@ export const A = styled(Link)`
     ${handleHover}
   }
   z-index: 2;
-`;
+`
 
 export const InfoBox = styled.div`
   z-index: 3;
@@ -115,14 +116,14 @@ export const InfoBox = styled.div`
   width: 100%;
   color: #fff;
   ${handleHover}
-`;
+`
 
 export const UserBox = styled.div`
   display: flex;
   align-items: center;
   text-decoration: none;
   pointer-events: all;
-`;
+`
 
 export const HandleBox = styled.div`
   display: flex;
@@ -130,7 +131,7 @@ export const HandleBox = styled.div`
   & svg {
     filter: drop-shadow(0 0.0625rem 0.0625rem rgba(0, 0, 0, 0.3));
   }
-`;
+`
 
 export const UserName = styled(Link)`
   text-decoration: none;
@@ -140,7 +141,7 @@ export const UserName = styled(Link)`
   color: #fff;
   text-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
   -webkit-font-smoothing: subpixel-antialiased;
-`;
+`
 
 export const SkeletonContent = styled.div`
   max-width: 1500px;
@@ -162,16 +163,16 @@ export const SkeletonContent = styled.div`
   ${customMedia.greaterThan('large')`
     grid-template-columns: repeat(4, 1fr);
   `}
-`;
+`
 
 export const SkeletonItem = styled.picture`
   position: relative;
   height: 210px;
   border-radius: 4px;
   /* opacity: 0.4; */
-  ${skeletonCss2}/* background: ${(p) => p.theme.widget.skeleton.background};
-  box-shadow: 0 5px 10px ${(p) => p.theme.widget.skeleton.shadow}; */
-`;
+  ${skeletonCss2}/* background: ${p => p.theme.widget.skeleton.background};
+  box-shadow: 0 5px 10px ${p => p.theme.widget.skeleton.shadow}; */
+`
 
 export const SkeletonAvatar = styled.div`
   width: 32px;
@@ -181,7 +182,7 @@ export const SkeletonAvatar = styled.div`
   bottom: 12px;
   left: 12px;
   ${skeletonCss}
-`;
+`
 
 export const SkeletonName = styled.div`
   width: 80px;
@@ -191,7 +192,7 @@ export const SkeletonName = styled.div`
   bottom: 21px;
   left: 50px;
   ${skeletonCss}
-`;
+`
 
 export const ChoiceBox = styled.div`
   position: absolute;
@@ -205,7 +206,7 @@ export const ChoiceBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
+`
 
 export const LikeContent = styled(animated.button as any)`
   ${initButton}
@@ -216,7 +217,7 @@ export const LikeContent = styled(animated.button as any)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${(_) => rgba(_.theme.colors.pure, 0.8)};
+  background: ${_ => rgba(_.theme.colors.pure, 0.8)};
   padding: 4px 14px;
   font-family: Rubik;
   font-size: 12px;
@@ -227,12 +228,12 @@ export const LikeContent = styled(animated.button as any)`
   color: ${({ theme }) => theme.colors.text};
   backdrop-filter: saturate(180%) blur(20px);
   ${handleHover}
-`;
+`
 
 export const HeartIcon = styled(Heart)<{ islike: number }>`
   stroke-width: 3px;
   stroke: ${({ theme }) => theme.colors.error};
-  fill: ${(_) => (_.islike ? _.theme.colors.error : 'none')};
-  stroke: ${(_) => (_.islike ? _.theme.colors.error : _.color || '#fff')};
+  fill: ${_ => (_.islike ? _.theme.colors.error : 'none')};
+  stroke: ${_ => (_.islike ? _.theme.colors.error : _.color || '#fff')};
   margin-right: 4px;
-`;
+`

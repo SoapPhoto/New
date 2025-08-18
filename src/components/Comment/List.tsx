@@ -1,17 +1,17 @@
-import React from 'react';
-import { observer } from 'mobx-react';
-import { CommentEntity } from '@app/common/types/modules/comment/comment.entity';
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { Wrapper } from './elements/list';
+import type { CommentEntity } from '@app/common/types/modules/comment/comment.entity'
+import type { UserEntity } from '@app/common/types/modules/user/user.entity'
+import { observer } from 'mobx-react'
+import React from 'react'
+import { Wrapper } from './elements/list'
 
-import { CommentItem } from './Item';
+import { CommentItem } from './Item'
 
 interface IProps {
-  parent?: CommentEntity;
-  author: UserEntity;
-  comment: CommentEntity[];
-  onConfirm: (value: string, commentId?: number) => Promise<void>;
-  openModal?: (data: CommentEntity) => void;
+  parent?: CommentEntity
+  author: UserEntity
+  comment: CommentEntity[]
+  onConfirm: (value: string, commentId?: number) => Promise<void>
+  openModal?: (data: CommentEntity) => void
 }
 
 export const CommentList: React.FC<IProps> = observer(({
@@ -23,7 +23,7 @@ export const CommentList: React.FC<IProps> = observer(({
 }) => (
   <Wrapper>
     {
-      comment.map((data) => (
+      comment.map(data => (
         <CommentItem
           parent={parent}
           author={author}
@@ -35,4 +35,4 @@ export const CommentList: React.FC<IProps> = observer(({
       ))
     }
   </Wrapper>
-));
+))

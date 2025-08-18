@@ -1,20 +1,20 @@
-import { animated } from 'react-spring';
-import styled from 'styled-components/macro';
-import { ToastType } from './Toast';
+import type { ToastType } from './Toast'
+import { animated } from 'react-spring'
+import styled from 'styled-components'
 
 const style: Record<ToastType, string> = {
   success: '#007aff',
   error: '#ff4d4f',
   warning: '#f5a623',
   base: '#fff',
-};
+}
 
 const styleColor: Record<ToastType, string> = {
   success: '#fff',
   error: '#fff',
   warning: '#fff',
   base: '#000',
-};
+}
 
 export const Container = styled.div`
   position: fixed;
@@ -25,14 +25,14 @@ export const Container = styled.div`
   right: 20px;
   z-index: 5000;
   transition: all 0.4s ease;
-`;
+`
 
 export const ToastBox = styled(animated.div as any)`
   position: absolute;
   bottom: 0;
   right: 0;
   width: 468px;
-`;
+`
 
 export const Toast = styled(animated.div as any)<{ type: ToastType }>`
   overflow: hidden;
@@ -48,14 +48,14 @@ export const Toast = styled(animated.div as any)<{ type: ToastType }>`
   min-height: 72px;
   /* transition: all 0.25s ease; */
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-`;
+`
 
 export const Content = styled(animated.div as any)`
   text-align: left;
   display: flex;
   flex: 1;
-`;
+`
 
 export const ActionBox = styled.div`
   min-width: max-content;
-`;
+`

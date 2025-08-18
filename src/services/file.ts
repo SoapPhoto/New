@@ -1,36 +1,31 @@
-import { v4 as uuid } from 'uuid';
+import { UploadType } from '@app/common/enum/upload'
 
-import { UploadType } from '@app/common/enum/upload';
-import { request } from '@app/utils/request';
+import { request } from '@app/utils/request'
+import { v4 as uuid } from 'uuid'
 
 interface ICreds {
-  AccessKeyId: string;
-  AccessKeySecret: string;
-  SecurityToken: string;
-  Expiration: string;
+  AccessKeyId: string
+  AccessKeySecret: string
+  SecurityToken: string
+  Expiration: string
 }
 
-export const getSts = async () => request.get<ICreds>('/api/file/sts');
+export const getSts = async () => request.get<ICreds>('/api/file/sts')
 
-export const uploadOSS = async (
-  file: File,
-  userId: number,
-  type: UploadType = UploadType.PICTURE,
-  progress?: (num: number) => void,
-) => {
+export async function uploadOSS(file: File, userId: number, type: UploadType = UploadType.PICTURE, progress?: (num: number) => void) {
   if (!(window as any).OSS) {
-    console.error('OSS 不存在');
-    return;
+    console.error('OSS 不存在')
+    return
   }
-  const { data: creds } = await getSts();
-  const key = uuid();
+  const { data: creds } = await getSts()
+  const key = uuid()
   const client = new (window as any).OSS({
     region: import.meta.env.VITE_OSS_REGION,
     bucket: import.meta.env.VITE_OSS_BUCKET,
     accessKeyId: creds.AccessKeyId,
     accessKeySecret: creds.AccessKeySecret,
     stsToken: creds.SecurityToken,
-  });
+  })
   const { data } = await client.multipartUpload(
     import.meta.env.VITE_OSS_PATH + key,
     file,
@@ -50,6 +45,6 @@ export const uploadOSS = async (
         },
       },
     },
-  );
-  return data.key as string;
-};
+  )
+  return data.key as string
+}

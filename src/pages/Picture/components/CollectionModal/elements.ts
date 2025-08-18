@@ -1,16 +1,16 @@
-import { rgba } from 'polished';
-import styled, { css } from 'styled-components/macro';
-import { animated } from 'react-spring';
+import { Check, Minus } from '@app/components/Icons'
+import Image from '@app/components/Image'
+import { rgba } from 'polished'
 
-import Image from '@app/components/Image';
-import { Check, Minus } from '@app/components/Icons';
+import { animated } from 'react-spring'
+import styled, { css } from 'styled-components'
 
 export const CollectionBox = styled.div`
   padding: 24px;
   padding-top: 0;
   display: grid;
   grid-gap: 14px;
-`;
+`
 
 export const CollectionItemBox = styled(animated.button as any)`
   cursor: pointer;
@@ -19,7 +19,7 @@ export const CollectionItemBox = styled(animated.button as any)`
   width: 100%;
   height: 80px;
   border-radius: 5px;
-  background-color: ${(p) => p.theme.colors.gray1};
+  background-color: ${p => p.theme.colors.gray1};
   overflow: hidden;
   border: none;
   padding: 0;
@@ -27,18 +27,18 @@ export const CollectionItemBox = styled(animated.button as any)`
   position: relative;
   text-align: inherit;
   transition: transform 0.1s;
-`;
+`
 
 export const CheckIcon = styled(Check)`
   transition: 0.1s opacity ease;
-`;
+`
 export const MinusIcon = styled(Minus)`
   transition: 0.1s opacity ease;
-`;
+`
 
 export const ItemInfoBox = styled.div<{
-  isCollected: number;
-  isPreview: number;
+  isCollected: number
+  isPreview: number
 }>`
   position: absolute;
   display: flex;
@@ -52,7 +52,7 @@ export const ItemInfoBox = styled.div<{
   padding: 17px 20px;
   border-radius: 5px;
   /* backdrop-filter: saturate(180%); */
-  color: ${(_) => _.theme.widget.collection.addPicture.color};
+  color: ${_ => _.theme.widget.collection.addPicture.color};
   & ${CheckIcon} {
     opacity: 0;
   }
@@ -64,11 +64,11 @@ export const ItemInfoBox = styled.div<{
       opacity: 1;
     }
   }
-  background: ${(_) => rgba(
+  background: ${_ => rgba(
     _.theme.widget.collection.addPicture.background,
     _.isPreview ? 0.4 : 1,
   )};
-  ${(_) => (_.isCollected
+  ${_ => (_.isCollected
     ? css`
           border: 2px solid ${_.theme.colors.green};
           background: linear-gradient(
@@ -89,7 +89,7 @@ export const ItemInfoBox = styled.div<{
           }
         `
     : css``)}
-`;
+`
 
 export const ItemInfoTitle = styled.p`
   font-size: 16px;
@@ -98,22 +98,22 @@ export const ItemInfoTitle = styled.p`
   display: flex;
   align-items: center;
   text-shadow: 0 1px 1px rgba(0,0,0, 0.15);
-`;
+`
 
 export const ItemInfoCount = styled.p`
   font-size: 13px;
   text-shadow: 0 1px 1px rgba(0,0,0, 0.15);
-`;
+`
 
 export const CollectionItemCover = styled(Image)`
   object-fit: cover;
   width: 100%;
   height: 100%;
-`;
+`
 
 export const ItemHandleIcon = styled.div`
   position: relative;
   & svg:first-child {
     position: absolute;
   }
-`;
+`

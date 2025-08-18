@@ -1,15 +1,15 @@
-import { createGlobalStyle } from 'styled-components/macro';
-import { animate } from './animate';
-import normalize from './normalize';
-import scroll from './scroll';
-import scrollbar from './scrollbar';
+import { createGlobalStyle } from 'styled-components'
+import { animate } from './animate'
+import normalize from './normalize'
+import scroll from './scroll'
+import scrollbar from './scrollbar'
 
 export const GlobalStyle = createGlobalStyle`
   html,
   body {
     height: 100%;
     width: 100%;
-    color: ${(p) => p.theme.foreground};
+    color: ${p => p.theme.foreground};
   }
   p,
   label {
@@ -21,7 +21,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: ${(p) => p.theme.colors.primary}
+    color: ${p => p.theme.colors.primary}
   }
   .lazyload-wrapper {
     width: 100%;
@@ -60,4 +60,4 @@ export const GlobalStyle = createGlobalStyle`
   ${animate}
   ${scroll}
   ${scrollbar}
-`;
+`

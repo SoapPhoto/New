@@ -1,17 +1,20 @@
-import { Field, FieldProps } from 'formik';
-import React, { CSSProperties, memo } from 'react';
-import { Switch, SwitchProps } from '@arco-design/web-react';
+import type { SwitchProps } from '@arco-design/web-react'
+import type { FieldProps } from 'formik'
+import type { CSSProperties } from 'react'
+import { Switch } from '@arco-design/web-react'
+import { Field } from 'formik'
+import React, { memo } from 'react'
 
-import { FieldItem } from '.';
+import { FieldItem } from '.'
 
-import '@arco-design/web-react/es/Switch/style/index.js';
+import '@arco-design/web-react/es/Switch/style/index.js'
 
 interface IProps extends Omit<SwitchProps, 'checked' | 'onChange'> {
-  label: string;
-  name: string;
-  bio?: string;
-  style?: CSSProperties;
-  className?: string;
+  label: string
+  name: string
+  bio?: string
+  style?: CSSProperties
+  className?: string
 }
 
 const Component = memo<FieldProps<boolean> & IProps>(
@@ -26,7 +29,7 @@ const Component = memo<FieldProps<boolean> & IProps>(
   }) => (
     <FieldItem
       onClick={() => {
-        setFieldValue(field.name, !field.value);
+        setFieldValue(field.name, !field.value)
       }}
       label={label}
       bio={bio}
@@ -36,9 +39,9 @@ const Component = memo<FieldProps<boolean> & IProps>(
       <Switch checked={field.value} onChange={() => {}} />
     </FieldItem>
   ),
-);
+)
 
 const FieldSwitch: React.FC<IProps> = ({ name, ...restProps }) => (
   <Field name={name} component={Component} {...restProps} />
-);
-export default FieldSwitch;
+)
+export default FieldSwitch

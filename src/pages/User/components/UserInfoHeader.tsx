@@ -1,19 +1,17 @@
-import { UserEntity } from '@app/common/types/modules/user/user.entity';
-import { EmojiText, Popover } from '@app/components';
-import Avatar from '@app/components/Avatar';
-import Button from '@app/components/Button';
-import FollowButton from '@app/components/FollowButton';
-import { VipBadge } from '@app/components/Icons/VipBadge';
-import { useAccount } from '@app/stores/hooks';
-import { customMedia } from '@app/styles/mediaQuery';
-import { useFollower, useSearchParamModal, useTapButton } from '@app/utils/hooks';
-import React, { memo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { animated } from 'react-spring';
-import styled, { css } from 'styled-components/macro';
+import type { UserEntity } from '@app/common/types/modules/user/user.entity'
+import { EmojiText, Popover } from '@app/components'
+import Avatar from '@app/components/Avatar'
+import FollowButton from '@app/components/FollowButton'
+import { VipBadge } from '@app/components/Icons/VipBadge'
+import { customMedia } from '@app/styles/mediaQuery'
+import { useSearchParamModal, useTapButton } from '@app/utils/hooks'
+import React, { memo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { animated } from 'react-spring'
+import styled, { css } from 'styled-components'
 
 interface IProps {
-  user: UserEntity;
+  user: UserEntity
 }
 
 const Wrapper = styled.div`
@@ -21,7 +19,7 @@ const Wrapper = styled.div`
   width: 100%;
   margin: -58px auto 0px;
   padding: 0px 24px;
-`;
+`
 
 const Box = styled.div`
   display: grid;
@@ -33,7 +31,7 @@ const Box = styled.div`
   ${customMedia.lessThan('mobile')`
     grid-template-columns: 110px auto;
   `}
-`;
+`
 
 const AvatarStyle = styled(Avatar)`
   width: 140px;
@@ -42,7 +40,7 @@ const AvatarStyle = styled(Avatar)`
     width: 110px;
     height: 110px;
   `}
-`;
+`
 
 const OnlineTag = styled.span`
   position: absolute;
@@ -61,7 +59,7 @@ const OnlineTag = styled.span`
     border-radius: 12px;
     font-size: 10px;
   }
-`;
+`
 const AvatarContent = styled.div`
   position: relative;
   text-align: center;
@@ -70,9 +68,9 @@ const AvatarContent = styled.div`
       transform: translate3d(0,48px, 0);
     }
   }
-`;
+`
 
-const InfoContent = styled.div``;
+const InfoContent = styled.div``
 
 const UserName = styled.div`
   position: relative;
@@ -82,7 +80,7 @@ const UserName = styled.div`
   grid-gap: 12px;
   z-index: 1;
   color: #fff;
-`;
+`
 
 const UserNameSpan = styled.span`
   font-weight: 700;
@@ -94,46 +92,46 @@ const UserNameSpan = styled.span`
   text-shadow: 0px 15px 5px rgba(0,0,0,0.1),
     10px 20px 5px rgba(0,0,0,0.05),
     -10px 20px 5px rgba(0,0,0,0.05);
-`;
+`
 
 const UserTotalBox = styled.div`
   margin-top: 6px;
-`;
+`
 const UserTotal = styled.div`
   display: flex;
   width: 100%;
   margin-left: -12px;
-`;
+`
 const UserTotalItemBtn = styled(animated.div as any)`
   padding: 0 12px;
   cursor: pointer;
-`;
+`
 const UserTotalItem = styled.div`
   padding: 0 12px;
-`;
+`
 const UserTotalItemCount = styled.span`
   font-family: Rubik;
   font-size: 20px;
   margin-right: 8px;
   font-weight: 600;
-`;
+`
 const UserTotalItemLabel = styled.span`
   font-size: 12px;
-  color: ${(_) => _.theme.colors.secondary};
-`;
+  color: ${_ => _.theme.colors.secondary};
+`
 
 const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {
   const [, , followerOpen] = useSearchParamModal(
     'user-follower',
     'modal-child',
-  );
+  )
   const [, , followedOpen] = useSearchParamModal(
     'user-followed',
     'modal-child',
-  );
-  const [spring, bind] = useTapButton(1.05, 0.93);
-  const [spring1, bind1] = useTapButton(1.05, 0.93);
-  const { t } = useTranslation();
+  )
+  const [spring, bind] = useTapButton(1.05, 0.93)
+  const [spring1, bind1] = useTapButton(1.05, 0.93)
+  const { t } = useTranslation()
   return (
     <Wrapper>
       <Box>
@@ -151,18 +149,18 @@ const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {
               />
             </UserNameSpan>
             {
-              user?.badge?.find((v) => v.name === 'prestige') && (
-              <Popover
-                trigger="hover"
-                placement="top"
-                theme="dark"
-                openDelay={100}
-                content={<span>{t('label.vipppp')}</span>}
-              >
-                <div css={css`display: flex;align-items: center;font-size: 28px;`}>
-                  <VipBadge size="1.2em" />
-                </div>
-              </Popover>
+              user?.badge?.find(v => v.name === 'prestige') && (
+                <Popover
+                  trigger="hover"
+                  placement="top"
+                  theme="dark"
+                  openDelay={100}
+                  content={<span>{t('label.vipppp')}</span>}
+                >
+                  <div css={css`display: flex;align-items: center;font-size: 28px;`}>
+                    <VipBadge size="1.2em" />
+                  </div>
+                </Popover>
               )
             }
             <FollowButton user={user} />
@@ -202,7 +200,7 @@ const UserInfoHeader: React.FC<IProps> = memo(({ user }) => {
         </InfoContent>
       </Box>
     </Wrapper>
-  );
-});
+  )
+})
 
-export default UserInfoHeader;
+export default UserInfoHeader

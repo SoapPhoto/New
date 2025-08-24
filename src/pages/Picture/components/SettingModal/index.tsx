@@ -17,6 +17,7 @@ import LocationModal from '@app/components/LocationModal'
 
 import Modal from '@app/components/Modal'
 import { Confirm } from '@app/components/Modal/Confirm'
+import Fragments from '@app/graphql/fragments'
 import { UpdatePicture } from '@app/graphql/mutations'
 import { useDeletePicture, useSearchParamModal } from '@app/utils/hooks'
 import { getPictureUrl } from '@app/utils/image'
@@ -38,8 +39,8 @@ import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from 'styled-components'
 import { Content } from '../../elements'
-import { EditPictureSchema } from './dto'
 
+import { EditPictureSchema } from './dto'
 import { Footer } from './elements'
 
 interface IProps {
@@ -88,25 +89,16 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
       })
       client.writeFragment({
         id: `Picture:${id}`,
-        fragment: gql`
-          fragment PictureBaseFragment on Picture {
-            title
-            bio
-            isPrivate
-            location
-          }
-        `,
+        fragment: Fragments,
+        fragmentName: 'PictureBaseFragment',
         data: {
           ...omit(data.updatePicture, 'tags'),
         },
       })
       client.writeFragment({
         id: `Picture:${id}`,
-        fragment: gql`
-          fragment PictureDetailFragment on Picture {
-            tags
-          }
-        `,
+        fragment: Fragments,
+        fragmentName: 'PictureDetailFragment',
         data: {
           tags: data.updatePicture.tags,
         },

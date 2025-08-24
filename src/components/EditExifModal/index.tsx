@@ -14,9 +14,9 @@ type ValueType = string | number | undefined
 export interface IEXIFEditValues {
   make: ValueType
   model: ValueType
-  focalLength: ValueType
-  aperture: ValueType
-  exposureTime: ValueType
+  FocalLength: ValueType
+  FNumber: ValueType
+  ExposureTime: ValueType
   ISO: ValueType
 }
 
@@ -27,9 +27,9 @@ interface IProps {
 const initValue = {
   make: '',
   model: '',
-  focalLength: undefined,
-  aperture: undefined,
-  exposureTime: '',
+  FocalLength: undefined,
+  FNumber: undefined,
+  ExposureTime: '',
   ISO: undefined,
 }
 const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
@@ -49,8 +49,8 @@ const EditExifModal: React.FC<IProps> = ({ initialValues }) => {
         <Formik<IEXIFEditValues>
           validationSchema={Yup.object().shape({
             ISO: Yup.number().typeError(t('validation.yup_number')),
-            aperture: Yup.number().typeError(t('validation.yup_number')),
-            focalLength: Yup.number().typeError(t('validation.yup_number')),
+            Aperture: Yup.number().typeError(t('validation.yup_number')),
+            FNumber: Yup.number().typeError(t('validation.yup_number')),
           })}
           initialValues={{
             ...initValue,

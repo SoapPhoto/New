@@ -26,6 +26,7 @@ import ReloadPrompt from '@app/ReloadPrompt'
 import { useAccount } from '@app/stores/hooks'
 import Loadable from '@loadable/component'
 import dayjs from 'dayjs'
+
 import React, {
   useEffect,
   useLayoutEffect,
@@ -33,7 +34,6 @@ import React, {
 } from 'react'
 
 import { Helmet } from 'react-helmet-async'
-
 import { Toaster } from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import {
@@ -70,7 +70,6 @@ function Router() {
           <Route path="" element={<HomePage />} />
           <Route path="s/:search" element={<SearchPage />} />
           <Route path="s" element={<SearchPage />} />
-          <Route path="picture/:id" element={<PicturePage />} />
           <Route path="test" element={<Test />} />
           <Route path="upload" element={<Upload />} />
           <Route path="/user/:username" element={<UserPage />}>
@@ -111,6 +110,7 @@ function Router() {
             <Route path="/setting/:type" element={<Navigate replace to="/setting/profile" />} />
           </Route>
         </Route>
+        <Route path="picture/:id" element={<PicturePage />} />
         <Route path="" element={<Account />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

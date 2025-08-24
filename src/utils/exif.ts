@@ -38,20 +38,67 @@ export enum ExifProperties {
 
 export async function getImageEXIF(image: File): Promise<IEXIF | undefined> {
   const filterArr = [
-    'Model',
+    'tz',
+    'tzSource',
+    'Orientation',
     'Make',
-    'FocalLength',
-    'FNumber',
-    'ExposureTime',
-    'ISO',
-    'MeteringMode',
-    'ExposureMode',
-    'ExposureProgram',
-    'ExposureCompensation',
-    'DateTimeOriginal',
+    'Model',
     'Software',
+    'Artist',
+    'Copyright',
+    'ExposureTime',
+
+    'FNumber',
+    'ExposureProgram',
+    'ISO',
+    'OffsetTime',
+    'OffsetTimeOriginal',
+    'OffsetTimeDigitized',
+    'ShutterSpeedValue',
+    'ApertureValue',
+    'BrightnessValue',
+    'ExposureCompensationSet',
+    'ExposureCompensationMode',
+    'ExposureCompensationSetting',
+
+    'ExposureCompensation',
+    'MaxApertureValue',
+    'LightSource',
+    'Flash',
+    'FocalLength',
+
+    'ColorSpace',
+    'ExposureMode',
+    'FocalLengthIn35mmFormat',
+    'SceneCaptureType',
+    'LensMake',
     'LensModel',
+    'MeteringMode',
     'WhiteBalance',
+    'WBShiftAB',
+    'WBShiftGM',
+    'WhiteBalanceBias',
+    'WhiteBalanceFineTune',
+    'FlashMeteringMode',
+    'SensingMethod',
+    'FocalPlaneXResolution',
+    'FocalPlaneYResolution',
+
+    'Aperture',
+    'ScaleFactor35efl',
+    'ShutterSpeed',
+    'LightValue',
+    'Rating',
+    // GPS
+    'GPSAltitude',
+    'GPSCoordinates',
+    'GPSAltitudeRef',
+    'GPSLatitude',
+    'GPSLatitudeRef',
+    'GPSLongitude',
+    'GPSLongitudeRef',
+    // HDR相关字段
+    'MPImageType',
   ]
   const [gps, data, orientation] = await Promise.all([
     exifr.gps(image),
@@ -59,22 +106,9 @@ export async function getImageEXIF(image: File): Promise<IEXIF | undefined> {
     exifr.orientation(image),
   ])
   if (data) {
-    const exif: IEXIF = {}
-    $enum(ExifProperties).forEach((value, content) => {
-      if (value === ExifProperties.ExposureTime) {
-        if (data[content]) {
-          if (data[content] >= 1) {
-            exif[value] = data[content]
-          }
-          else {
-            exif[value] = `1/${Math.round(1 / data[content])}`
-          }
-        }
-      }
-      else if (data[content]) {
-        exif[value] = data[content]
-      }
-    })
+    const exif: IEXIF = {
+      ...data,
+    }
     if (gps && !Number.isNaN(gps.latitude)) {
       exif.location = [gps.longitude, gps.latitude]
     }

@@ -1,13 +1,12 @@
 import { ApolloProvider } from '@apollo/client'
-
 import { client } from '@app/apollo/client'
+
 import { App } from '@app/app'
 import { stores } from '@app/stores'
 import { ThemeProvider } from '@app/styles/theme/ThemeProvider'
-
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
 
+import relativeTime from 'dayjs/plugin/relativeTime'
 import { Provider } from 'mobx-react'
 
 import * as React from 'react'
@@ -15,6 +14,8 @@ import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { HelmetProvider } from 'react-helmet-async'
+
+import './styles/tailwind.css'
 
 /**
  * index.tsx

@@ -73,8 +73,11 @@
       "make": "设备",
       "model": "型号",
       "focalLength": "焦距",
+      "FocalLength": "焦距",
       "aperture": "光圈",
+      "FNumber": "光圈",
       "exposureTime": "快门速度",
+      "ExposureTime": "快门速度",
       "ISO": "ISO",
       "dimensions": "尺寸",
       "size": "大小"
@@ -190,6 +193,15 @@
     "login": "请登录!",
     "authorize": {
       "authorized user": "绑定失败，该账户已绑定其他账号"
+    }
+  },
+  "photo": {
+    "error": {
+      "loading": "图片加载错误"
+    },
+    "webgl": {
+      "creatingTexture": "正在创建纹理...",
+      "loadingImage": "正在加载图像..."
     }
   }
 }

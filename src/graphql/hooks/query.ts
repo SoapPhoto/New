@@ -1,4 +1,4 @@
-import type { QueryHookOptions } from '@apollo/client'
+import type { OperationVariables, QueryHookOptions } from '@apollo/client'
 import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 
 import type { ListQueryData, PicturesQueryVariables } from '../interface'
@@ -10,7 +10,7 @@ const defaultOptions: QueryHookOptions<any, any> = {
 
 export function usePicturesQuery<
   TData = ListQueryData<'pictures', PictureEntity>,
-  TVariables = PicturesQueryVariables,
+  TVariables extends OperationVariables = PicturesQueryVariables,
 >(
   variables: TVariables,
   options?: Omit<QueryHookOptions<TData, TVariables>, 'variables'>,

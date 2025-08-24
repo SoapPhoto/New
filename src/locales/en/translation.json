@@ -82,7 +82,10 @@
       "make": "Make",
       "model": "Model",
       "size": "Size",
-      "title": "Info"
+      "title": "Info",
+      "ExposureTime": "Shutter Speed",
+      "FNumber": "Aperture",
+      "FocalLength": "Focal Length"
     },
     "label": {
       "delete": "Delete",
@@ -142,7 +145,14 @@
       "username_exists": "Username already exists"
     },
     "verified": "The account has been verified",
-    "verified_error": "Verification information is invalid"
+    "verified_error": "Verification information is invalid",
+    "email_exists": "Email has been registered",
+    "login": "Please log in!",
+    "oauth": {
+      "login_error": "Login failed",
+      "user_credentials_invalid": "Incorrect username or password"
+    },
+    "username_exists": "The username already exists"
   },
   "title": {
     "name": "Soap"
@@ -183,6 +193,15 @@
         "revoke": "Untie",
         "signup_type": "register"
       }
+    }
+  },
+  "photo": {
+    "error": {
+      "loading": "Image loading error"
+    },
+    "webgl": {
+      "creatingTexture": "Creating a texture...",
+      "loadingImage": "Loading image..."
     }
   }
 }

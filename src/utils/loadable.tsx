@@ -1,3 +1,4 @@
+import type { JSX } from 'react'
 import React, { lazy, Suspense } from 'react'
 
 interface Opts {

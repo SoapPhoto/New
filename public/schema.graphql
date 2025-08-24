@@ -1,5 +1,3 @@
-directive @limit(number: Float) on FIELD_DEFINITION
-
 scalar DateTime
 
 interface BaseNode {
@@ -56,6 +54,17 @@ input CollectionsQueryInput {
   timestamp: Float
 }
 
+input FollowUsersQueryInput {
+  """分页"""
+  page: Float
+
+  """分页"""
+  pageSize: Float
+
+  """时间戳"""
+  timestamp: Float
+}
+
 enum BadgeType {
   USER
   PICTURE
@@ -77,13 +86,19 @@ type Query {
   childComments(id: Float!, query: CommentsQueryInput): Comments
 
   """关注的用户"""
-  followedUsers(limit: Float, offset: Float, id: Float): [User]
+  followedUsers(id: Float, query: FollowUsersQueryInput): [User]
 
   """粉丝"""
-  followerUsers(limit: Float, offset: Float, id: Float): [User]
+  followerUsers(id: Float, query: FollowUsersQueryInput): [User]
 
   """搜索位置信息"""
-  searchPlace(value: String, config: LocationBaseInput): [SearchPlaceDetail]
+  searchPlace(value: String!, region: String!, clientType: LocationClientType): [Location]
+
+  """地址输入提示"""
+  placeSuggestion(value: String!, region: String!): [Location]
+
+  """Poi详情"""
+  placeDetail(uid: String!): Location
 
   """你想地理编码数据"""
   reverseGeocoding(location: String, config: LocationBaseInput): PictureLocation
@@ -131,15 +146,7 @@ type Query {
   tagPictures(
     """标签名称"""
     name: String!
-
-    """分页"""
-    page: Float
-
-    """分页"""
-    pageSize: Float
-
-    """时间戳"""
-    timestamp: Float
+    query: PicturesQueryInput
   ): Pictures
 
   """获取登录用户信息"""
@@ -195,6 +202,21 @@ type Mutation {
     """收藏夹id"""
     id: Float!
   ): Status
+
+  """编辑收藏夹"""
+  updateCollection(
+    """收藏夹id"""
+    id: Float!
+
+    """编辑"""
+    data: AddCollectionInput!
+  ): Collection
+
+  """新增收藏夹"""
+  addCollection(
+    """新增"""
+    data: AddCollectionInput!
+  ): Collection
   addComment(
     """图片id"""
     id: Float!
@@ -203,13 +225,14 @@ type Mutation {
   ): Comment
   followUser(input: FollowUserInput): Status
   unFollowUser(input: FollowUserInput): Status
+  createInvite: Invite
   markNotificationReadAll: Status
 
   """喜欢图片"""
-  likePicture(id: Float!): LikePictureReq
+  likePicture(id: Float!): Picture
 
   """取消喜欢图片"""
-  unlikePicture(id: Float!): LikePictureReq
+  unlikePicture(id: Float!): Picture
   updatePicture(id: Float!, data: UpdatePictureInput!): Picture
   deletePicture(id: Float!): Status
 
@@ -230,6 +253,17 @@ type Badge {
 input AddPictureCollectionInput {
   """图片id"""
   pictureId: Float!
+}
+
+input AddCollectionInput {
+  """名字"""
+  name: String
+
+  """介绍"""
+  bio: String
+
+  """私人"""
+  isPrivate: Boolean
 }
 
 type Collections implements BaseList {
@@ -320,6 +354,21 @@ type Follow {
   updateTime: DateTime
 }
 
+type Invite implements BaseNode {
+  """id"""
+  id: Float!
+
+  """创建时间"""
+  createTime: DateTime
+
+  """修改时间"""
+  updateTime: DateTime
+
+  """code"""
+  code: String
+  user: User
+}
+
 enum LocationClientType {
   BAIDU
   MAPBOX
@@ -355,7 +404,7 @@ type PictureLocation {
 
   """乡镇名"""
   town: String
-  pois(limit: Float): [Poi]
+  pois: [Poi]
 }
 
 type SearchPlaceDetailInfo {
@@ -374,18 +423,31 @@ type Poi {
   tag: String
 }
 
-type SearchPlaceDetail {
+type LocationDetail {
+  tag: String
+  navi_location: SearchPlaceDetailLocation
+  shop_hours: String
+  detail_url: String
+  type: String
+  overall_rating: String
+  image_num: String
+  comment_num: String
+  scope_type: String
+  content_tag: String
+}
+
+type Location {
   name: String
   location: SearchPlaceDetailLocation
   address: String
   province: String
   city: String
+  district: String
   area: String
   street_id: String
   telephone: String
-  detail: Float
   uid: String
-  detail: SearchPlaceDetailInfo
+  detail: LocationDetail
 }
 
 enum NotificationCategory {
@@ -404,6 +466,7 @@ union NotificationMedia = Picture | Comment | Collection | User
 
 type Subscription {
   newNotification: Notification
+  userOnlineStatus(id: Float!): UserOnlineStatus
 }
 
 type Count {
@@ -446,6 +509,7 @@ input UpdatePictureInput {
   title: String
   bio: String
   isPrivate: Boolean
+  locationUid: String
   tags: [String]
 }
 
@@ -487,6 +551,12 @@ type EXIF {
   focalLength: Float
   ISO: Float
   location: [Float]
+}
+
+type Classify {
+  score: Float
+  root: String
+  keyword: String
 }
 
 """图片"""
@@ -577,7 +647,10 @@ type Picture implements BaseNode {
   badge: [Badge]
 
   """位置信息"""
-  location: PictureLocation
+  location: Location
+
+  """图片智能标签"""
+  classify: [Classify]
 }
 
 """标签"""
@@ -619,6 +692,10 @@ input UpdateProfileInput {
   bio: String
   website: String
   key: String
+  gender: Float
+  genderSecret: Boolean
+  birthday: String
+  birthdayShow: Float
 }
 
 """用户"""
@@ -647,6 +724,21 @@ type User implements BaseNode {
 
   """个人网站"""
   website: String
+
+  """在线状态"""
+  isOnline: Boolean
+
+  """性别"""
+  gender: Float
+
+  """性别"""
+  genderSecret: Boolean
+
+  """生日"""
+  birthday: String
+
+  """生日的显示"""
+  birthdayShow: Float
 
   """喜欢的picture数量"""
   likedCount: Float
@@ -684,6 +776,10 @@ type User implements BaseNode {
 
   """徽章"""
   badge: [Badge]
+}
+
+type UserOnlineStatus {
+  online: Boolean!
 }
 
 type UserCoverRes {

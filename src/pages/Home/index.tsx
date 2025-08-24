@@ -10,11 +10,9 @@ import React, {
   useMemo,
   useRef,
 } from 'react'
-import { useTranslation } from 'react-i18next'
 import Skeleton from './Skeleton'
 
 function HomePage() {
-  const { t } = useTranslation()
   const {
     loading,
     data,

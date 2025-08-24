@@ -43,9 +43,7 @@ fragment PictureDetailFragment on Picture {
     tags {
       ...TagFragment
     }
-    exif {
-      ...EXIFFragment
-    }
+    exif
     badge {
       ...BadgeFragment
     }
@@ -67,8 +65,9 @@ fragment PictureListItemFragment on Picture {
       ...BadgeFragment
     }
   }
-  exif {
-    ...EXIFFragment
+  exif
+  tags {
+    ...TagFragment
   }
 }
 
@@ -209,15 +208,6 @@ fragment TagFragment on Tag {
   updateTime
   pictureCount
 }
-
-fragment EXIFFragment on EXIF {
-  aperture
-  exposureTime
-  focalLength
-  ISO
-  location
-}
-
 
 fragment NotificationFragment on Notification {
   id

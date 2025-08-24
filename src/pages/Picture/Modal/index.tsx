@@ -1,9 +1,10 @@
 import IconButton from '@app/components/Button/IconButton'
 import { X } from '@app/components/Icons'
 import { customMedia } from '@app/styles/mediaQuery'
+import { motion } from 'motion/react'
 import ScrollLocker from 'rc-util/lib/Dom/scrollLocker'
 import PortalWrapper from 'rc-util/lib/PortalWrapper'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import PictureModalContent from './Content'
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  overflow: auto;
+  overflow: hidden;
   outline: 0;
   -webkit-overflow-scrolling: touch;
   z-index: 1000;
@@ -32,15 +33,15 @@ const Mask = styled.div`
   z-index: 1000;
 `
 
-const Content = styled.div`
+const Content = styled(motion.div)`
   position: relative;
-  top: 20px;
+  top: 0;
   margin: 0 auto;
   background: ${p => p.theme.widget.modal.background};
-  border-radius: 6px;
-  width: 100%;
-  max-width: 1080px;
-  overflow: hidden;
+  border-radius: 0px;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
   ${customMedia.lessThan('mobile')`
     top: 0px;
     min-height: 100vh;
@@ -64,7 +65,7 @@ const scrollLocker = new ScrollLocker()
 const PictureModal: React.FC = () => {
   const navigate = useNavigate()
   const contentClickRef = useRef(false)
-  const contentTimeoutRef = useRef<number>()
+  const contentTimeoutRef = useRef<number>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     scrollLocker.lock()
@@ -99,6 +100,16 @@ const PictureModal: React.FC = () => {
             ref={wrapperRef}
           >
             <Content
+              variants={{
+                initial: {
+                  opacity: 0,
+                  translateY: 20,
+                  scale: 0.95,
+                },
+                animate: { opacity: 1, transform: 'translateY(0px)', scale: 1 },
+              }}
+              initial="initial"
+              animate="animate"
               onMouseDown={onContentMouseDown}
               onMouseUp={onContentMouseUp}
             >
@@ -110,7 +121,6 @@ const PictureModal: React.FC = () => {
                 <X />
               </CloseBox>
               <PictureModalContent />
-
             </Content>
           </Wrapper>
         </div>

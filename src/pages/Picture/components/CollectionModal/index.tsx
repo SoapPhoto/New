@@ -54,11 +54,8 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
       })
       cache.writeFragment({
         id: `Picture:${variables!.pictureId}`,
-        fragment: gql`
-          fragment PictureDetailFragment on Picture {
-            currentCollections
-          }
-        `,
+        fragment: Fragments,
+        fragmentName: 'PictureDetailFragment',
         data: {
           currentCollections: cacheData?.currentCollections.filter(collection => collection.id !== variables!.id),
         },
@@ -76,11 +73,8 @@ const CollectionModal: React.FC<IProps> = observer(({ picture }) => {
       })
       cache.writeFragment({
         id: `Picture:${variables!.pictureId}`,
-        fragment: gql`
-          fragment PictureDetailFragment on Picture {
-            currentCollections
-          }
-        `,
+        fragment: Fragments,
+        fragmentName: 'PictureDetailFragment',
         data: {
           currentCollections: [...(cacheData?.currentCollections ?? []), data.data?.addPictureCollection],
         },

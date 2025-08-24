@@ -8,7 +8,6 @@ import styled, { css } from 'styled-components'
 import { Heart } from '../Icons'
 
 export const ListWrapper = styled.div`
-  max-width: 1500px;
   margin: 0 auto;
 `
 
@@ -33,7 +32,7 @@ export const ItemWrapper = styled(m.div)<{ color: string, isPrivate: number }>`
   overflow: hidden;
 `
 
-const handleHover = css`
+export const handleHover = css`
   opacity: 0;
   transition: 0.2s opacity ease-in-out;
   ${customMedia.lessThan('mobile')`
@@ -49,6 +48,10 @@ export const ItemBox = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 0px;
+  transition: 0.2s transform ease-in-out;
+  ${ItemWrapper}:hover & {
+    transform: scale(1.05);
+  }
 `
 
 export const Img = styled.img`
@@ -79,28 +82,6 @@ export const Shadow = styled.img`
 `
 
 export const A = styled(Link)`
-  ${cover()}
-  overflow: hidden;
-  &:before {
-    content: '';
-    position: absolute;
-    overflow: hidden;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0) 0,
-      rgba(0, 0, 0, 0) 10.79%,
-      rgba(0, 0, 0, 0.12) 32.79%,
-      rgba(0, 0, 0, 0.2) 44.79%,
-      rgba(0, 0, 0, 0.35) 63.54%,
-      #000 100%
-    );
-    ${handleHover}
-  }
   z-index: 2;
 `
 
@@ -144,10 +125,9 @@ export const UserName = styled(Link)`
 `
 
 export const SkeletonContent = styled.div`
-  max-width: 1500px;
   margin: 0 auto;
   display: grid;
-  grid-gap: 24px;
+  grid-gap: 4px;
   ${customMedia.lessThan('mobile')`
     grid-template-columns: repeat(1, 1fr);
   `}
@@ -160,15 +140,19 @@ export const SkeletonContent = styled.div`
     grid-template-columns: repeat(3, 1fr);
   `}
 
-  ${customMedia.greaterThan('large')`
+  ${customMedia.between('large', 'huge')`
     grid-template-columns: repeat(4, 1fr);
+  `}
+
+  ${customMedia.greaterThan('huge')`
+    grid-template-columns: repeat(5, 1fr);
   `}
 `
 
 export const SkeletonItem = styled.picture`
   position: relative;
-  height: 210px;
-  border-radius: 4px;
+  height: 410px;
+  border-radius: 0px;
   /* opacity: 0.4; */
   ${skeletonCss2}/* background: ${p => p.theme.widget.skeleton.background};
   box-shadow: 0 5px 10px ${p => p.theme.widget.skeleton.shadow}; */

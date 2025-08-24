@@ -19,5 +19,6 @@ export default antfu({
     'max-len': [0],
     'no-underscore-dangle': [0],
     'react/require-default-props': [0],
+    'no-console': [0],
   },
 })

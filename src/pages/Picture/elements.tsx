@@ -8,7 +8,18 @@ import { Link } from 'react-router-dom'
 import { animated } from 'react-spring'
 import styled from 'styled-components'
 
-export const Wrapper = styled.div``
+export const Wrapper = styled.div`
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+`
+
+export const ViewContent = styled.div`
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 100vh;
+`
 
 export const UserHeaderWrapper = styled.div`
   border-top: 1px solid ${p => p.theme.colors.border};
@@ -53,8 +64,7 @@ export const TimeSpan = styled.span`
 
 export const PictureWrapper = styled.article`
   /* background-color: ${p => p.theme.colors.gray1}; */
-  padding: 24px;
-  border-bottom: 1px solid ${p => p.theme.colors.border};
+  padding: 0px;
 `
 
 export const PictureContent = styled.div`
@@ -67,27 +77,25 @@ export const PictureBox = styled.div<{ num: number }>`
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
-  ${customMedia.greaterThan('mobile')`
+  /* ${customMedia.greaterThan('mobile')`
     max-width: calc(calc(100vh - ${84 + 71 + 2 + 48}px) * ${_ => (_ as any).num});
     min-width: 500px;
   `}
   ${customMedia.lessThan('mobile')`
     border-radius: 0;
-  `}
+  `} */
 `
 
 export const PictureImageBox = styled.div<{
   height: number
-  background: string
 }>`
   position: relative;
   display: block;
   pointer-events: none;
-  padding-bottom: ${props => props.height}%;
-  background-color: ${props => props.background};
   width: 100%;
+  height: 100vh;
   transition: 0.2s filter ease-in-out;
-  border-radius: 4px;
+  border-radius: 0px;
   overflow: hidden;
 `
 

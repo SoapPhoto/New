@@ -1,7 +1,7 @@
 import { generateMedia } from 'styled-media-query'
 
 export const customBreakpoints = {
-  huge: '1440px',
+  huge: '1500px',
   large: '1170px',
   medium: '868px',
   mobile: '604px',

@@ -26,12 +26,13 @@ const PictureList: React.FC<IProps> = ({ list, onPage, noMore }) => {
   const pageLock = useRef<boolean>(false)
   const columns = useMedia(
     [
+      '(min-width: 1500px)',
       '(min-width: 1170px)',
       '(min-width: 868px)',
       '(min-width: 604px)',
       '(max-width: 604px)',
     ],
-    [4, 3, 2, 1],
+    [5, 4, 3, 2, 1],
     2,
   )
   const [ref, { width }] = useMeasure()
@@ -56,6 +57,7 @@ const PictureList: React.FC<IProps> = ({ list, onPage, noMore }) => {
         xy,
         width: itemWidth,
         height: itemHeight,
+        _original: child,
       }
     })
     return [heights, gridItems]
@@ -108,7 +110,7 @@ const PictureList: React.FC<IProps> = ({ list, onPage, noMore }) => {
         >
           <PictureLayzItem
             index={index}
-            picture={picture as PictureEntity}
+            picture={picture._original as PictureEntity}
           />
         </div>
       ))}

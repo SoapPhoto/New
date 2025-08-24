@@ -1,18 +1,21 @@
-import { defineConfig } from 'vite';
-import path from 'path';
-import react from '@vitejs/plugin-react';
-import graphql from '@rollup/plugin-graphql';
+import path from 'node:path'
+import graphql from '@rollup/plugin-graphql'
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 // import macrosPlugin from 'vite-plugin-babel-macros';
-import vitePluginImp from 'vite-plugin-imp';
+import vitePluginImp from 'vite-plugin-imp'
 import { VitePWA } from 'vite-plugin-pwa'
 
-const cdnUrl = 'https://cdn-oss.soapphoto.com';
+const cdnUrl = 'https://cdn-oss.soapphoto.com'
 
-var isDev = process.env.NODE_ENV !== 'production'
+let isDev = process.env.NODE_ENV !== 'production'
 
 export default defineConfig({
   base: isDev ? '/' : 'https://cdn-oss.soapphoto.com/',
   plugins: [
+
+    tailwindcss(),
     react({
       babel: {
         plugins: [
@@ -20,11 +23,11 @@ export default defineConfig({
             'babel-plugin-styled-components',
             {
               displayName: true,
-              fileName: false
-            }
-          ]
-        ]
-      }
+              fileName: false,
+            },
+          ],
+        ],
+      },
     }),
     graphql(),
     // macrosPlugin(),
@@ -32,38 +35,38 @@ export default defineConfig({
       base: '/',
       // base: isDev ? '/' : 'https://cdn-oss.soapphoto.com/',
       includeAssets: [
-          "favicon.ico",
-          "robots.txt",
+        'favicon.ico',
+        'robots.txt',
       ],
       manifest: {
-        "name": "Soap Photos",
-        "short_name": "Soap",
-        "background_color": "#FFFFFF",
-        "theme_color": "#ffffff",
-        "display": "standalone",
-        "start_url": "/",
-        "icons": [
+        name: 'Soap Photos',
+        short_name: 'Soap',
+        background_color: '#FFFFFF',
+        theme_color: '#ffffff',
+        display: 'standalone',
+        start_url: '/',
+        icons: [
           {
-            "src": "icon/logo-72x72.png",
-            "type": "image/png",
-            "sizes": "72x72"
+            src: 'icon/logo-72x72.png',
+            type: 'image/png',
+            sizes: '72x72',
           },
           {
-            "src": "icon/logo-96x96.png",
-            "type": "image/png",
-            "sizes": "96x96"
+            src: 'icon/logo-96x96.png',
+            type: 'image/png',
+            sizes: '96x96',
           },
           {
-            "src": "icon/logo-192x192.png",
-            "type": "image/png",
-            "sizes": "192x192"
+            src: 'icon/logo-192x192.png',
+            type: 'image/png',
+            sizes: '192x192',
           },
           {
-            "src": "icon/logo-512x512.png",
-            "type": "image/png",
-            "sizes": "512x512"
-          }
-        ]
+            src: 'icon/logo-512x512.png',
+            type: 'image/png',
+            sizes: '512x512',
+          },
+        ],
       },
       workbox: {
         // 不缓存api路径
@@ -74,7 +77,7 @@ export default defineConfig({
           /^\/oauth/,
         ],
         // 缓存策略
-        runtimeCaching:[
+        runtimeCaching: [
           // 缓存https://cdn-oss.soapphoto.com/下的图片
           {
             urlPattern: /^https:\/\/cdn-oss.soapphoto.com\/photo\/.*/,
@@ -101,16 +104,16 @@ export default defineConfig({
           },
         ],
         manifestTransforms: [
-          (manifest) => 
+          manifest =>
             ({
-              manifest: manifest.map(entry => !entry.url.indexOf("assets/") ? ({
+              manifest: manifest.map(entry => !entry.url.indexOf('assets/') ? ({
                 ...entry,
-                url: cdnUrl + "/" + entry.url,
+                url: `${cdnUrl}/${entry.url}`,
               }) : entry),
-              warnings: []
-            })
-        ]
-      }
+              warnings: [],
+            }),
+        ],
+      },
     }),
     vitePluginImp({
       libList: [
@@ -119,7 +122,7 @@ export default defineConfig({
           libDirectory: '',
           camel2DashComponentName: false,
           style: () => {
-            return false;
+            return false
           },
         },
         {
@@ -127,10 +130,10 @@ export default defineConfig({
           libDirectory: 'es',
           camel2DashComponentName: false,
           style: (name) => {
-            return `@arco-design/web-react/es/${name}/style/index.js`;
+            return `@arco-design/web-react/es/${name}/style/index.js`
           },
         },
-      ]
+      ],
     }),
   ],
   resolve: {
@@ -145,16 +148,16 @@ export default defineConfig({
     port: 3002,
     proxy: {
       '/graphql': {
-        target: 'https://soapphoto.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
-        ws: true
+        ws: true,
       },
       '/oauth': {
-        target: 'https://soapphoto.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
       },
       '/api': {
-        target: 'https://soapphoto.com',
+        target: 'http://localhost:3001',
         changeOrigin: true,
       },
     },
@@ -162,4 +165,4 @@ export default defineConfig({
   define: {
     'process.env': {},
   },
-});
+})

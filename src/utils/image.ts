@@ -1,24 +1,40 @@
-/* eslint-disable no-async-promise-executor */
 import type { IEXIF } from './exif'
 import { encode } from 'blurhash'
 import { FastAverageColor } from 'fast-average-color'
-
 import isString from 'lodash/isString'
 import { getImageEXIF } from './exif'
 import { isWebp } from './mixed'
 
+// 常量定义
+const DEFAULT_CDN_DOMAIN = '//cdn-oss.soapphoto.com'
+const SUPPORTED_IMAGE_FORMATS = ['jpg', 'jpeg', 'png', 'webp'] as const
+const ORIENTATION_TRANSFORMS = {
+  FLIP_HORIZONTAL: 2,
+  ROTATE_180: 3,
+  FLIP_VERTICAL: 4,
+  FLIP_VERTICAL_ROTATE_90: 5,
+  ROTATE_90: 6,
+  FLIP_HORIZONTAL_ROTATE_90: 7,
+  ROTATE_270: 8,
+} as const
+
+// 类型定义
 export interface IImageInfo {
   exif: IEXIF
   color: string
   isDark: boolean
   height: number
   width: number
+  originalname: string
+  size: number
+  mimetype: string
   make?: string
   model?: string
   blurhash?: string
 }
 
 export const pictureStyle = {
+  original: '',
   full: '@!full',
   large: '@!large',
   small: '@!small',
@@ -29,276 +45,586 @@ export const pictureStyle = {
   thumbSmall: '@!thumbnailSmall',
   medium: '@!medium',
   ico: '@!ico',
-}
+} as const
 
 export type PictureStyle = keyof typeof pictureStyle
+export type ImageFormat = typeof SUPPORTED_IMAGE_FORMATS[number]
+
+interface ImageDimensions {
+  width: number
+  height: number
+}
+
+interface CanvasRenderOptions {
+  orientation?: number
+  isBase64?: boolean
+  quality?: number
+}
+
+// 错误类型定义
+export class ImageProcessError extends Error {
+  constructor(message: string, public readonly code: string) {
+    super(message)
+    this.name = 'ImageProcessError'
+  }
+}
 
 /**
  * 获取图片链接
- *
- * @export
- * @param {string} key
- * @param {PictureStyle} [style]
- * @param {boolean} [webp]
- * @returns
+ * @param key - 图片key
+ * @param style - 图片样式
+ * @param webp - 是否使用webp格式
+ * @returns 完整的图片URL
  */
 export function getPictureUrl(
   key: string,
   style: PictureStyle = 'regular',
   webp = true,
-) {
+): string {
+  if (!key) {
+    throw new ImageProcessError('Image key is required', 'INVALID_KEY')
+  }
+
   let styleName = pictureStyle[style]
-  if (isWebp && webp) {
+
+  // 添加webp后缀
+  if (isWebp && webp && style !== 'original') {
     styleName += '_webp'
   }
-  if (/default.svg$/.test(key)) {
-    return `${key}`
+
+  // 处理不同类型的key
+  if (/default\.svg$/.test(key)) {
+    return key
   }
+
   if (/^\/\/cdn/.test(key)) {
     return `${key}${styleName}`
   }
-  if (key.startsWith('blob:')) {
+
+  if (key.startsWith('blob:') || /\/\//.test(key)) {
     return key
   }
-  if (/\/\//.test(key)) {
-    return key
-  }
-  if (/^photo\//.test(key)) {
-    return `//cdn-oss.soapphoto.com/${key}${styleName}`
-  }
-  return `//cdn-oss.soapphoto.com/photo/${key}${styleName}`
-}
-/**
- * 判断文件是否是图片格式
- *
- * @export
- * @param {string} fileName
- * @returns
- */
-export function isImage(fileName: string) {
-  const imgType = ['jpg', 'jpeg', 'png']
-  const ext = fileName.split('.').pop()!
-  return imgType.includes(ext.toLocaleLowerCase())
+
+  // 统一处理CDN路径
+  const basePath = /^photo\//.test(key) ? key : `photo/${key}`
+  return `${DEFAULT_CDN_DOMAIN}/${basePath}${styleName}`
 }
 
+/**
+ * 判断文件是否是支持的图片格式
+ * @param fileName - 文件名
+ * @returns 是否是图片格式
+ */
+export function isImage(fileName: string): boolean {
+  if (!fileName || typeof fileName !== 'string') {
+    return false
+  }
+
+  const ext = fileName.split('.').pop()?.toLowerCase()
+  return ext ? SUPPORTED_IMAGE_FORMATS.includes(ext as ImageFormat) : false
+}
+
+/**
+ * 计算等比缩放后的尺寸
+ * @param originalWidth - 原始宽度
+ * @param originalHeight - 原始高度
+ * @param maxWidth - 最大宽度
+ * @param maxHeight - 最大高度
+ * @returns 缩放后的尺寸 [width, height]
+ */
 export function getImageMinSize(
-  width: number,
-  height: number,
+  originalWidth: number,
+  originalHeight: number,
   maxWidth: number,
   maxHeight: number,
-) {
-  // 目标尺寸
-  let targetWidth = width
-  let targetHeight = height
-  // 图片尺寸超过400x400的限制
-  if (width > maxWidth || height > maxHeight) {
-    if (width / height > maxWidth / maxHeight) {
-      // 更宽，按照宽度限定尺寸
-      targetWidth = maxWidth
-      targetHeight = Math.round(maxWidth * (height / width))
-    }
-    else {
-      targetHeight = maxHeight
-      targetWidth = Math.round(maxHeight * (width / height))
-    }
+): [number, number] {
+  // 参数验证
+  if (originalWidth <= 0 || originalHeight <= 0 || maxWidth <= 0 || maxHeight <= 0) {
+    throw new ImageProcessError('Invalid dimensions provided', 'INVALID_DIMENSIONS')
   }
+
+  let targetWidth = originalWidth
+  let targetHeight = originalHeight
+
+  // 如果图片尺寸超过限制，进行等比缩放
+  if (originalWidth > maxWidth || originalHeight > maxHeight) {
+    const widthRatio = maxWidth / originalWidth
+    const heightRatio = maxHeight / originalHeight
+    const ratio = Math.min(widthRatio, heightRatio)
+
+    targetWidth = Math.round(originalWidth * ratio)
+    targetHeight = Math.round(originalHeight * ratio)
+  }
+
   return [targetWidth, targetHeight]
 }
 
+/**
+ * 应用Canvas变换以处理图片方向
+ * @param ctx - Canvas 2D context
+ * @param orientation - EXIF方向值
+ * @param width - 图片宽度
+ * @param height - 图片高度
+ * @returns 变换后的画布尺寸
+ */
+function applyOrientationTransform(
+  ctx: CanvasRenderingContext2D,
+  orientation: number,
+  width: number,
+  height: number,
+): ImageDimensions {
+  const canvas = ctx.canvas
+
+  // 重置变换矩阵
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+
+  switch (orientation) {
+    case ORIENTATION_TRANSFORMS.FLIP_HORIZONTAL: // 2
+      // 水平翻转
+      canvas.width = width
+      canvas.height = height
+      ctx.translate(width, 0)
+      ctx.scale(-1, 1)
+      break
+
+    case ORIENTATION_TRANSFORMS.ROTATE_180: // 3
+      // 180度旋转
+      canvas.width = width
+      canvas.height = height
+      ctx.translate(width, height)
+      ctx.rotate(Math.PI)
+      break
+
+    case ORIENTATION_TRANSFORMS.FLIP_VERTICAL: // 4
+      // 垂直翻转
+      canvas.width = width
+      canvas.height = height
+      ctx.translate(0, height)
+      ctx.scale(1, -1)
+      break
+
+    case ORIENTATION_TRANSFORMS.FLIP_VERTICAL_ROTATE_90: // 5
+      // 垂直翻转 + 90度顺时针旋转
+      canvas.width = height
+      canvas.height = width
+      ctx.translate(height, 0)
+      ctx.rotate(Math.PI / 2)
+      ctx.scale(1, -1)
+      break
+
+    case ORIENTATION_TRANSFORMS.ROTATE_90: // 6
+      // 90度顺时针旋转
+      canvas.width = height
+      canvas.height = width
+      ctx.translate(height, 0)
+      ctx.rotate(Math.PI / 2)
+      break
+
+    case ORIENTATION_TRANSFORMS.FLIP_HORIZONTAL_ROTATE_90: // 7
+      // 水平翻转 + 90度顺时针旋转
+      canvas.width = height
+      canvas.height = width
+      ctx.translate(height, width)
+      ctx.rotate(Math.PI / 2)
+      ctx.scale(-1, 1)
+      break
+
+    case ORIENTATION_TRANSFORMS.ROTATE_270: // 8
+      // 270度顺时针旋转（或90度逆时针）
+      canvas.width = height
+      canvas.height = width
+      ctx.translate(0, width)
+      ctx.rotate(-Math.PI / 2)
+      break
+
+    default: // 1 或其他
+      // 正常方向，无需变换
+      canvas.width = width
+      canvas.height = height
+      break
+  }
+
+  return { width: canvas.width, height: canvas.height }
+}
+
+/**
+ * 生成图片预览
+ * @param img - HTML图片元素
+ * @param minSize - 最小尺寸
+ * @param options - 渲染选项
+ * @returns 预览图片的URL或base64
+ */
 export function previewImage(
   img: HTMLImageElement,
   minSize = 600,
-  orientation?: number,
-  isBase64 = false,
+  options: CanvasRenderOptions = {},
 ): Promise<string> {
-  return new Promise((resolve) => {
-    const [width, height] = getImageMinSize(
-      img.naturalWidth,
-      img.naturalHeight,
-      minSize,
-      minSize,
-    )
-    const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')!
-    switch (orientation) {
-      case 2:
-        canvas.width = width
-        canvas.height = height
-        // horizontal flip
-        ctx.translate(width, 0)
-        ctx.scale(-1, 1)
-        break
-      case 3:
-        canvas.width = width
-        canvas.height = height
-        // 180 graus
-        ctx.translate(width / 2, height / 2)
-        ctx.rotate((180 * Math.PI) / 180)
-        ctx.translate(-width / 2, -height / 2)
-        break
-      case 4:
-        canvas.width = width
-        canvas.height = height
-        // vertical flip
-        ctx.translate(0, height)
-        ctx.scale(1, -1)
-        break
-      case 5:
-        // vertical flip + 90 rotate right
-        canvas.height = width
-        canvas.width = height
-        ctx.rotate(0.5 * Math.PI)
-        ctx.scale(1, -1)
-        break
-      case 6:
-        canvas.width = height
-        canvas.height = width
-        // 90 graus
-        ctx.translate(height / 2, width / 2)
-        ctx.rotate((90 * Math.PI) / 180)
-        ctx.translate(-width / 2, -height / 2)
-        break
-      case 7:
-        // horizontal flip + 90 rotate right
-        canvas.height = width
-        canvas.width = height
-        ctx.rotate(0.5 * Math.PI)
-        ctx.translate(width, -height)
-        ctx.scale(-1, 1)
-        break
-      case 8:
-        canvas.height = width
-        canvas.width = height
-        // -90 graus
-        ctx.translate(height / 2, width / 2)
-        ctx.rotate((-90 * Math.PI) / 180)
-        ctx.translate(-width / 2, -height / 2)
-        break
-      default:
-        canvas.width = width
-        canvas.height = height
+  const { orientation, isBase64 = false, quality = 0.8 } = options
+
+  return new Promise((resolve, reject) => {
+    try {
+      // 根据方向确定原始尺寸
+      const originalWidth = img.naturalWidth
+      const originalHeight = img.naturalHeight
+
+      // 计算缩放后的尺寸
+      const [scaledWidth, scaledHeight] = getImageMinSize(
+        originalWidth,
+        originalHeight,
+        minSize,
+        minSize,
+      )
+
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+
+      if (!ctx) {
+        reject(new ImageProcessError('Cannot get canvas context', 'CANVAS_ERROR'))
+        return
+      }
+      // 根据方向设置画布并应用变换
+      // if (orientation && orientation !== 1) {
+      //   applyOrientationTransform(ctx, orientation, scaledWidth, scaledHeight)
+      // }
+      // else {
+      //   // 没有方向信息或正常方向
+      // }
+      canvas.width = scaledWidth
+      canvas.height = scaledHeight
+
+      // 绘制图片到变换后的画布上
+      ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight)
+
+      if (isBase64) {
+        const dataURL = canvas.toDataURL('image/jpeg', quality)
+        resolve(dataURL)
+      }
+      else {
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              resolve(URL.createObjectURL(blob))
+            }
+            else {
+              reject(new ImageProcessError('Failed to create blob', 'BLOB_ERROR'))
+            }
+          },
+          'image/jpeg',
+          quality,
+        )
+      }
     }
-    ctx.drawImage(img, 0, 0, width, height)
-    if (isBase64) {
-      resolve(canvas.toDataURL())
-    }
-    else {
-      canvas.toBlob((blob) => {
-        resolve(window.URL.createObjectURL(blob!))
-      })
+    catch (error) {
+      reject(new ImageProcessError(
+        `Preview generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        'PREVIEW_ERROR',
+      ))
     }
   })
 }
 
-export async function getImageColor(img: HTMLImageElement) {
-  const fac = new FastAverageColor()
-  const color = await fac.getColorAsync(img)
-  return color
+/**
+ * 获取图片主色调
+ * @param img - HTML图片元素
+ * @returns 颜色信息
+ */
+export async function getImageColor(img: HTMLImageElement): Promise<{
+  hex: string
+  isDark: boolean
+  rgb: [number, number, number]
+}> {
+  try {
+    const fac = new FastAverageColor()
+    const color = await fac.getColorAsync(img)
+
+    return {
+      hex: color.hex,
+      isDark: color.isDark,
+      rgb: color.value as [number, number, number],
+    }
+  }
+  catch (error) {
+    console.warn('Failed to get image color, using default:', error)
+    return {
+      hex: '#ffffff',
+      isDark: false,
+      rgb: [255, 255, 255],
+    }
+  }
 }
 
+/**
+ * 生成图片BlurHash
+ * @param data - 图片数据（URL或HTMLImageElement）
+ * @param componentX - X方向组件数
+ * @param componentY - Y方向组件数
+ * @returns BlurHash字符串
+ */
 export function getImageBlurhash(
   data: string | HTMLImageElement,
+  componentX = 4,
+  componentY = 3,
 ): Promise<string> {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const canvas = document.createElement('canvas')
-    const ctx = canvas.getContext('2d')!
+    const ctx = canvas.getContext('2d')
+
+    if (!ctx) {
+      reject(new ImageProcessError('Cannot get canvas context', 'CANVAS_ERROR'))
+      return
+    }
+
     let img: HTMLImageElement
+    let needsCleanup = false
+
     if (isString(data)) {
       img = new Image()
+      img.crossOrigin = 'anonymous' // 处理跨域问题
       img.src = data
+      needsCleanup = true
     }
     else {
       img = data
     }
-    const set = () => {
-      const width = img.naturalWidth
-      const height = img.naturalHeight
-      canvas.width = width
-      canvas.height = height
-      ctx.drawImage(img, 0, 0, width, height)
-      URL.revokeObjectURL(img.src)
-      const imageData = ctx.getImageData(0, 0, width, height)
-      const blurhash = encode(imageData.data, width, height, 4, 3)
-      resolve(blurhash)
+
+    const processImage = () => {
+      try {
+        const { naturalWidth: width, naturalHeight: height } = img
+
+        if (width === 0 || height === 0) {
+          reject(new ImageProcessError('Invalid image dimensions', 'INVALID_DIMENSIONS'))
+          return
+        }
+
+        canvas.width = width
+        canvas.height = height
+        ctx.drawImage(img, 0, 0, width, height)
+
+        const imageData = ctx.getImageData(0, 0, width, height)
+        const blurhash = encode(imageData.data, width, height, componentX, componentY)
+
+        if (needsCleanup && img.src.startsWith('blob:')) {
+          URL.revokeObjectURL(img.src)
+        }
+
+        resolve(blurhash)
+      }
+      catch (error) {
+        reject(new ImageProcessError(
+          `BlurHash generation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          'BLURHASH_ERROR',
+        ))
+      }
     }
-    if (img.complete) {
-      set()
+
+    if (img.complete && img.naturalWidth > 0) {
+      processImage()
     }
     else {
-      img.onload = async () => {
-        set()
+      img.onload = processImage
+      img.onerror = () => {
+        reject(new ImageProcessError('Failed to load image for BlurHash', 'IMAGE_LOAD_ERROR'))
       }
     }
   })
 }
 
 /**
+ * 获取旋转后的图片尺寸
+ * @param width - 原始宽度
+ * @param height - 原始高度
+ * @param orientation - EXIF方向值
+ * @returns 旋转后的尺寸
+ */
+function getRotatedDimensions(width: number, height: number, orientation?: number): ImageDimensions {
+  if (!orientation) {
+    return { width, height }
+  }
+
+  // 这些方向值会导致宽高互换
+  const rotationOrientations = [
+    ORIENTATION_TRANSFORMS.FLIP_VERTICAL_ROTATE_90,
+    ORIENTATION_TRANSFORMS.ROTATE_90,
+    ORIENTATION_TRANSFORMS.FLIP_HORIZONTAL_ROTATE_90,
+    ORIENTATION_TRANSFORMS.ROTATE_270,
+  ]
+
+  return rotationOrientations.includes(orientation)
+    ? { width: height, height: width }
+    : { width, height }
+}
+
+/**
  * 获取图片详细信息
- *
- * @export
- * @param {File} image
- * @returns {Promise<[IImageInfo, string, string]>}
+ * @param image - 图片文件
+ * @returns 图片信息、预览URL和base64数据
  */
 export async function getImageInfo(
   image: File,
 ): Promise<[IImageInfo, string, string]> {
-  return new Promise(async (res) => {
-    const info: IImageInfo = {
-      exif: {},
-      color: '#fff',
-      isDark: false,
-      height: 0,
-      width: 0,
-      make: undefined,
-      model: undefined,
-    }
-    const imgSrc = window.URL.createObjectURL(image)
-    const imgHtml = document.createElement('img')
-    imgHtml.src = imgSrc
-    const exif = await getImageEXIF(image)
-    if (exif) {
-      info.exif = exif
-      info.make = exif.make
-      info.model = exif.model
-    }
-    let previewSrc: string
-    let previewBase64: string
-    const setPreviewImage = async () => {
-      info.height = imgHtml.naturalHeight
-      info.width = imgHtml.naturalWidth
-      if (info.exif && info.exif.orientation) {
-        // 有翻转的长宽对调
-        if (info.exif.orientation >= 5) {
-          info.height = imgHtml.naturalWidth
-          info.width = imgHtml.naturalHeight
+  if (!image || !(image instanceof File)) {
+    throw new ImageProcessError('Invalid image file provided', 'INVALID_FILE')
+  }
+
+  if (!isImage(image.name)) {
+    throw new ImageProcessError('Unsupported image format', 'UNSUPPORTED_FORMAT')
+  }
+
+  return new Promise(async (resolve, reject) => {
+    let imgSrc: string | null = null
+    let previewSrc: string | null = null
+
+    try {
+      const info: IImageInfo = {
+        exif: {},
+        color: '#ffffff',
+        isDark: false,
+        height: 0,
+        width: 0,
+        make: undefined,
+        model: undefined,
+      }
+
+      imgSrc = URL.createObjectURL(image)
+      const imgElement = new Image()
+      imgElement.src = imgSrc
+
+      // 获取EXIF信息
+      const exif = await getImageEXIF(image).catch((error) => {
+        console.warn('Failed to get EXIF data:', error)
+        return null
+      })
+
+      if (exif) {
+        info.exif = exif
+        info.make = exif.Make
+        info.model = exif.Model
+      }
+
+      const processImage = async () => {
+        try {
+          // 设置基础尺寸信息
+          const originalDimensions = {
+            width: imgElement.naturalWidth,
+            height: imgElement.naturalHeight,
+          }
+
+          // 根据EXIF方向调整尺寸
+          const adjustedDimensions = getRotatedDimensions(
+            originalDimensions.width,
+            originalDimensions.height,
+            info.exif.orientation,
+          )
+
+          info.width = adjustedDimensions.width
+          info.height = adjustedDimensions.height
+
+          // 并行处理图片预览和颜色分析
+          const [preview, previewBase64, colorInfo] = await Promise.all([
+            previewImage(imgElement, 800, { orientation: info.exif.orientation }),
+            previewImage(imgElement, 300, {
+              orientation: info.exif.orientation,
+              isBase64: true,
+            }),
+            getImageColor(imgElement),
+          ])
+
+          previewSrc = preview
+          info.color = colorInfo.hex
+          info.isDark = colorInfo.isDark
+
+          // 生成BlurHash
+          try {
+            info.blurhash = await getImageBlurhash(previewBase64)
+          }
+          catch (error) {
+            console.warn('Failed to generate BlurHash:', error)
+            // BlurHash 失败不应该阻断整个流程
+          }
+
+          resolve([info, preview, previewBase64])
+        }
+        catch (error) {
+          reject(new ImageProcessError(
+            `Image processing failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+            'PROCESSING_ERROR',
+          ))
         }
       }
-      [previewSrc, previewBase64] = await Promise.all([
-        previewImage(imgHtml, 800, info.exif.orientation),
-        previewImage(imgHtml, 300, info.exif.orientation, true),
-      ])
+
+      if (imgElement.complete && imgElement.naturalWidth > 0) {
+        await processImage()
+      }
+      else {
+        imgElement.onload = processImage
+        imgElement.onerror = () => {
+          reject(new ImageProcessError('Failed to load image', 'IMAGE_LOAD_ERROR'))
+        }
+
+        // 添加超时处理
+        setTimeout(() => {
+          if (!imgElement.complete) {
+            reject(new ImageProcessError('Image loading timeout', 'LOAD_TIMEOUT'))
+          }
+        }, 30000) // 30秒超时
+      }
     }
-    const setColor = async () => {
-      const colorData = await getImageColor(imgHtml)
-      info.isDark = colorData.isDark
-      info.color = colorData.hex
+    catch (error) {
+      reject(error instanceof ImageProcessError ? error : new ImageProcessError(
+        `Unexpected error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        'UNEXPECTED_ERROR',
+      ))
     }
-    const setBlurhash = async () => {
-      const blurhash = await getImageBlurhash(previewBase64)
-      info.blurhash = blurhash
-    }
-    const setInfo = async () => {
-      await Promise.all([setPreviewImage(), setColor()])
-      await setBlurhash()
-      res([info, previewSrc!, previewBase64!])
-    }
-    if (imgHtml.complete) {
-      setInfo()
-    }
-    else {
-      imgHtml.onload = async () => {
-        setInfo()
+    finally {
+      // 清理资源
+      if (imgSrc && imgSrc.startsWith('blob:')) {
+        setTimeout(() => URL.revokeObjectURL(imgSrc!), 1000)
       }
     }
   })
+}
+
+/**
+ * 获取图片元数据（getImageInfo的别名）
+ * @param image - 图片文件
+ * @returns 图片信息、预览URL和base64数据
+ */
+export const getImageMetadata = getImageInfo
+
+// 工具函数：批量处理图片
+export async function processImagesInBatch(
+  images: File[],
+  batchSize = 3,
+): Promise<Array<[IImageInfo, string, string]>> {
+  const results: Array<[IImageInfo, string, string]> = []
+
+  for (let i = 0; i < images.length; i += batchSize) {
+    const batch = images.slice(i, i + batchSize)
+    const batchResults = await Promise.allSettled(
+      batch.map(image => getImageInfo(image)),
+    )
+
+    batchResults.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        results.push(result.value)
+      }
+      else {
+        console.error(`Failed to process image ${i + index}:`, result.reason)
+      }
+    })
+  }
+
+  return results
+}
+/**
+ * 从 URL 或文件路径中提取图片格式
+ * @param url - 图片的 URL 或文件路径
+ * @returns 图片格式的大写字符串，如 'JPG', 'HEIC', 'PNG' 等
+ */
+export function getImageFormat(url: string): string {
+  if (!url)
+    return 'UNKNOWN'
+
+  const extension = url.split('.').pop()?.toUpperCase()
+  return extension || 'UNKNOWN'
 }

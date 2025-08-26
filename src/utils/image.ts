@@ -1,7 +1,7 @@
 import type { IEXIF } from './exif'
 import { encode } from 'blurhash'
+import { isString } from 'es-toolkit'
 import { FastAverageColor } from 'fast-average-color'
-import isString from 'lodash/isString'
 import { getImageEXIF } from './exif'
 import { isWebp } from './mixed'
 
@@ -160,94 +160,6 @@ export function getImageMinSize(
 }
 
 /**
- * 应用Canvas变换以处理图片方向
- * @param ctx - Canvas 2D context
- * @param orientation - EXIF方向值
- * @param width - 图片宽度
- * @param height - 图片高度
- * @returns 变换后的画布尺寸
- */
-function applyOrientationTransform(
-  ctx: CanvasRenderingContext2D,
-  orientation: number,
-  width: number,
-  height: number,
-): ImageDimensions {
-  const canvas = ctx.canvas
-
-  // 重置变换矩阵
-  ctx.setTransform(1, 0, 0, 1, 0, 0)
-
-  switch (orientation) {
-    case ORIENTATION_TRANSFORMS.FLIP_HORIZONTAL: // 2
-      // 水平翻转
-      canvas.width = width
-      canvas.height = height
-      ctx.translate(width, 0)
-      ctx.scale(-1, 1)
-      break
-
-    case ORIENTATION_TRANSFORMS.ROTATE_180: // 3
-      // 180度旋转
-      canvas.width = width
-      canvas.height = height
-      ctx.translate(width, height)
-      ctx.rotate(Math.PI)
-      break
-
-    case ORIENTATION_TRANSFORMS.FLIP_VERTICAL: // 4
-      // 垂直翻转
-      canvas.width = width
-      canvas.height = height
-      ctx.translate(0, height)
-      ctx.scale(1, -1)
-      break
-
-    case ORIENTATION_TRANSFORMS.FLIP_VERTICAL_ROTATE_90: // 5
-      // 垂直翻转 + 90度顺时针旋转
-      canvas.width = height
-      canvas.height = width
-      ctx.translate(height, 0)
-      ctx.rotate(Math.PI / 2)
-      ctx.scale(1, -1)
-      break
-
-    case ORIENTATION_TRANSFORMS.ROTATE_90: // 6
-      // 90度顺时针旋转
-      canvas.width = height
-      canvas.height = width
-      ctx.translate(height, 0)
-      ctx.rotate(Math.PI / 2)
-      break
-
-    case ORIENTATION_TRANSFORMS.FLIP_HORIZONTAL_ROTATE_90: // 7
-      // 水平翻转 + 90度顺时针旋转
-      canvas.width = height
-      canvas.height = width
-      ctx.translate(height, width)
-      ctx.rotate(Math.PI / 2)
-      ctx.scale(-1, 1)
-      break
-
-    case ORIENTATION_TRANSFORMS.ROTATE_270: // 8
-      // 270度顺时针旋转（或90度逆时针）
-      canvas.width = height
-      canvas.height = width
-      ctx.translate(0, width)
-      ctx.rotate(-Math.PI / 2)
-      break
-
-    default: // 1 或其他
-      // 正常方向，无需变换
-      canvas.width = width
-      canvas.height = height
-      break
-  }
-
-  return { width: canvas.width, height: canvas.height }
-}
-
-/**
  * 生成图片预览
  * @param img - HTML图片元素
  * @param minSize - 最小尺寸
@@ -259,7 +171,7 @@ export function previewImage(
   minSize = 600,
   options: CanvasRenderOptions = {},
 ): Promise<string> {
-  const { orientation, isBase64 = false, quality = 0.8 } = options
+  const { isBase64 = false, quality = 0.8 } = options
 
   return new Promise((resolve, reject) => {
     try {
@@ -331,7 +243,7 @@ export function previewImage(
 export async function getImageColor(img: HTMLImageElement): Promise<{
   hex: string
   isDark: boolean
-  rgb: [number, number, number]
+  rgb: [number, number, number, number]
 }> {
   try {
     const fac = new FastAverageColor()
@@ -340,7 +252,7 @@ export async function getImageColor(img: HTMLImageElement): Promise<{
     return {
       hex: color.hex,
       isDark: color.isDark,
-      rgb: color.value as [number, number, number],
+      rgb: color.value as [number, number, number, number],
     }
   }
   catch (error) {
@@ -348,7 +260,7 @@ export async function getImageColor(img: HTMLImageElement): Promise<{
     return {
       hex: '#ffffff',
       isDark: false,
-      rgb: [255, 255, 255],
+      rgb: [255, 255, 255, 1],
     }
   }
 }
@@ -472,17 +384,19 @@ export async function getImageInfo(
 
   return new Promise(async (resolve, reject) => {
     let imgSrc: string | null = null
-    let previewSrc: string | null = null
 
     try {
       const info: IImageInfo = {
         exif: {},
+        originalname: image.name,
         color: '#ffffff',
         isDark: false,
         height: 0,
         width: 0,
         make: undefined,
         model: undefined,
+        size: 0,
+        mimetype: image.type,
       }
 
       imgSrc = URL.createObjectURL(image)
@@ -529,7 +443,6 @@ export async function getImageInfo(
             getImageColor(imgElement),
           ])
 
-          previewSrc = preview
           info.color = colorInfo.hex
           info.isDark = colorInfo.isDark
 

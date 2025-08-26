@@ -3,7 +3,7 @@ import { DeletePicture } from '@app/graphql/mutations'
 import { UserPictures } from '@app/graphql/query'
 import { useCallback } from 'react'
 import { toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 type Callback = (id: number) => Promise<void>
 

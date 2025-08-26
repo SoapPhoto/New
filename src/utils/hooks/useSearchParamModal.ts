@@ -1,7 +1,7 @@
-import isBoolean from 'lodash/isBoolean'
+import { isBoolean } from 'es-toolkit'
 import qs from 'qs'
 import { useCallback, useMemo } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router'
 
 type Callback = (replace?: boolean) => void
 

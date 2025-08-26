@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 
 import { Spring } from '@app/utils/spring'
 import React, { memo } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import { Blurhash } from '..'
 import {
   A,

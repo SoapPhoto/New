@@ -1,7 +1,7 @@
 import { AlertCircle, CheckCircle } from '@app/components/Icons'
 import qs from 'qs'
 import React, { useMemo } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`

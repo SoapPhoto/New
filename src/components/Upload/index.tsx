@@ -1,4 +1,4 @@
-import isFunction from 'lodash/isFunction'
+import { isFunction } from 'es-toolkit'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -84,7 +84,7 @@ const Upload: React.FC<IUploadProps> = ({
     onDragEnter: onFileEnter,
   }
   return (
-    // eslint-disable-next-line react/button-has-type
+    // eslint-disable-next-line react-dom/no-missing-button-type
     <button onClick={uploadImage} ref={wrapperRef} {...event} {...restProps}>
       <Input
         accept={accept}

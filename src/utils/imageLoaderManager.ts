@@ -37,34 +37,6 @@ export interface ImageCacheResult {
   format: string
 }
 
-// Regular image cache using LRU cache
-const regularImageCache: LRUCache<string, ImageCacheResult> = new LRUCache<
-  string,
-  ImageCacheResult
->(
-  30, // Cache size for regular images
-  (value, key, reason) => {
-    try {
-      URL.revokeObjectURL(value.blobSrc)
-      console.info(`Regular image cache: Revoked blob URL - ${reason}`)
-    }
-    catch (error) {
-      console.warn(
-        `Failed to revoke regular image blob URL (${reason}):`,
-        error,
-      )
-    }
-  },
-)
-
-/**
- * 生成普通图片的缓存键
- */
-function generateRegularImageCacheKey(url: string): string {
-  // 使用原始 URL 作为唯一键
-  return url
-}
-
 export class ImageLoaderManager {
   private currentXHR: XMLHttpRequest | null = null
   private delayTimer: NodeJS.Timeout | null = null
@@ -113,8 +85,9 @@ export class ImageLoaderManager {
   ): Promise<ImageLoadResult> {
     const { onProgress, onError, onLoadingStateUpdate } = callbacks
 
-    const cached = imageCache.get(src)
+    const cached = await imageCache.get(src)
     if (cached) {
+      console.log('[ImageLoaderManager] loadImage from cache', cached)
       return {
         blobSrc: cached.blobSrc,
         convertedUrl: cached.url,
@@ -160,6 +133,7 @@ export class ImageLoaderManager {
                 width: originalImage.width,
                 height: originalImage.height,
                 timestamp: Date.now(),
+                size: blob.size,
               })
 
               resolve(result)
@@ -321,35 +295,9 @@ export class ImageLoaderManager {
   ): ImageLoadResult {
     const { onLoadingStateUpdate } = callbacks
 
-    // 生成缓存键
-    const cacheKey = generateRegularImageCacheKey(originalUrl) // 使用原始 URL
-
-    // 检查缓存
-    const cachedResult = regularImageCache.get(cacheKey)
-    if (cachedResult) {
-      console.info('Using cached regular image result', cachedResult)
-
-      // Hide loading indicator
-      onLoadingStateUpdate?.({
-        isVisible: false,
-      })
-
-      return {
-        blobSrc: cachedResult.blobSrc,
-      }
-    }
-
     // 普通图片格式
     const url = URL.createObjectURL(blob)
 
-    const result: ImageCacheResult = {
-      blobSrc: url,
-      originalSize: blob.size,
-      format: blob.type,
-    }
-
-    // 缓存结果
-    regularImageCache.set(cacheKey, result)
     console.info(
       `Regular image processed and cached: ${(blob.size / 1024).toFixed(1)}KB, URL: ${originalUrl}`,
     )
@@ -468,33 +416,4 @@ export class ImageLoaderManager {
       this.currentXHR = null
     }
   }
-}
-
-// Regular image cache management functions
-export function getRegularImageCacheSize(): number {
-  return regularImageCache.size()
-}
-
-export function clearRegularImageCache(): void {
-  regularImageCache.clear()
-}
-
-export function removeRegularImageCache(cacheKey: string): boolean {
-  return regularImageCache.delete(cacheKey)
-}
-
-export function getRegularImageCacheStats(): {
-  size: number
-  maxSize: number
-  keys: string[]
-} {
-  return regularImageCache.getStats()
-}
-
-/**
- * 根据原始 URL 移除特定的普通图片缓存项
- */
-export function removeRegularImageCacheByUrl(originalUrl: string): boolean {
-  const cacheKey = generateRegularImageCacheKey(originalUrl)
-  return regularImageCache.delete(cacheKey)
 }

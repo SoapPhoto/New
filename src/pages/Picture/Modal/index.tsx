@@ -1,11 +1,11 @@
 import IconButton from '@app/components/Button/IconButton'
 import { X } from '@app/components/Icons'
 import { customMedia } from '@app/styles/mediaQuery'
-import { motion } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import ScrollLocker from 'rc-util/lib/Dom/scrollLocker'
 import PortalWrapper from 'rc-util/lib/PortalWrapper'
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import styled from 'styled-components'
 import PictureModalContent from './Content'
 
@@ -64,6 +64,7 @@ const scrollLocker = new ScrollLocker()
 
 const PictureModal: React.FC = () => {
   const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(true)
   const contentClickRef = useRef(false)
   const contentTimeoutRef = useRef<number>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -93,37 +94,44 @@ const PictureModal: React.FC = () => {
   return (
     <PortalWrapper visible getContainer={document.body as any}>
       {() => (
-        <div>
-          <Mask />
-          <Wrapper
-            onClick={close}
-            ref={wrapperRef}
-          >
-            <Content
-              variants={{
-                initial: {
-                  opacity: 0,
-                  translateY: 20,
-                  scale: 0.95,
-                },
-                animate: { opacity: 1, transform: 'translateY(0px)', scale: 1 },
-              }}
-              initial="initial"
-              animate="animate"
-              onMouseDown={onContentMouseDown}
-              onMouseUp={onContentMouseUp}
+        <AnimatePresence
+          onExitComplete={() => {
+            navigate(-1)
+          }}
+        >
+          {isOpen && (
+            <Wrapper
+              onClick={close}
+              ref={wrapperRef}
             >
-              <CloseBox
-                onClick={() => {
-                  navigate(-1)
+              <Content
+                variants={{
+                  initial: {
+                    opacity: 0,
+                    translateY: 20,
+                    scale: 0.95,
+                  },
+                  animate: { opacity: 1, transform: 'translateY(0px)', scale: 1 },
+                  exit: { opacity: 0, transform: 'translateY(20px)', scale: 0.95 },
                 }}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                onMouseDown={onContentMouseDown}
+                onMouseUp={onContentMouseUp}
               >
-                <X />
-              </CloseBox>
-              <PictureModalContent />
-            </Content>
-          </Wrapper>
-        </div>
+                <CloseBox
+                  onClick={() => {
+                    setIsOpen(false)
+                  }}
+                >
+                  <X />
+                </CloseBox>
+                <PictureModalContent />
+              </Content>
+            </Wrapper>
+          )}
+        </AnimatePresence>
       )}
     </PortalWrapper>
   )

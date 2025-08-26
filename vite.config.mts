@@ -118,14 +118,6 @@ export default defineConfig({
     vitePluginImp({
       libList: [
         {
-          libName: 'lodash',
-          libDirectory: '',
-          camel2DashComponentName: false,
-          style: () => {
-            return false
-          },
-        },
-        {
           libName: '@arco-design/web-react',
           libDirectory: 'es',
           camel2DashComponentName: false,

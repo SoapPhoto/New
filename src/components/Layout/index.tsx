@@ -2,7 +2,7 @@ import useNewNotificationSubscription from '@app/utils/hooks/useNewNotificationS
 import React, { } from 'react'
 
 // import { Header } from '@app/components';
-import { Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router'
 import styled from 'styled-components'
 import Footer from '../Footer'
 import Header from '../Header'

@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import {
   Outlet,
   useParams,
-} from 'react-router-dom'
+} from 'react-router'
 import UserHeader from './components/UserHeader'
 
 const UserPage = memo(() => {

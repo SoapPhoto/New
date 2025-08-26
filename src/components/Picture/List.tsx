@@ -1,8 +1,8 @@
 import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
 import { getScrollHeight, getScrollTop, getWindowHeight } from '@app/utils/dom'
 import { useMedia } from '@app/utils/hooks'
-import debounce from 'lodash/debounce'
 
+import { debounce } from 'es-toolkit'
 import React, {
   memo,
   useEffect,

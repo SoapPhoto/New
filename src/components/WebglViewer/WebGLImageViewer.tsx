@@ -128,7 +128,6 @@ export function WebGLImageViewer({
       // 如果提供了尺寸，传递给loadImage进行优化
       const preknownWidth = config.width > 0 ? config.width : undefined
       const preknownHeight = config.height > 0 ? config.height : undefined
-      console.log('srccs', src, preknownWidth, preknownHeight)
       webGLImageViewerEngine
         .loadImage(src, preknownWidth, preknownHeight)
         .catch(console.error)

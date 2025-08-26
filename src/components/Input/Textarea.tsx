@@ -1,5 +1,5 @@
 import type { TextareaAutosizeProps } from 'react-textarea-autosize'
-import isFunction from 'lodash/isFunction'
+import { isFunction } from 'es-toolkit'
 import { rgba } from 'polished'
 import React, { memo, useCallback, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'

@@ -3,7 +3,7 @@ import { customBreakpoints, customMedia } from '@app/styles/mediaQuery'
 import { initButton, skeletonCss } from '@app/styles/mixins'
 import { rgba } from 'polished'
 import { Heart } from 'react-feather'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 import { animated } from 'react-spring'
 import styled from 'styled-components'

@@ -1,4 +1,4 @@
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router'
 import styled from 'styled-components'
 
 const A = styled(RouterLink)`

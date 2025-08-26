@@ -24,7 +24,7 @@ import React, {
 } from 'react'
 import { toast } from 'react-hot-toast'
 import { Trans, useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { animated, useSpring } from 'react-spring'
 import { LoginSchema } from '../dto'
 import {

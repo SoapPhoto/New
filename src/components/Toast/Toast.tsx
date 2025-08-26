@@ -1,14 +1,14 @@
 import type {
   ReactNode,
 } from 'react'
-import reduce from 'lodash/reduce'
+import { reduce } from 'es-toolkit/compat'
 import React, {
   useEffect,
   useRef,
   useState,
 } from 'react'
-import { useTransition } from 'react-spring'
 
+import { useTransition } from 'react-spring'
 import {
   ActionBox,
   Container,
@@ -38,7 +38,7 @@ const SPACE = 12
 const MIN_HEIGHT = 72
 
 const ToastComponent: React.FC<IProps> = ({ toasts, onDelete }) => {
-  const timer = useRef<number>()
+  const timer = useRef<number>(null)
   const [isOverviewing, setIsOverviewing] = useState(false)
   const heights = useRef(new Map())
   const [refMap] = useState(() => new WeakMap())

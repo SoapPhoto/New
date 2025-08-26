@@ -9,7 +9,7 @@ import Skeleton from '@app/components/Picture/Skeleton'
 import { SearchPictures } from '@app/graphql/query'
 import usePicturePagination from '@app/utils/hooks/usePicturePagination'
 import React, { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router'
 import styled, { css } from 'styled-components'
 
 const SerachBox = styled.div`

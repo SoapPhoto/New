@@ -4,8 +4,8 @@ import Button from '@app/components/Button'
 import { useAccount } from '@app/stores/hooks'
 import { FormikValidationFilter } from '@app/utils/error'
 import useUrlQuery from '@app/utils/hooks/useUrlQuery'
+import { isEmpty } from 'es-toolkit/compat'
 import { Formik } from 'formik'
-import isEmpty from 'lodash/isEmpty'
 import { observer } from 'mobx-react'
 import React, {
   useCallback,
@@ -14,8 +14,7 @@ import React, {
   useState,
 } from 'react'
 import toast from 'react-hot-toast'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 import { animated, useSpring } from 'react-spring'
 import { Des, Title } from '../elements'
 
@@ -34,9 +33,8 @@ function isUserName(number: string) {
 function AuthCompletePage() {
   const navigate = useNavigate()
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const { t } = useTranslation()
   const { activeUser } = useAccount()
-  const timer = useRef<number>()
+  const timer = useRef<number>(null)
   const { code } = useUrlQuery()
   const formRef = useRef<FormikProps<IValues>>(null)
   const [props, animate] = useSpring(() => ({
@@ -50,7 +48,7 @@ function AuthCompletePage() {
         transform: 'translateX(0%)',
       })
     }, 100)
-    return () => { animate.stop(); clearTimeout(timer.current) }
+    return () => { animate.stop(); clearTimeout(timer.current!) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const validate = useCallback((values: IValues) => {

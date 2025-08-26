@@ -1,4 +1,4 @@
-import type { LoadingIndicatorRef } from './LoadingIndicator'
+import type { LoadingIndicatorRef } from './components/LoadingIndicator'
 
 export const SHOW_SCALE_INDICATOR_DURATION = 1000
 

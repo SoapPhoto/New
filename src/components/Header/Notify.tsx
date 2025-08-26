@@ -6,7 +6,7 @@ import { Badge } from '@arco-design/web-react'
 import { observer } from 'mobx-react'
 
 import React, { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import styled from 'styled-components'
 import { Popover } from '..'
 import IconButton from '../Button/IconButton'

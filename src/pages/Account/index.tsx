@@ -4,7 +4,7 @@ import { useAccount } from '@app/stores/hooks'
 
 import { observer } from 'mobx-react'
 import React, { useEffect, useState } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router'
 
 import {
   BG,

@@ -8,7 +8,7 @@ import PictureSkeleton from '@app/components/Picture/Skeleton'
 import { UserPictures } from '@app/graphql/query'
 import usePicturePagination from '@app/utils/hooks/usePicturePagination'
 import React, { memo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`

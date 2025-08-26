@@ -2,7 +2,7 @@ import type { Icon } from '@app/components/Icons'
 import { customMedia } from '@app/styles/mediaQuery'
 import { boxMixin } from '@app/styles/mixins'
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 import styled from 'styled-components'
 
 interface IData {

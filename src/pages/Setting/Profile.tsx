@@ -8,9 +8,9 @@ import Head from '@app/components/Head'
 import { UpdateProfile } from '@app/graphql/mutations'
 
 import { useAccount } from '@app/stores/hooks'
+import { pick } from 'es-toolkit'
 import { Form, Formik } from 'formik'
-import pick from 'lodash/pick'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 // import '@arco-design/web-react/es/Radio/style/index.js';
@@ -48,7 +48,7 @@ function SettingProfilePage() {
     <div>
       <Head title="用户设置" />
       <Formik<IValues>
-        initialValues={pick(userInfo, [
+        initialValues={pick(userInfo!, [
           'name',
           'bio',
           'website',
@@ -57,7 +57,7 @@ function SettingProfilePage() {
           'genderSecret',
           'birthday',
           'birthdayShow',
-        ]) as IValues}
+        ] as any) as unknown as IValues}
         onSubmit={onSubmit}
       >
         {() => (

@@ -18,7 +18,6 @@ import {
   useTapButton,
 } from '@app/utils/hooks'
 import { Form, Formik } from 'formik'
-import pick from 'lodash/pick'
 import { observer } from 'mobx-react'
 import React, {
   useCallback,
@@ -222,7 +221,6 @@ const UploadModal = observer(() => {
 
   // 图片信息 Hook
   const [info, thumbnail, setFile, clearImage, classify] = useImageInfo(imageRef)
-  console.log(info)
 
   // 表单验证 Schema (使用 useMemo 优化)
   const validationSchema = useMemo(() =>

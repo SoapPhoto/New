@@ -1,5 +1,5 @@
 import { btnMixin } from '@app/styles/mixins'
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 
 import styled from 'styled-components'
 

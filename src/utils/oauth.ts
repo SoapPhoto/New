@@ -1,6 +1,6 @@
 import type { OauthActionType, OauthStateType } from '@app/common/enum/oauthState'
 import { OauthType } from '@app/common/enum/router'
-import isFunction from 'lodash/isFunction'
+import { isFunction } from 'es-toolkit'
 import qs from 'qs'
 
 let openWindow: Window | null = null
@@ -91,7 +91,6 @@ export function oauthOpen(url: string) {
     try {
       // 非同域名会报错，所以要先去请求一下，然后关闭窗口
 
-      // eslint-disable-next-line no-console
       console.log(openWindow && openWindow.location)
     }
     // eslint-disable-next-line unused-imports/no-unused-vars

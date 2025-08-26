@@ -1,44 +1,25 @@
 import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
-import { Blurhash, EmojiText, Popover } from '@app/components'
-import Comment from '@app/components/Comment'
+import { Blurhash } from '@app/components'
 import Head from '@app/components/Head'
 
-import { Hash, Lock, Ordinary } from '@app/components/Icons'
-import NotPage from '@app/pages/404'
-import { useAccount } from '@app/stores/hooks'
+import { NotFound } from '@app/components/page/NotFound'
 import useQueryPicture from '@app/utils/hooks/useQueryPicture'
 import { observer } from 'mobx-react'
-import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
-import { Link, useParams } from 'react-router-dom'
-import { css } from 'styled-components'
+import { useParams } from 'react-router'
 import {
-  Bio,
-  Content,
-  Tag,
-  TagBox,
-  Title,
   ViewContent,
   Wrapper,
 } from '../elements'
 import PictureSkeleton from '../Skeleton'
-import CollectionModal from './CollectionModal'
-import ExifModal from './ExifModal'
-import HeaderUserInfo from './HeaderUserInfo'
 import PictureCenter from './PictureCenter'
-import PictureInfo from './PictureInfo'
-import SettingModal from './SettingModal'
 
 const PictureContent = observer(() => {
-  const { t } = useTranslation()
   const { id } = useParams()
-  const { userInfo } = useAccount()
   const [{ loading, data, error }, cacheData] = useQueryPicture<{ picture: PictureEntity }>(Number(id))
-  const isMe = useMemo(() => data?.picture.user.id === userInfo?.id, [data?.picture.user.id, userInfo?.id])
   if (error?.message) {
     if (error.message === 'Not Found') {
-      return <NotPage title="Opoooos...!" />
+      return <NotFound />
     }
   }
   if ((loading && (!data && !cacheData)) || (!data && !cacheData))

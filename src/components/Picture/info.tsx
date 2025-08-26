@@ -2,7 +2,7 @@ import type { PictureEntity } from '@app/common/types/modules/picture/picture.en
 import type { FC } from 'react'
 import { getImageFormat } from '@app/utils/image'
 import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import { styled } from 'styled-components'
 import { handleHover } from './elements'
 import {

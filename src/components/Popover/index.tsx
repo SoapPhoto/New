@@ -2,7 +2,7 @@ import type { Placement } from '@popperjs/core'
 import type {
   PropsWithChildren,
 } from 'react'
-import isFunction from 'lodash/isFunction'
+import { isFunction } from 'es-toolkit'
 import contains from 'rc-util/lib/Dom/contains'
 import PortalWrapper from 'rc-util/lib/PortalWrapper'
 import React, {
@@ -52,16 +52,14 @@ const Popover: React.FC<PropsWithChildren<IPopoverProps>> = ({
   const [popperSize, setPopperSize] = useState({ width: 0, height: 0 })
   const [popupVisible, setPopupVisible] = useState(false)
   const [closed, setClosed] = useState(true)
-  const openTimer = useRef<number>()
-  const closeTimer = useRef<number>()
-  const referenceElementRef = useRef<HTMLButtonElement>()
+  const openTimer = useRef<number>(null)
+  const closeTimer = useRef<number>(null)
+  const referenceElementRef = useRef<HTMLButtonElement>(null)
   const [
     referenceElement,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     _setReferenceElement,
   ] = useState<HTMLButtonElement | null>(null)
-  const popperElementRef = useRef<HTMLDivElement>()
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const popperElementRef = useRef<HTMLDivElement>(null)
   const [popperElement, _setPopperElement] = useState<HTMLDivElement | null>(null)
   const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null)
   const themeState = useMemo(

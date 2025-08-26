@@ -2,10 +2,12 @@ import type { WebGLImageViewerRef } from '../WebglViewer'
 import type { ProgressiveImageProps } from './types'
 
 import { cx } from '@app/utils/cn'
-import { useCallback, useRef } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 
+import { useCallback, useRef } from 'react'
 import styled from 'styled-components'
 import { WebGLImageViewer } from '../WebglViewer'
+import { SlidingNumber } from './components/SlidingNumber'
 import {
   useImageLoader,
   useProgressiveImageState,
@@ -62,7 +64,6 @@ export function ProgressiveImage({
   alt,
   width,
   height,
-  className,
   onError,
   onProgress,
   onZoomChange,
@@ -71,8 +72,6 @@ export function ProgressiveImage({
   minZoom = 1,
   isCurrentImage = false,
   isLivePhoto = false,
-  livePhotoVideoUrl,
-  isHDR = false,
   loadingIndicatorRef,
 }: ProgressiveImageProps) {
   // State management
@@ -83,7 +82,8 @@ export function ProgressiveImage({
     error,
     isHighResImageRendered,
     isThumbnailLoaded,
-    isLivePhotoPlaying,
+    showScaleIndicator,
+    currentScale,
   } = state
 
   // Refs
@@ -106,7 +106,7 @@ export function ProgressiveImage({
     setState.setIsHighResImageRendered,
   )
 
-  const { onTransformed, onDOMTransformed } = useScaleIndicator(
+  const { onTransformed } = useScaleIndicator(
     onZoomChange,
     setState.setCurrentScale,
     setState.setShowScaleIndicator,
@@ -170,19 +170,19 @@ export function ProgressiveImage({
       )}
 
       {/* 缩放倍率提示 */}
-      {/* <AnimatePresence>
+      <AnimatePresence>
         {showScaleIndicator && (
-          <m.div
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="pointer-events-none absolute bottom-4 left-4 z-20 flex items-center gap-0.5 rounded bg-black/50 px-3 py-1 text-lg text-white tabular-nums"
+            className="pointer-events-none absolute bottom-4 left-4 z-20 flex items-center gap-0.5 rounded bg-black/50 px-3 py-1 text-lg text-white"
           >
             <SlidingNumber number={currentScale} decimalPlaces={1} />
             x
-          </m.div>
+          </motion.div>
         )}
-      </AnimatePresence> */}
+      </AnimatePresence>
     </Wrapper>
   )
 }

@@ -1,8 +1,8 @@
 import type { PictureEntity } from '@app/common/types/modules/picture/picture.entity'
-import type { LoadingIndicatorRef } from '@app/components/ProgressiveImage/LoadingIndicator'
+import type { LoadingIndicatorRef } from '@app/components/ProgressiveImage/components/LoadingIndicator'
 
 import { WebGLImageViewer } from '@afilmory/webgl-viewer'
-import { LoadingIndicator } from '@app/components/ProgressiveImage/LoadingIndicator'
+import { LoadingIndicator } from '@app/components/ProgressiveImage/components/LoadingIndicator'
 import { ProgressiveImage } from '@app/components/ProgressiveImage/ProgressiveImage'
 
 import { getPictureUrl } from '@app/utils/image'
@@ -21,19 +21,12 @@ interface IProps {
 }
 
 const PictureCenter: React.FC<IProps> = ({ picture }) => {
-  const num = picture.width / picture.height
-  const height = (1 - (picture.width - picture.height) / picture.width) * 100 || 100
   const loadingIndicatorRef = useRef<LoadingIndicatorRef>(null)
 
   return (
     <PictureWrapper>
       <PictureContent>
         <PictureImage>
-          {/* <Image
-                    src={getPictureUrl(picture.key, 'medium')}
-                    blurhash={picture.blurhash}
-                    lazyload={false}
-                  /> */}
           <LoadingIndicator ref={loadingIndicatorRef} />
           <ProgressiveImage
             isCurrentImage

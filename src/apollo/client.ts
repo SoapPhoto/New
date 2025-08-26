@@ -8,7 +8,7 @@ import {
 import { onError } from '@apollo/client/link/error'
 import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
-import isString from 'lodash/isString'
+import { isString } from 'es-toolkit'
 
 export function initClient() {
   const batchLink = new HttpLink({

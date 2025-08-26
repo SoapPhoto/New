@@ -20,7 +20,7 @@ const WORKER_SIMPLE_LOD_LEVELS = [
  */
 self.onmessage = async (e) => {
   const { type, payload } = e.data
-  console.info('[Worker] Received message:', type, payload)
+  // console.info('[Worker] Received message:', type, payload)
 
   switch (type) {
     case 'load-image': {

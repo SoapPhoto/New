@@ -1,6 +1,6 @@
 import { useTapButton } from '@app/utils/hooks'
-import isFunction from 'lodash/isFunction'
 
+import { isFunction } from 'es-toolkit'
 import React from 'react'
 import {
   ItemBio,

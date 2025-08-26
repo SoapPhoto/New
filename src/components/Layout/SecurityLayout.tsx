@@ -2,7 +2,7 @@ import { useAccount } from '@app/stores/hooks'
 import { observer } from 'mobx-react'
 import { stringify } from 'qs'
 import React from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router'
 
 export const SecurityLayout = observer(() => {
   const {

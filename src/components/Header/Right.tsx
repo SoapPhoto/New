@@ -19,7 +19,7 @@ import {
 } from 'react-feather'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router'
 import { animated } from 'react-spring'
 import styled from 'styled-components'
 import Avatar from '../Avatar'

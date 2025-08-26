@@ -2,12 +2,12 @@ import type { PropsWithChildren } from 'react'
 import type React from 'react'
 import type {
   Location,
-} from 'react-router-dom'
+} from 'react-router'
 import { useEffect, useRef } from 'react'
 import {
   useLocation,
   useNavigationType,
-} from 'react-router-dom'
+} from 'react-router'
 
 const ScrollToTop: React.FC<PropsWithChildren> = ({ children }) => {
   const location = useLocation()

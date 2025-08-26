@@ -17,6 +17,7 @@ export interface IEXIF {
   ISO?: string
   lensModel?: string
   whiteBalance?: string
+  [key: string]: any
 }
 
 export enum ExifProperties {

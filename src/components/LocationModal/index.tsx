@@ -5,13 +5,13 @@ import { PlaceDetail, PlaceSuggestion } from '@app/graphql/query'
 import { useSearchParamModal } from '@app/utils/hooks'
 import { AutoComplete, Select } from '@arco-design/web-react'
 
-import debounce from 'lodash/debounce'
+import { debounce } from 'es-toolkit'
 import React, { useEffect, useRef, useState } from 'react'
 import { css } from 'styled-components'
+
 import Button from '../Button'
 
 import Modal from '../Modal'
-
 import cities from './cities.json'
 import '@arco-design/web-react/es/Select/style/index.js'
 import '@arco-design/web-react/es/AutoComplete/style/index.js'

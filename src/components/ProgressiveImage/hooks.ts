@@ -1,4 +1,4 @@
-import type { LoadingIndicatorRef } from './LoadingIndicator'
+import type { LoadingIndicatorRef } from './components/LoadingIndicator'
 import type {
   ProgressiveImageState,
 } from './types'
@@ -87,7 +87,6 @@ export function useImageLoader(src: string, isCurrentImage: boolean, highResLoad
 
     const loadImage = async () => {
       try {
-        console.log(1231232331)
         const result = await imageLoaderManager.loadImage(src, {
           onProgress,
           onError,
@@ -167,6 +166,7 @@ export function useScaleIndicator(onZoomChange?: (isZoomed: boolean) => void, se
   const onTransformed = useCallback(
     (originalScale: number, relativeScale: number) => {
       const isZoomed = Math.abs(relativeScale - 1) > 0.01
+      console.log('isZoomed', originalScale, isZoomed)
       handleScaleChange(originalScale, isZoomed)
     },
     [handleScaleChange],

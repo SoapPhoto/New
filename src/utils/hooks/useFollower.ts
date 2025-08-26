@@ -7,7 +7,7 @@ import {
 } from '@app/graphql/mutations/mutations.graphql'
 import { UserIsFollowing } from '@app/graphql/query'
 import { useAccount } from '@app/stores/hooks'
-import throttle from 'lodash/throttle'
+import { throttle } from 'es-toolkit'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
@@ -51,7 +51,7 @@ export default function useFollower(): [(user: UserEntity) => any, boolean] {
         toast.error(message)
         setFollowLoading(false)
       }
-    }),
+    }, 300),
     [isLogin],
   )
   return [follow, followLoading]

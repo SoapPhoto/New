@@ -4,8 +4,8 @@ import FieldInput from '@app/components/Formik/FieldInput'
 import { register } from '@app/services/account'
 
 import { useAccount } from '@app/stores/hooks'
+import { isArray } from 'es-toolkit/compat'
 import { Form, Formik } from 'formik'
-import isArray from 'lodash/isArray'
 import { observer } from 'mobx-react'
 import React, {
   useCallback,
@@ -15,7 +15,7 @@ import React, {
 } from 'react'
 import { toast } from 'react-hot-toast'
 import { Trans, useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router'
 import { animated, useSpring } from 'react-spring'
 import { RegisterSchema } from '../dto'
 import { Des, Title } from '../elements'
@@ -31,7 +31,7 @@ const Register = observer(() => {
   const { t } = useTranslation()
   const { registerLogin } = useAccount()
   const [confirmLoading, setConfirmLoading] = useState(false)
-  const timer = useRef<number>()
+  const timer = useRef<number>(null)
   const [props, animate] = useSpring(() => ({
     opacity: 0,
     transform: 'translateX(-5%)',
@@ -43,7 +43,7 @@ const Register = observer(() => {
         transform: 'translateX(0%)',
       })
     }, 100)
-    return () => clearTimeout(timer.current)
+    return () => clearTimeout(timer.current!)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const onSubmit = useCallback(

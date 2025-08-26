@@ -21,13 +21,12 @@ import Fragments from '@app/graphql/fragments'
 import { UpdatePicture } from '@app/graphql/mutations'
 import { useDeletePicture, useSearchParamModal } from '@app/utils/hooks'
 import { getPictureUrl } from '@app/utils/image'
+import { omit, pick } from 'es-toolkit'
 import {
   Form,
   Formik,
   useFormikContext,
 } from 'formik'
-import omit from 'lodash/omit'
-import pick from 'lodash/pick'
 import React, {
   useCallback,
   useEffect,
@@ -38,8 +37,8 @@ import { Trash2 } from 'react-feather'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useTheme } from 'styled-components'
-import { Content } from '../../elements'
 
+import { Content } from '../../elements'
 import { EditPictureSchema } from './dto'
 import { Footer } from './elements'
 
@@ -92,7 +91,7 @@ const SettingModal: React.FC<IProps> = ({ picture }) => {
         fragment: Fragments,
         fragmentName: 'PictureBaseFragment',
         data: {
-          ...omit(data.updatePicture, 'tags'),
+          ...omit(data.updatePicture, ['tags']),
         },
       })
       client.writeFragment({
